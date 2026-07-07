@@ -1,0 +1,1 @@
+### Contributors, please read the contribution guidelines thoroughly here: [Link](https://github.com/ankit-suman-07/QA-SDV-Project/blob/main/docs/TEAM_GUIDELINES.md)
