@@ -1,4 +1,4 @@
-| Member | Primary Tools | Major Tasks | Assigned To |
+| Domain | Primary Tools | Major Tasks | Assigned To |
 |--------|---------------|-------------|-------------|
 | **Backend, Integration & DevOps** | Java, Spring Boot, Maven, Jenkins, Docker, Git/GitHub, JUnit, Postman | • Design overall system architecture<br>• Develop Java backend and REST APIs<br>• Integrate Kuksa, uProtocol, Ditto, and OpenSOVD<br>• Implement Vehicle Health Engine and business logic<br>• Configure Jenkins CI pipeline (build, test, package)<br>• Manage Docker Compose and overall project integration<br>• Perform integration, API, and end-to-end testing | Ankit Suman |
 | **Eclipse Kuksa** | Eclipse Kuksa, Docker, Python/Java, Git | • Set up and configure Kuksa<br>• Simulate vehicle sensor data (speed, battery, temperature, tire pressure, etc.)<br>• Add new vehicle state variables if required<br>• Inject simulated faults or abnormal sensor values<br>• Test sensor publishing and data accuracy | Emmanuel Adegboye |
