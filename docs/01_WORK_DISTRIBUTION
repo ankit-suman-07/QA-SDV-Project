@@ -1,0 +1,9 @@
+## Team Work Distribution
+
+| Team Member | Primary Role | Major Responsibilities |
+|---|---|---|
+| **Ankit Suman** | Backend Integration and Quality Lead |• Design the system architecture<br>• Develop the Spring Boot backend<br>• Implement REST and WebSocket APIs<br>• Build the vehicle health engine<br>• Develop component integration adapters<br>• Create automated integration and end-to-end tests<br>• Measure system latency<br>• Coordinate final system integration. |
+| **Emmanuel Adegboye** | Eclipse Kuksa and Vehicle Simulation Lead | • Configure Eclipse Kuksa<br>• Simulate vehicle signals such as speed, battery level, temperature, and tire pressure<br>• Publish sensor data<br>• Implement automated fault-injection scenarios<br>• Validate signal accuracy and updates. |
+| **Benjamin Emeshili** | Eclipse uProtocol, OpenSOVD Support and CI Lead | <br>• Define uProtocol message schemas and events<br>• Implement and test message serialization and event propagation<br>• Assist with OpenSOVD integration<br>• Configure the Jenkins CI pipeline for automated builds and tests. |
+| **Atharva Rajadhyaksha** | Eclipse Ditto and Diagnostics Lead | <br>• Configure Eclipse Ditto<br>• Design and extend the vehicle digital-twin model<br>• Implement vehicle-state synchronization<br>• Configure Eclipse OpenSOVD<br>• Implement diagnostic commands, fault reporting, and fault-clearing behaviour. |
+| **Mehtaj** | Frontend Dashboard and API Validation Lead | <br>• Design and develop the web dashboard<br>• Display live vehicle signals, health status, and diagnostic information<br>• Integrate the frontend with backend APIs<br>• Create Postman collections<br>• Perform frontend and API validation. |
