@@ -4,9 +4,8 @@ import com.ankit.sdv.backend.dto.VehicleHealthResponse;
 import com.ankit.sdv.backend.health.VehicleHealthEngine;
 import com.ankit.sdv.backend.model.HealthResult;
 import com.ankit.sdv.backend.model.VehicleState;
+import com.ankit.sdv.backend.provider.VehicleStateProvider;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
 
 @Service
 public class DefaultVehicleHealthService
@@ -15,29 +14,26 @@ public class DefaultVehicleHealthService
     private static final String SUPPORTED_VEHICLE_ID =
             "vehicle-001";
 
-    private static final double BASELINE_TEMPERATURE_CELSIUS =
-            85.0;
-
     private final VehicleHealthEngine vehicleHealthEngine;
+    private final VehicleStateProvider vehicleStateProvider;
 
     public DefaultVehicleHealthService(
-            VehicleHealthEngine vehicleHealthEngine
+            VehicleHealthEngine vehicleHealthEngine,
+            VehicleStateProvider vehicleStateProvider
     ) {
         this.vehicleHealthEngine = vehicleHealthEngine;
+        this.vehicleStateProvider = vehicleStateProvider;
     }
 
     @Override
     public VehicleHealthResponse getCurrentHealth(String vehicleId) {
         validateVehicleId(vehicleId);
 
-        VehicleState baselineState = new VehicleState(
-                vehicleId,
-                Instant.now(),
-                BASELINE_TEMPERATURE_CELSIUS
-        );
+        VehicleState state =
+                vehicleStateProvider.getCurrentState(vehicleId);
 
         HealthResult result =
-                vehicleHealthEngine.evaluate(baselineState);
+                vehicleHealthEngine.evaluate(state);
 
         return new VehicleHealthResponse(
                 vehicleId,
