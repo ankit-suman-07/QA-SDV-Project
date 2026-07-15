@@ -1,10 +1,11 @@
 package com.ankit.sdv.backend.service;
 
+import org.springframework.stereotype.Service;
 import com.ankit.sdv.backend.adapter.kuksa.KuksaAdapter;
 import com.ankit.sdv.backend.model.VehicleState;
 import com.ankit.sdv.backend.provider.InMemoryVehicleStateProvider;
 
-
+@Service
 public class VehicleIntegrationService {
 
     private static final String VEHICLE_ID = "vehicle-001";
