@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package sdv.uprotocol;
+
+import "common.proto";
+
+option java_package = "com.sdv.uprotocol.proto";
+option java_multiple_files = true;
+
+enum HealthStatus {
+  HEALTH_STATUS_UNSPECIFIED = 0;
+  HEALTH_HEALTHY = 1;
+  HEALTH_WARNING = 2;
+  HEALTH_CRITICAL = 3;
+}
+
+// Published only when overall vehicle health transitions
+// (HEALTHY <-> WARNING <-> CRITICAL) — not on every signal cycle.
+message HealthStatusChanged {
+  EventMetadata metadata = 1;
+  HealthStatus previous_status = 2;
+  HealthStatus new_status = 3;
+  string triggering_signal = 4; // e.g. "batteryPercent", "temperatureCelsius"
+}

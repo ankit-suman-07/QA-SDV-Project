@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package sdv.uprotocol;
+
+import "common.proto";
+
+option java_package = "com.sdv.uprotocol.proto";
+option java_multiple_files = true;
+
+enum FaultCode {
+  FAULT_CODE_UNSPECIFIED = 0;
+  BATTERY_LOW = 1;
+  TEMP_HIGH = 2;
+  TIRE_PRESSURE_LOW = 3;
+}
+
+enum FaultSeverity {
+  FAULT_SEVERITY_UNSPECIFIED = 0;
+  FAULT_WARNING = 1;
+  FAULT_CRITICAL = 2;
+}
+
+// Published when a fault's activation condition is met and persisted
+// (NORMAL -> DETECTED -> ACTIVE in the fault lifecycle).
+message FaultDetected {
+  EventMetadata metadata = 1;
+  FaultCode fault_code = 2;
+  FaultSeverity severity = 3;
+  string affected_signal = 4;   // e.g. "batteryPercent"
+  double detected_value = 5;
+  double threshold = 6;
+}
+
+// Published when a fault's recovery condition is met and persisted
+// (ACTIVE -> CLEARED). metadata.event_id must match the
+// originating FaultDetected's event_id for correlation.
+message FaultCleared {
+  EventMetadata metadata = 1;
+  FaultCode fault_code = 2;
+  double cleared_value = 3;
+}
