@@ -1,9 +1,9 @@
 package com.ankit.sdv.backend.service;
 
-import org.springframework.stereotype.Service;
 import com.ankit.sdv.backend.adapter.kuksa.KuksaAdapter;
 import com.ankit.sdv.backend.model.VehicleState;
 import com.ankit.sdv.backend.provider.InMemoryVehicleStateProvider;
+import org.springframework.stereotype.Service;
 
 @Service
 public class VehicleIntegrationService {
@@ -12,13 +12,17 @@ public class VehicleIntegrationService {
 
     private final KuksaAdapter kuksaAdapter;
     private final InMemoryVehicleStateProvider stateProvider;
+    private final DittoSynchronizationService dittoSynchronizationService;
 
     public VehicleIntegrationService(
             KuksaAdapter kuksaAdapter,
-            InMemoryVehicleStateProvider stateProvider
+            InMemoryVehicleStateProvider stateProvider,
+            DittoSynchronizationService dittoSynchronizationService
     ) {
         this.kuksaAdapter = kuksaAdapter;
         this.stateProvider = stateProvider;
+        this.dittoSynchronizationService =
+                dittoSynchronizationService;
     }
 
     public void synchronizeVehicleState() {
@@ -39,5 +43,6 @@ public class VehicleIntegrationService {
         }
 
         stateProvider.updateState(state);
+        dittoSynchronizationService.synchronize(state);
     }
 }

@@ -3,20 +3,21 @@ package com.ankit.sdv.backend.service;
 import com.ankit.sdv.backend.adapter.kuksa.KuksaAdapter;
 import com.ankit.sdv.backend.model.VehicleState;
 import com.ankit.sdv.backend.provider.InMemoryVehicleStateProvider;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 class VehicleIntegrationServiceTest {
 
     @Test
-    void shouldSynchronizeKuksaStateWithCurrentStateProvider() {
+    void shouldSynchronizeKuksaStateWithProviderAndDitto() {
         VehicleState kuksaState = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
@@ -25,6 +26,9 @@ class VehicleIntegrationServiceTest {
 
         KuksaAdapter kuksaAdapter =
                 mock(KuksaAdapter.class);
+
+        DittoSynchronizationService dittoService =
+                mock(DittoSynchronizationService.class);
 
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(kuksaState);
@@ -35,7 +39,8 @@ class VehicleIntegrationServiceTest {
         VehicleIntegrationService integrationService =
                 new VehicleIntegrationService(
                         kuksaAdapter,
-                        stateProvider
+                        stateProvider,
+                        dittoService
                 );
 
         integrationService.synchronizeVehicleState();
@@ -47,12 +52,18 @@ class VehicleIntegrationServiceTest {
 
         verify(kuksaAdapter)
                 .readCurrentState("vehicle-001");
+
+        verify(dittoService)
+                .synchronize(kuksaState);
     }
 
     @Test
     void shouldRejectMissingKuksaStateWithoutOverwritingCurrentState() {
         KuksaAdapter kuksaAdapter =
                 mock(KuksaAdapter.class);
+
+        DittoSynchronizationService dittoService =
+                mock(DittoSynchronizationService.class);
 
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(null);
@@ -66,7 +77,8 @@ class VehicleIntegrationServiceTest {
         VehicleIntegrationService integrationService =
                 new VehicleIntegrationService(
                         kuksaAdapter,
-                        stateProvider
+                        stateProvider,
+                        dittoService
                 );
 
         assertThrows(
@@ -74,10 +86,12 @@ class VehicleIntegrationServiceTest {
                 integrationService::synchronizeVehicleState
         );
 
-        VehicleState stateAfterFailure =
-                stateProvider.getCurrentState("vehicle-001");
+        assertEquals(
+                existingState,
+                stateProvider.getCurrentState("vehicle-001")
+        );
 
-        assertEquals(existingState, stateAfterFailure);
+        verifyNoInteractions(dittoService);
     }
 
     @Test
@@ -91,6 +105,9 @@ class VehicleIntegrationServiceTest {
         KuksaAdapter kuksaAdapter =
                 mock(KuksaAdapter.class);
 
+        DittoSynchronizationService dittoService =
+                mock(DittoSynchronizationService.class);
+
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(incorrectState);
 
@@ -103,7 +120,8 @@ class VehicleIntegrationServiceTest {
         VehicleIntegrationService integrationService =
                 new VehicleIntegrationService(
                         kuksaAdapter,
-                        stateProvider
+                        stateProvider,
+                        dittoService
                 );
 
         assertThrows(
@@ -111,9 +129,11 @@ class VehicleIntegrationServiceTest {
                 integrationService::synchronizeVehicleState
         );
 
-        VehicleState stateAfterFailure =
-                stateProvider.getCurrentState("vehicle-001");
+        assertEquals(
+                existingState,
+                stateProvider.getCurrentState("vehicle-001")
+        );
 
-        assertEquals(existingState, stateAfterFailure);
+        verifyNoInteractions(dittoService);
     }
 }
