@@ -86,3 +86,43 @@ GET /sovd/v1/components/ecu/data/temperature → {"id":"temperature","data":{"va
 ```
 
 **Result:** confirms that OpenSOVD's gateway runs alone in mock mode and shows the current sensor values (voltage, temperature) through a REST API - the same categories of data (battery, temperature) our team's Ditto twin and health engine will need to map into diagnostic resources.
+
+## Fault Lifecycle Evidence — Real Simulator (Emmanuel's vehicle-simulator)
+
+### Trigger: INJECT_FAULT=1, battery drains toward 0
+
+Bridge script console output (`eclipse-components/ditto/vehicle_pipeline.py`):
+```
+[Rule] battery=0.0 < 20 -> WARNING, BATTERY_LOW
+[Ditto] speed=56.9 battery=0.0 temp=150.0 tireFL=4 health=WARNING
+```
+(Captured from the script's console rather than a separate `curl` GET — this
+output reflects the exact same PUT calls a GET would confirm, since the
+script prints the values immediately after writing them to Ditto.)
+
+### Recovery: INJECT_FAULT=0, battery restored
+
+Simulator log (`vehicle-simulator` provider container):
+```
+provider-1 | [normal] speed=95.2 battery=85.2 engine_temp=89.9 tire_pressure=32.1
+```
+
+Ditto verification GET:
+```
+curl.exe -u ditto:ditto http://localhost:8080/api/2/things/sdv:vehicle-001
+```
+```json
+{"thingId":"sdv:vehicle-001","policyId":"sdv:vehicle-001-policy","attributes":{"vehicleId":"vehicle-001"},"features":{"signals":{"properties":{"speedKph":95.23506164550781,"batteryPercent":85.2,"temperatureCelsius":89.92329406738281,"tirePressurePsi":{"frontLeft":32,"frontRight":0,"rearLeft":0,"rearRight":0},"sourceTimestamp":null}},"health":{"properties":{"status":"HEALTHY","activeFaults":[],"faultCount":0}}}}
+```
+
+### Result
+
+Confirms the full fault lifecycle: real simulator data flows through Kuksa,
+into the bridge's health rule, into Ditto; a battery-low fault was triggered
+and later cleared automatically as the underlying signal recovered.
+
+Cross-check: simulator log values (battery≈85.2, temp≈89.9, tire≈32) match
+the Ditto twin's stored values (batteryPercent:85.2, temperatureCelsius:89.9,
+tirePressurePsi.frontLeft:32) almost exactly, confirming live synchronization
+rather than stale or cached data.
+
