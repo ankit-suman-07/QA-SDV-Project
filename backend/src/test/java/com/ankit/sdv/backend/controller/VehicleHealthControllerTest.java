@@ -42,4 +42,31 @@ class VehicleHealthControllerTest {
                 .andExpect(jsonPath("$.healthStatus")
                         .value("HEALTHY"));
     }
+
+    @Test
+    void shouldReturnNotFoundForUnsupportedVehicleId()
+            throws Exception {
+
+        when(vehicleHealthService.getCurrentHealth("vehicle-999"))
+                .thenThrow(
+                        new IllegalArgumentException(
+                                "Unsupported vehicle ID: vehicle-999"
+                        )
+                );
+
+        mockMvc.perform(
+                        get("/api/vehicles/vehicle-999/health")
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code")
+                        .value("VEHICLE_NOT_FOUND"))
+                .andExpect(jsonPath("$.message")
+                        .value(
+                                "Unsupported vehicle ID: vehicle-999"
+                        ))
+                .andExpect(jsonPath("$.path")
+                        .value(
+                                "/api/vehicles/vehicle-999/health"
+                        ));
+    }
 }
