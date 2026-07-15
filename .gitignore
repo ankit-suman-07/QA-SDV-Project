@@ -1,0 +1,206 @@
+# ==================================================
+# Environment variables and secrets
+# ==================================================
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# ==================================================
+# Java and Maven
+# ==================================================
+
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Keep Maven Wrapper configuration and scripts
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.properties
+
+# ==================================================
+# Python
+# ==================================================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+venv/
+env/
+ENV/
+
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+
+*.egg
+*.egg-info/
+dist/
+build/
+
+# ==================================================
+# JavaScript and frontend
+# ==================================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.npm/
+.cache/
+.parcel-cache/
+
+frontend/dist/
+frontend/build/
+coverage/
+
+# ==================================================
+# Generated uProtocol and Protobuf files
+# ==================================================
+
+uprotocol/generated/*
+!uprotocol/generated/.gitkeep
+
+*.pb.java
+*.pb.py
+*.pb.cc
+*.pb.h
+
+# Remove these rules if the team decides to commit
+# generated Protobuf source code.
+
+# ==================================================
+# IDE and editor files
+# ==================================================
+
+.idea/
+*.iml
+*.ipr
+*.iws
+
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.example.json
+
+.project
+.classpath
+.settings/
+
+*.swp
+*.swo
+*~
+.history/
+
+# ==================================================
+# Operating-system files
+# ==================================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ==================================================
+# Logs and runtime files
+# ==================================================
+
+*.log
+logs/
+log/
+
+*.pid
+*.pid.lock
+*.seed
+*.tmp
+*.temp
+
+# ==================================================
+# Docker and local component data
+# ==================================================
+
+docker-data/
+local-data/
+runtime-data/
+
+ditto/data/
+opensovd/data/
+kuksa-data/
+
+# ==================================================
+# Test and measurement output
+# ==================================================
+
+surefire-reports/
+failsafe-reports/
+allure-results/
+
+tests/performance/results/*
+!tests/performance/results/.gitkeep
+
+# Keep selected final evidence only when intentionally
+# reviewed and committed under docs/evidence/.
+
+# ==================================================
+# Postman local and generated files
+# ==================================================
+
+.postman/
+newman/
+newman-report/
+
+# Keep the shared collection and safe environment file.
+# Never commit environments containing credentials.
+
+# ==================================================
+# Archives and temporary files
+# ==================================================
+
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+tmp/
+temp/
+.cache/
+
+# ==================================================
+# Local override configuration
+# ==================================================
+
+application-local.yml
+application-local.properties
+
+docker-compose.override.yml
+
+*-environment.local.json
+*-config.local.json

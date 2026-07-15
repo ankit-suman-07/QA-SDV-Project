@@ -1,0 +1,17 @@
+# Team Work Distribution
+
+| Team Member | Primary Role | Major Responsibilities |
+|---|---|---|
+| **Ankit Suman** | Backend Integration, Test Architecture and Quality Lead | • Design the system architecture and integration contracts<br>• Define the TDD strategy, test standards, and acceptance criteria<br>• Develop the Spring Boot backend and REST/WebSocket APIs<br>• Build the vehicle health engine and component integration adapters<br>• Create backend unit, controller, API-contract, integration, and end-to-end tests<br>• Maintain Postman/Newman API automation<br>• Measure latency, reliability, and test coverage<br>• Analyze and document test results<br>• Coordinate final integration and quality validation |
+| **Emmanuel Adegboye** | Eclipse Kuksa and Vehicle Simulation Lead | • Configure Eclipse Kuksa<br>• Simulate speed, battery, temperature, and tire-pressure signals<br>• Publish and validate vehicle data<br>• Implement repeatable fault-injection scenarios<br>• Design component tests before implementation<br>• Create automated Kuksa publication, readback, signal-accuracy, and fault-injection tests<br>• Provide test evidence and integration inputs to Ankit |
+| **Benjamin Emeshili** | Eclipse uProtocol, OpenSOVD Support and CI Lead | • Define uProtocol message schemas and events<br>• Design serialization and propagation tests before implementation<br>• Implement and test message serialization, event delivery, ordering, and duplication handling<br>• Assist Atharva with OpenSOVD integration and testing<br>• Configure Jenkins to run builds and automated tests<br>• Publish CI and component-test results |
+| **Atharva Rajadhyaksha** | Eclipse Ditto and Diagnostics Lead | • Configure Eclipse Ditto and OpenSOVD<br>• Design and extend the vehicle digital-twin model<br>• Implement vehicle-state synchronization<br>• Implement diagnostic commands, fault reporting, and fault-clearing behaviour<br>• Design component tests before implementation<br>• Create automated tests for twin updates, state consistency, diagnostic queries, and fault lifecycles<br>• Provide diagnostic and synchronization test evidence to Ankit |
+| **Mehtaj** | Frontend Dashboard and UI Quality Lead | • Design and develop the web dashboard<br>• Display live vehicle signals, health status, and diagnostic information<br>• Integrate the frontend with backend APIs<br>• Design frontend tests and UI acceptance criteria before implementation<br>• Test loading, error, disconnected, healthy, warning, critical, and recovered states<br>• Support Ankit with frontend-facing API validation<br>• Create automated frontend tests where feasible |
+
+## Shared Testing Expectations
+
+- Test design begins on Day 2 before implementation starts.
+- Each component owner follows the TDD cycle where practical: write a failing test, implement the minimum code required to pass, and then refactor.
+- Each component owner remains responsible for their component-level tests and test evidence.
+- Ankit owns the overall test architecture, cross-component integration tests, API automation, end-to-end tests, coverage reporting, and final quality analysis.
+- A feature is considered complete only when its agreed acceptance criteria and automated tests pass.
