@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 class VehicleIntegrationServiceTest {
 
     @Test
-    void shouldSynchronizeKuksaStateWithProviderAndDitto() {
+    void shouldSynchronizeKuksaStateWithProviderDittoAndUProtocol() {
         VehicleState kuksaState = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
@@ -30,6 +30,9 @@ class VehicleIntegrationServiceTest {
         DittoSynchronizationService dittoService =
                 mock(DittoSynchronizationService.class);
 
+        UProtocolEventService uProtocolEventService =
+                mock(UProtocolEventService.class);
+
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(kuksaState);
 
@@ -40,7 +43,8 @@ class VehicleIntegrationServiceTest {
                 new VehicleIntegrationService(
                         kuksaAdapter,
                         stateProvider,
-                        dittoService
+                        dittoService,
+                        uProtocolEventService
                 );
 
         integrationService.synchronizeVehicleState();
@@ -55,6 +59,9 @@ class VehicleIntegrationServiceTest {
 
         verify(dittoService)
                 .synchronize(kuksaState);
+
+        verify(uProtocolEventService)
+                .publishVehicleStatus(kuksaState);
     }
 
     @Test
@@ -64,6 +71,9 @@ class VehicleIntegrationServiceTest {
 
         DittoSynchronizationService dittoService =
                 mock(DittoSynchronizationService.class);
+
+        UProtocolEventService uProtocolEventService =
+                mock(UProtocolEventService.class);
 
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(null);
@@ -78,7 +88,8 @@ class VehicleIntegrationServiceTest {
                 new VehicleIntegrationService(
                         kuksaAdapter,
                         stateProvider,
-                        dittoService
+                        dittoService,
+                        uProtocolEventService
                 );
 
         assertThrows(
@@ -86,12 +97,16 @@ class VehicleIntegrationServiceTest {
                 integrationService::synchronizeVehicleState
         );
 
-        assertEquals(
-                existingState,
-                stateProvider.getCurrentState("vehicle-001")
-        );
+        VehicleState stateAfterFailure =
+                stateProvider.getCurrentState("vehicle-001");
+
+        assertEquals(existingState, stateAfterFailure);
+
+        verify(kuksaAdapter)
+                .readCurrentState("vehicle-001");
 
         verifyNoInteractions(dittoService);
+        verifyNoInteractions(uProtocolEventService);
     }
 
     @Test
@@ -108,6 +123,9 @@ class VehicleIntegrationServiceTest {
         DittoSynchronizationService dittoService =
                 mock(DittoSynchronizationService.class);
 
+        UProtocolEventService uProtocolEventService =
+                mock(UProtocolEventService.class);
+
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(incorrectState);
 
@@ -121,7 +139,8 @@ class VehicleIntegrationServiceTest {
                 new VehicleIntegrationService(
                         kuksaAdapter,
                         stateProvider,
-                        dittoService
+                        dittoService,
+                        uProtocolEventService
                 );
 
         assertThrows(
@@ -129,11 +148,15 @@ class VehicleIntegrationServiceTest {
                 integrationService::synchronizeVehicleState
         );
 
-        assertEquals(
-                existingState,
-                stateProvider.getCurrentState("vehicle-001")
-        );
+        VehicleState stateAfterFailure =
+                stateProvider.getCurrentState("vehicle-001");
+
+        assertEquals(existingState, stateAfterFailure);
+
+        verify(kuksaAdapter)
+                .readCurrentState("vehicle-001");
 
         verifyNoInteractions(dittoService);
+        verifyNoInteractions(uProtocolEventService);
     }
 }
