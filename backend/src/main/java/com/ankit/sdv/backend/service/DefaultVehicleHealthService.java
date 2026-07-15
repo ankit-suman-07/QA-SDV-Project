@@ -12,7 +12,11 @@ import java.time.Instant;
 public class DefaultVehicleHealthService
         implements VehicleHealthService {
 
-    private static final double BASELINE_TEMPERATURE_CELSIUS = 85.0;
+    private static final String SUPPORTED_VEHICLE_ID =
+            "vehicle-001";
+
+    private static final double BASELINE_TEMPERATURE_CELSIUS =
+            85.0;
 
     private final VehicleHealthEngine vehicleHealthEngine;
 
@@ -24,6 +28,8 @@ public class DefaultVehicleHealthService
 
     @Override
     public VehicleHealthResponse getCurrentHealth(String vehicleId) {
+        validateVehicleId(vehicleId);
+
         VehicleState baselineState = new VehicleState(
                 vehicleId,
                 Instant.now(),
@@ -37,5 +43,13 @@ public class DefaultVehicleHealthService
                 vehicleId,
                 result.status()
         );
+    }
+
+    private void validateVehicleId(String vehicleId) {
+        if (!SUPPORTED_VEHICLE_ID.equals(vehicleId)) {
+            throw new IllegalArgumentException(
+                    "Unsupported vehicle ID: " + vehicleId
+            );
+        }
     }
 }
