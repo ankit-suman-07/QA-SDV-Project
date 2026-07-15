@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SDV Vehicle Health Dashboard</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <main class="dashboard-shell">
+    <header class="topbar">
+      <div><p class="eyebrow">Software-Defined Vehicle</p><h1>Vehicle Health Dashboard</h1></div>
+      <div class="connection-wrap"><span id="connectionStatus" class="status-chip neutral">CONNECTING</span><span id="vehicleId">vehicle-001</span></div>
+    </header>
+
+    <section class="demo-panel" aria-label="Iteration 1 demonstration controls">
+      <div><strong>Iteration 1 contract demo</strong><p>Switch mock API states to validate dashboard behaviour before backend integration.</p></div>
+      <label for="demoState">Demo state
+        <select id="demoState">
+          <option value="healthy">Healthy</option><option value="warning">Warning</option><option value="critical">Critical</option>
+          <option value="recovered">Recovered</option><option value="disconnected">Disconnected</option><option value="error">API error</option>
+        </select>
+      </label>
+    </section>
+
+    <section id="messagePanel" class="message-panel" aria-live="polite">Loading vehicle data...</section>
+
+    <section id="dashboardContent" class="dashboard-content" hidden>
+      <section id="healthBanner" class="health-banner neutral"><span id="healthIcon">…</span><div><p>Overall vehicle health</p><h2 id="healthStatus">LOADING</h2><span id="healthMessage">Waiting for vehicle state.</span></div></section>
+
+      <section class="signal-grid" aria-label="Live vehicle signals">
+        <article class="card"><span>Speed</span><strong id="speedValue">—</strong><small>km/h</small></article>
+        <article class="card"><span>Battery</span><strong id="batteryValue">—</strong><small>%</small></article>
+        <article class="card"><span>Temperature</span><strong id="temperatureValue">—</strong><small>°C</small></article>
+        <article class="card"><span>Active faults</span><strong id="faultCount">—</strong><small>faults</small></article>
+      </section>
+
+      <section class="two-column">
+        <article class="panel"><h2>Tire pressure</h2><div class="tire-grid">
+          <div><span>Front left</span><strong id="frontLeftValue">—</strong><small>psi</small></div><div><span>Front right</span><strong id="frontRightValue">—</strong><small>psi</small></div>
+          <div><span>Rear left</span><strong id="rearLeftValue">—</strong><small>psi</small></div><div><span>Rear right</span><strong id="rearRightValue">—</strong><small>psi</small></div>
+        </div></article>
+        <article class="panel"><h2>Data freshness</h2><dl class="metadata"><div><dt>Source time</dt><dd id="sourceTimestamp">—</dd></div><div><dt>Processed time</dt><dd id="processedTimestamp">—</dd></div><div><dt>Data quality</dt><dd id="dataQuality">CURRENT</dd></div></dl></article>
+      </section>
+
+      <section class="panel"><div class="section-heading"><h2>Active faults and diagnostics</h2><span id="faultSummary">No active faults</span></div><div id="faultList" class="fault-list"></div></section>
+    </section>
+  </main>
+  <script type="module" src="./js/dashboard.js"></script>
+</body>
+</html>

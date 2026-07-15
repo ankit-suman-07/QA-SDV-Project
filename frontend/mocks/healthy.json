@@ -1,0 +1,1 @@
+{"vehicleId":"vehicle-001","connectionStatus":"CONNECTED","sourceTimestamp":"2026-07-15T14:30:00.000Z","speedKph":60,"batteryPercent":75,"temperatureCelsius":85,"tirePressurePsi":{"frontLeft":32,"frontRight":32,"rearLeft":31,"rearRight":32},"healthStatus":"HEALTHY","activeFaults":[],"faultCount":0,"processedTimestamp":"2026-07-15T14:30:00.120Z","dataQuality":"CURRENT"}

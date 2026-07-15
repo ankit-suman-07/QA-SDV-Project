@@ -1,0 +1,1 @@
+{"vehicleId":"vehicle-001","connectionStatus":"DISCONNECTED","sourceTimestamp":null,"speedKph":null,"batteryPercent":null,"temperatureCelsius":null,"tirePressurePsi":{"frontLeft":null,"frontRight":null,"rearLeft":null,"rearRight":null},"healthStatus":null,"activeFaults":[],"faultCount":0,"processedTimestamp":"2026-07-15T14:34:00.120Z","dataQuality":"UNAVAILABLE"}
