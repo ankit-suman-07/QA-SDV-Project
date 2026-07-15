@@ -31,7 +31,3 @@ uprotocol/
 - `pom.xml` is Maven's build config — dependencies only, no logic.
 - `demo_uprotocol_pipeline.py` is Python, used only to quickly verify the message blueprints work (build -> send -> receive, no data loss). It is **not** the final implementation.
 - Final implementation will be Java, using `up-java`.
-
-ator may publish kPa - needs confirmation.
-- `source_timestamp` vs `event_timestamp` semantics - needs team agreement.
-- Exact `up-java` version to pin - pending verification.
