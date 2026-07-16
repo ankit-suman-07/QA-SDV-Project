@@ -21,7 +21,7 @@ PATHS = {
     "tire_fl": "Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
 }
 
-with VSSClient("127.0.0.1", 55555) as client:
+with VSSClient("127.0.0.1", 55556) as client:
     fault_active = False
     while True:
         values = client.get_current_values(list(PATHS.values()))

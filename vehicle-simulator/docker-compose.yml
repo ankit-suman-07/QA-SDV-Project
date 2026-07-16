@@ -3,7 +3,7 @@ services:
     image: ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0
     command: ["--insecure"]
     ports:
-      - "55555:55555"
+      - "55556:55555"
 
   provider:
     build: .
@@ -12,4 +12,4 @@ services:
     environment:
       - DATABROKER_HOST=databroker
       - DATABROKER_PORT=55555
-      - INJECT_FAULT=0
+      - INJECT_FAULT=1
