@@ -99,7 +99,7 @@ The demonstrated development environment uses macOS, but the Docker and Python w
 ## 1. Clone the Project
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/ankit-suman-07/QA-SDV-Project.git
 cd QA-SDV-Project
 ```
 
