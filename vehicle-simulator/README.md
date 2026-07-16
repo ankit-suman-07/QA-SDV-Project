@@ -108,3 +108,31 @@ vehicle-simulator/
 
 - Fault mode is currently a single on/off flag (`INJECT_FAULT`), not per-fault-type scenarios.
 - Only one wheel's tire pressure is simulated.
+
+## Screenshots: Full Fault Lifecycle Walkthrough
+
+### 01-simulator-normal-startup.png
+`docker-compose up --build` output showing the Kuksa Databroker (v0.7.0)
+starting cleanly (`Listening on 0.0.0.0:55555`) alongside Emmanuel's
+simulator publishing normal signals — e.g. `speed=83.0 battery=82.9
+engine_temp=88.9 tire_pressure=32.1`.
+
+### 02-simulator-fault-injection.png
+Simulator log after setting `INJECT_FAULT=1` and restarting. Shows the
+`[FAULT]` tag active, with `battery` already at 0.0 and `tire_pressure`
+draining from ~4.4 down to 0.0 over successive readings — confirms the
+fault condition is real and progressive, not an instant flag flip.
+
+### 03-bridge-fault-detected.png
+`vehicle_pipeline.py` console output during the same fault window. Shows
+the rule firing: `[Rule] battery=0.0 < 20 -> WARNING, BATTERY_LOW`,
+followed by repeated `[Ditto] ... health=WARNING` lines confirming the
+health state was written to Ditto continuously while the fault was active.
+
+### 04-bridge-healthy-sync.png
+`vehicle_pipeline.py` console output during normal (non-fault) operation.
+Shows live-changing values (`speed` varies each line, `battery≈82-83`,
+`temp≈89`, `tireFL=32`) with `health=HEALTHY` throughout — confirms the
+bridge tracks the simulator continuously rather than reading a single
+static value.
+
