@@ -1,0 +1,52 @@
+============================================================
+1. Enter real vehicle signal values
+============================================================
+Speed (kph) [0.0]: 89
+Battery percent [0.0]: 90
+Temperature (C) [0.0]: 100
+Tire pressure - front left (psi) [0.0]: 21
+Tire pressure - front right (psi) [0.0]: 21
+Tire pressure - rear left (psi) [0.0]: 21
+Tire pressure - rear right (psi) [0.0]: 21
+[PUBLISH] topic=sdv/vehicle-001/vehicle_status_updated bytes=162
+[RECEIVED] topic=sdv/vehicle-001/vehicle_status_updated bytes=162
+[OK] VehicleStatusUpdated round-trip verified
+
+============================================================
+2. Automatically evaluating your values against fault rules...
+============================================================
+  -> BATTERY_LOW not triggered (batteryPercent=90.0 >= 20.0)
+  -> TEMP_HIGH not triggered (temperatureCelsius=100.0 <= 105.0)
+  -> TIRE_PRESSURE_LOW activation condition MET (front_left=21.0 < 28.0)
+
+Derived overall health status: HEALTH_WARNING
+
+============================================================
+3. HealthStatusChanged (only fires if health actually changed)
+============================================================
+What was the PREVIOUS health status? [HEALTH_HEALTHY/HEALTH_WARNING/HEALTH_CRITICAL] (default HEALTH_HEALTHY): HEALTH_HEALTHY
+[PUBLISH] topic=sdv/vehicle-001/health_status_changed bytes=120
+[RECEIVED] topic=sdv/vehicle-001/health_status_changed bytes=120
+[OK] HealthStatusChanged fired: HEALTH_HEALTHY -> HEALTH_WARNING
+
+============================================================
+4. FaultDetected (fires automatically for each triggered rule)
+============================================================
+[PUBLISH] topic=sdv/vehicle-001/fault_detected bytes=145
+[RECEIVED] topic=sdv/vehicle-001/fault_detected bytes=145
+[OK] FaultDetected fired: TIRE_PRESSURE_LOW (value=21.0, threshold=28.0)
+
+============================================================
+5. FaultCleared (test recovery for each fault that fired above)
+============================================================
+Enter a recovery value for TIRE_PRESSURE_LOW [0.0]: 21
+  [NOTE] 21.0 does NOT meet the real recovery condition for TIRE_PRESSURE_LOW -- in the real system this fault would remain ACTIVE, not clear. Publishing anyway for testing.
+[PUBLISH] topic=sdv/vehicle-001/fault_cleared bytes=108
+[RECEIVED] topic=sdv/vehicle-001/fault_cleared bytes=108
+[OK] FaultCleared fired for TIRE_PRESSURE_LOW, correlated event_id matches: True
+
+============================================================
+SUMMARY: 4 event(s) published and received successfully
+Derived health status from your inputs: HEALTH_WARNING
+Faults triggered by your inputs: ['TIRE_PRESSURE_LOW']
+============================================================

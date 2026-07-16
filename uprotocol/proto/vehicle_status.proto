@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package sdv.uprotocol;
+
+import "common.proto";
+
+option java_package = "com.sdv.uprotocol.proto";
+option java_multiple_files = true;
+
+// Tire pressure readings for all four wheels, in PSI.
+message TirePressure {
+  double front_left = 1;
+  double front_right = 2;
+  double rear_left = 3;
+  double rear_right = 4;
+}
+
+// Published on every normalized signal batch read from Kuksa.
+message VehicleStatusUpdated {
+  EventMetadata metadata = 1;
+  double speed_kph = 2;
+  double battery_percent = 3;
+  double temperature_celsius = 4;
+  TirePressure tire_pressure_psi = 5;
+}

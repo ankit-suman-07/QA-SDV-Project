@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package sdv.uprotocol;
+
+option java_package = "com.sdv.uprotocol.proto";
+option java_multiple_files = true;
+
+// Fields shared across all SDV uProtocol events.
+// Do not duplicate these fields in individual event messages —
+// import and embed this message instead.
+message EventMetadata {
+  string vehicle_id = 1;      // fixed as "vehicle-001" for the MVP
+  string event_id = 2;        // UUID; used for correlation (e.g. FaultCleared matches FaultDetected)
+  string source_timestamp = 3; // RFC3339 UTC — timestamp of the originating signal reading
+  string event_timestamp = 4;  // RFC3339 UTC — timestamp the event was generated/published
+} 
