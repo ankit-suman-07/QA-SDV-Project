@@ -1,6 +1,9 @@
 package com.ankit.sdv.backend.service;
 
 import com.ankit.sdv.backend.adapter.kuksa.KuksaAdapter;
+import com.ankit.sdv.backend.health.VehicleHealthEngine;
+import com.ankit.sdv.backend.model.HealthResult;
+import com.ankit.sdv.backend.model.HealthStatus;
 import com.ankit.sdv.backend.model.VehicleState;
 import com.ankit.sdv.backend.provider.InMemoryVehicleStateProvider;
 import org.junit.jupiter.api.Test;
@@ -17,15 +20,21 @@ import static org.mockito.Mockito.when;
 class VehicleIntegrationServiceTest {
 
     @Test
-    void shouldSynchronizeKuksaStateWithProviderDittoAndUProtocol() {
+    void shouldProcessValidStateThroughCompletePipeline() {
         VehicleState kuksaState = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
                 95.0
         );
 
+        HealthResult healthResult =
+                new HealthResult(HealthStatus.WARNING);
+
         KuksaAdapter kuksaAdapter =
                 mock(KuksaAdapter.class);
+
+        VehicleHealthEngine healthEngine =
+                mock(VehicleHealthEngine.class);
 
         DittoSynchronizationService dittoService =
                 mock(DittoSynchronizationService.class);
@@ -33,8 +42,14 @@ class VehicleIntegrationServiceTest {
         UProtocolEventService uProtocolEventService =
                 mock(UProtocolEventService.class);
 
+        DiagnosticService diagnosticService =
+                mock(DiagnosticService.class);
+
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(kuksaState);
+
+        when(healthEngine.evaluate(kuksaState))
+                .thenReturn(healthResult);
 
         InMemoryVehicleStateProvider stateProvider =
                 new InMemoryVehicleStateProvider();
@@ -43,37 +58,54 @@ class VehicleIntegrationServiceTest {
                 new VehicleIntegrationService(
                         kuksaAdapter,
                         stateProvider,
+                        healthEngine,
                         dittoService,
-                        uProtocolEventService
+                        uProtocolEventService,
+                        diagnosticService
                 );
 
         integrationService.synchronizeVehicleState();
 
-        VehicleState synchronizedState =
-                stateProvider.getCurrentState("vehicle-001");
-
-        assertEquals(kuksaState, synchronizedState);
+        assertEquals(
+                kuksaState,
+                stateProvider.getCurrentState("vehicle-001")
+        );
 
         verify(kuksaAdapter)
                 .readCurrentState("vehicle-001");
+
+        verify(healthEngine)
+                .evaluate(kuksaState);
 
         verify(dittoService)
                 .synchronize(kuksaState);
 
         verify(uProtocolEventService)
                 .publishVehicleStatus(kuksaState);
+
+        verify(diagnosticService)
+                .updateDiagnostics(
+                        kuksaState,
+                        healthResult
+                );
     }
 
     @Test
-    void shouldRejectMissingKuksaStateWithoutOverwritingCurrentState() {
+    void shouldRejectMissingKuksaStateWithoutProcessingIt() {
         KuksaAdapter kuksaAdapter =
                 mock(KuksaAdapter.class);
+
+        VehicleHealthEngine healthEngine =
+                mock(VehicleHealthEngine.class);
 
         DittoSynchronizationService dittoService =
                 mock(DittoSynchronizationService.class);
 
         UProtocolEventService uProtocolEventService =
                 mock(UProtocolEventService.class);
+
+        DiagnosticService diagnosticService =
+                mock(DiagnosticService.class);
 
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(null);
@@ -88,8 +120,10 @@ class VehicleIntegrationServiceTest {
                 new VehicleIntegrationService(
                         kuksaAdapter,
                         stateProvider,
+                        healthEngine,
                         dittoService,
-                        uProtocolEventService
+                        uProtocolEventService,
+                        diagnosticService
                 );
 
         assertThrows(
@@ -97,20 +131,21 @@ class VehicleIntegrationServiceTest {
                 integrationService::synchronizeVehicleState
         );
 
-        VehicleState stateAfterFailure =
-                stateProvider.getCurrentState("vehicle-001");
+        assertEquals(
+                existingState,
+                stateProvider.getCurrentState("vehicle-001")
+        );
 
-        assertEquals(existingState, stateAfterFailure);
-
-        verify(kuksaAdapter)
-                .readCurrentState("vehicle-001");
-
-        verifyNoInteractions(dittoService);
-        verifyNoInteractions(uProtocolEventService);
+        verifyNoInteractions(
+                healthEngine,
+                dittoService,
+                uProtocolEventService,
+                diagnosticService
+        );
     }
 
     @Test
-    void shouldRejectStateForDifferentVehicle() {
+    void shouldRejectStateForDifferentVehicleWithoutProcessingIt() {
         VehicleState incorrectState = new VehicleState(
                 "vehicle-999",
                 Instant.parse("2026-07-15T16:00:00Z"),
@@ -120,11 +155,17 @@ class VehicleIntegrationServiceTest {
         KuksaAdapter kuksaAdapter =
                 mock(KuksaAdapter.class);
 
+        VehicleHealthEngine healthEngine =
+                mock(VehicleHealthEngine.class);
+
         DittoSynchronizationService dittoService =
                 mock(DittoSynchronizationService.class);
 
         UProtocolEventService uProtocolEventService =
                 mock(UProtocolEventService.class);
+
+        DiagnosticService diagnosticService =
+                mock(DiagnosticService.class);
 
         when(kuksaAdapter.readCurrentState("vehicle-001"))
                 .thenReturn(incorrectState);
@@ -139,8 +180,10 @@ class VehicleIntegrationServiceTest {
                 new VehicleIntegrationService(
                         kuksaAdapter,
                         stateProvider,
+                        healthEngine,
                         dittoService,
-                        uProtocolEventService
+                        uProtocolEventService,
+                        diagnosticService
                 );
 
         assertThrows(
@@ -148,15 +191,16 @@ class VehicleIntegrationServiceTest {
                 integrationService::synchronizeVehicleState
         );
 
-        VehicleState stateAfterFailure =
-                stateProvider.getCurrentState("vehicle-001");
+        assertEquals(
+                existingState,
+                stateProvider.getCurrentState("vehicle-001")
+        );
 
-        assertEquals(existingState, stateAfterFailure);
-
-        verify(kuksaAdapter)
-                .readCurrentState("vehicle-001");
-
-        verifyNoInteractions(dittoService);
-        verifyNoInteractions(uProtocolEventService);
+        verifyNoInteractions(
+                healthEngine,
+                dittoService,
+                uProtocolEventService,
+                diagnosticService
+        );
     }
 }
