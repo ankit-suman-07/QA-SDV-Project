@@ -19,6 +19,8 @@ SIGNAL_PATHS = {
 
 def main():
     state = initial_state()
+    if FAULT_MODE:
+        state["battery"] = 15.0
     with get_client() as client:
         while True:
             state = next_state(state, fault=FAULT_MODE)

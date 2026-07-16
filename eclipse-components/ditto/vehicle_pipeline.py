@@ -2,6 +2,11 @@ import time
 import requests
 from kuksa_client.grpc import VSSClient
 
+from uprotocol_transport import (
+    publish_vehicle_status,
+    receive_vehicle_status,
+)
+
 DITTO_URL = "http://localhost:8080/api/2/things/sdv:vehicle-001"
 AUTH = ("ditto", "ditto")
 HEADERS = {"Content-Type": "application/json"}
@@ -16,7 +21,7 @@ PATHS = {
     "tire_fl": "Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
 }
 
-with VSSClient("127.0.0.1", 55555) as client:
+with VSSClient("127.0.0.1", 55556) as client:
     fault_active = False
     while True:
         values = client.get_current_values(list(PATHS.values()))
@@ -30,6 +35,21 @@ with VSSClient("127.0.0.1", 55555) as client:
             print("[wait] no battery value published yet, retrying...")
             time.sleep(2)
             continue
+
+        serialized_event = publish_vehicle_status(
+            vehicle_id="vehicle-001",
+            speed_kph=float(speed),
+            battery_percent=float(battery),
+            temperature_celsius=float(temperature),
+            tire_pressure_psi=float(tire_fl),
+        )
+
+        received_event = receive_vehicle_status(serialized_event)
+
+        speed = received_event.speed_kph
+        battery = received_event.battery_percent
+        temperature = received_event.temperature_celsius
+        tire_fl = received_event.tire_pressure_psi.front_left
 
         if battery < BATTERY_LOW_THRESHOLD and not fault_active:
             fault_active = True
