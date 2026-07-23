@@ -37,7 +37,7 @@ diagnostic information, ahead of Day 2 contract finalization.
   `/sovd/v1` → `components` → `{component}/data` → `{signal}`.
 
 ## Minimum Working Example or Evidence
-See `eclipse-components/ditto/evidence.md` for full request/response logs:
+See `docs/evidence/integration-tests/ditto-kuksa/evidence.md` for full request/response logs:
 - Created policy + thing for vehicle-001 in Ditto; confirmed partial-state
   synchronization (single-property update leaves other fields untouched).
 - Ran OpenSOVD gateway in mock mode; confirmed it exposes ECU voltage
