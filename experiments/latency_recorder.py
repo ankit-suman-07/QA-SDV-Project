@@ -1,3 +1,6 @@
+import csv
+from pathlib import Path
+
 class LatencyRecorder:
 
     def __init__(
@@ -45,3 +48,36 @@ class LatencyRecorder:
         self.records.append(record)
 
         return record
+
+    def export_csv(self, output_path):
+        output_path = Path(output_path)
+        output_path.parent.mkdir(
+            parents=True,
+            exist_ok=True
+        )
+
+        fieldnames = [
+            "experiment_id",
+            "event_id",
+            "publication_interval_seconds",
+            "latency_ms",
+            "success",
+            "health_status",
+        ]
+
+        with output_path.open(
+                mode="w",
+                encoding="utf-8",
+                newline=""
+        ) as csv_file:
+            writer = csv.DictWriter(
+                csv_file,
+                fieldnames=fieldnames
+            )
+
+            writer.writeheader()
+            writer.writerows(self.records)
+
+        return output_path
+
+    
