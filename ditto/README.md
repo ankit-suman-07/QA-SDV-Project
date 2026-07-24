@@ -33,6 +33,22 @@ curl.exe -u ditto:ditto http://localhost:8080/api/2/things/sdv:vehicle-001
 See `docs/evidence/integration-tests/ditto-kuksa/` for full fault-lifecycle
 evidence (trigger + clear, with screenshots).
 
+## Stopping Ditto
+```bash
+cd /tmp/ditto-src/deployment/docker
+docker compose down
+```
+
+## Verifying vehicle state
+```bash
+python ditto/scripts/verify-vehicle-state.py
+python ditto/scripts/verify-vehicle-state.py --publication-interval-seconds 0.2
+```
+Exits `0` if the twin is complete and fresh, `1` with a printed list of
+problems otherwise (missing fields, invalid health status, or a twin older
+than `max(3x publication interval, 5s)` per docs/04 Section 6). Evidence
+from experiment runs is under `docs/evidence/iteration-2/`
+
 ## Known limitations
 - Bridge script is temporary, not the team's Spring Boot backend.
 - Only front-left tire pressure has real data (per vehicle-simulator's own limitation).
