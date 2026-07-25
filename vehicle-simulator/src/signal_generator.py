@@ -42,3 +42,15 @@ def next_state(state, fault=False):
         "engine_temp": engine_temp,
         "tire_pressure": tire_pressure,
     }
+
+
+def parse_interval(raw_value, default=5.0):
+    try:
+        value = float(raw_value)
+    except (TypeError, ValueError):
+        raise ValueError(f"Invalid PUBLISH_INTERVAL_SECONDS: {raw_value!r} is not numeric")
+
+    if value <= 0:
+        raise ValueError(f"Invalid PUBLISH_INTERVAL_SECONDS: {raw_value!r} must be positive")
+
+    return value
