@@ -19,8 +19,15 @@ class PipelineEvaluator:
             publication_interval_seconds=publication_interval_seconds,
         )
 
-    def start_event(self, event_id):
-        self.start_times[event_id] = self.clock()
+    def start_event(
+            self,
+            event_id,
+            start_time=None
+    ):
+        if start_time is None:
+            start_time = self.clock()
+
+        self.start_times[event_id] = start_time
 
     def complete_event(
             self,

@@ -43,6 +43,27 @@ class PipelineEvaluatorTest(unittest.TestCase):
                 health_status="UNKNOWN",
             )
 
+    def test_should_accept_an_explicit_start_time(self):
+        evaluator = PipelineEvaluator(
+            experiment_id="interval-1s",
+            publication_interval_seconds=1.0,
+            clock=lambda: 20.250,
+        )
+
+        evaluator.start_event(
+            event_id="event-002",
+            start_time=20.000,
+        )
+
+        record = evaluator.complete_event(
+            event_id="event-002",
+            success=True,
+            health_status="WARNING",
+        )
+
+        self.assertAlmostEqual(250.0, record["latency_ms"])
+        self.assertEqual("WARNING", record["health_status"])
+
 
 if __name__ == "__main__":
     unittest.main()
