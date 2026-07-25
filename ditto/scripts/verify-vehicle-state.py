@@ -92,6 +92,12 @@ def validate_health(thing: dict, result: VerificationResult) -> None:
     if status in ("WARNING", "CRITICAL") and not health.get("activeFaults"):
         result.add_error(f"health.status is {status} but activeFaults is empty")
 
+    fault_count = health.get("faultCount")
+    active_faults = health.get("activeFaults")
+    if fault_count is not None and isinstance(active_faults, list) and fault_count != len(active_faults):
+        result.add_error(
+            f"faultCount ({fault_count}) does not match activeFaults length ({len(active_faults)})"
+        )
 
 def validate_freshness(thing: dict, result: VerificationResult, max_age_seconds: float, now: datetime = None) -> None:
     now = now if now is not None else datetime.now(timezone.utc)

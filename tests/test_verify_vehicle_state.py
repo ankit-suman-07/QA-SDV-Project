@@ -86,6 +86,15 @@ class VerifyVehicleStateTest(unittest.TestCase):
         self.assertFalse(result.ok)
 
     @patch("requests.get")
+    def test_fault_count_mismatch_fails(self, mock_get):
+        thing = make_thing(status="WARNING", active_faults=["BATTERY_LOW"],
+                            overrides={"health": {"faultCount": 0}})
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("faultCount" in e for e in result.errors))
+
+    @patch("requests.get")
     def test_stale_timestamp_fails(self, mock_get):
         old_ts = (datetime.now(timezone.utc) - timedelta(seconds=60)).isoformat()
         thing = make_thing(processed_ts=old_ts)

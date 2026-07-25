@@ -65,3 +65,18 @@ pre-existing timestamp gaps, no health-consistency complaints.
 Context: completes the regression pair with 03 - confirms Ditto correctly
 represents both the WARNING/BATTERY_LOW state and its recovery to
 HEALTHY, independent of the currently-blocked bridge.
+
+## 05-tests-with-faultcount-check.png
+
+All 11 mocked tests passing, including the new
+test_fault_count_mismatch_fails, added after discovering a real bug (see
+06) while running the fully-integrated bridge.
+
+## 06-verifier-catches-faultcount-bug.png
+
+Verifier run against the live twin after running the real, merged bridge
+(Benjamin's transport relocation + Emmanuel's simulator, both merged to
+main). Correctly detects a genuine bug: the bridge writes activeFaults
+but never updates faultCount, leaving it stale. Contract (docs/04
+Section 3) requires faultCount == activeFaults.length. Flagged to Ankit
+as a bridge bug, separate from the two pre-existing timestamp gaps.
