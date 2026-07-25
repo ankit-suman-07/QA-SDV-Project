@@ -12,6 +12,13 @@ including a fault injection mode for testing downstream diagnostics.
 | Engine Coolant Temperature | `Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature` |
 | Tire Pressure (front left) | `Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure` |
 
+## Configuration
+
+| Env Var | Default | Description |
+|---|---|---|
+| `INJECT_FAULT` | `0` | Set to `1` to enable fault injection mode |
+| `PUBLISH_INTERVAL_SECONDS` | `5.0` | How often (in seconds) signals are published. Must be a positive number; invalid values (non-numeric, zero, negative) are rejected at startup. |
+
 ## Prerequisites
 
 - Docker Desktop
@@ -63,6 +70,29 @@ set INJECT_FAULT=1
 python src/main.py
 ```
 
+## Running at Different Publish Rates (Experiments)
+
+The simulator supports configurable publish rates for throughput/latency experiments.
+Tested rates: `5.0`, `1.0`, and `0.2` seconds.
+
+**Manual run:**
+```powershell
+$env:PUBLISH_INTERVAL_SECONDS = "0.2"
+python src/main.py
+```
+
+**Via Docker Compose:** edit `PUBLISH_INTERVAL_SECONDS` under the `provider` service's
+`environment:` block in `docker-compose.yml`, then:
+```bash
+docker-compose up --build
+```
+
+Each published line is timestamped, so log output can be used to measure the actual
+inter-publish interval achieved at each configured rate:
+```
+[2026-07-25T09:54:10.877146] mode=FAULT interval=5.0 speed=60.0 battery=14.1 engine_temp=91.2 tire_pressure=31.8
+```
+
 ## Verifying Signals Manually
 
 With the Databroker running, use the CLI to inspect published values:
@@ -79,9 +109,11 @@ get Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
 
 ## Running Tests
 
-Tests are **integration tests** — the Databroker and `src/main.py` must both
-already be running before you run them, since the test reads whatever is
-currently published rather than publishing its own data.
+Two test files exist:
+- `tests/test_signal_generator.py` — pure unit tests (interval parsing, normal/fault signal
+  generation). No Databroker required.
+- `tests/test_kuksa_publication.py` — integration test. Requires the Databroker and
+  `src/main.py` running first.
 
 ```bash
 venv\Scripts\activate
@@ -98,7 +130,8 @@ vehicle-simulator/
 │   ├── get_kuksa_client.py   # Databroker connection
 │   └── signal_generator.py   # signal state transitions (normal + fault)
 ├── tests/
-│   └── test_kuksa_publication.py
+│   ├── test_kuksa_publication.py
+│   └── test_signal_generator.py
 ├── Dockerfile
 ├── docker-compose.yml
 └── requirements.txt

@@ -13,3 +13,4 @@ services:
       - DATABROKER_HOST=databroker
       - DATABROKER_PORT=55555
       - INJECT_FAULT=1
+      - PUBLISH_INTERVAL_SECONDS=5
