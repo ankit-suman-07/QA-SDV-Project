@@ -14,7 +14,12 @@
       }
     },
     "health": {
-      "properties": { "status": "HEALTHY", "activeFaults": [], "faultCount": 0 }
+      "properties": {
+        "status": "HEALTHY",
+        "activeFaults": [],
+        "faultCount": 0,
+        "processedTimestamp": null
+      }
     }
   }
 }
