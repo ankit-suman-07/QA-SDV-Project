@@ -1,16 +1,19 @@
-import sys
 import unittest
-from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DITTO_COMPONENT = PROJECT_ROOT / "eclipse-components" / "ditto"
-
-sys.path.insert(0, str(DITTO_COMPONENT))
-
-from uprotocol_transport import (
+from uprotocol.transport import (
     publish_vehicle_status,
     receive_vehicle_status,
 )
+
+# PROJECT_ROOT = Path(__file__).resolve().parents[1]
+# DITTO_COMPONENT = PROJECT_ROOT / "eclipse-components" / "ditto"
+
+# sys.path.insert(0, str(DITTO_COMPONENT))
+#
+# from uprotocol_transport import (
+#     publish_vehicle_status,
+#     receive_vehicle_status,
+# )
 
 
 class UProtocolTransportTest(unittest.TestCase):
