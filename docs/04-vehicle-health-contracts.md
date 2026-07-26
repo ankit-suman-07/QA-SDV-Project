@@ -195,6 +195,7 @@ Every event includes `eventId`, `correlationId`, `eventType`, `vehicleId`, `sour
 | Health | `healthStatus` | `health_status` | `health.status` | `healthStatus` |
 | Active faults | `activeFaults` | Fault event payload | `health.activeFaults` | `activeFaults` |
 | Fault count | `faultCount` | Optional | `health.faultCount` | `faultCount` |
+| Processed time | `processedTimestamp` | Optional | `health.processedTimestamp` | `processedTimestamp` |
 
 Atharva will finalize OpenSOVD mappings. Each diagnostic fault must expose, where supported: vehicle ID, code, description, severity, status, affected signal, observed value, unit, threshold, timestamps, and correlation ID.
 
