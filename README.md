@@ -4,6 +4,8 @@
 
 This graduate project implements and evaluates a health-monitoring and diagnostic pipeline for one simulated software-defined vehicle, `vehicle-001`.
 
+- Demo video: [Link](https://youtu.be/w7lZ9HRNJ34)
+
 The system:
 
 - Generates speed, battery, temperature, and tire-pressure signals.
