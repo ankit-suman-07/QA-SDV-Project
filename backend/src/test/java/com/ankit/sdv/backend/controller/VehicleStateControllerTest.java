@@ -37,9 +37,9 @@ class VehicleStateControllerTest {
         VehicleState state = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
-                85.0
+                85.0,
+                200.0
         );
-
         when(vehicleStateProvider.getCurrentState("vehicle-001"))
                 .thenReturn(state);
 

@@ -24,7 +24,8 @@ class VehicleIntegrationServiceTest {
         VehicleState kuksaState = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
-                95.0
+                95.0,
+                200.0
         );
 
         HealthResult healthResult =
@@ -149,7 +150,8 @@ class VehicleIntegrationServiceTest {
         VehicleState incorrectState = new VehicleState(
                 "vehicle-999",
                 Instant.parse("2026-07-15T16:00:00Z"),
-                85.0
+                85.0,
+                200.0
         );
 
         KuksaAdapter kuksaAdapter =

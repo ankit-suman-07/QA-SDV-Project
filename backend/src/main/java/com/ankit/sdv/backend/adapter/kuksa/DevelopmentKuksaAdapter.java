@@ -17,12 +17,16 @@ public class DevelopmentKuksaAdapter implements KuksaAdapter {
     private static final double DEVELOPMENT_TEMPERATURE_CELSIUS =
             85.0;
 
+    private static final double DEVELOPMENT_COOLANT_PRESSURE_KPA =
+            200.0;
+
     @Override
     public VehicleState readCurrentState(String vehicleId) {
         return new VehicleState(
                 vehicleId,
                 Instant.now(),
-                DEVELOPMENT_TEMPERATURE_CELSIUS
+                DEVELOPMENT_TEMPERATURE_CELSIUS,
+                DEVELOPMENT_COOLANT_PRESSURE_KPA
         );
     }
 }
