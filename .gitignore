@@ -123,6 +123,8 @@ uprotocol/generated/*
 .AppleDouble
 .LSOverride
 ._*
+.DS_Store
+**/.DS_Store
 
 Thumbs.db
 ehthumbs.db
