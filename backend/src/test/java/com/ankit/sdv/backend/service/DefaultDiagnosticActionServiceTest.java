@@ -9,6 +9,11 @@ import com.ankit.sdv.backend.model.DiagnosticScenario;
 import com.ankit.sdv.backend.support.ActionIdGenerator;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneOffset;
@@ -81,4 +86,42 @@ class DefaultDiagnosticActionServiceTest {
                         "action-001"
                 );
     }
+
+    @Test
+    void shouldStoreAndRetrieveSubmittedActionById() {
+        DiagnosticActionRequest request =
+                new DiagnosticActionRequest(
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE
+                );
+
+        DiagnosticActionResponse submitted =
+                service.submit(request);
+
+        DiagnosticActionResponse retrieved =
+                service.getById("action-001");
+
+        assertEquals(submitted, retrieved);
+        assertEquals(
+                DiagnosticActionStatus.ACCEPTED,
+                retrieved.status()
+        );
+    }
+
+    @Test
+    void shouldRejectUnknownActionId() {
+        NoSuchElementException exception =
+                assertThrows(
+                        NoSuchElementException.class,
+                        () -> service.getById("action-999")
+                );
+
+        assertEquals(
+                "Diagnostic action not found: action-999",
+                exception.getMessage()
+        );
+    }
+
+
 }

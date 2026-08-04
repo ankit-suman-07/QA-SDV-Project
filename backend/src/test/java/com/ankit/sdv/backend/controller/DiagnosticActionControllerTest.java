@@ -17,12 +17,12 @@ import java.time.Instant;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import java.util.NoSuchElementException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -160,5 +160,72 @@ class DiagnosticActionControllerTest {
                         .value("Unsupported vehicle ID: vehicle-999"))
                 .andExpect(jsonPath("$.path")
                         .value("/api/v1/diagnostics/actions"));
+    }
+
+    @Test
+    void shouldReturnDiagnosticActionById() throws Exception {
+        DiagnosticActionResponse response =
+                new DiagnosticActionResponse(
+                        "action-001",
+                        "action-001",
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE,
+                        DiagnosticActionStatus.ACCEPTED,
+                        Instant.parse("2026-08-03T17:00:00Z")
+                );
+
+        when(diagnosticActionService.getById("action-001"))
+                .thenReturn(response);
+
+        mockMvc.perform(
+                        get(
+                                "/api/v1/diagnostics/actions/action-001"
+                        )
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.actionId")
+                        .value("action-001"))
+                .andExpect(jsonPath("$.traceId")
+                        .value("action-001"))
+                .andExpect(jsonPath("$.vehicleId")
+                        .value("vehicle-001"))
+                .andExpect(jsonPath("$.action")
+                        .value("INJECT_SCENARIO"))
+                .andExpect(jsonPath("$.scenario")
+                        .value("COOLING_SYSTEM_FAILURE"))
+                .andExpect(jsonPath("$.status")
+                        .value("ACCEPTED"))
+                .andExpect(jsonPath("$.requestedAt")
+                        .value("2026-08-03T17:00:00Z"));
+    }
+
+    @Test
+    void shouldReturnNotFoundForUnknownActionId()
+            throws Exception {
+
+        when(diagnosticActionService.getById("action-999"))
+                .thenThrow(
+                        new NoSuchElementException(
+                                "Diagnostic action not found: action-999"
+                        )
+                );
+
+        mockMvc.perform(
+                        get(
+                                "/api/v1/diagnostics/actions/action-999"
+                        )
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code")
+                        .value("ACTION_NOT_FOUND"))
+                .andExpect(jsonPath("$.message")
+                        .value(
+                                "Diagnostic action not found: action-999"
+                        ))
+                .andExpect(jsonPath("$.path")
+                        .value(
+                                "/api/v1/diagnostics/actions/action-999"
+                        ));
     }
 }

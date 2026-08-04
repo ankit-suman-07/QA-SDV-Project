@@ -8,4 +8,6 @@ public interface DiagnosticActionService {
     DiagnosticActionResponse submit(
             DiagnosticActionRequest request
     );
+
+    DiagnosticActionResponse getById(String actionId);
 }

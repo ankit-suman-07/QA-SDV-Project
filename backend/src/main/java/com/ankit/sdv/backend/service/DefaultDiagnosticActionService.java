@@ -7,6 +7,10 @@ import com.ankit.sdv.backend.model.DiagnosticActionStatus;
 import com.ankit.sdv.backend.support.ActionIdGenerator;
 import org.springframework.stereotype.Service;
 
+import java.util.NoSuchElementException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.util.Objects;
@@ -17,6 +21,9 @@ public class DefaultDiagnosticActionService
 
     private static final String SUPPORTED_VEHICLE_ID =
             "vehicle-001";
+
+    private final ConcurrentMap<String, DiagnosticActionResponse>
+            actionsById = new ConcurrentHashMap<>();
 
     private final SimulatorControlAdapter simulatorControlAdapter;
     private final ActionIdGenerator actionIdGenerator;
@@ -60,6 +67,8 @@ public class DefaultDiagnosticActionService
                         requestedAt
                 );
 
+        actionsById.put(actionId, response);
+
         simulatorControlAdapter.executeAction(
                 request.vehicleId(),
                 request.action(),
@@ -67,6 +76,25 @@ public class DefaultDiagnosticActionService
                 actionId,
                 traceId
         );
+
+        return response;
+    }
+
+    @Override
+    public DiagnosticActionResponse getById(String actionId) {
+        Objects.requireNonNull(
+                actionId,
+                "Diagnostic action ID cannot be null"
+        );
+
+        DiagnosticActionResponse response =
+                actionsById.get(actionId);
+
+        if (response == null) {
+            throw new NoSuchElementException(
+                    "Diagnostic action not found: " + actionId
+            );
+        }
 
         return response;
     }
