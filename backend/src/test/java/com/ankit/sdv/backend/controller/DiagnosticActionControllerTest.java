@@ -21,6 +21,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 @WebMvcTest(DiagnosticActionController.class)
 class DiagnosticActionControllerTest {
 
@@ -79,5 +85,80 @@ class DiagnosticActionControllerTest {
                         .value("ACCEPTED"))
                 .andExpect(jsonPath("$.requestedAt")
                         .value("2026-08-03T17:00:00Z"));
+    }
+
+    @Test
+    void shouldRejectRequestWithBlankVehicleId() throws Exception {
+        String requestBody = """
+            {
+              "vehicleId": "",
+              "action": "INJECT_SCENARIO",
+              "scenario": "COOLING_SYSTEM_FAILURE"
+            }
+            """;
+
+        mockMvc.perform(
+                        post("/api/v1/diagnostics/actions")
+                                .contentType(APPLICATION_JSON)
+                                .content(requestBody)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code")
+                        .value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.path")
+                        .value("/api/v1/diagnostics/actions"));
+    }
+
+    @Test
+    void shouldRejectRequestWithoutScenario() throws Exception {
+        String requestBody = """
+            {
+              "vehicleId": "vehicle-001",
+              "action": "INJECT_SCENARIO"
+            }
+            """;
+
+        mockMvc.perform(
+                        post("/api/v1/diagnostics/actions")
+                                .contentType(APPLICATION_JSON)
+                                .content(requestBody)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code")
+                        .value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.path")
+                        .value("/api/v1/diagnostics/actions"));
+    }
+
+    @Test
+    void shouldRejectUnsupportedVehicleId() throws Exception {
+        String requestBody = """
+            {
+              "vehicleId": "vehicle-999",
+              "action": "INJECT_SCENARIO",
+              "scenario": "COOLING_SYSTEM_FAILURE"
+            }
+            """;
+
+        when(diagnosticActionService.submit(
+                any(DiagnosticActionRequest.class)
+        )).thenThrow(
+                new IllegalArgumentException(
+                        "Unsupported vehicle ID: vehicle-999"
+                )
+        );
+
+        mockMvc.perform(
+                        post("/api/v1/diagnostics/actions")
+                                .contentType(APPLICATION_JSON)
+                                .content(requestBody)
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code")
+                        .value("VEHICLE_NOT_FOUND"))
+                .andExpect(jsonPath("$.message")
+                        .value("Unsupported vehicle ID: vehicle-999"))
+                .andExpect(jsonPath("$.path")
+                        .value("/api/v1/diagnostics/actions"));
     }
 }
