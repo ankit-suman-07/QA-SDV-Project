@@ -123,5 +123,171 @@ class DefaultDiagnosticActionServiceTest {
         );
     }
 
+    @Test
+    void shouldTransitionAcceptedActionToInProgress() {
+        DiagnosticActionRequest request =
+                new DiagnosticActionRequest(
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE
+                );
 
+        service.submit(request);
+
+        DiagnosticActionResponse updated =
+                service.updateStatus(
+                        "action-001",
+                        DiagnosticActionStatus.IN_PROGRESS
+                );
+
+        assertEquals(
+                DiagnosticActionStatus.IN_PROGRESS,
+                updated.status()
+        );
+
+        assertEquals(
+                DiagnosticActionStatus.IN_PROGRESS,
+                service.getById("action-001").status()
+        );
+    }
+
+    @Test
+    void shouldRejectTransitionFromAcceptedDirectlyToCompleted() {
+        DiagnosticActionRequest request =
+                new DiagnosticActionRequest(
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE
+                );
+
+        service.submit(request);
+
+        IllegalStateException exception =
+                assertThrows(
+                        IllegalStateException.class,
+                        () -> service.updateStatus(
+                                "action-001",
+                                DiagnosticActionStatus.COMPLETED
+                        )
+                );
+
+        assertEquals(
+                "Invalid diagnostic action status transition: "
+                        + "ACCEPTED -> COMPLETED",
+                exception.getMessage()
+        );
+
+        assertEquals(
+                DiagnosticActionStatus.ACCEPTED,
+                service.getById("action-001").status()
+        );
+    }
+
+    @Test
+    void shouldTransitionInProgressActionToCompleted() {
+        DiagnosticActionRequest request =
+                new DiagnosticActionRequest(
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE
+                );
+
+        service.submit(request);
+
+        service.updateStatus(
+                "action-001",
+                DiagnosticActionStatus.IN_PROGRESS
+        );
+
+        DiagnosticActionResponse completed =
+                service.updateStatus(
+                        "action-001",
+                        DiagnosticActionStatus.COMPLETED
+                );
+
+        assertEquals(
+                DiagnosticActionStatus.COMPLETED,
+                completed.status()
+        );
+
+        assertEquals(
+                DiagnosticActionStatus.COMPLETED,
+                service.getById("action-001").status()
+        );
+    }
+
+    @Test
+    void shouldTransitionInProgressActionToFailed() {
+        DiagnosticActionRequest request =
+                new DiagnosticActionRequest(
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE
+                );
+
+        service.submit(request);
+
+        service.updateStatus(
+                "action-001",
+                DiagnosticActionStatus.IN_PROGRESS
+        );
+
+        DiagnosticActionResponse failed =
+                service.updateStatus(
+                        "action-001",
+                        DiagnosticActionStatus.FAILED
+                );
+
+        assertEquals(
+                DiagnosticActionStatus.FAILED,
+                failed.status()
+        );
+
+        assertEquals(
+                DiagnosticActionStatus.FAILED,
+                service.getById("action-001").status()
+        );
+    }
+
+    @Test
+    void shouldRejectTransitionFromCompletedBackToInProgress() {
+        DiagnosticActionRequest request =
+                new DiagnosticActionRequest(
+                        "vehicle-001",
+                        DiagnosticAction.INJECT_SCENARIO,
+                        DiagnosticScenario.COOLING_SYSTEM_FAILURE
+                );
+
+        service.submit(request);
+
+        service.updateStatus(
+                "action-001",
+                DiagnosticActionStatus.IN_PROGRESS
+        );
+
+        service.updateStatus(
+                "action-001",
+                DiagnosticActionStatus.COMPLETED
+        );
+
+        IllegalStateException exception =
+                assertThrows(
+                        IllegalStateException.class,
+                        () -> service.updateStatus(
+                                "action-001",
+                                DiagnosticActionStatus.IN_PROGRESS
+                        )
+                );
+
+        assertEquals(
+                "Invalid diagnostic action status transition: "
+                        + "COMPLETED -> IN_PROGRESS",
+                exception.getMessage()
+        );
+
+        assertEquals(
+                DiagnosticActionStatus.COMPLETED,
+                service.getById("action-001").status()
+        );
+    }
 }

@@ -41,6 +41,8 @@ public class DefaultDiagnosticActionService
         this.clock = clock;
     }
 
+
+
     @Override
     public DiagnosticActionResponse submit(
             DiagnosticActionRequest request
@@ -99,6 +101,59 @@ public class DefaultDiagnosticActionService
         return response;
     }
 
+    @Override
+    public DiagnosticActionResponse updateStatus(
+            String actionId,
+            DiagnosticActionStatus status
+    ) {
+        Objects.requireNonNull(
+                actionId,
+                "Diagnostic action ID cannot be null"
+        );
+
+        Objects.requireNonNull(
+                status,
+                "Diagnostic action status cannot be null"
+        );
+
+        DiagnosticActionResponse updated =
+                actionsById.computeIfPresent(
+                        actionId,
+                        (id, current) -> {
+                            if (!isValidTransition(
+                                    current.status(),
+                                    status
+                            )) {
+                                throw new IllegalStateException(
+                                        "Invalid diagnostic action "
+                                                + "status transition: "
+                                                + current.status()
+                                                + " -> "
+                                                + status
+                                );
+                            }
+
+                            return new DiagnosticActionResponse(
+                                    current.actionId(),
+                                    current.traceId(),
+                                    current.vehicleId(),
+                                    current.action(),
+                                    current.scenario(),
+                                    status,
+                                    current.requestedAt()
+                            );
+                        }
+                );
+
+        if (updated == null) {
+            throw new NoSuchElementException(
+                    "Diagnostic action not found: " + actionId
+            );
+        }
+
+        return updated;
+    }
+
     private void validateVehicleId(String vehicleId) {
         if (!SUPPORTED_VEHICLE_ID.equals(vehicleId)) {
             throw new IllegalArgumentException(
@@ -106,4 +161,28 @@ public class DefaultDiagnosticActionService
             );
         }
     }
+
+    private boolean isValidTransition(
+            DiagnosticActionStatus current,
+            DiagnosticActionStatus requested
+    ) {
+        if (current == requested) {
+            return true;
+        }
+
+        return switch (current) {
+            case ACCEPTED ->
+                    requested == DiagnosticActionStatus.IN_PROGRESS
+                            || requested
+                            == DiagnosticActionStatus.REJECTED;
+
+            case IN_PROGRESS ->
+                    requested == DiagnosticActionStatus.COMPLETED
+                            || requested
+                            == DiagnosticActionStatus.FAILED;
+
+            case COMPLETED, FAILED, REJECTED -> false;
+        };
+    }
+
 }
