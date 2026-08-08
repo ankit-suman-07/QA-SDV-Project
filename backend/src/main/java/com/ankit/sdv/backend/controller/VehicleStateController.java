@@ -24,7 +24,7 @@ public class VehicleStateController {
 
     @GetMapping("/{vehicleId}/state")
     public VehicleState getVehicleState(
-            @PathVariable String vehicleId
+            @PathVariable("vehicleId") String vehicleId
     ) {
         validateVehicleId(vehicleId);
 

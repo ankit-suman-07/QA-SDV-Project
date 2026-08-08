@@ -53,3 +53,34 @@ def test_fault_signal_generation_trends_toward_failure():
     assert state["battery"] <= initial_battery
     assert state["engine_temp"] >= initial_engine_temp
     assert state["tire_pressure"] <= initial_tire_pressure
+
+def test_initial_state_contains_normal_coolant_pressure():
+    state = initial_state()
+
+    assert state["coolant_pressure"] == 200.0
+
+
+def test_fault_generation_reduces_coolant_pressure():
+    state = initial_state()
+    initial_pressure = state["coolant_pressure"]
+
+    for _ in range(20):
+        state = next_state(state, fault=True)
+
+    assert state["coolant_pressure"] < initial_pressure
+    assert state["coolant_pressure"] >= 100.0
+
+def test_coolant_pressure_recovers_after_fault_is_cleared():
+    state = initial_state()
+
+    for _ in range(30):
+        state = next_state(state, fault=True)
+
+    fault_pressure = state["coolant_pressure"]
+
+    for _ in range(50):
+        state = next_state(state, fault=False)
+
+    assert fault_pressure < 180.0
+    assert state["coolant_pressure"] >= 180.0
+    assert state["coolant_pressure"] <= 220.0

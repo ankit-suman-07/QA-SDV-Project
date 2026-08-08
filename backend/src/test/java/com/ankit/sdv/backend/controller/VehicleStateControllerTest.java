@@ -16,7 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(VehicleStateController.class)
 class VehicleStateControllerTest {
 
     @Autowired
@@ -25,21 +25,14 @@ class VehicleStateControllerTest {
     @MockitoBean
     private VehicleStateProvider vehicleStateProvider;
 
-    /*
-     * Required because @WebMvcTest currently loads the existing
-     * VehicleHealthController as well.
-     */
-    @MockitoBean
-    private VehicleHealthService vehicleHealthService;
-
     @Test
     void shouldReturnCurrentVehicleState() throws Exception {
         VehicleState state = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
-                85.0
+                85.0,
+                200.0
         );
-
         when(vehicleStateProvider.getCurrentState("vehicle-001"))
                 .thenReturn(state);
 

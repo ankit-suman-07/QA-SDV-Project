@@ -21,7 +21,7 @@ public class VehicleHealthController {
 
     @GetMapping("/{vehicleId}/health")
     public VehicleHealthResponse getVehicleHealth(
-            @PathVariable String vehicleId
+            @PathVariable("vehicleId") String vehicleId
     ) {
         return vehicleHealthService.getCurrentHealth(vehicleId);
     }
