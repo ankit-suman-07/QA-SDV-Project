@@ -1,0 +1,6 @@
+{
+  "timestamp": "2026-08-03T21:50:13Z",
+  "code": "VALIDATION_ERROR",
+  "message": "vehicleId: must not be blank",
+  "path": "/api/v1/diagnostics/actions"
+}
