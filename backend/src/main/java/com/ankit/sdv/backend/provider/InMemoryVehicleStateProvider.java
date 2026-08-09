@@ -13,7 +13,8 @@ public class InMemoryVehicleStateProvider
             new VehicleState(
                     "vehicle-001",
                     Instant.now(),
-                    85.0
+                    85.0,
+                    200.0
             );
 
     @Override

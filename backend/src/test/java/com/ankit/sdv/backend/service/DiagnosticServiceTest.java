@@ -24,7 +24,8 @@ class DiagnosticServiceTest {
         VehicleState vehicleState = new VehicleState(
                 "vehicle-001",
                 Instant.parse("2026-07-15T16:00:00Z"),
-                105.0
+                90.0,
+                200.0
         );
 
         HealthResult healthResult =

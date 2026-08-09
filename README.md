@@ -1,202 +1,657 @@
-Software-Defined Vehicle Health Monitoring and Diagnostic System
-Project Overview
-This project implements a Software-Defined Vehicle (SDV) data pipeline for one simulated vehicle, vehicle-001.
-The system generates vehicle telemetry, publishes it to Eclipse Kuksa, transfers the normalized state through a Protobuf-based communication layer, evaluates a basic vehicle-health rule, and synchronizes the resulting state with an Eclipse Ditto digital twin.
-Iteration 1 built and proved out the baseline end-to-end pipeline at a single, fixed publication rate: the simulator generates telemetry for one vehicle (vehicle-001), publishes it to a real Eclipse Kuksa Databroker, and the bridge reads those signals, wraps them in a serialized Protobuf VehicleStatusUpdated event, evaluates the battery-health rule, and synchronizes the result to a real Eclipse Ditto digital twin over its REST API. This was validated with real running instances of Kuksa and Ditto rather than mocks — policy and Thing creation, single-property updates, and full-state verification were all exercised against a live Ditto container, confirming that partial state updates apply correctly without disturbing unrelated fields. Iteration 1 also proved a repeatable fault scenario end to end: injecting a low-battery condition in the simulator visibly propagates through the bridge's health rule into WARNING/BATTERY_LOW on the live twin, and clearing it visibly recovers the twin to HEALTHY. An early mock integration with Eclipse OpenSOVD (gateway topology and component discovery) was also demonstrated, though OpenSOVD is not yet part of the main pipeline. See docs/evidence/integration-tests/ditto-kuksa/ for the full evidence, including exact commands and responses.
-Iteration 2 extends this baseline with a configurable signal publication rate, message-delivery tracking, automated digital-twin validation, and latency/throughput measurement across multiple publication rates.
-Demonstrated in Iteration 1:
-•	Simulated vehicle telemetry generation
-•	Eclipse Kuksa signal publication and retrieval
-•	Protobuf event serialization and reception
-•	Eclipse Ditto digital-twin synchronization, including verified partial-state updates
-•	A repeatable low-battery fault scenario, trigger and recovery
-•	Automated verification of the message flow
-•	An early mock OpenSOVD integration (gateway topology, component discovery)
-Added in Iteration 2:
-•	Automated verification of the Ditto digital twin itself (field completeness, freshness, health-state consistency) complete
-•	Configurable publication rate with latency/throughput measurement 
-A Spring Boot backend skeleton also exists under backend/ with pluggable adapters for Kuksa, Ditto, uProtocol, and OpenSOVD. It currently runs only in development mode against mocked adapter implementations and is not yet part of the demonstrated pipeline below — see Known Limitations.
-Implemented Architecture
+# Software-Defined Vehicle Health Monitoring and Diagnostic System
+
+## Project Overview
+
+This graduate project implements and evaluates a health-monitoring and diagnostic pipeline for one simulated software-defined vehicle, `vehicle-001`.
+
+- Demo video: [Link](https://youtu.be/w7lZ9HRNJ34)
+
+The system:
+
+- Generates speed, battery, temperature, and tire-pressure signals.
+- Publishes the signals to Eclipse Kuksa.
+- Serializes and receives vehicle-status events through a Protobuf-based uProtocol communication layer.
+- Applies a vehicle-health rule and tracks active faults.
+- Synchronizes signals, health state, fault count, and timestamps with an Eclipse Ditto digital twin.
+- Maps active Ditto faults into an OpenSOVD-compatible diagnostic representation.
+- Measures pipeline latency and throughput at multiple publication intervals.
+- Exposes vehicle state, health, and diagnostic-action REST endpoints consumed by a browser dashboard (Iteration 3).
+
+## Iteration 2 Extension
+
+Iteration 2 extends and evaluates the baseline pipeline through:
+
+- Configurable simulator publication intervals: `5.0`, `1.0`, and `0.2` seconds.
+- Event IDs and publication/reception timestamps for message traceability.
+- Delivery tracking for missing, duplicate, and invalid events.
+- Ditto state, timestamp, freshness, and fault-count verification.
+- OpenSOVD-compatible fault mapping.
+- Pipeline latency recording and CSV export.
+- Minimum, average, median, p95, and maximum latency calculations.
+- Throughput and success-rate evaluation.
+- Automated tests and repeatable experiment procedures.
+
+## Iteration 3 Extension
+
+Iteration 3 adds a diagnostic-action layer and a browser dashboard on top of the Iteration 2 pipeline:
+
+- A Spring Boot backend exposing `GET /api/vehicles/{vehicleId}/state`, `GET /api/vehicles/{vehicleId}/health`, and `POST /api/v1/diagnostics/actions` (inject/clear a correlated cooling-system fault scenario).
+- A plain HTML/CSS/JavaScript dashboard (`frontend/`) with three pages — Vehicle Dashboard, Diagnostics, and Performance & Testing — that talks to this API and never connects directly to Kuksa, Ditto, uProtocol, or Docker.
+- CORS enabled on the backend so the browser dashboard can call it directly.
+
+See [Frontend Dashboard](#frontend-dashboard-iteration-3) below for how to run it.
+
+## Runtime Architecture
+
+```mermaid
 flowchart TD
-    A["Vehicle Simulator<br/>Python"] -->|"Publishes VSS signals"| B["Eclipse Kuksa Databroker<br/>gRPC"]
-    B -->|"Reads current values"| C["Ditto Bridge<br/>Python integration service"]
-    C -->|"VehicleStatusUpdated"| D["Protobuf Publisher<br/>Serialize to bytes"]
-    D -->|"In-process delivery"| E["Protobuf Receiver<br/>Deserialize event"]
-    E -->|"Received vehicle state"| F["Battery Health Rule"]
-    F -->|"Signals and health state"| G["Eclipse Ditto<br/>vehicle-001"]
-    G -->|"REST API"| H["Verification<br/>ditto/scripts/verify-vehicle-state.py"]
-This diagram is unchanged from Iteration 1: the demonstrated pipeline still runs through the Python bridge rather than the backend skeleton. It will be updated once the backend adapters are connected to real components.
-Component Roles
-Component	Role
-Vehicle Simulator	Generates speed, battery, temperature, and tire-pressure values at a configurable publication rate and supports repeatable fault injection.
-Eclipse Kuksa	Receives and exposes vehicle signals using VSS paths.
-Ditto Bridge	Reads Kuksa signals and coordinates message processing, health evaluation, and Ditto synchronization.
-Protobuf Communication Layer	Serializes VehicleStatusUpdated events into bytes and deserializes them at the receiver.
-Health Rule	Produces WARNING and BATTERY_LOW when battery level is below 20%.
-Eclipse Ditto	Store the latest signals and calculated health state for vehicle-001.
-State Verifier	Independently validates the live Ditto twin: required fields present, health status internally consistent, and twin freshness within max(3 x publication interval, 5s).
-Current Communication-Layer Scope
-The pipeline uses Protobuf serialization with an in-process uProtocol-compatible publisher and receiver. It demonstrates observable message creation, byte serialization, delivery, deserialization, and event-ID traceability.
-This baseline is not a production uProtocol transport. A distributed uProtocol transport and additional event types are planned for later iterations.
-Repository Structure
+    A["Vehicle Simulator"] -->|"VSS signals"| B["Eclipse Kuksa Databroker"]
+    B -->|"Current values"| C["Python Integration Pipeline"]
+    C -->|"Serialize event"| D["uProtocol / Protobuf"]
+    D -->|"Receive event"| C
+    C -->|"Signals, health, faults, timestamps"| E["Eclipse Ditto"]
+    E -->|"Active fault state"| F["OpenSOVD Mapping Adapter"]
+    C -->|"Latency records"| G["Experiment Results"]
+    E -->|"REST"| H["Spring Boot Backend"]
+    H -->|"REST"| I["Frontend Dashboard"]
+```
+
+The Python bridge is the active integration runtime used for the Iteration 2 latency measurements below. The Spring Boot backend is a separate, now-live integration used by the Iteration 3 frontend dashboard — it reads from the same Ditto twin but is not part of the measured Iteration 2 runtime.
+
+## Component Roles
+
+| Component            | Role                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Vehicle Simulator    | Generates normal and fault-mode vehicle signals at a configurable interval.                                                    |
+| Eclipse Kuksa        | Stores and exposes simulated vehicle signals through VSS paths.                                                                |
+| uProtocol / Protobuf | Serializes and receives traceable `VehicleStatusUpdated` events.                                                               |
+| Integration Pipeline | Reads Kuksa, evaluates health, updates Ditto, and records measurements.                                                        |
+| Eclipse Ditto        | Maintains the synchronized digital twin for `vehicle-001`.                                                                     |
+| State Verifier       | Independently validates the live Ditto twin: required fields present, health status internally consistent, and twin freshness. |
+| OpenSOVD Adapter     | Maps active Ditto faults into a standardized diagnostic resource shape.                                                        |
+| Experiment Tools     | Export raw latency measurements, calculate statistics, and generate charts.                                                    |
+| Spring Boot Backend  | Exposes vehicle state, health, and diagnostic-action REST endpoints for the dashboard.                                         |
+| Frontend Dashboard   | Browser UI for live vehicle monitoring, diagnostic actions, and performance results.                                           |
+
+## Current Communication Scope
+
+The project uses Protobuf serialization with an in-process uProtocol-compatible publisher and receiver. Messages are serialized into bytes and deserialized as they would be across a wire, but a production network transport such as MQTT or Zenoh is not used.
+
+## Repository Structure
+
+```text
 QA-SDV-Project/
-├── backend/                       
-├── docs/
-│   └── evidence/
-│       └── iteration-2/
-│           ├── functional-validation/  
-│           ├── publication-rate/       
-│           ├── transport/               
-│           └── results/                 
+├── backend/                         # Spring Boot backend — vehicle state/health/diagnostics REST API
 ├── ditto/
-│   ├── config/
-│   │   ├── vehicle-001-thing.json
-│   │   └── vehicle-policy.json
-│   ├── scripts/
-│   │   ├── interim-kuksa-to-ditto-bridge.py
-│   │   └── verify-vehicle-state.py
-│   └── README.md
-├── frontend/                      
-├── tests/
-│   ├── test_uprotocol_transport.py
-│   ├── test_verify_vehicle_state.py
-│   └── performance/
-│       ├── process_results.py     
-│       └── results/                
+│   ├── config/                      # Ditto policy and Thing definitions
+│   └── scripts/                     # Pipeline bridge and state verifier
+├── docs/
+│   ├── evidence/iteration-2/        # Iteration 2 evidence
+│   │   ├── functional-validation/
+│   │   ├── publication-rate/
+│   │   ├── transport/
+│   │   └── results/
+│   └── 05-testing-and-results.md    # Evaluation report
+├── experiments/
+│   ├── latency_recorder.py
+│   ├── pipeline_evaluator.py
+│   ├── result_summary.py
+│   ├── generate_performance_chart.py
+│   └── results/                     # Raw CSVs, summary, and chart
+├── frontend/                        # Iteration 3 dashboard (plain HTML/CSS/JS, no framework)
+│   ├── index.html                   # Vehicle Dashboard
+│   ├── diagnostics.html
+│   ├── performance.html
+│   ├── css/
+│   ├── js/
+│   │   └── config.js                # USE_MOCK_API / API_BASE_URL switch
+│   └── mocks/
+├── opensovd/
+│   ├── fault_mapper.py
+│   └── scripts/map-active-faults.py
+├── tests/                            # Root Python automated tests
 ├── uprotocol/
-│   ├── proto/                     
-│   └── generated/                 
+│   ├── proto/                        # Protobuf definitions
+│   ├── generated/                    # Generated Python classes
+│   ├── transport.py
+│   └── tests/
 └── vehicle-simulator/
     ├── src/
+    ├── tests/
+    │   └── test_signal_generator.py
     ├── Dockerfile
     └── docker-compose.yml
-Ditto configuration and scripts now live under ditto/.
+```
 
-Vehicle Signals
-Signal	Kuksa/VSS path
-Speed	Vehicle.Speed
-Battery level	Vehicle.Powertrain.TractionBattery.StateOfCharge.Current
-Engine temperature	Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature
-Front-left tire pressure	Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure
-Prerequisites
-•	Git
-•	Docker Desktop with Docker Compose
-•	At least 4 GB of memory allocated to Docker Desktop
-•	Python 3.10 or newer
-•	curl
-1. Clone the Project
+Ditto configuration and scripts live under `ditto/`.
+
+## Vehicle Signals
+
+| Signal                   | Kuksa/VSS path                                                  |
+| ------------------------ | --------------------------------------------------------------- |
+| Speed                    | `Vehicle.Speed`                                                 |
+| Battery level            | `Vehicle.Powertrain.TractionBattery.StateOfCharge.Current`      |
+| Engine temperature       | `Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature` |
+| Front-left tire pressure | `Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure`            |
+
+## Prerequisites
+
+Install:
+
+- Git
+- Docker Desktop with Docker Compose
+- Python 3.10 or newer
+- `curl`
+- Java 17+ (for the Spring Boot backend and, optionally, `java -m jdk.httpserver` to serve the frontend)
+- At least 4 GB of memory allocated to Docker Desktop
+
+The demonstrated environment uses macOS. Equivalent Docker, Python, and HTTP commands can be used on Linux or Windows.
+
+## 1. Clone the Repository
+
+```bash
 git clone https://github.com/ankit-suman-07/QA-SDV-Project.git
 cd QA-SDV-Project
-2. Create the Python Environment
+```
+
+## 2. Create the Python Environment
+
+macOS or Linux:
+
+```bash
 python3 -m venv .venv
-source .venv/bin/activate       
+source .venv/bin/activate
+```
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+Install the required Python packages:
+
+```bash
 python -m pip install --upgrade pip
-python -m pip install kuksa_client requests python-dotenv
-The generated Protobuf Python classes are included under uprotocol/generated, so protoc is not required merely to run the demonstrated pipeline.
-3. Start Eclipse Ditto
-Clone the official Ditto runtime into a location outside this repository — it is not, and should not be, committed here:
-git clone --depth 1 https://github.com/eclipse-ditto/ditto.git ../eclipse-ditto-runtime
-cd ../eclipse-ditto-runtime/deployment/docker
+python -m pip install \
+  kuksa_client==0.5.1 \
+  requests \
+  python-dotenv \
+  "protobuf>=7.35.0" \
+  matplotlib
+```
+
+Generated Protobuf Python classes are committed under `uprotocol/generated`, so `protoc` is not required to run the demonstrated pipeline.
+
+## 3. Start Eclipse Ditto
+
+The complete Eclipse Ditto source is not stored in this repository. Clone and run the official Docker deployment in a separate local directory:
+
+```bash
+mkdir -p ../tmp
+git clone --depth 1 \
+  https://github.com/eclipse-ditto/ditto.git \
+  ../tmp/eclipse-ditto
+
+cd ../tmp/eclipse-ditto/deployment/docker
 docker compose up -d
-Wait for initialization, then confirm the API responds:
 docker compose ps
-curl -i -u ditto:ditto http://localhost:8080/api/2/things
-Return to the project root before continuing.
-4. Create the Ditto Policy and Vehicle Thing
-From the project root:
-curl -i -u ditto:ditto -X PUT -H "Content-Type: application/json" \
+```
+
+Initial `502 Bad Gateway` responses may occur while the Ditto cluster starts. Continue when this returns HTTP `200`:
+
+```bash
+curl -i -u ditto:ditto \
+  http://localhost:8080/api/2/things
+```
+
+Return to the repository root before continuing.
+
+## 4. Create the Ditto Policy and Vehicle Thing
+
+Create the policy:
+
+```bash
+curl -i -u ditto:ditto \
+  -X PUT \
+  -H "Content-Type: application/json" \
   --data-binary @ditto/config/vehicle-policy.json \
   http://localhost:8080/api/2/policies/sdv:vehicle-001-policy
+```
 
-curl -i -u ditto:ditto -X PUT -H "Content-Type: application/json" \
+Create the digital twin:
+
+```bash
+curl -i -u ditto:ditto \
+  -X PUT \
+  -H "Content-Type: application/json" \
   --data-binary @ditto/config/vehicle-001-thing.json \
   http://localhost:8080/api/2/things/sdv:vehicle-001
-Verify:
-curl -s -u ditto:ditto http://localhost:8080/api/2/things/sdv:vehicle-001 | python3 -m json.tool
-5. Start Eclipse Kuksa and the Vehicle Simulator
-The Kuksa Databroker is exposed on host port 55556 (mapped from 55555 inside Docker) to avoid local port conflicts.
-Ensure normal mode in vehicle-simulator/docker-compose.yml:
-- INJECT_FAULT=0
-Start and verify:
-docker compose -f vehicle-simulator/docker-compose.yml up --build -d
-docker compose -f vehicle-simulator/docker-compose.yml ps
-docker compose -f vehicle-simulator/docker-compose.yml logs --tail=20 provider
-Expected log line:
-[normal] speed=60.1 battery=82.1 engine_temp=90.1 tire_pressure=32.2
-Publication-rate configuration 
-The simulator currently publishes on a fixed 5-second interval (time.sleep(5) in vehicle-simulator/src/main.py). A PUBLISH_INTERVAL_SECONDS environment variable is planned so the interval can be set per experiment condition:
-Target usage landed:
-PUBLISH_INTERVAL_SECONDS=1.0 python vehicle-simulator/src/main.py
-Target experiment conditions:
-Condition	PUBLISH_INTERVAL_SECONDS
-Baseline	5.0
-Medium load	1.0
-High load	0.2
-6. Start the Ditto Bridge
-python ditto/scripts/interim-kuksa-to-ditto-bridge.py
-Expected repeating output:
-[uProtocol Publisher] eventId=... vehicleId=vehicle-001 bytes=...
-[uProtocol Receiver] eventId=... vehicleId=vehicle-001 battery=...
-[Ditto] speed=... battery=... temp=... tireFL=... health=HEALTHY
-Ditto can be validated directly via its REST API and ditto/scripts/verify-vehicle-state.py, as shown in step 7.
-7. Verify the Ditto Digital Twin
-With the bridge running, either inspect the twin directly:
-curl -s -u ditto:ditto http://localhost:8080/api/2/things/sdv:vehicle-001 | python3 -m json.tool
-or use the automated verifier, which checks required fields, health-state consistency, and twin freshness in one command:
-python ditto/scripts/verify-vehicle-state.py
-Expected success:
-OK: sdv:vehicle-001 is valid and fresh (<= 30.0s old)
-On failure, it prints each specific problem, e.g. a missing field or a stale twin, and exits with status 1.
-8. Reproduce the Low-Battery Fault
-Stop the normal provider:
-docker compose -f vehicle-simulator/docker-compose.yml stop provider
-Run the simulator locally in fault mode while keeping Kuksa running:
-INJECT_FAULT=1 DATABROKER_HOST=127.0.0.1 DATABROKER_PORT=55556 python vehicle-simulator/src/main.py
-Expected simulator output: [FAULT] speed=... battery=14.4 ...
-The bridge should report [Rule] battery=14.4 < 20 -> WARNING, BATTERY_LOW followed by [Ditto] ... health=WARNING. Confirm with either the curl command above or:
-python ditto/scripts/verify-vehicle-state.py
-The verifier does not treat an active fault as an error — a WARNING status with a populated activeFaults list is valid. It only flags missing fields, stale twins, or an internally inconsistent state (e.g. WARNING with no listed fault).
-Stop the locally running fault simulator with Control + C.
-9. Run the Automated Tests
-python -m unittest discover -s tests -p "test_*.py" -v
-This runs:
-•	tests/test_uprotocol_transport.py
-•	tests/test_verify_vehicle_state.py (10 mocked unit tests covering the verifier's validation logic, including the freshness formula)
-•	vehicle-simulator/tests/test_kuksa_publication.py (integration test — requires the Databroker and simulator already running)
-Expected result: OK.
-10. Run the Publication-Rate Experiment 
-Each of the three conditions (5.0, 1.0, 0.2 second intervals) will be run for a fixed number of messages, with per-event measurements written to tests/performance/results/.
-11. Generate the Results Table and Chart
-  --python tests/performance/process_results.py \
-  --input-dir tests/performance/results \
-  --output-dir docs/evidence/iteration-2/results
-This produces comparison-table.md, comparison-table.csv, and publication-rate-vs-latency-throughput.png in the output directory.
-To dry-run the script itself before real data exists:
-python tests/performance/process_results.py --sample-data \
-  --input-dir /tmp/sample_results --output-dir /tmp/sample_output
-Stopping the System
-docker compose -f vehicle-simulator/docker-compose.yml down
-cd ../eclipse-ditto-runtime/deployment/docker
-docker compose down
-Troubleshooting
-Port 55555 is already in use
-The repository exposes Kuksa on host port 55556. Confirm vehicle-simulator/docker-compose.yml maps "55556:55555", and that anything connecting from the host (including the bridge) targets 55556.
-Ditto returns 502 Bad Gateway
-The Ditto cluster is still initializing. Run docker compose ps and wait until the API responds successfully.
-Bridge script fails to start (import error / wrong Kuksa port)
-Known issue, already flagged to the team — see the note at the top of this README. Ditto can still be validated directly via its REST API and ditto/scripts/verify-vehicle-state.py in the meantime.
-Protobuf generated-code/runtime mismatch
-Use the generated files committed under uprotocol/generated with the installed project dependencies rather than regenerating with an unrelated Protobuf compiler version.
-Docker Hub returns 429 Too Many Requests
-A registry rate limit, not a project-code failure. Reuse already-built images or wait before rebuilding.
-Iteration 2 Evidence
-Organized under docs/evidence/iteration-2/ — see that folder's own README.md for what belongs where and current status per section. Iteration 1 fault-lifecycle evidence remains at docs/evidence/integration-tests/ditto-kuksa/.
-Known Limitations
-•	The current message transport is in-process rather than distributed.
-•	Only the front-left tire-pressure signal is currently read from Kuksa.
-•	The health rule covers the low-battery scenario only.
-•	The Spring Boot backend skeleton (backend/) runs only against mocked development adapters and is not yet connected to real Kuksa/Ditto/uProtocol/OpenSOVD components.
-•	OpenSOVD integration and the final dashboard remain future work.
-License and External Components
-Eclipse Kuksa, Eclipse Ditto, and Eclipse uProtocol are external Eclipse Foundation projects and remain subject to their respective licenses. This repository contains the team's integration code, configuration, tests, documentation, and project-specific models.
+```
 
+Verify it:
+
+```bash
+curl -s -u ditto:ditto \
+  http://localhost:8080/api/2/things/sdv:vehicle-001 \
+  | python3 -m json.tool
+```
+
+## 5. Start Kuksa and the Vehicle Simulator
+
+Kuksa listens on port `55555` inside Docker and is exposed on host port `55556`.
+
+Start the simulator in normal mode with a five-second interval:
+
+```bash
+INJECT_FAULT=0 \
+PUBLISH_INTERVAL_SECONDS=5.0 \
+docker compose \
+  -f vehicle-simulator/docker-compose.yml \
+  up -d --build
+```
+
+Verify both services:
+
+```bash
+docker compose \
+  -f vehicle-simulator/docker-compose.yml \
+  ps
+```
+
+Verify signal publication:
+
+```bash
+docker compose \
+  -f vehicle-simulator/docker-compose.yml \
+  logs --tail=10 provider
+```
+
+Expected output includes:
+
+```text
+mode=normal interval=5.0 speed=... battery=... engine_temp=... tire_pressure=...
+```
+
+## 6. Run the Integration Pipeline
+
+Keep Kuksa, the simulator, and Ditto running. From the repository root:
+
+```bash
+EXPERIMENT_ID=baseline-run \
+EXPERIMENT_EVENT_LIMIT=30 \
+PUBLISH_INTERVAL_SECONDS=5.0 \
+EXPERIMENT_RESULTS_FILE=experiments/results/baseline-run.csv \
+python ditto/scripts/interim-kuksa-to-ditto-bridge.py
+```
+
+The pipeline processes 30 events and exits after exporting the results.
+
+Expected output includes:
+
+```text
+[uProtocol Publisher] eventId=... publicationTimestamp=...
+[uProtocol Receiver] eventId=... receptionTimestamp=...
+[Metrics] eventId=... latencyMs=... success=True
+[Ditto] speed=... battery=... health=...
+[Experiment Complete] results=...
+[Summary] messages=30 successRate=...
+```
+
+Publisher and receiver event IDs should match.
+
+## 7. Verify the Ditto Digital Twin
+
+Run the verifier immediately after a pipeline run:
+
+```bash
+python ditto/scripts/verify-vehicle-state.py \
+  --publication-interval-seconds 5.0
+```
+
+Expected result:
+
+```text
+OK: sdv:vehicle-001 is valid and fresh
+```
+
+The verifier checks:
+
+- Required signal and health fields
+- Valid health classification
+- `faultCount` and `activeFaults` consistency
+- ISO 8601 processing timestamps
+- Digital-twin freshness
+
+Inspect the complete state:
+
+```bash
+curl -s -u ditto:ditto \
+  http://localhost:8080/api/2/things/sdv:vehicle-001 \
+  | python3 -m json.tool
+```
+
+## 8. Reproduce the Low-Battery Fault
+
+Recreate the provider in fault mode:
+
+```bash
+INJECT_FAULT=1 \
+PUBLISH_INTERVAL_SECONDS=1.0 \
+docker compose \
+  -f vehicle-simulator/docker-compose.yml \
+  up -d --force-recreate provider
+```
+
+Run a short fault pipeline:
+
+```bash
+EXPERIMENT_ID=fault-validation \
+EXPERIMENT_EVENT_LIMIT=5 \
+PUBLISH_INTERVAL_SECONDS=1.0 \
+EXPERIMENT_RESULTS_FILE=/tmp/sdv-fault-validation.csv \
+python ditto/scripts/interim-kuksa-to-ditto-bridge.py
+```
+
+Expected output includes:
+
+```text
+[Rule] battery=... < 20 -> WARNING, BATTERY_LOW
+[Ditto] ... health=WARNING
+```
+
+The Ditto health state should contain:
+
+```json
+{
+  "status": "WARNING",
+  "activeFaults": ["BATTERY_LOW"],
+  "faultCount": 1
+}
+```
+
+## 9. Verify the OpenSOVD Mapping
+
+With the fault state active:
+
+```bash
+python opensovd/scripts/map-active-faults.py
+```
+
+Expected output includes:
+
+```text
+[OpenSOVD] 1 active fault(s): BATTERY_LOW(...)
+```
+
+For continuous observation:
+
+```bash
+python opensovd/scripts/map-active-faults.py --watch
+```
+
+The available OpenSOVD mock gateway is read-only. Therefore, the project uses a tested adapter that maps current Ditto faults into the agreed OpenSOVD-compatible diagnostic shape.
+
+## 10. Reproduce Fault Recovery
+
+Return the provider to normal mode:
+
+```bash
+INJECT_FAULT=0 \
+PUBLISH_INTERVAL_SECONDS=1.0 \
+docker compose \
+  -f vehicle-simulator/docker-compose.yml \
+  up -d --force-recreate provider
+```
+
+Run the short pipeline again:
+
+```bash
+EXPERIMENT_ID=recovery-validation \
+EXPERIMENT_EVENT_LIMIT=5 \
+PUBLISH_INTERVAL_SECONDS=1.0 \
+EXPERIMENT_RESULTS_FILE=/tmp/sdv-recovery-validation.csv \
+python ditto/scripts/interim-kuksa-to-ditto-bridge.py
+```
+
+The health state should return to:
+
+```json
+{
+  "status": "HEALTHY",
+  "activeFaults": [],
+  "faultCount": 0
+}
+```
+
+## 11. Run Automated Tests
+
+Run the complete root Python test suite:
+
+```bash
+python -m unittest discover \
+  -s tests \
+  -p "test_*.py" \
+  -v
+```
+
+The validated Iteration 2 version executes 34 tests successfully.
+
+The tests cover:
+
+- Latency recording and CSV export
+- Result-summary calculations
+- Pipeline evaluation
+- uProtocol serialization and delivery tracking
+- Ditto state verification
+- Fault-count consistency
+- OpenSOVD diagnostic mapping
+
+Optional component-specific tests:
+
+```bash
+python -m unittest discover \
+  -s uprotocol/tests \
+  -p "test_*.py" \
+  -v
+```
+
+## 12. Reproduce the Performance Experiments
+
+Run each experiment using the same interval for the simulator and pipeline.
+
+### 5.0-second experiment
+
+```bash
+INJECT_FAULT=0 PUBLISH_INTERVAL_SECONDS=5.0 \
+docker compose -f vehicle-simulator/docker-compose.yml \
+  up -d --force-recreate provider
+
+EXPERIMENT_ID=interval-5s \
+EXPERIMENT_EVENT_LIMIT=30 \
+PUBLISH_INTERVAL_SECONDS=5.0 \
+EXPERIMENT_RESULTS_FILE=experiments/results/interval-5s.csv \
+python ditto/scripts/interim-kuksa-to-ditto-bridge.py
+```
+
+### 1.0-second experiment
+
+```bash
+INJECT_FAULT=0 PUBLISH_INTERVAL_SECONDS=1.0 \
+docker compose -f vehicle-simulator/docker-compose.yml \
+  up -d --force-recreate provider
+
+EXPERIMENT_ID=interval-1s \
+EXPERIMENT_EVENT_LIMIT=30 \
+PUBLISH_INTERVAL_SECONDS=1.0 \
+EXPERIMENT_RESULTS_FILE=experiments/results/interval-1s.csv \
+python ditto/scripts/interim-kuksa-to-ditto-bridge.py
+```
+
+### 0.2-second experiment
+
+```bash
+INJECT_FAULT=0 PUBLISH_INTERVAL_SECONDS=0.2 \
+docker compose -f vehicle-simulator/docker-compose.yml \
+  up -d --force-recreate provider
+
+EXPERIMENT_ID=interval-0.2s \
+EXPERIMENT_EVENT_LIMIT=30 \
+PUBLISH_INTERVAL_SECONDS=0.2 \
+EXPERIMENT_RESULTS_FILE=experiments/results/interval-0.2s.csv \
+python ditto/scripts/interim-kuksa-to-ditto-bridge.py
+```
+
+Regenerate the chart:
+
+```bash
+python experiments/generate_performance_chart.py
+```
+
+## Iteration 2 Results
+
+| Interval | Events | Minimum (ms) | Average (ms) | Median (ms) | P95 (ms) | Maximum (ms) | Success Rate | Throughput (messages/s) |
+| -------: | -----: | -----------: | -----------: | ----------: | -------: | -----------: | -----------: | ----------------------: |
+|    5.0 s |     30 |      185.278 |      316.997 |     318.525 |  466.788 |      532.126 |         100% |                   0.194 |
+|    1.0 s |     30 |      110.405 |      227.832 |     170.275 |  730.731 |      910.352 |         100% |                   0.823 |
+|    0.2 s |     30 |      108.513 |      150.202 |     134.686 |  235.013 |      347.421 |         100% |                   2.848 |
+
+![Pipeline performance comparison](experiments/results/pipeline-performance-comparison.png)
+
+Detailed methodology, analysis, and limitations are documented in [`docs/05-testing-and-results.md`](docs/05-testing-and-results.md).
+
+## Frontend Dashboard (Iteration 3)
+
+The dashboard in `frontend/` is plain HTML/CSS/JavaScript (ES modules) — no build tool, no framework — and talks only to the Spring Boot backend below, never directly to Kuksa, Ditto, uProtocol, or Docker.
+
+### Start the backend
+
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+Confirm it's up:
+
+```bash
+curl -i http://localhost:8080/api/vehicles/vehicle-001/state
+curl -i http://localhost:8080/api/vehicles/vehicle-001/health
+```
+
+Both should return `200 OK` with JSON. CORS is enabled on the backend, so the browser dashboard can call these directly.
+
+### Serve the frontend
+
+Browsers block `fetch()` of local JSON mock files over `file://`, so serve it rather than opening the HTML directly:
+
+```bash
+cd frontend
+java -m jdk.httpserver -p 8081 -d "$(pwd)"
+```
+
+(equivalent to `jwebserver -p 8081 -d /path/to/frontend` on JDKs that include the `jwebserver` launcher; `python3 -m http.server 8081` also works)
+
+Open `http://localhost:8081/index.html`.
+
+### Switching between mock and real API
+
+Edit `frontend/js/config.js`:
+
+```js
+export const CONFIG = {
+  USE_MOCK_API: false,   // set true to preview all states without a backend
+  API_BASE_URL: "http://localhost:8080",
+  ...
+};
+```
+
+With the backend running as above, `USE_MOCK_API: false` connects the dashboard to real vehicle state, health, and diagnostic actions. Speed, battery, and tire pressure remain mocked and labeled as such — the backend does not serve those fields yet. The diagnostic action lookup endpoint (`GET /api/v1/diagnostics/actions/{actionId}`) also remains mocked pending backend confirmation.
+
+Full details, the manual test checklist, and what's real vs. mocked are documented in `frontend/README.md`.
+
+## Stopping the System
+
+Stop Kuksa and the simulator:
+
+```bash
+docker compose \
+  -f vehicle-simulator/docker-compose.yml \
+  down
+```
+
+Stop Ditto from its deployment directory:
+
+```bash
+cd ../tmp/eclipse-ditto/deployment/docker
+docker compose down
+```
+
+## Troubleshooting
+
+### Port 55555 is already in use
+
+The repository exposes Kuksa on host port `55556`. Confirm:
+
+```yaml
+ports:
+  - "55556:55555"
+```
+
+The host-side bridge must connect to port `55556`.
+
+### Ditto returns 502 Bad Gateway
+
+The Ditto cluster is still initializing. Check its containers with `docker compose ps`, wait, and retry the API request.
+
+### Protobuf generated-code/runtime mismatch
+
+Install a Protobuf runtime compatible with the committed generated code:
+
+```bash
+python -m pip install --upgrade "protobuf>=7.35.0"
+```
+
+### Docker Hub returns 429 Too Many Requests
+
+This indicates registry rate limiting. Reuse already-built images or wait before rebuilding.
+
+### Verifier reports a stale digital twin
+
+Run the verifier immediately after the pipeline, or use an explicit maximum age while diagnosing:
+
+```bash
+python ditto/scripts/verify-vehicle-state.py \
+  --max-age-seconds 15
+```
+
+### Frontend gets `curl: (7) Failed to connect ... Connection refused`
+
+The Spring Boot backend isn't running. Start it (`cd backend && ./mvnw spring-boot:run`) before loading the dashboard with `USE_MOCK_API: false`.
+
+### Frontend gets 404 on `/api/vehicles/vehicle-001/state`
+
+The backend is running but that route isn't mapped — confirm you're on the latest `main` and the route hasn't moved.
+
+## Known Limitations
+
+- uProtocol delivery is in-process rather than a distributed production transport.
+- OpenSOVD uses a tested mapping adapter because the available mock gateway is read-only.
+- Only the front-left tire-pressure value originates from Kuksa; the Protobuf message temporarily copies it to all four wheel fields.
+- The health rule currently activates and clears the low-battery fault only.
+- Ditto properties are updated through sequential HTTP requests.
+- Performance measurements were collected on one local machine with 30 events per interval.
+- Reported latency begins before uProtocol serialization and ends after Ditto updates; it excludes simulator-to-Kuksa delay and frontend rendering.
+- The Spring Boot backend now serves live vehicle state, health, and diagnostic-action endpoints for the Iteration 3 dashboard, but speed, battery, tire pressure, and diagnostic-action lookup (`GET .../actions/{actionId}`) remain mocked on the frontend pending further backend work.
+
+## Evidence and Documentation
+
+- Iteration 2 evidence: `docs/evidence/iteration-2/`
+- Testing and results: `docs/05-testing-and-results.md`
+- Vehicle health contract: `docs/04-vehicle-health-contracts.md`
+- Raw experiment data: `experiments/results/`
+- Frontend setup and manual test checklist: `frontend/README.md`
+
+## License and External Components
+
+Eclipse Kuksa, Eclipse Ditto, Eclipse uProtocol, and Eclipse OpenSOVD are external Eclipse Foundation projects and remain subject to their respective licenses. This repository contains the team's integration code, configuration, tests, evidence, documentation, and project-specific models.

@@ -1,0 +1,4 @@
+publication_interval_seconds,event_count,min_latency_ms,average_latency_ms,median_latency_ms,p95_latency_ms,max_latency_ms,success_rate_percent,throughput_messages_per_second
+5.0,30,185.278,316.997,318.525,466.788,532.126,100.00,0.194
+1.0,30,110.405,227.832,170.275,730.731,910.352,100.00,0.823
+0.2,30,108.513,150.202,134.686,235.013,347.421,100.00,2.848
