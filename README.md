@@ -15,6 +15,7 @@ The system:
 - Synchronizes signals, health state, fault count, and timestamps with an Eclipse Ditto digital twin.
 - Maps active Ditto faults into an OpenSOVD-compatible diagnostic representation.
 - Measures pipeline latency and throughput at multiple publication intervals.
+- Exposes vehicle state, health, and diagnostic-action REST endpoints consumed by a browser dashboard (Iteration 3).
 
 ## Iteration 2 Extension
 
@@ -30,6 +31,16 @@ Iteration 2 extends and evaluates the baseline pipeline through:
 - Throughput and success-rate evaluation.
 - Automated tests and repeatable experiment procedures.
 
+## Iteration 3 Extension
+
+Iteration 3 adds a diagnostic-action layer and a browser dashboard on top of the Iteration 2 pipeline:
+
+- A Spring Boot backend exposing `GET /api/vehicles/{vehicleId}/state`, `GET /api/vehicles/{vehicleId}/health`, and `POST /api/v1/diagnostics/actions` (inject/clear a correlated cooling-system fault scenario).
+- A plain HTML/CSS/JavaScript dashboard (`frontend/`) with three pages — Vehicle Dashboard, Diagnostics, and Performance & Testing — that talks to this API and never connects directly to Kuksa, Ditto, uProtocol, or Docker.
+- CORS enabled on the backend so the browser dashboard can call it directly.
+
+See [Frontend Dashboard](#frontend-dashboard-iteration-3) below for how to run it.
+
 ## Runtime Architecture
 
 ```mermaid
@@ -41,21 +52,26 @@ flowchart TD
     C -->|"Signals, health, faults, timestamps"| E["Eclipse Ditto"]
     E -->|"Active fault state"| F["OpenSOVD Mapping Adapter"]
     C -->|"Latency records"| G["Experiment Results"]
+    E -->|"REST"| H["Spring Boot Backend"]
+    H -->|"REST"| I["Frontend Dashboard"]
 ```
 
-The Python bridge is the active integration runtime used for the demonstrated pipeline. The Spring Boot backend remains a project foundation and is not part of the measured Iteration 2 runtime.
+The Python bridge is the active integration runtime used for the Iteration 2 latency measurements below. The Spring Boot backend is a separate, now-live integration used by the Iteration 3 frontend dashboard — it reads from the same Ditto twin but is not part of the measured Iteration 2 runtime.
 
 ## Component Roles
 
-| Component | Role |
-|---|---|
-| Vehicle Simulator | Generates normal and fault-mode vehicle signals at a configurable interval. |
-| Eclipse Kuksa | Stores and exposes simulated vehicle signals through VSS paths. |
-| uProtocol / Protobuf | Serializes and receives traceable `VehicleStatusUpdated` events. |
-| Integration Pipeline | Reads Kuksa, evaluates health, updates Ditto, and records measurements. |
-| Eclipse Ditto | Maintains the synchronized digital twin for `vehicle-001`. |
-| OpenSOVD Adapter | Maps active Ditto faults into a standardized diagnostic resource shape. |
-| Experiment Tools | Export raw latency measurements, calculate statistics, and generate charts. |
+| Component            | Role                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Vehicle Simulator    | Generates normal and fault-mode vehicle signals at a configurable interval.                                                    |
+| Eclipse Kuksa        | Stores and exposes simulated vehicle signals through VSS paths.                                                                |
+| uProtocol / Protobuf | Serializes and receives traceable `VehicleStatusUpdated` events.                                                               |
+| Integration Pipeline | Reads Kuksa, evaluates health, updates Ditto, and records measurements.                                                        |
+| Eclipse Ditto        | Maintains the synchronized digital twin for `vehicle-001`.                                                                     |
+| State Verifier       | Independently validates the live Ditto twin: required fields present, health status internally consistent, and twin freshness. |
+| OpenSOVD Adapter     | Maps active Ditto faults into a standardized diagnostic resource shape.                                                        |
+| Experiment Tools     | Export raw latency measurements, calculate statistics, and generate charts.                                                    |
+| Spring Boot Backend  | Exposes vehicle state, health, and diagnostic-action REST endpoints for the dashboard.                                         |
+| Frontend Dashboard   | Browser UI for live vehicle monitoring, diagnostic actions, and performance results.                                           |
 
 ## Current Communication Scope
 
@@ -65,12 +81,16 @@ The project uses Protobuf serialization with an in-process uProtocol-compatible 
 
 ```text
 QA-SDV-Project/
-├── backend/                         # Spring Boot backend foundation
+├── backend/                         # Spring Boot backend — vehicle state/health/diagnostics REST API
 ├── ditto/
 │   ├── config/                      # Ditto policy and Thing definitions
 │   └── scripts/                     # Pipeline bridge and state verifier
 ├── docs/
 │   ├── evidence/iteration-2/        # Iteration 2 evidence
+│   │   ├── functional-validation/
+│   │   ├── publication-rate/
+│   │   ├── transport/
+│   │   └── results/
 │   └── 05-testing-and-results.md    # Evaluation report
 ├── experiments/
 │   ├── latency_recorder.py
@@ -78,7 +98,14 @@ QA-SDV-Project/
 │   ├── result_summary.py
 │   ├── generate_performance_chart.py
 │   └── results/                     # Raw CSVs, summary, and chart
-├── frontend/                        # Frontend foundation
+├── frontend/                        # Iteration 3 dashboard (plain HTML/CSS/JS, no framework)
+│   ├── index.html                   # Vehicle Dashboard
+│   ├── diagnostics.html
+│   ├── performance.html
+│   ├── css/
+│   ├── js/
+│   │   └── config.js                # USE_MOCK_API / API_BASE_URL switch
+│   └── mocks/
 ├── opensovd/
 │   ├── fault_mapper.py
 │   └── scripts/map-active-faults.py
@@ -91,18 +118,21 @@ QA-SDV-Project/
 └── vehicle-simulator/
     ├── src/
     ├── tests/
+    │   └── test_signal_generator.py
     ├── Dockerfile
     └── docker-compose.yml
 ```
 
+Ditto configuration and scripts live under `ditto/`.
+
 ## Vehicle Signals
 
-| Signal | Kuksa/VSS path |
-|---|---|
-| Speed | `Vehicle.Speed` |
-| Battery level | `Vehicle.Powertrain.TractionBattery.StateOfCharge.Current` |
-| Engine temperature | `Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature` |
-| Front-left tire pressure | `Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure` |
+| Signal                   | Kuksa/VSS path                                                  |
+| ------------------------ | --------------------------------------------------------------- |
+| Speed                    | `Vehicle.Speed`                                                 |
+| Battery level            | `Vehicle.Powertrain.TractionBattery.StateOfCharge.Current`      |
+| Engine temperature       | `Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature` |
+| Front-left tire pressure | `Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure`            |
 
 ## Prerequisites
 
@@ -112,6 +142,7 @@ Install:
 - Docker Desktop with Docker Compose
 - Python 3.10 or newer
 - `curl`
+- Java 17+ (for the Spring Boot backend and, optionally, `java -m jdk.httpserver` to serve the frontend)
 - At least 4 GB of memory allocated to Docker Desktop
 
 The demonstrated environment uses macOS. Equivalent Docker, Python, and HTTP commands can be used on Linux or Windows.
@@ -481,14 +512,63 @@ python experiments/generate_performance_chart.py
 ## Iteration 2 Results
 
 | Interval | Events | Minimum (ms) | Average (ms) | Median (ms) | P95 (ms) | Maximum (ms) | Success Rate | Throughput (messages/s) |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 5.0 s | 30 | 185.278 | 316.997 | 318.525 | 466.788 | 532.126 | 100% | 0.194 |
-| 1.0 s | 30 | 110.405 | 227.832 | 170.275 | 730.731 | 910.352 | 100% | 0.823 |
-| 0.2 s | 30 | 108.513 | 150.202 | 134.686 | 235.013 | 347.421 | 100% | 2.848 |
+| -------: | -----: | -----------: | -----------: | ----------: | -------: | -----------: | -----------: | ----------------------: |
+|    5.0 s |     30 |      185.278 |      316.997 |     318.525 |  466.788 |      532.126 |         100% |                   0.194 |
+|    1.0 s |     30 |      110.405 |      227.832 |     170.275 |  730.731 |      910.352 |         100% |                   0.823 |
+|    0.2 s |     30 |      108.513 |      150.202 |     134.686 |  235.013 |      347.421 |         100% |                   2.848 |
 
 ![Pipeline performance comparison](experiments/results/pipeline-performance-comparison.png)
 
 Detailed methodology, analysis, and limitations are documented in [`docs/05-testing-and-results.md`](docs/05-testing-and-results.md).
+
+## Frontend Dashboard (Iteration 3)
+
+The dashboard in `frontend/` is plain HTML/CSS/JavaScript (ES modules) — no build tool, no framework — and talks only to the Spring Boot backend below, never directly to Kuksa, Ditto, uProtocol, or Docker.
+
+### Start the backend
+
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+
+Confirm it's up:
+
+```bash
+curl -i http://localhost:8080/api/vehicles/vehicle-001/state
+curl -i http://localhost:8080/api/vehicles/vehicle-001/health
+```
+
+Both should return `200 OK` with JSON. CORS is enabled on the backend, so the browser dashboard can call these directly.
+
+### Serve the frontend
+
+Browsers block `fetch()` of local JSON mock files over `file://`, so serve it rather than opening the HTML directly:
+
+```bash
+cd frontend
+java -m jdk.httpserver -p 8081 -d "$(pwd)"
+```
+
+(equivalent to `jwebserver -p 8081 -d /path/to/frontend` on JDKs that include the `jwebserver` launcher; `python3 -m http.server 8081` also works)
+
+Open `http://localhost:8081/index.html`.
+
+### Switching between mock and real API
+
+Edit `frontend/js/config.js`:
+
+```js
+export const CONFIG = {
+  USE_MOCK_API: false,   // set true to preview all states without a backend
+  API_BASE_URL: "http://localhost:8080",
+  ...
+};
+```
+
+With the backend running as above, `USE_MOCK_API: false` connects the dashboard to real vehicle state, health, and diagnostic actions. Speed, battery, and tire pressure remain mocked and labeled as such — the backend does not serve those fields yet. The diagnostic action lookup endpoint (`GET /api/v1/diagnostics/actions/{actionId}`) also remains mocked pending backend confirmation.
+
+Full details, the manual test checklist, and what's real vs. mocked are documented in `frontend/README.md`.
 
 ## Stopping the System
 
@@ -545,6 +625,14 @@ python ditto/scripts/verify-vehicle-state.py \
   --max-age-seconds 15
 ```
 
+### Frontend gets `curl: (7) Failed to connect ... Connection refused`
+
+The Spring Boot backend isn't running. Start it (`cd backend && ./mvnw spring-boot:run`) before loading the dashboard with `USE_MOCK_API: false`.
+
+### Frontend gets 404 on `/api/vehicles/vehicle-001/state`
+
+The backend is running but that route isn't mapped — confirm you're on the latest `main` and the route hasn't moved.
+
 ## Known Limitations
 
 - uProtocol delivery is in-process rather than a distributed production transport.
@@ -554,7 +642,7 @@ python ditto/scripts/verify-vehicle-state.py \
 - Ditto properties are updated through sequential HTTP requests.
 - Performance measurements were collected on one local machine with 30 events per interval.
 - Reported latency begins before uProtocol serialization and ends after Ditto updates; it excludes simulator-to-Kuksa delay and frontend rendering.
-- The Spring Boot backend and frontend remain foundations and are not part of the measured runtime.
+- The Spring Boot backend now serves live vehicle state, health, and diagnostic-action endpoints for the Iteration 3 dashboard, but speed, battery, tire pressure, and diagnostic-action lookup (`GET .../actions/{actionId}`) remain mocked on the frontend pending further backend work.
 
 ## Evidence and Documentation
 
@@ -562,6 +650,7 @@ python ditto/scripts/verify-vehicle-state.py \
 - Testing and results: `docs/05-testing-and-results.md`
 - Vehicle health contract: `docs/04-vehicle-health-contracts.md`
 - Raw experiment data: `experiments/results/`
+- Frontend setup and manual test checklist: `frontend/README.md`
 
 ## License and External Components
 

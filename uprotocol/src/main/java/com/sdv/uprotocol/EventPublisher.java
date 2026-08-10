@@ -25,12 +25,15 @@ public class EventPublisher {
     // backend status names -> uProtocol event schema names
     private static String mapHealthStatus(String backendStatus) {
         switch (backendStatus) {
-            case "HEALTHY":  return "HEALTH_HEALTHY";
-            case "WARNING":  return "HEALTH_WARNING";
-            case "CRITICAL": return "HEALTH_CRITICAL";
+            case "HEALTHY":
+                return "HEALTH_HEALTHY";
+            case "WARNING":
+                return "HEALTH_WARNING";
+            case "CRITICAL":
+                return "HEALTH_CRITICAL";
             default:
                 throw new IllegalArgumentException(
-                    "Unknown health status value: " + backendStatus);
+                        "Unknown health status value: " + backendStatus);
         }
     }
 
@@ -62,24 +65,24 @@ public class EventPublisher {
         // TODO: replace with real up-java UMessage construction + publish
         // once the up-java version is pinned (see pom.xml TODO).
         System.out.println("[PUBLISHED HealthStatusChanged] "
-            + "vehicleId=" + vehicleId
-            + " eventId=" + eventId
-            + " timestamp=" + nowTimestamp()
-            + " previousStatus=" + mappedPrevious
-            + " newStatus=" + mappedNew
-            + " triggeringSignal=" + triggeringSignal);
+                + "vehicleId=" + vehicleId
+                + " eventId=" + eventId
+                + " timestamp=" + nowTimestamp()
+                + " previousStatus=" + mappedPrevious
+                + " newStatus=" + mappedNew
+                + " triggeringSignal=" + triggeringSignal);
     }
 
     /**
      * Call this the moment a fault's activation condition is met
      * (e.g. temperature crosses its warning/critical threshold).
      *
-     * @param vehicleId       e.g. "vehicle-001"
-     * @param faultCode       "BATTERY_LOW", "TEMP_HIGH", or "TIRE_PRESSURE_LOW"
-     * @param severity        "FAULT_WARNING" or "FAULT_CRITICAL"
-     * @param affectedSignal  e.g. "temperatureCelsius"
-     * @param detectedValue   the actual reading that triggered the fault
-     * @param threshold       the threshold that was crossed
+     * @param vehicleId      e.g. "vehicle-001"
+     * @param faultCode      "BATTERY_LOW", "TEMP_HIGH", or "TIRE_PRESSURE_LOW"
+     * @param severity       "FAULT_WARNING" or "FAULT_CRITICAL"
+     * @param affectedSignal e.g. "temperatureCelsius"
+     * @param detectedValue  the actual reading that triggered the fault
+     * @param threshold      the threshold that was crossed
      * @return the eventId generated for this fault - save it and pass the
      *         SAME id into publishFaultCleared later, so the two events
      *         can be matched together as one fault's full lifecycle
@@ -95,14 +98,14 @@ public class EventPublisher {
         String eventId = UUID.randomUUID().toString();
 
         System.out.println("[PUBLISHED FaultDetected] "
-            + "vehicleId=" + vehicleId
-            + " eventId=" + eventId
-            + " timestamp=" + nowTimestamp()
-            + " faultCode=" + faultCode
-            + " severity=" + severity
-            + " affectedSignal=" + affectedSignal
-            + " detectedValue=" + detectedValue
-            + " threshold=" + threshold);
+                + "vehicleId=" + vehicleId
+                + " eventId=" + eventId
+                + " timestamp=" + nowTimestamp()
+                + " faultCode=" + faultCode
+                + " severity=" + severity
+                + " affectedSignal=" + affectedSignal
+                + " detectedValue=" + detectedValue
+                + " threshold=" + threshold);
 
         return eventId;
     }
@@ -112,12 +115,12 @@ public class EventPublisher {
      * condition is met (the problem is genuinely resolved, not just
      * slightly improved).
      *
-     * @param vehicleId     e.g. "vehicle-001"
-     * @param eventId       must be the SAME id returned by the matching
-     *                      publishFaultDetected call, so the two events
-     *                      can be linked together
-     * @param faultCode     must match the original fault's code
-     * @param clearedValue  the reading at the moment of recovery
+     * @param vehicleId    e.g. "vehicle-001"
+     * @param eventId      must be the SAME id returned by the matching
+     *                     publishFaultDetected call, so the two events
+     *                     can be linked together
+     * @param faultCode    must match the original fault's code
+     * @param clearedValue the reading at the moment of recovery
      */
     public static void publishFaultCleared(
             String vehicleId,
@@ -126,11 +129,11 @@ public class EventPublisher {
             double clearedValue) {
 
         System.out.println("[PUBLISHED FaultCleared] "
-            + "vehicleId=" + vehicleId
-            + " eventId=" + eventId
-            + " timestamp=" + nowTimestamp()
-            + " faultCode=" + faultCode
-            + " clearedValue=" + clearedValue);
+                + "vehicleId=" + vehicleId
+                + " eventId=" + eventId
+                + " timestamp=" + nowTimestamp()
+                + " faultCode=" + faultCode
+                + " clearedValue=" + clearedValue);
     }
 
     /**
@@ -151,14 +154,13 @@ public class EventPublisher {
         String eventId = UUID.randomUUID().toString();
 
         System.out.println("[PUBLISHED VehicleStatusUpdated] "
-            + "vehicleId=" + vehicleId
-            + " eventId=" + eventId
-            + " timestamp=" + nowTimestamp()
-            + " speedKph=" + speedKph
-            + " batteryPercent=" + batteryPercent
-            + " temperatureCelsius=" + temperatureCelsius
-            + " tirePressure=[" + tireFrontLeft + "," + tireFrontRight
-            + "," + tireRearLeft + "," + tireRearRight + "]");
+                + "vehicleId=" + vehicleId
+                + " eventId=" + eventId
+                + " timestamp=" + nowTimestamp()
+                + " speedKph=" + speedKph
+                + " batteryPercent=" + batteryPercent
+                + " temperatureCelsius=" + temperatureCelsius
+                + " tirePressure=[" + tireFrontLeft + "," + tireFrontRight
+                + "," + tireRearLeft + "," + tireRearRight + "]");
     }
-}
 }

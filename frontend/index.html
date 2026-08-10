@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Dashboard &mdash; SDV Control</title>
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <button
+      type="button"
+      class="menu-toggle"
+      id="menu-toggle"
+      aria-expanded="false"
+      aria-controls="sidebar"
+    >
+      <span aria-hidden="true">&#9776;</span>
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <div class="app-shell">
+      <nav class="sidebar" id="sidebar" aria-label="Primary">
+        <div class="sidebar__brand">
+          <span aria-hidden="true">&#9032;</span> SDV Control
+        </div>
+        <ul class="sidebar__nav-list">
+          <li>
+            <a class="sidebar__nav-link" href="index.html" aria-current="page"
+              ><span class="sidebar__nav-icon" aria-hidden="true">&#9096;</span
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a class="sidebar__nav-link" href="diagnostics.html"
+              ><span class="sidebar__nav-icon" aria-hidden="true">&#9881;</span
+              >Diagnostics</a
+            >
+          </li>
+          <li>
+            <a class="sidebar__nav-link" href="performance.html"
+              ><span class="sidebar__nav-icon" aria-hidden="true">&#9651;</span
+              >Performance</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <main class="content">
+        <header class="page-header">
+          <h1 class="page-header__title">Vehicle Dashboard</h1>
+          <div class="page-header__controls">
+            <label class="sr-only" for="vehicle-select">Vehicle</label>
+            <select id="vehicle-select" class="field-select" disabled>
+              <option>vehicle-001</option>
+            </select>
+            <span id="connection-badge"></span>
+            <span id="last-updated" class="page-header__updated"
+              >Last updated: &mdash;</span
+            >
+          </div>
+        </header>
+
+        <div
+          class="dev-switcher"
+          id="dev-switcher-panel"
+          role="group"
+          aria-label="Demo fixture selector"
+        >
+          <span>Preview fixture:</span>
+          <span id="fixture-switcher"></span>
+          <label
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              margin-left: 8px;
+            "
+          >
+            <input type="checkbox" id="disconnect-toggle" /> simulate
+            disconnected
+          </label>
+        </div>
+
+        <div
+          class="disconnected-banner"
+          id="disconnected-banner"
+          role="alert"
+          hidden
+        >
+          <div>
+            <div class="disconnected-banner__title">Disconnected</div>
+            <div class="disconnected-banner__detail">
+              Showing last known data.
+            </div>
+          </div>
+          <button type="button" class="btn btn--outline" id="retry-btn">
+            Retry
+          </button>
+        </div>
+
+        <section
+          class="metric-grid"
+          id="metric-grid"
+          aria-label="Vehicle metrics"
+        >
+          <div class="metric-card metric-card--health">
+            <span class="metric-card__label">Vehicle Health</span>
+            <span id="health-badge-slot"></span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__label">Speed</span>
+            <div id="metric-speed" class="metric-card__value">&mdash;</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__label">Battery</span>
+            <div id="metric-battery" class="metric-card__value">&mdash;</div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__label">Temperature</span>
+            <div id="metric-temperature" class="metric-card__value">
+              &mdash;
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__label">Coolant Pressure</span>
+            <div id="metric-coolant" class="metric-card__value">&mdash;</div>
+          </div>
+        </section>
+
+        <section class="lower-grid">
+          <div class="card">
+            <h2 class="card__title">Live Telemetry</h2>
+            <svg
+              id="telemetry-chart"
+              role="img"
+              aria-label="Live temperature over the last 30 seconds"
+              width="100%"
+              height="160"
+            ></svg>
+          </div>
+          <div class="card">
+            <h2 class="card__title">Active Faults</h2>
+            <div id="fault-slot"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+    <script>
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          var sidebar = document.getElementById("sidebar");
+          var open = sidebar.classList.toggle("is-open");
+          this.setAttribute("aria-expanded", String(open));
+        });
+    </script>
+  </body>
+</html>
