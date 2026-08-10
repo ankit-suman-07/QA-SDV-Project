@@ -32,12 +32,8 @@ def create_request_handler(controller):
                 return
 
             try:
-                content_length = int(
-                    self.headers.get("Content-Length", "0")
-                )
-                request_body = self.rfile.read(
-                    content_length
-                )
+                request_body = self._read_request_body()
+
                 payload = json.loads(
                     request_body.decode("utf-8")
                 )
@@ -61,6 +57,57 @@ def create_request_handler(controller):
                     400,
                     {"error": str(exception)},
                 )
+
+        def _read_request_body(self):
+            transfer_encoding = self.headers.get(
+                "Transfer-Encoding",
+                "",
+            ).lower()
+
+            if "chunked" in transfer_encoding:
+                request_body = bytearray()
+
+                while True:
+                    chunk_header = (
+                        self.rfile.readline().strip()
+                    )
+
+                    if not chunk_header:
+                        raise ValueError(
+                            "Invalid chunked request body"
+                        )
+
+                    chunk_size = int(
+                        chunk_header.split(b";", 1)[0],
+                        16,
+                    )
+
+                    if chunk_size == 0:
+                        while True:
+                            trailer = self.rfile.readline()
+
+                            if trailer in (
+                                b"\r\n",
+                                b"\n",
+                                b"",
+                            ):
+                                break
+
+                        break
+
+                    request_body.extend(
+                        self.rfile.read(chunk_size)
+                    )
+
+                    self.rfile.read(2)
+
+                return bytes(request_body)
+
+            content_length = int(
+                self.headers.get("Content-Length", "0")
+            )
+
+            return self.rfile.read(content_length)
 
         def _write_json(self, status_code, payload):
             response_body = json.dumps(payload).encode(

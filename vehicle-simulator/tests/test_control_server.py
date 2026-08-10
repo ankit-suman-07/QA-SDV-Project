@@ -3,6 +3,7 @@ import os
 import sys
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
+from http.client import HTTPConnection
 
 import pytest
 
@@ -94,3 +95,46 @@ def test_invalid_action_returns_bad_request(running_server):
         )
 
     assert error.value.code == 400
+
+def test_chunked_post_action_injects_scenario(
+    running_server,
+):
+    server, controller = running_server
+    host, port = server.server_address
+
+    payload = json.dumps(
+        {
+            "actionId": "action-001",
+            "traceId": "trace-001",
+            "action": "INJECT_SCENARIO",
+            "scenario": "COOLING_SYSTEM_FAILURE",
+        }
+    ).encode("utf-8")
+
+    connection = HTTPConnection(
+        host,
+        port,
+        timeout=2,
+    )
+
+    connection.request(
+        method="POST",
+        url="/api/v1/scenarios/actions",
+        body=iter([payload]),
+        headers={
+            "Content-Type": "application/json",
+        },
+        encode_chunked=True,
+    )
+
+    response = connection.getresponse()
+    body = json.loads(
+        response.read().decode("utf-8")
+    )
+    connection.close()
+
+    assert response.status == 200
+    assert body["active"] is True
+    assert controller.is_active(
+        "COOLING_SYSTEM_FAILURE"
+    ) is True
