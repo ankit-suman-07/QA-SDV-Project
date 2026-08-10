@@ -16,7 +16,7 @@ uprotocol/
 |   |-- health_status.proto
 |   |-- vehicle_fault.proto
 |   `-- vehicle_diagnostic.proto
-|-- generated/
+|-- generated/                (not committed - created by the protoc step below)
 |-- tests/
 |   |-- test_transport.py
 |   `-- verify_contract_match.py
@@ -69,8 +69,12 @@ REJECTED (terminal, no prior state)
 
 ## Open items
 
-- Coolant pressure's Kuksa/VSS path is `TO_BE_CONFIRMED` in the
-  contract itself - project-wide blocker, not schema-specific.
+- Coolant pressure's Kuksa/VSS path is confirmed:
+  `Vehicle.Powertrain.CombustionEngine.EngineCoolant.Pressure`
+  (previously `TO_BE_CONFIRMED` in the shared contract - contract doc
+  update owned by Ankit). No changes needed on the schema/transport
+  side, since publish_vehicle_status() receives an already-extracted
+  value and never references the Kuksa path directly.
 
 ## Tests
 
@@ -111,7 +115,7 @@ print(get_delivery_stats())
 - [x] Transport tests passing (9/9)
 - [x] EventPublisher.java compiles, JUnit tests passing (7/7)
 - [x] Iteration 3 schemas (coolant pressure, correlated fault, diagnostic actions) verified against the shared contract (4/4)
-- [ ] transport.py extended to carry Iteration 3 fields (trace_id, action_id, event_type, schema_version)
-- [ ] Delivery tracking extended for new event types
+- [x] transport.py extended to carry Iteration 3 fields (trace_id, action_id, event_type, schema_version)
+- [x] Delivery tracking extended for new event types (correlated faults, diagnostic actions)
 - [ ] Real network transport (MQTT/Zenoh)
 - [ ] Full live backend connection
