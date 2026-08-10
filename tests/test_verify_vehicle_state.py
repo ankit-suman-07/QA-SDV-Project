@@ -19,6 +19,7 @@ def make_thing(status="HEALTHY", active_faults=None, processed_ts=None, override
             "signals": {
                 "properties": {
                     "speedKph": 60.0, "batteryPercent": 80.0, "temperatureCelsius": 89.0,
+                    "coolantPressureKpa": 200.0,
                     "tirePressurePsi": {"frontLeft": 32, "frontRight": 32, "rearLeft": 31, "rearRight": 32},
                     "sourceTimestamp": now,
                 }
