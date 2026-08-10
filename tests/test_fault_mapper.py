@@ -93,6 +93,94 @@ class FaultMapperTest(unittest.TestCase):
         thing = make_thing(active_faults=[])
         self.assertEqual([], map_all_active_faults(thing))
 
+    def test_correlated_fault_maps_both_signals(self):
+        thing = make_thing(active_faults=["COOLING_SYSTEM_FAILURE"])
+        thing["features"]["signals"]["properties"]["temperatureCelsius"] = 108.0
+        thing["features"]["signals"]["properties"]["coolantPressureKpa"] = 140.0
+
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        result = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+
+        self.assertEqual("CRITICAL", result["severity"])
+        self.assertEqual("ACTIVE", result["status"])
+        self.assertEqual(["temperatureCelsius", "coolantPressureKpa"], result["affectedSignals"])
+        self.assertEqual(108.0, result["observedValues"]["temperatureCelsius"])
+        self.assertEqual(140.0, result["observedValues"]["coolantPressureKpa"])
+        self.assertEqual(105.0, result["activationThresholds"]["temperatureCelsius"])
+        self.assertEqual(150.0, result["activationThresholds"]["coolantPressureKpa"])
+        self.assertEqual(100.0, result["recoveryThresholds"]["temperatureCelsius"])
+        self.assertEqual(180.0, result["recoveryThresholds"]["coolantPressureKpa"])
+
+    def test_correlated_fault_status_cleared_when_not_active(self):
+        thing = make_thing(active_faults=[])
+        thing["features"]["signals"]["properties"]["temperatureCelsius"] = 95.0
+        thing["features"]["signals"]["properties"]["coolantPressureKpa"] = 200.0
+
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        result = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+        self.assertEqual("CLEARED", result["status"])
+
+    def test_correlated_fault_unknown_code_raises(self):
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        with self.assertRaises(ValueError):
+            map_correlated_fault_to_opensovd("NOT_A_REAL_CORRELATED_FAULT", make_thing())
+
+    def test_correlated_fault_pulls_detail_when_present(self):
+        thing = make_thing(active_faults=["COOLING_SYSTEM_FAILURE"])
+        thing["features"]["diagnostics"] = {
+            "properties": {
+                "activeFaultDetails": [
+                    {
+                        "code": "COOLING_SYSTEM_FAILURE",
+                        "detectedAt": "2026-08-03T15:00:01.200Z",
+                        "clearedAt": None,
+                        "eventId": "event-123",
+                        "traceId": "trace-123",
+                        "actionId": "action-123",
+                    }
+                ]
+            }
+        }
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        result = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+        self.assertEqual("2026-08-03T15:00:01.200Z", result["detectedAt"])
+        self.assertEqual("trace-123", result["traceId"])
+        self.assertEqual("action-123", result["actionId"])
+
+    def test_correlated_fault_detail_absent_returns_none(self):
+        thing = make_thing(active_faults=["COOLING_SYSTEM_FAILURE"])
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        result = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+        self.assertIsNone(result["detectedAt"])
+        self.assertIsNone(result["traceId"])
+        self.assertIsNone(result["actionId"])
+
+    def test_map_all_active_faults_dispatches_correlated_correctly(self):
+        thing = make_thing(battery=15, active_faults=["BATTERY_LOW", "COOLING_SYSTEM_FAILURE"])
+        thing["features"]["signals"]["properties"]["temperatureCelsius"] = 108.0
+        thing["features"]["signals"]["properties"]["coolantPressureKpa"] = 140.0
+
+        results = map_all_active_faults(thing)
+        self.assertEqual(2, len(results))
+
+        battery_result = next(r for r in results if r["code"] == "BATTERY_LOW")
+        cooling_result = next(r for r in results if r["code"] == "COOLING_SYSTEM_FAILURE")
+        self.assertIn("affectedSignal", battery_result)       # single-signal shape
+        self.assertIn("affectedSignals", cooling_result)      # correlated shape
+
+    def test_build_diagnostic_resource_wraps_correlated_fault(self):
+        thing = make_thing(active_faults=["COOLING_SYSTEM_FAILURE"])
+        thing["features"]["signals"]["properties"]["temperatureCelsius"] = 108.0
+        thing["features"]["signals"]["properties"]["coolantPressureKpa"] = 140.0
+
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd, build_diagnostic_resource
+        fault = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+        resource = build_diagnostic_resource(fault)
+
+        self.assertEqual("vehicle-001", resource["vehicleId"])
+        self.assertEqual("diagnosticFault", resource["resourceType"])
+        self.assertEqual(fault, resource["fault"])
+
 
 if __name__ == "__main__":
     unittest.main()
