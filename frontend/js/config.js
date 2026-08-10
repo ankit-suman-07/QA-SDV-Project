@@ -1,7 +1,7 @@
 // Central place to switch between mock and real API, and tune timing.
 // Section 10-15 of the handoff guide.
 export const CONFIG = {
-  USE_MOCK_API: falsecd,
+  USE_MOCK_API: false,
   API_BASE_URL: "http://localhost:8080",
   POLL_INTERVAL_MS: 2000,
   STALE_AFTER_MS: 5000,
