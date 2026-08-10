@@ -7,7 +7,10 @@ import "common.proto";
 option java_package = "com.sdv.uprotocol.proto";
 option java_multiple_files = true;
 
-// Tire pressure readings for all four wheels, in PSI.
+// Kept at 4 wheels from Iteration 1/2, even though the Iteration 3
+// contract's required-fields table only lists frontLeft. Not a
+// breaking change - proto3 leaves unset numeric fields at 0.0, and
+// removing already-shipped fields would break existing consumers.
 message TirePressure {
   double front_left = 1;
   double front_right = 2;
@@ -15,11 +18,18 @@ message TirePressure {
   double rear_right = 4;
 }
 
-// Published on every normalized signal batch read from Kuksa.
+// Matches the contract's nested "signals" object.
+message VehicleSignals {
+  double speed_kph = 1;
+  double battery_percent = 2;
+  double temperature_celsius = 3;
+  // Path is TO_BE_CONFIRMED in the contract itself as of this version -
+  // this is a project-wide open item, not something unresolved on my end.
+  double coolant_pressure_kpa = 4;
+  TirePressure tire_pressure_psi = 5;
+}
+
 message VehicleStatusUpdated {
   EventMetadata metadata = 1;
-  double speed_kph = 2;
-  double battery_percent = 3;
-  double temperature_celsius = 4;
-  TirePressure tire_pressure_psi = 5;
+  VehicleSignals signals = 2;
 }

@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package sdv.uprotocol;
+
+import "common.proto";
+import "vehicle_fault.proto";
+
+option java_package = "com.sdv.uprotocol.proto";
+option java_multiple_files = true;
+
+// --- Correlated fault ---
+// Matches the contract's "Fault Contract" section. Two separate message
+// types (Detected/Cleared) are used instead of one message with a
+// status field - CorrelatedFaultDetected implies status=ACTIVE,
+// CorrelatedFaultCleared implies status=CLEARED. No data is lost by
+// this choice; it follows the same pattern as FaultDetected/FaultCleared
+// in vehicle_fault.proto.
+
+enum CorrelatedFaultCode {
+  CORRELATED_FAULT_CODE_UNSPECIFIED = 0;
+  COOLING_SYSTEM_FAILURE = 1;
+}
+
+// Severity is kept as an internal enum (not a raw "CRITICAL" string) for
+// type safety, consistent with FaultSeverity in vehicle_fault.proto.
+// Whatever component produces the external JSON/REST/Ditto
+// representation is responsible for translating this to the contract's
+// plain-string form, the same way EventPublisher.java already
+// translates backend status names to schema enum names.
+message CorrelatedFaultDetected {
+  EventMetadata metadata = 1;
+  CorrelatedFaultCode fault_code = 2;
+  string description = 3;
+  FaultSeverity severity = 4;
+  repeated string affected_signals = 5;
+  map<string, double> observed_values = 6;
+  map<string, double> activation_thresholds = 7;
+  string detected_at = 8;
+}
+
+message CorrelatedFaultCleared {
+  EventMetadata metadata = 1;
+  CorrelatedFaultCode fault_code = 2;
+  repeated string affected_signals = 3;
+  map<string, double> observed_values = 4;
+  map<string, double> recovery_thresholds = 5;
+  string cleared_at = 6;
+}
+
+// --- Diagnostic action lifecycle ---
+// CONFIRMED against backend model DiagnosticAction.java - exactly two values.
+enum DiagnosticAction {
+  DIAGNOSTIC_ACTION_UNSPECIFIED = 0;
+  INJECT_SCENARIO = 1;
+  CLEAR_SCENARIO = 2;
+  // Status querying is NOT a DiagnosticAction - it is a separate GET
+  // operation (DiagnosticActionService.getById()), confirmed by the
+  // contract's Diagnostic Action API section.
+}
+
+// CONFIRMED against backend model DiagnosticScenario.java.
+enum DiagnosticScenario {
+  DIAGNOSTIC_SCENARIO_UNSPECIFIED = 0;
+  SCENARIO_COOLING_SYSTEM_FAILURE = 1;
+}
+
+// CONFIRMED against backend model DiagnosticActionStatus.java and the
+// contract's Action States table. Legal transitions (from
+// DefaultDiagnosticActionService.isValidTransition(), matches contract's
+// "Permitted State Transitions"):
+//   ACCEPTED -> IN_PROGRESS -> COMPLETED
+//   ACCEPTED -> IN_PROGRESS -> FAILED
+//   ACCEPTED -> FAILED
+//   REJECTED (terminal, no prior state)
+enum DiagnosticActionStatus {
+  DIAGNOSTIC_ACTION_STATUS_UNSPECIFIED = 0;
+  ACCEPTED = 1;
+  IN_PROGRESS = 2;
+  COMPLETED = 3;
+  FAILED = 4;
+  REJECTED = 5;
+}
+
+message DiagnosticActionRequested {
+  EventMetadata metadata = 1;   // action_id set here; trace_id may equal action_id per contract
+  DiagnosticAction action = 2;
+  DiagnosticScenario scenario = 3;
+}
+
+message DiagnosticActionAccepted {
+  EventMetadata metadata = 1;
+  DiagnosticAction action = 2;
+  DiagnosticScenario scenario = 3;
+  DiagnosticActionStatus status = 4;
+}
