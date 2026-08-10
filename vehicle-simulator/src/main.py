@@ -49,6 +49,10 @@ SIGNAL_PATHS = {
         "Vehicle.Chassis.Axle.Row1.Wheel.Left."
         "Tire.Pressure"
     ),
+    "coolant_pressure": (
+        "Vehicle.Powertrain.CombustionEngine."
+        "EngineCoolant.Pressure"
+    ),
 }
 
 
@@ -68,6 +72,7 @@ def create_scenario_controller():
 
 def main():
     controller = create_scenario_controller()
+
     control_server = start_control_server(
         controller=controller,
         host=CONTROL_HOST,

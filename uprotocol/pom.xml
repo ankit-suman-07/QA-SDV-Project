@@ -13,8 +13,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- TODO: pin exact version after Day 2 verification against Maven Central -->
-    <uprotocol.version>TBD</uprotocol.version>
+    <uprotocol.version>1.5.8</uprotocol.version>
     <protobuf.version>3.25.3</protobuf.version>
   </properties>
 
@@ -60,16 +59,19 @@
         <artifactId>protobuf-maven-plugin</artifactId>
         <version>0.6.1</version>
         <configuration>
+          <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact> 
           <protoSourceRoot>${project.basedir}/proto</protoSourceRoot>
           <outputDirectory>${project.basedir}/generated</outputDirectory>
           <clearOutputDirectory>false</clearOutputDirectory>
         </configuration>
         <executions>
+
           <execution>
             <goals>
               <goal>compile</goal>
             </goals>
           </execution>
+          
         </executions>
       </plugin>
     </plugins>
