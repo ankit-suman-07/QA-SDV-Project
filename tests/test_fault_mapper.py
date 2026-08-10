@@ -181,6 +181,40 @@ class FaultMapperTest(unittest.TestCase):
         self.assertEqual("diagnosticFault", resource["resourceType"])
         self.assertEqual(fault, resource["fault"])
 
+    def test_source_is_active_faults_when_no_detail_present(self):
+        thing = make_thing(battery=15, active_faults=["BATTERY_LOW"])
+        result = map_fault_to_opensovd("BATTERY_LOW", thing)
+        self.assertEqual("activeFaults", result["source"])
+
+    def test_source_is_active_fault_details_when_detail_present(self):
+        thing = make_thing(battery=15, active_faults=["BATTERY_LOW"])
+        thing["features"]["diagnostics"] = {"properties": {"activeFaultDetails": [
+            {"code": "BATTERY_LOW", "faultId": "f-1"}
+        ]}}
+        result = map_fault_to_opensovd("BATTERY_LOW", thing)
+        self.assertEqual("activeFaultDetails", result["source"])
+
+    def test_correlated_source_is_active_faults_when_no_detail_present(self):
+        thing = make_thing(active_faults=["COOLING_SYSTEM_FAILURE"])
+        thing["features"]["signals"]["properties"]["temperatureCelsius"] = 108.0
+        thing["features"]["signals"]["properties"]["coolantPressureKpa"] = 140.0
+
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        result = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+        self.assertEqual("activeFaults", result["source"])
+
+    def test_correlated_source_is_active_fault_details_when_detail_present(self):
+        thing = make_thing(active_faults=["COOLING_SYSTEM_FAILURE"])
+        thing["features"]["signals"]["properties"]["temperatureCelsius"] = 108.0
+        thing["features"]["signals"]["properties"]["coolantPressureKpa"] = 140.0
+        thing["features"]["diagnostics"] = {"properties": {"activeFaultDetails": [
+            {"code": "COOLING_SYSTEM_FAILURE", "detectedAt": "2026-08-03T15:00:01.200Z"}
+        ]}}
+
+        from opensovd.fault_mapper import map_correlated_fault_to_opensovd
+        result = map_correlated_fault_to_opensovd("COOLING_SYSTEM_FAILURE", thing)
+        self.assertEqual("activeFaultDetails", result["source"])
+
 
 if __name__ == "__main__":
     unittest.main()

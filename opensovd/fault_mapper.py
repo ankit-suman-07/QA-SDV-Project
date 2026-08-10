@@ -18,11 +18,13 @@ Two fault shapes are supported:
   must breach their own threshold, single CRITICAL severity per the
   Iteration 3 contract.
 
-Known limitation: faultId, detectedAt/detectedTimestamp, clearedAt,
-traceId, actionId, and correlationId require persistent per-fault
-lifecycle state. If present in Ditto's diagnostics.activeFaultDetails
-feature (matched by code), they are used; otherwise they are returned as
-None, pending that state being written by the integration bridge.
+Per Ankit's guidance (activeFaultDetails is still a work in progress on
+the bridge side): every mapped fault includes a "source" field -
+"activeFaultDetails" when a full lifecycle record was found in Ditto's
+diagnostics feature, or "activeFaults" when this is a fallback built only
+from the bare fault code, with faultId/detectedAt/clearedAt/traceId/
+actionId/eventId reported as None. This makes the fallback case
+explicit rather than silently indistinguishable from complete data.
 """
 from dataclasses import dataclass, asdict
 from typing import Optional
@@ -93,6 +95,7 @@ class OpenSovdFault:
     lastUpdatedTimestamp: Optional[str]
     clearedTimestamp: Optional[str]
     correlationId: Optional[str]
+    source: str
 
     def to_dict(self):
         return asdict(self)
@@ -161,6 +164,7 @@ def map_fault_to_opensovd(fault_code: str, thing: dict) -> dict:
     signals = thing.get("features", {}).get("signals", {}).get("properties", {})
     health = thing.get("features", {}).get("health", {}).get("properties", {})
     detail = _lookup_fault_detail(thing, fault_code)
+    source = "activeFaultDetails" if detail else "activeFaults"
 
     fault = OpenSovdFault(
         faultId=detail.get("faultId"),
@@ -177,6 +181,7 @@ def map_fault_to_opensovd(fault_code: str, thing: dict) -> dict:
         lastUpdatedTimestamp=health.get("processedTimestamp"),
         clearedTimestamp=detail.get("clearedAt"),
         correlationId=detail.get("traceId"),
+        source=source,
     )
     return fault.to_dict()
 
@@ -192,6 +197,7 @@ def map_correlated_fault_to_opensovd(fault_code: str, thing: dict) -> dict:
     signals = thing.get("features", {}).get("signals", {}).get("properties", {})
     health = thing.get("features", {}).get("health", {}).get("properties", {})
     detail = _lookup_fault_detail(thing, fault_code)
+    source = "activeFaultDetails" if detail else "activeFaults"
 
     affected_signals = list(definition["signals"].keys())
     observed_values = {name: signals.get(name) for name in affected_signals}
@@ -207,6 +213,7 @@ def map_correlated_fault_to_opensovd(fault_code: str, thing: dict) -> dict:
         "description": definition["description"],
         "severity": definition["severity"],
         "status": "ACTIVE" if fault_code in health.get("activeFaults", []) else "CLEARED",
+        "source": source,
         "affectedSignals": affected_signals,
         "observedValues": observed_values,
         "activationThresholds": activation_thresholds,

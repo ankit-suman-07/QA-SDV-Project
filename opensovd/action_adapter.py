@@ -21,7 +21,7 @@ from typing import Optional
 
 import requests
 
-DEFAULT_BACKEND_URL = "http://localhost:8081"
+DEFAULT_BACKEND_URL = "http://localhost:8082"
 ACTIONS_PATH = "/api/v1/diagnostics/actions"
 
 SUPPORTED_ACTIONS = {"INJECT_SCENARIO", "CLEAR_SCENARIO"}
