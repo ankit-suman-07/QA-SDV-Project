@@ -19,6 +19,7 @@ SIGNAL_PATHS = {
     "battery": "Vehicle.Powertrain.TractionBattery.StateOfCharge.Current",
     "engine_temp": "Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature",
     "tire_pressure": "Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
+    "coolant_pressure": "Vehicle.Powertrain.CombustionEngine.EngineCoolant.Pressure",
 }
 
 def main():

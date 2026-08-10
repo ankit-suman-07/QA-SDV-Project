@@ -1,0 +1,9 @@
+Vehicle.Powertrain.CombustionEngine.EngineCoolant.Pressure:
+  datatype: float
+  type: sensor
+  unit: kPa
+  description: >
+    Simulated engine-coolant pressure used for correlated cooling-system
+    diagnostics. Custom project-specific VSS extension (no standard VSS
+    path exists for coolant pressure as of VSS 4.0). Normal range:
+    180-220 kPa. Fault threshold: <=150 kPa. Recovery threshold: >=180 kPa.
