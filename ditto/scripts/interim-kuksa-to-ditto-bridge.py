@@ -2,6 +2,7 @@ import os
 import sys
 import time
 from datetime import datetime, timezone
+from ditto.ditto_http import put_json_with_retry
 from pathlib import Path
 
 import requests
@@ -94,12 +95,14 @@ def optional_action_id(metadata):
 
 
 def put_ditto_property(path, value):
-    return requests.put(
-        f"{DITTO_URL}/{path}",
-        json=value,
+    return put_json_with_retry(
+        url=f"{DITTO_URL}/{path}",
+        value=value,
         auth=AUTH,
         headers=HEADERS,
-        timeout=5,
+        attempts=3,
+        timeout_seconds=5,
+        retry_delay_seconds=0.2,
     )
 
 
@@ -468,18 +471,23 @@ with VSSClient("127.0.0.1", 55556) as client:
         ]
 
         ditto_success = all(
-            response.ok
+            response is not None and response.ok
             for response in responses
         )
 
         if not ditto_success:
             failed_responses = [
                 (
+                    "NO_RESPONSE",
+                    "Ditto request failed after retries",
+                )
+                if response is None
+                else (
                     response.status_code,
                     response.text,
                 )
                 for response in responses
-                if not response.ok
+                if response is None or not response.ok
             ]
 
             print(
