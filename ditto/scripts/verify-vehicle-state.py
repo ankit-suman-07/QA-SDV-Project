@@ -43,8 +43,8 @@ NUMERIC_SIGNAL_FIELDS = ["speedKph", "batteryPercent", "temperatureCelsius", "co
 # the activation side is checked - see validate_correlated_faults.
 CORRELATED_FAULT_RULES = {
     "COOLING_SYSTEM_FAILURE": {
-        "temperatureCelsius": {"activation_threshold": 105.0, "direction": "above"},
-        "coolantPressureKpa": {"activation_threshold": 150.0, "direction": "below"},
+        "temperatureCelsius": {"activation_threshold": 105.0, "recovery_threshold": 100.0, "direction": "above"},
+        "coolantPressureKpa": {"activation_threshold": 150.0, "recovery_threshold": 180.0, "direction": "below"},
     },
 }
 
@@ -156,13 +156,17 @@ def validate_health(thing: dict, result: VerificationResult) -> None:
 
 
 def validate_correlated_faults(thing: dict, result: VerificationResult) -> None:
-    """Checks an active correlated fault is justified by current signal
-    values ('Correlated-fault status matches the signal values', docs/10).
+    """Checks an active correlated fault hasn't fully recovered while
+    still being reported as active ('Correlated-fault status matches the
+    signal values', docs/10).
 
-    Only the activation direction is checked. Checking the reverse would
-    false-positive: the contract's hysteresis design lets signals sit
-    between activation and recovery thresholds while a fault stays active
-    - correct behaviour, not a violation.
+    Only flags the case where BOTH recovery conditions are already met -
+    that's the one unambiguous inconsistency a single snapshot can prove.
+    Does NOT flag the hysteresis zone (between recovery and activation
+    thresholds) or a fully-abnormal state, since the contract's own
+    hysteresis design means a fault legitimately stays active through
+    both of those - flagging them would be a false positive, not a
+    real defect.
     """
     health = thing.get("features", {}).get("health", {}).get("properties", {})
     signals = thing.get("features", {}).get("signals", {}).get("properties", {})
@@ -171,23 +175,27 @@ def validate_correlated_faults(thing: dict, result: VerificationResult) -> None:
     for code, rules in CORRELATED_FAULT_RULES.items():
         if code not in active_faults:
             continue
+
+        recovery_checks = []
         for signal_name, rule in rules.items():
             value = signals.get(signal_name)
             if value is None or not _is_valid_number(value):
                 result.add_error(
                     f"Correlated fault {code} is active but {signal_name} is missing or invalid"
                 )
+                recovery_checks.append(False)
                 continue
-            breached = (
-                value >= rule["activation_threshold"]
+            recovered = (
+                value <= rule["recovery_threshold"]
                 if rule["direction"] == "above"
-                else value <= rule["activation_threshold"]
+                else value >= rule["recovery_threshold"]
             )
-            if not breached:
+            recovery_checks.append(recovered)
+            if recovered:
                 result.add_error(
                     f"Correlated fault {code} is active but {signal_name}={value} "
-                    f"does not meet its activation threshold ({rule['direction']} "
-                    f"{rule['activation_threshold']})"
+                    f"has already recovered past its threshold "
+                    f"({'<=' if rule['direction'] == 'above' else '>='} {rule['recovery_threshold']})"
                 )
 
 
