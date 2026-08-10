@@ -44,6 +44,10 @@ class ValidateActionRequestTest(unittest.TestCase):
         error = validate_action_request("vehicle-001", "INJECT_SCENARIO", "")
         self.assertEqual(400, error["status"])
 
+    def test_clear_scenario_action_also_valid(self):
+        error = validate_action_request("vehicle-001", "CLEAR_SCENARIO", "COOLING_SYSTEM_FAILURE")
+        self.assertIsNone(error)
+
 
 class SubmitDiagnosticActionTest(unittest.TestCase):
 
