@@ -77,8 +77,8 @@ frontend/
 | ------------------------------------- | ------------------------------------------------------------------------------------------------- |
 | Vehicle temperature, coolant pressure | Mocked by default; HTTP adapter ready, switch `USE_MOCK_API: false` once backend + CORS confirmed |
 | Vehicle health                        | Same as above                                                                                     |
-| Diagnostic action submit (POST)       | Same as above                                                                                     |
-| Diagnostic action lookup (GET by id)  | Always mocked — guide marks the real endpoint IN PROGRESS                                         |
+| POST diagnostics action               | ✅ Confirmed live above                                                                           |
+| GET action-by-id                      | ✅ Confirmed live                                                                                 |
 | Speed, battery, tire pressure         | Always mocked and labeled — not served by backend at all yet                                      |
 | Active-fault detail                   | Always mocked — guide says do not infer from health status alone                                  |
 | Performance page                      | Always fixture-based (real experiment numbers), per guide — no live metrics endpoint exists       |
