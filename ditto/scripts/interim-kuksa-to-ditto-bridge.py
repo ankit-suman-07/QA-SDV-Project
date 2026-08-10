@@ -1,25 +1,40 @@
 import os
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
 from kuksa_client.grpc import VSSClient
-from datetime import datetime, timezone
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
+from ditto.fault_details import (
+    build_active_fault_detail,
+    is_activation_condition,
+    is_recovery_condition,
+)
 from experiments.pipeline_evaluator import PipelineEvaluator
 from experiments.result_summary import summarize_records
 from uprotocol.transport import (
+    publish_correlated_fault_cleared,
+    publish_correlated_fault_detected,
     publish_vehicle_status,
+    receive_correlated_fault_cleared,
+    receive_correlated_fault_detected,
     receive_vehicle_status,
+    vehicle_diagnostic_pb2,
+    vehicle_fault_pb2,
 )
 
-DITTO_URL = "http://localhost:8080/api/2/things/sdv:vehicle-001"
+DITTO_URL = (
+    "http://localhost:8080/api/2/things/"
+    "sdv:vehicle-001"
+)
+
 AUTH = ("ditto", "ditto")
 HEADERS = {"Content-Type": "application/json"}
 
@@ -38,21 +53,55 @@ EXPERIMENT_EVENT_LIMIT = int(
 
 RESULTS_FILE = os.getenv(
     "EXPERIMENT_RESULTS_FILE",
-    f"experiments/results/{EXPERIMENT_ID}.csv",
+    (
+        f"experiments/results/"
+        f"{EXPERIMENT_ID}.csv"
+    ),
 )
 
-BATTERY_LOW_THRESHOLD = 20
-BATTERY_RECOVER_THRESHOLD = 25
+BATTERY_LOW_THRESHOLD = 20.0
+BATTERY_RECOVER_THRESHOLD = 25.0
 
 PATHS = {
     "speed": "Vehicle.Speed",
-    "battery":
-        "Vehicle.Powertrain.TractionBattery.StateOfCharge.Current",
-    "temperature":
-        "Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature",
-    "tire_fl":
-        "Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
+    "battery": (
+        "Vehicle.Powertrain.TractionBattery."
+        "StateOfCharge.Current"
+    ),
+    "temperature": (
+        "Vehicle.Powertrain.CombustionEngine."
+        "EngineCoolant.Temperature"
+    ),
+    "tire_fl": (
+        "Vehicle.Chassis.Axle.Row1.Wheel.Left."
+        "Tire.Pressure"
+    ),
+    "coolant_pressure": (
+        "Vehicle.Powertrain.CombustionEngine."
+        "EngineCoolant.Pressure"
+    ),
 }
+
+
+def optional_action_id(metadata):
+    try:
+        if metadata.HasField("action_id"):
+            return metadata.action_id
+    except ValueError:
+        pass
+
+    return None
+
+
+def put_ditto_property(path, value):
+    return requests.put(
+        f"{DITTO_URL}/{path}",
+        json=value,
+        auth=AUTH,
+        headers=HEADERS,
+        timeout=5,
+    )
+
 
 evaluator = PipelineEvaluator(
     experiment_id=EXPERIMENT_ID,
@@ -71,34 +120,56 @@ print(
 )
 
 with VSSClient("127.0.0.1", 55556) as client:
-    fault_active = False
+    battery_fault_active = False
+    cooling_fault_active = False
+    active_fault_details = []
 
     while True:
         values = client.get_current_values(
             list(PATHS.values())
         )
 
-        speed = values[PATHS["speed"]].value or 0
+        speed = values[PATHS["speed"]].value
         battery = values[PATHS["battery"]].value
-        temperature = (
-            values[PATHS["temperature"]].value or 0
-        )
-        tire_fl = values[PATHS["tire_fl"]].value or 0
+        temperature = values[
+            PATHS["temperature"]
+        ].value
+        tire_fl = values[PATHS["tire_fl"]].value
+        coolant_pressure = values[
+            PATHS["coolant_pressure"]
+        ].value
 
-        if battery is None:
+        required_values = (
+            speed,
+            battery,
+            temperature,
+            tire_fl,
+            coolant_pressure,
+        )
+
+        if any(
+            value is None
+            for value in required_values
+        ):
             print(
-                "[wait] no battery value published yet, "
-                "retrying..."
+                "[wait] required Kuksa values have "
+                "not been published yet, retrying..."
             )
             time.sleep(2)
             continue
 
         pipeline_start_time = time.perf_counter()
+
         serialized_event = publish_vehicle_status(
             vehicle_id="vehicle-001",
             speed_kph=float(speed),
             battery_percent=float(battery),
-            temperature_celsius=float(temperature),
+            temperature_celsius=float(
+                temperature
+            ),
+            coolant_pressure_kpa=float(
+                coolant_pressure
+            ),
             tire_pressure_psi=float(tire_fl),
         )
 
@@ -107,133 +178,314 @@ with VSSClient("127.0.0.1", 55556) as client:
         )
 
         event_id = received_event.metadata.event_id
+        trace_id = received_event.metadata.trace_id
+        action_id = optional_action_id(
+            received_event.metadata
+        )
 
         evaluator.start_event(
             event_id=event_id,
             start_time=pipeline_start_time,
         )
 
-        speed = received_event.speed_kph
-        battery = received_event.battery_percent
-        temperature = received_event.temperature_celsius
+        signals = received_event.signals
+
+        speed = signals.speed_kph
+        battery = signals.battery_percent
+        temperature = signals.temperature_celsius
+        coolant_pressure = (
+            signals.coolant_pressure_kpa
+        )
         tire_fl = (
-            received_event.tire_pressure_psi.front_left
-        )
-
-        if (
-                battery < BATTERY_LOW_THRESHOLD
-                and not fault_active
-        ):
-            fault_active = True
-            print(
-                f"[Rule] battery={battery:.1f} "
-                f"< {BATTERY_LOW_THRESHOLD} "
-                "-> WARNING, BATTERY_LOW"
-            )
-
-        elif (
-                battery >= BATTERY_RECOVER_THRESHOLD
-                and fault_active
-        ):
-            fault_active = False
-            print(
-                f"[Rule] battery={battery:.1f} "
-                f">= {BATTERY_RECOVER_THRESHOLD} "
-                "-> HEALTHY, fault cleared"
-            )
-
-        health_status = (
-            "WARNING" if fault_active else "HEALTHY"
-        )
-
-        active_faults = (
-            ["BATTERY_LOW"] if fault_active else []
+            signals.tire_pressure_psi.front_left
         )
 
         processed_timestamp = (
             datetime.now(timezone.utc).isoformat()
         )
 
+        if (
+            battery < BATTERY_LOW_THRESHOLD
+            and not battery_fault_active
+        ):
+            battery_fault_active = True
+
+            print(
+                f"[Rule] battery={battery:.1f} "
+                f"< {BATTERY_LOW_THRESHOLD:.1f} "
+                "-> WARNING, BATTERY_LOW"
+            )
+
+        elif (
+            battery >= BATTERY_RECOVER_THRESHOLD
+            and battery_fault_active
+        ):
+            battery_fault_active = False
+
+            print(
+                f"[Rule] battery={battery:.1f} "
+                f">= {BATTERY_RECOVER_THRESHOLD:.1f} "
+                "-> BATTERY_LOW cleared"
+            )
+
+        if (
+            not cooling_fault_active
+            and is_activation_condition(
+                temperature_celsius=temperature,
+                coolant_pressure_kpa=(
+                    coolant_pressure
+                ),
+            )
+        ):
+            cooling_fault_active = True
+
+            fault_payload, _ = (
+                publish_correlated_fault_detected(
+                    vehicle_id="vehicle-001",
+                    fault_code=(
+                        vehicle_diagnostic_pb2
+                        .COOLING_SYSTEM_FAILURE
+                    ),
+                    description=(
+                        "High temperature correlated "
+                        "with low coolant pressure"
+                    ),
+                    severity=(
+                        vehicle_fault_pb2
+                        .FAULT_CRITICAL
+                    ),
+                    affected_signals=[
+                        "temperatureCelsius",
+                        "coolantPressureKpa",
+                    ],
+                    observed_values={
+                        "temperatureCelsius": (
+                            float(temperature)
+                        ),
+                        "coolantPressureKpa": (
+                            float(coolant_pressure)
+                        ),
+                    },
+                    activation_thresholds={
+                        "temperatureCelsius": 105.0,
+                        "coolantPressureKpa": 150.0,
+                    },
+                    trace_id=trace_id,
+                    action_id=action_id,
+                )
+            )
+
+            fault_event = (
+                receive_correlated_fault_detected(
+                    fault_payload
+                )
+            )
+
+            fault_action_id = optional_action_id(
+                fault_event.metadata
+            )
+
+            active_fault_details = [
+                build_active_fault_detail(
+                    temperature_celsius=(
+                        temperature
+                    ),
+                    coolant_pressure_kpa=(
+                        coolant_pressure
+                    ),
+                    detected_at=(
+                        fault_event.detected_at
+                    ),
+                    event_id=(
+                        fault_event.metadata.event_id
+                    ),
+                    trace_id=(
+                        fault_event.metadata.trace_id
+                    ),
+                    action_id=fault_action_id,
+                )
+            ]
+
+            print(
+                "[Rule] correlated cooling fault "
+                "detected -> CRITICAL, "
+                "COOLING_SYSTEM_FAILURE"
+            )
+
+        elif (
+            cooling_fault_active
+            and is_recovery_condition(
+                temperature_celsius=temperature,
+                coolant_pressure_kpa=(
+                    coolant_pressure
+                ),
+            )
+        ):
+            cleared_payload = (
+                publish_correlated_fault_cleared(
+                    vehicle_id="vehicle-001",
+                    fault_code=(
+                        vehicle_diagnostic_pb2
+                        .COOLING_SYSTEM_FAILURE
+                    ),
+                    affected_signals=[
+                        "temperatureCelsius",
+                        "coolantPressureKpa",
+                    ],
+                    observed_values={
+                        "temperatureCelsius": (
+                            float(temperature)
+                        ),
+                        "coolantPressureKpa": (
+                            float(coolant_pressure)
+                        ),
+                    },
+                    recovery_thresholds={
+                        "temperatureCelsius": 100.0,
+                        "coolantPressureKpa": 180.0,
+                    },
+                    trace_id=trace_id,
+                    action_id=action_id,
+                )
+            )
+
+            receive_correlated_fault_cleared(
+                cleared_payload
+            )
+
+            cooling_fault_active = False
+            active_fault_details = []
+
+            print(
+                "[Rule] correlated cooling fault "
+                "cleared -> recovery thresholds met"
+            )
+
+        active_faults = []
+
+        if battery_fault_active:
+            active_faults.append("BATTERY_LOW")
+
+        if cooling_fault_active:
+            active_faults.append(
+                "COOLING_SYSTEM_FAILURE"
+            )
+
+        if cooling_fault_active:
+            health_status = "CRITICAL"
+        elif battery_fault_active:
+            health_status = "WARNING"
+        else:
+            health_status = "HEALTHY"
+
         ditto_updates = [
             (
                 (
-                    f"{DITTO_URL}/features/signals/"
-                    "properties/speedKph"
+                    "features/signals/properties/"
+                    "speedKph"
                 ),
                 speed,
             ),
             (
                 (
-                    f"{DITTO_URL}/features/signals/"
-                    "properties/batteryPercent"
+                    "features/signals/properties/"
+                    "batteryPercent"
                 ),
                 round(battery, 1),
             ),
             (
                 (
-                    f"{DITTO_URL}/features/signals/"
-                    "properties/temperatureCelsius"
+                    "features/signals/properties/"
+                    "temperatureCelsius"
                 ),
                 temperature,
             ),
             (
                 (
-                    f"{DITTO_URL}/features/signals/properties/"
+                    "features/signals/properties/"
+                    "coolantPressureKpa"
+                ),
+                coolant_pressure,
+            ),
+            (
+                (
+                    "features/signals/properties/"
                     "tirePressurePsi/frontLeft"
                 ),
                 tire_fl,
             ),
             (
                 (
-                    f"{DITTO_URL}/features/signals/"
-                    "properties/sourceTimestamp"
+                    "features/signals/properties/"
+                    "sourceTimestamp"
                 ),
-                received_event.metadata.source_timestamp,
+                (
+                    received_event
+                    .metadata
+                    .source_timestamp
+                ),
             ),
             (
                 (
-                    f"{DITTO_URL}/features/health/"
-                    "properties/status"
+                    "features/health/properties/"
+                    "status"
                 ),
                 health_status,
             ),
             (
                 (
-                    f"{DITTO_URL}/features/health/"
-                    "properties/activeFaults"
+                    "features/health/properties/"
+                    "activeFaults"
                 ),
                 active_faults,
             ),
             (
                 (
-                    f"{DITTO_URL}/features/health/"
-                    "properties/faultCount"
+                    "features/health/properties/"
+                    "faultCount"
                 ),
                 len(active_faults),
             ),
             (
                 (
-                    f"{DITTO_URL}/features/health/"
-                    "properties/processedTimestamp"
+                    "features/health/properties/"
+                    "processedTimestamp"
                 ),
                 processed_timestamp,
+            ),
+            (
+                (
+                    "features/diagnostics/"
+                    "properties/activeFaultDetails"
+                ),
+                active_fault_details,
             ),
         ]
 
         responses = [
-            requests.put(
-                url,
-                json=value,
-                auth=AUTH,
-                headers=HEADERS,
-                timeout=5,
-            )
-            for url, value in ditto_updates
+            put_ditto_property(path, value)
+            for path, value in ditto_updates
         ]
 
         ditto_success = all(
-            response.ok for response in responses
+            response.ok
+            for response in responses
         )
+
+        if not ditto_success:
+            failed_responses = [
+                (
+                    response.status_code,
+                    response.text,
+                )
+                for response in responses
+                if not response.ok
+            ]
+
+            print(
+                "[Ditto Error] "
+                f"{failed_responses}"
+            )
 
         record = evaluator.complete_event(
             event_id=event_id,
@@ -245,19 +497,26 @@ with VSSClient("127.0.0.1", 55556) as client:
 
         print(
             f"[Metrics] eventId={event_id} "
-            f"latencyMs={record['latency_ms']:.3f} "
+            f"latencyMs="
+            f"{record['latency_ms']:.3f} "
             f"success={ditto_success}"
         )
 
         print(
-            f"[Ditto] speed={speed} "
+            f"[Ditto] speed={speed:.1f} "
             f"battery={battery:.1f} "
-            f"temp={temperature} "
-            f"tireFL={tire_fl} "
-            f"health={health_status}"
+            f"temp={temperature:.1f} "
+            f"coolantPressure="
+            f"{coolant_pressure:.1f} "
+            f"tireFL={tire_fl:.1f} "
+            f"health={health_status} "
+            f"faults={active_faults}"
         )
 
-        if completed_event_count >= EXPERIMENT_EVENT_LIMIT:
+        if (
+            completed_event_count
+            >= EXPERIMENT_EVENT_LIMIT
+        ):
             experiment_duration = (
                 time.perf_counter()
                 - experiment_start_time
@@ -266,7 +525,9 @@ with VSSClient("127.0.0.1", 55556) as client:
             results_path = Path(RESULTS_FILE)
 
             if not results_path.is_absolute():
-                results_path = _REPO_ROOT / results_path
+                results_path = (
+                    _REPO_ROOT / results_path
+                )
 
             evaluator.recorder.export_csv(
                 results_path
@@ -280,13 +541,14 @@ with VSSClient("127.0.0.1", 55556) as client:
             )
 
             print(
-                f"[Experiment Complete] "
+                "[Experiment Complete] "
                 f"results={results_path}"
             )
 
             print(
-                f"[Summary] "
-                f"messages={summary['total_messages']} "
+                "[Summary] "
+                f"messages="
+                f"{summary['total_messages']} "
                 f"successRate="
                 f"{summary['success_rate_percent']:.2f}% "
                 f"averageLatencyMs="
