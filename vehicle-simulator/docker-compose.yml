@@ -9,8 +9,12 @@ services:
     build: .
     depends_on:
       - databroker
+    ports:
+      - "${SIMULATOR_CONTROL_PORT:-8090}:8090"
     environment:
       - DATABROKER_HOST=databroker
       - DATABROKER_PORT=55555
       - INJECT_FAULT=${INJECT_FAULT:-0}
       - PUBLISH_INTERVAL_SECONDS=${PUBLISH_INTERVAL_SECONDS:-5.0}
+      - SIMULATOR_CONTROL_HOST=0.0.0.0
+      - SIMULATOR_CONTROL_PORT=8090
