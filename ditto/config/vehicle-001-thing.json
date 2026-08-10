@@ -1,5 +1,3 @@
-
-
 {
   "policyId": "sdv:vehicle-001-policy",
   "attributes": { "vehicleId": "vehicle-001" },
@@ -9,6 +7,7 @@
         "speedKph": 0,
         "batteryPercent": 0,
         "temperatureCelsius": 0,
+        "coolantPressureKpa": null,
         "tirePressurePsi": { "frontLeft": 0, "frontRight": 0, "rearLeft": 0, "rearRight": 0 },
         "sourceTimestamp": null
       }
@@ -19,6 +18,14 @@
         "activeFaults": [],
         "faultCount": 0,
         "processedTimestamp": null
+      }
+    },
+    "diagnostics": {
+      "properties": {
+        "lastActionId": null,
+        "lastTraceId": null,
+        "actionStatus": null,
+        "activeFaultDetails": []
       }
     }
   }
