@@ -1,10 +1,12 @@
 import { apiRequest } from "./api-client.js";
 import { CONFIG } from "./config.js";
 
-/** Section 12: POST /api/v1/diagnostics/actions — READY, returns 202.
- * Section 13: GET .../{actionId} — IN PROGRESS. Calling it here is
- * optimistic; until the backend confirms it's live, use
- * createMockDiagnosticApi's getAction instead (see diagnostics.js). */
+// Section 12: POST /api/v1/diagnostics/actions — CONFIRMED LIVE (2026-08-10).
+// Section 13: GET .../{actionId} — CONFIRMED LIVE (2026-08-10), but the
+// backend does not currently transition actions past ACCEPTED to
+// COMPLETED. Frontend polls for CONFIG.ACTION_TIMEOUT_MS then settles
+// into a calm "Accepted (completion pending)" state rather than erroring.
+// Known limitation, not a frontend bug — see frontend/README.md.
 export function createHttpDiagnosticApi(baseUrl = CONFIG.API_BASE_URL) {
   return {
     async submitAction(request) {
