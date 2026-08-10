@@ -127,14 +127,16 @@ async function pollUntilTerminal(actionId) {
   if (pollTimer) clearTimeout(pollTimer);
 
   async function tick() {
-   if (Date.now() - startedAt > CONFIG.ACTION_TIMEOUT_MS) {
-  el.currentActionSlot.querySelector("#current-status-badge")?.replaceChildren(
-    renderStatusBadge("ACCEPTED", "Accepted (completion pending)")
-  );
-  announce("Action accepted. The backend hasn't reported completion yet.");
-  return;
-}
+    if (Date.now() - startedAt > CONFIG.ACTION_TIMEOUT_MS) {
+      el.currentActionSlot
+        .querySelector("#current-status-badge")
+        ?.replaceChildren(
+          renderStatusBadge("ACCEPTED", "Accepted (completion pending)"),
+        );
+      announce("Action accepted. The backend hasn't reported completion yet.");
+      return;
     }
+
     try {
       const result = await api.getAction(actionId);
       renderCurrentAction(result);
