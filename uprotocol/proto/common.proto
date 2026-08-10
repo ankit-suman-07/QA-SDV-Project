@@ -5,12 +5,39 @@ package sdv.uprotocol;
 option java_package = "com.sdv.uprotocol.proto";
 option java_multiple_files = true;
 
-// Fields shared across all SDV uProtocol events.
-// Do not duplicate these fields in individual event messages —
-// import and embed this message instead.
+// Matches the Iteration 3 Shared Integration Contract's vehicle-status
+// event envelope. Field names below map directly to the contract's
+// camelCase JSON fields (source_timestamp <-> sourceTimestamp, etc.).
+
+enum EventType {
+  EVENT_TYPE_UNSPECIFIED = 0;
+  VEHICLE_STATUS_UPDATED = 1;
+  HEALTH_STATUS_CHANGED = 2;
+  FAULT_DETECTED = 3;
+  FAULT_CLEARED = 4;
+  CORRELATED_FAULT_DETECTED = 5;
+  CORRELATED_FAULT_CLEARED = 6;
+  DIAGNOSTIC_ACTION_REQUESTED = 7;
+  DIAGNOSTIC_ACTION_ACCEPTED = 8;
+}
+
 message EventMetadata {
-  string vehicle_id = 1;      // fixed as "vehicle-001" for the MVP
-  string event_id = 2;        // UUID; used for correlation (e.g. FaultCleared matches FaultDetected)
-  string source_timestamp = 3; // RFC3339 UTC — timestamp of the originating signal reading
-  string event_timestamp = 4;  // RFC3339 UTC — timestamp the event was generated/published
-} 
+  string schema_version = 1;   // contract-confirmed: "1.0.0"
+  string event_id = 2;
+  string trace_id = 3;
+  // Contract: "actionId may be null for normal telemetry without a
+  // diagnostic request." Using proto3 explicit presence so absence is
+  // distinguishable from an empty string.
+  optional string action_id = 4;
+  string vehicle_id = 5;
+  EventType event_type = 6;
+  string source_timestamp = 7;
+  string publication_timestamp = 8;
+
+  // reception_timestamp is intentionally NOT set by the publisher - the
+  // publisher cannot know when an event will be received. It is recorded
+  // by the transport module at receive time (see transport.py) and
+  // included in experiment/log records, which satisfies the contract's
+  // requirement to "logically represent" this data without violating
+  // causality. Not a wire field on outbound messages.
+}
