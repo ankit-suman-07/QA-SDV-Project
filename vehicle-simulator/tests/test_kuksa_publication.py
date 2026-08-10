@@ -33,3 +33,12 @@ def test_tire_pressure_is_published_and_in_range():
         value = result["Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure"].value
         assert value is not None
         assert 30 <= value <= 34
+
+
+def test_coolant_pressure_is_published_and_in_range():
+    with get_client() as client:
+        result = client.get_current_values(["Vehicle.Powertrain.CombustionEngine.EngineCoolant.Pressure"])
+        value = result["Vehicle.Powertrain.CombustionEngine.EngineCoolant.Pressure"].value
+        assert value is not None
+        assert isinstance(value, (int, float))
+        assert 100 <= value <= 220

@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-08-03T20:00:00Z",
+  "source": "experiments/results/experiment-summary.csv",
+  "testSummary": {
+    "backend": { "total": 15, "passed": 15, "verified": false },
+    "python": { "total": 50, "passed": 50, "verified": true }
+  },
+  "experiments": [
+    { "intervalSeconds": 5.0, "messageCount": 30, "averageLatencyMs": 316.997, "p95LatencyMs": 466.788, "throughputMessagesPerSecond": 0.194, "successRatePercent": 100.0 },
+    { "intervalSeconds": 1.0, "messageCount": 30, "averageLatencyMs": 227.832, "p95LatencyMs": 730.731, "throughputMessagesPerSecond": 0.823, "successRatePercent": 100.0 },
+    { "intervalSeconds": 0.2, "messageCount": 30, "averageLatencyMs": 150.202, "p95LatencyMs": 235.013, "throughputMessagesPerSecond": 2.848, "successRatePercent": 100.0 }
+  ]
+}

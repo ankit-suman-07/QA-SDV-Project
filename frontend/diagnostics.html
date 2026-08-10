@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diagnostics &mdash; SDV Control</title>
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+  </head>
+  <body>
+    <button
+      type="button"
+      class="menu-toggle"
+      id="menu-toggle"
+      aria-expanded="false"
+      aria-controls="sidebar"
+    >
+      <span aria-hidden="true">&#9776;</span>
+      <span class="sr-only">Toggle navigation</span>
+    </button>
+
+    <div class="app-shell">
+      <nav class="sidebar" id="sidebar" aria-label="Primary">
+        <div class="sidebar__brand">
+          <span aria-hidden="true">&#9032;</span> SDV Control
+        </div>
+        <ul class="sidebar__nav-list">
+          <li>
+            <a class="sidebar__nav-link" href="index.html"
+              ><span class="sidebar__nav-icon" aria-hidden="true">&#9096;</span
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a
+              class="sidebar__nav-link"
+              href="diagnostics.html"
+              aria-current="page"
+              ><span class="sidebar__nav-icon" aria-hidden="true">&#9881;</span
+              >Diagnostics</a
+            >
+          </li>
+          <li>
+            <a class="sidebar__nav-link" href="performance.html"
+              ><span class="sidebar__nav-icon" aria-hidden="true">&#9651;</span
+              >Performance</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <main class="content">
+        <header class="page-header">
+          <h1 class="page-header__title">Diagnostics</h1>
+          <div class="page-header__controls">
+            <select class="field-select" disabled>
+              <option>vehicle-001</option>
+            </select>
+            <span class="status-badge status-badge--green" role="status"
+              ><span aria-hidden="true" class="status-badge__icon">&#9679;</span
+              >Connected</span
+            >
+          </div>
+        </header>
+
+        <div class="dev-switcher" id="dev-switcher-panel">
+          <label style="display: flex; align-items: center; gap: 6px">
+            <input type="checkbox" id="validation-error-toggle" /> Demo:
+            simulate 400 VALIDATION_ERROR on next submit
+          </label>
+        </div>
+
+        <div id="diagnostics-fault-slot"></div>
+
+        <div id="live-region" class="sr-only" aria-live="polite"></div>
+        <div id="error-slot"></div>
+
+        <section class="lower-grid lower-grid--even">
+          <div class="card">
+            <h2 class="card__title">Scenario Control</h2>
+            <label
+              class="hint"
+              for="scenario-select"
+              style="display: block; margin-bottom: 6px"
+              >Scenario</label
+            >
+            <select
+              id="scenario-select"
+              class="field-select"
+              disabled
+              style="width: 100%; margin-bottom: 14px"
+            >
+              <option>Cooling System Failure</option>
+            </select>
+            <div style="display: flex; gap: 10px">
+              <button
+                type="button"
+                id="inject-btn"
+                class="btn btn--destructive"
+              >
+                Inject Scenario
+              </button>
+              <button type="button" id="clear-btn" class="btn btn--outline">
+                Clear Scenario
+              </button>
+            </div>
+            <p class="hint" style="margin-top: 12px">
+              Scenario injection request will be sent to the vehicle.
+            </p>
+          </div>
+
+          <div class="card">
+            <h2 class="card__title">Current Action</h2>
+            <div id="current-action-slot"></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="card__title">Action History</h2>
+          <p class="hint" id="history-empty">
+            No actions submitted this session.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Action ID</th>
+                <th scope="col">Action</th>
+                <th scope="col">Scenario</th>
+                <th scope="col">Status</th>
+                <th scope="col">Time</th>
+              </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <div class="dialog-overlay" id="dialog-overlay" hidden>
+      <div
+        class="dialog"
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-body"
+      >
+        <h2 id="dialog-title" class="dialog__title"></h2>
+        <p id="dialog-body" class="dialog__body"></p>
+        <div class="dialog__actions">
+          <button type="button" id="dialog-cancel" class="btn btn--outline">
+            Cancel
+          </button>
+          <button
+            type="button"
+            id="dialog-confirm"
+            class="btn btn--primary"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/diagnostics.js"></script>
+    <script>
+      document
+        .getElementById("menu-toggle")
+        .addEventListener("click", function () {
+          var sidebar = document.getElementById("sidebar");
+          var open = sidebar.classList.toggle("is-open");
+          this.setAttribute("aria-expanded", String(open));
+        });
+    </script>
+  </body>
+</html>

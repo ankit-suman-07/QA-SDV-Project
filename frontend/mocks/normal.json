@@ -1,0 +1,6 @@
+{
+  "state": { "vehicleId": "vehicle-001", "sourceTimestamp": "2026-08-03T16:00:00Z", "temperatureCelsius": 89.0, "coolantPressureKpa": 200.0 },
+  "health": { "vehicleId": "vehicle-001", "healthStatus": "HEALTHY" },
+  "mockOnly": { "speedKph": 64.0, "batteryPercent": 81.0, "tirePressurePsi": 32.0 },
+  "activeFaults": []
+}
