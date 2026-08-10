@@ -44,7 +44,9 @@ async function doFetch(baseUrl, path, options) {
   try {
     const response = await fetch(`${baseUrl}${path}`, {
       method: options.method ?? "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: options.body
+        ? { "Content-Type": "application/json" }
+        : undefined,
       body: options.body ? JSON.stringify(options.body) : undefined,
       signal: controller.signal,
     });
