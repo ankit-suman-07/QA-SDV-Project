@@ -2,10 +2,8 @@ import os
 import sys
 import time
 from datetime import datetime, timezone
-from ditto.ditto_http import put_json_with_retry
 from pathlib import Path
 
-import requests
 from kuksa_client.grpc import VSSClient
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -13,6 +11,10 @@ _REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
+from ditto.ditto_http import (
+    get_json_with_retry,
+    put_json_with_retry,
+)
 from ditto.fault_details import (
     build_active_fault_detail,
     is_activation_condition,
@@ -34,6 +36,16 @@ from uprotocol.transport import (
 DITTO_URL = (
     "http://localhost:8080/api/2/things/"
     "sdv:vehicle-001"
+)
+
+SIMULATOR_CONTROL_URL = os.getenv(
+    "SIMULATOR_CONTROL_URL",
+    "http://localhost:8090",
+)
+
+COOLING_SCENARIO_CONTEXT_URL = (
+    f"{SIMULATOR_CONTROL_URL}/api/v1/scenarios/"
+    "COOLING_SYSTEM_FAILURE"
 )
 
 AUTH = ("ditto", "ditto")
@@ -104,6 +116,20 @@ def put_ditto_property(path, value):
         timeout_seconds=5,
         retry_delay_seconds=0.2,
     )
+
+
+def get_cooling_scenario_context():
+    context = get_json_with_retry(
+        url=COOLING_SCENARIO_CONTEXT_URL,
+        attempts=3,
+        timeout_seconds=2,
+        retry_delay_seconds=0.2,
+    )
+
+    if not isinstance(context, dict):
+        return {}
+
+    return context
 
 
 evaluator = PipelineEvaluator(
@@ -242,6 +268,19 @@ with VSSClient("127.0.0.1", 55556) as client:
         ):
             cooling_fault_active = True
 
+            scenario_context = (
+                get_cooling_scenario_context()
+            )
+
+            transition_trace_id = (
+                scenario_context.get("traceId")
+                or trace_id
+            )
+            transition_action_id = (
+                scenario_context.get("actionId")
+                or action_id
+            )
+
             fault_payload, _ = (
                 publish_correlated_fault_detected(
                     vehicle_id="vehicle-001",
@@ -273,8 +312,8 @@ with VSSClient("127.0.0.1", 55556) as client:
                         "temperatureCelsius": 105.0,
                         "coolantPressureKpa": 150.0,
                     },
-                    trace_id=trace_id,
-                    action_id=action_id,
+                    trace_id=transition_trace_id,
+                    action_id=transition_action_id,
                 )
             )
 
@@ -324,6 +363,19 @@ with VSSClient("127.0.0.1", 55556) as client:
                 ),
             )
         ):
+            scenario_context = (
+                get_cooling_scenario_context()
+            )
+
+            transition_trace_id = (
+                scenario_context.get("traceId")
+                or trace_id
+            )
+            transition_action_id = (
+                scenario_context.get("actionId")
+                or action_id
+            )
+
             cleared_payload = (
                 publish_correlated_fault_cleared(
                     vehicle_id="vehicle-001",
@@ -347,8 +399,8 @@ with VSSClient("127.0.0.1", 55556) as client:
                         "temperatureCelsius": 100.0,
                         "coolantPressureKpa": 180.0,
                     },
-                    trace_id=trace_id,
-                    action_id=action_id,
+                    trace_id=transition_trace_id,
+                    action_id=transition_action_id,
                 )
             )
 

@@ -138,3 +138,40 @@ def test_chunked_post_action_injects_scenario(
     assert controller.is_active(
         "COOLING_SYSTEM_FAILURE"
     ) is True
+
+def test_get_scenario_state_returns_action_context(
+    running_server,
+):
+    server, _ = running_server
+
+    post_json(
+        server,
+        "/api/v1/scenarios/actions",
+        {
+            "actionId": "action-001",
+            "traceId": "trace-001",
+            "action": "INJECT_SCENARIO",
+            "scenario": "COOLING_SYSTEM_FAILURE",
+        },
+    )
+
+    host, port = server.server_address
+
+    with urlopen(
+        (
+            f"http://{host}:{port}"
+            "/api/v1/scenarios/"
+            "COOLING_SYSTEM_FAILURE"
+        ),
+        timeout=2,
+    ) as response:
+        body = json.load(response)
+
+    assert response.status == 200
+    assert body == {
+        "scenario": "COOLING_SYSTEM_FAILURE",
+        "active": True,
+        "actionId": "action-001",
+        "traceId": "trace-001",
+        "action": "INJECT_SCENARIO",
+    }

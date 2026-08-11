@@ -84,3 +84,23 @@ def test_unsupported_scenario_is_rejected():
             action_id="action-001",
             trace_id="trace-001",
         )
+
+def test_scenario_state_preserves_action_context():
+    controller = ScenarioController()
+
+    controller.execute(
+        action="INJECT_SCENARIO",
+        scenario="COOLING_SYSTEM_FAILURE",
+        action_id="action-001",
+        trace_id="trace-001",
+    )
+
+    assert controller.get_state(
+        "COOLING_SYSTEM_FAILURE"
+    ) == {
+        "scenario": "COOLING_SYSTEM_FAILURE",
+        "active": True,
+        "actionId": "action-001",
+        "traceId": "trace-001",
+        "action": "INJECT_SCENARIO",
+    }

@@ -11,16 +11,36 @@ def create_request_handler(controller):
     class ControlRequestHandler(BaseHTTPRequestHandler):
 
         def do_GET(self):
-            if self.path != "/health":
+            if self.path == "/health":
                 self._write_json(
-                    404,
-                    {"error": "Endpoint not found"},
+                    200,
+                    {"status": "UP"},
                 )
                 return
 
+            scenario_prefix = "/api/v1/scenarios/"
+
+            if self.path.startswith(scenario_prefix):
+                scenario = self.path[
+                    len(scenario_prefix):
+                ]
+
+                try:
+                    state = controller.get_state(
+                        scenario
+                    )
+                    self._write_json(200, state)
+                except ValueError as exception:
+                    self._write_json(
+                        400,
+                        {"error": str(exception)},
+                    )
+
+                return
+
             self._write_json(
-                200,
-                {"status": "UP"},
+                404,
+                {"error": "Endpoint not found"},
             )
 
         def do_POST(self):

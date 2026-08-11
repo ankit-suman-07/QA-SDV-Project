@@ -3,7 +3,10 @@ from unittest.mock import Mock
 
 import requests
 
-from ditto.ditto_http import put_json_with_retry
+from ditto.ditto_http import (
+    get_json_with_retry,
+    put_json_with_retry,
+)
 
 
 class DittoHttpTest(unittest.TestCase):
@@ -69,6 +72,57 @@ class DittoHttpTest(unittest.TestCase):
                 headers={},
                 attempts=0,
             )
+
+    def test_get_json_returns_action_context(self):
+        response = Mock()
+        response.ok = True
+        response.json.return_value = {
+            "actionId": "action-001",
+            "traceId": "trace-001",
+            "active": True,
+        }
+
+        request_get = Mock(return_value=response)
+
+        result = get_json_with_retry(
+            url=(
+                "http://localhost:8090/api/v1/"
+                "scenarios/COOLING_SYSTEM_FAILURE"
+            ),
+            attempts=3,
+            timeout_seconds=2,
+            request_get=request_get,
+        )
+
+        self.assertEqual(
+            "action-001",
+            result["actionId"],
+        )
+        self.assertEqual(
+            "trace-001",
+            result["traceId"],
+        )
+
+    def test_get_json_returns_none_after_timeouts(self):
+        request_get = Mock(
+            side_effect=requests.Timeout(
+                "simulator unavailable"
+            )
+        )
+        sleeper = Mock()
+
+        result = get_json_with_retry(
+            url="http://localhost:8090/test",
+            attempts=2,
+            timeout_seconds=2,
+            retry_delay_seconds=0.1,
+            request_get=request_get,
+            sleeper=sleeper,
+        )
+
+        self.assertIsNone(result)
+        self.assertEqual(2, request_get.call_count)
+        sleeper.assert_called_once_with(0.1)
 
 
 if __name__ == "__main__":

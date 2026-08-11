@@ -13,6 +13,7 @@ class ScenarioController:
     }
 
     def __init__(self):
+        self._scenario_states = {}
         self._active_scenarios = set()
         self._lock = RLock()
 
@@ -39,15 +40,40 @@ class ScenarioController:
             else:
                 self._active_scenarios.discard(scenario)
 
-            return {
+            state = {
+                "scenario": scenario,
+                "active": (
+                    scenario in self._active_scenarios
+                ),
                 "actionId": action_id,
                 "traceId": trace_id,
                 "action": action,
-                "scenario": scenario,
-                "active": scenario
-                in self._active_scenarios,
             }
+
+            self._scenario_states[scenario] = state
+
+            return dict(state)
 
     def is_active(self, scenario):
         with self._lock:
             return scenario in self._active_scenarios
+
+    def get_state(self, scenario):
+        if scenario not in self.SUPPORTED_SCENARIOS:
+            raise ValueError(
+                f"Unsupported diagnostic scenario: {scenario}"
+            )
+
+        with self._lock:
+            state = self._scenario_states.get(scenario)
+
+            if state is None:
+                return {
+                    "scenario": scenario,
+                    "active": False,
+                    "actionId": None,
+                    "traceId": None,
+                    "action": None,
+                }
+
+            return dict(state)
