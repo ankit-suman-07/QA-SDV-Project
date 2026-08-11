@@ -19,6 +19,7 @@ def make_thing(status="HEALTHY", active_faults=None, processed_ts=None, override
             "signals": {
                 "properties": {
                     "speedKph": 60.0, "batteryPercent": 80.0, "temperatureCelsius": 89.0,
+                    "coolantPressureKpa": 200.0,
                     "tirePressurePsi": {"frontLeft": 32, "frontRight": 32, "rearLeft": 31, "rearRight": 32},
                     "sourceTimestamp": now,
                 }
@@ -118,6 +119,109 @@ class VerifyVehicleStateTest(unittest.TestCase):
     def test_explicit_max_age_overrides_interval(self):
         self.assertEqual(99.0, vvs.compute_max_age_seconds(
             publication_interval_seconds=1.0, explicit_max_age_seconds=99.0))
+
+    @patch("requests.get")
+    def test_missing_coolant_pressure_fails(self, mock_get):
+        thing = make_thing()
+        del thing["features"]["signals"]["properties"]["coolantPressureKpa"]
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("coolantPressureKpa" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_boolean_signal_value_fails(self, mock_get):
+        thing = make_thing(overrides={"signals": {"batteryPercent": True}})
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("batteryPercent" in e and "not a valid finite number" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_non_finite_signal_value_fails(self, mock_get):
+        thing = make_thing(overrides={"signals": {"temperatureCelsius": float("inf")}})
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("temperatureCelsius" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_invalid_source_timestamp_fails(self, mock_get):
+        thing = make_thing(overrides={"signals": {"sourceTimestamp": "not-a-timestamp"}})
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("sourceTimestamp" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_correlated_fault_active_with_justifying_signals_passes(self, mock_get):
+        thing = make_thing(status="CRITICAL", active_faults=["COOLING_SYSTEM_FAILURE"],
+                            overrides={"signals": {"temperatureCelsius": 108.0, "coolantPressureKpa": 140.0},
+                                       "health": {"faultCount": 1}})
+        thing["features"]["diagnostics"] = {"properties": {"activeFaultDetails": [{
+            "code": "COOLING_SYSTEM_FAILURE", "description": "x", "severity": "CRITICAL", "status": "ACTIVE",
+            "affectedSignals": ["temperatureCelsius", "coolantPressureKpa"],
+            "observedValues": {"temperatureCelsius": 108.0, "coolantPressureKpa": 140.0},
+            "activationThresholds": {"temperatureCelsius": 105.0, "coolantPressureKpa": 150.0},
+            "recoveryThresholds": {"temperatureCelsius": 100.0, "coolantPressureKpa": 180.0},
+            "detectedAt": "2026-08-03T15:00:01.200Z",
+        }]}}
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        correlated_errors = [e for e in result.errors if "COOLING_SYSTEM_FAILURE" in e]
+        self.assertEqual([], correlated_errors, result.errors)
+
+    @patch("requests.get")
+    def test_correlated_fault_active_without_justifying_signals_fails(self, mock_get):
+        thing = make_thing(status="CRITICAL", active_faults=["COOLING_SYSTEM_FAILURE"],
+                            overrides={"signals": {"temperatureCelsius": 90.0, "coolantPressureKpa": 200.0},
+                                       "health": {"faultCount": 1}})
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("COOLING_SYSTEM_FAILURE" in e and "temperatureCelsius" in e for e in result.errors))
+        self.assertTrue(any("COOLING_SYSTEM_FAILURE" in e and "coolantPressureKpa" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_correlated_fault_active_missing_detail_record_fails(self, mock_get):
+        thing = make_thing(status="CRITICAL", active_faults=["COOLING_SYSTEM_FAILURE"],
+                            overrides={"signals": {"temperatureCelsius": 108.0, "coolantPressureKpa": 140.0},
+                                       "health": {"faultCount": 1}})
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("no matching entry" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_correlated_fault_detail_missing_required_field_fails(self, mock_get):
+        thing = make_thing(status="CRITICAL", active_faults=["COOLING_SYSTEM_FAILURE"],
+                            overrides={"signals": {"temperatureCelsius": 108.0, "coolantPressureKpa": 140.0},
+                                       "health": {"faultCount": 1}})
+        thing["features"]["diagnostics"] = {"properties": {"activeFaultDetails": [{
+            "code": "COOLING_SYSTEM_FAILURE", "status": "ACTIVE",
+        }]}}
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        self.assertFalse(result.ok)
+        self.assertTrue(any("detectedAt" in e for e in result.errors))
+
+    @patch("requests.get")
+    def test_hysteresis_zone_does_not_fail_while_fault_active(self, mock_get):
+        thing = make_thing(status="CRITICAL", active_faults=["COOLING_SYSTEM_FAILURE"],
+                            overrides={"signals": {"temperatureCelsius": 103.0, "coolantPressureKpa": 165.0},
+                                       "health": {"faultCount": 1}})
+        thing["features"]["diagnostics"] = {"properties": {"activeFaultDetails": [{
+            "code": "COOLING_SYSTEM_FAILURE", "description": "x", "severity": "CRITICAL", "status": "ACTIVE",
+            "affectedSignals": ["temperatureCelsius", "coolantPressureKpa"],
+            "observedValues": {"temperatureCelsius": 103.0, "coolantPressureKpa": 165.0},
+            "activationThresholds": {"temperatureCelsius": 105.0, "coolantPressureKpa": 150.0},
+            "recoveryThresholds": {"temperatureCelsius": 100.0, "coolantPressureKpa": 180.0},
+            "detectedAt": "2026-08-03T15:00:01.200Z",
+        }]}}
+        mock_get.return_value = MagicMock(json=lambda: thing)
+        result = vvs.verify_vehicle_state()
+        correlated_errors = [e for e in result.errors if "COOLING_SYSTEM_FAILURE" in e]
+        self.assertEqual([], correlated_errors, result.errors)
 
 
 if __name__ == "__main__":
