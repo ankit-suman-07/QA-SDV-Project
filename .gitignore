@@ -206,3 +206,5 @@ docker-compose.override.yml
 
 *-environment.local.json
 *-config.local.json
+
+.demo-runtime/
