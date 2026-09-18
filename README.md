@@ -273,6 +273,13 @@ source .venv/bin/activate
 ./scripts/start-demo.sh
 ```
 
+**Windows:** use the PowerShell equivalent instead (no `.venv/bin` shim needed):
+
+```powershell
+.venv\Scripts\Activate.ps1
+.\scripts\start-demo.ps1
+```
+
 - Frontend: <http://localhost:3000/index.html>
 - Backend health: <http://localhost:8082/actuator/health>
 - Simulator health: <http://localhost:8090/health>
@@ -290,6 +297,12 @@ It passes only after validating injection, `CRITICAL`, detailed correlated fault
 
 ```bash
 ./scripts/stop-demo.sh
+```
+
+**Windows:**
+
+```powershell
+.\scripts\stop-demo.ps1
 ```
 
 The external Ditto stack is intentionally left running.
