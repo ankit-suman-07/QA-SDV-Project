@@ -22,3 +22,16 @@
 - real network transport
 - duplicate-processing behavior
 - multi-vehicle isolation tests
+
+### Confirmed EventMetadata Fields
+- schema_version
+- event_id
+- trace_id
+- optional action_id
+- vehicle_id
+- event_type
+- source_timestamp
+- publication_timestamp
+
+Note:
+- reception_timestamp is intentionally recorded at receive time and is not part of the outbound wire message.
