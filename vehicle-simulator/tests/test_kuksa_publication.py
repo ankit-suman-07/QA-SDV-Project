@@ -3,6 +3,10 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from get_kuksa_client import get_client
 
+import pytest
+
+pytestmark = pytest.mark.integration
+
 def test_speed_is_published_and_in_range():
     with get_client() as client:
         result = client.get_current_values(["Vehicle.Speed"])
