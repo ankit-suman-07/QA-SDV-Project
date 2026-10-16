@@ -47,4 +47,44 @@ class VehicleStateControllerTest {
                 .andExpect(jsonPath("$.temperatureCelsius")
                         .value(85.0));
     }
+
+    @Test
+void shouldReturnStateForVehicle002() throws Exception {
+    VehicleState state = new VehicleState(
+            "vehicle-002",
+            Instant.parse("2026-07-15T16:05:00Z"),
+            90.0,
+            180.0
+    );
+
+    when(vehicleStateProvider.getCurrentState("vehicle-002"))
+            .thenReturn(state);
+
+    mockMvc.perform(
+                    get("/api/vehicles/vehicle-002/state")
+            )
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.vehicleId")
+                    .value("vehicle-002"))
+            .andExpect(jsonPath("$.sourceTimestamp")
+                    .value("2026-07-15T16:05:00Z"))
+            .andExpect(jsonPath("$.temperatureCelsius")
+                    .value(90.0));
+}
+        @Test
+void shouldReturnNotFoundWhenVehicleStateDoesNotExist()
+        throws Exception {
+
+    when(vehicleStateProvider.getCurrentState("vehicle-999"))
+            .thenReturn(null);
+
+    mockMvc.perform(
+                    get("/api/vehicles/vehicle-999/state")
+            )
+            .andExpect(status().isNotFound())
+            .andExpect(jsonPath("$.code")
+                    .value("VEHICLE_NOT_FOUND"))
+            .andExpect(jsonPath("$.message")
+                    .value("Vehicle state not found: vehicle-999"));
+}
 }
