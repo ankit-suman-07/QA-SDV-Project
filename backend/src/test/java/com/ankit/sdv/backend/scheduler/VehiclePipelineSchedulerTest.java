@@ -1,6 +1,7 @@
 package com.ankit.sdv.backend.scheduler;
 
 import com.ankit.sdv.backend.service.VehicleIntegrationService;
+import com.ankit.sdv.backend.registry.VehicleRegistry;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -15,15 +16,22 @@ class VehiclePipelineSchedulerTest {
         VehicleIntegrationService integrationService =
                 mock(VehicleIntegrationService.class);
 
-        VehiclePipelineScheduler scheduler =
-                new VehiclePipelineScheduler(
-                        integrationService,
+        VehicleRegistry vehicleRegistry =
+                new VehicleRegistry(
                         List.of(
                                 "vehicle-001",
                                 "vehicle-002",
                                 "vehicle-003"
                         )
                 );
+
+        VehiclePipelineScheduler scheduler =
+                new VehiclePipelineScheduler(
+                        integrationService,
+                        vehicleRegistry
+                );
+
+
 
         scheduler.synchronizeVehicles();
 
