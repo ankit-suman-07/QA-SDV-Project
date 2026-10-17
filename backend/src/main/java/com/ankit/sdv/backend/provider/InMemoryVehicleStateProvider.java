@@ -3,7 +3,7 @@ package com.ankit.sdv.backend.provider;
 import com.ankit.sdv.backend.model.VehicleState;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
+//import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,16 +15,16 @@ public class InMemoryVehicleStateProvider
     private final Map<String, VehicleState> currentStates =
             new ConcurrentHashMap<>();
 
-    public InMemoryVehicleStateProvider() {
-        updateState(
-                new VehicleState(
-                        "vehicle-001",
-                        Instant.now(),
-                        85.0,
-                        200.0
-                )
-        );
-    }
+//     public InMemoryVehicleStateProvider() {
+//         updateState(
+//                 new VehicleState(
+//                         "vehicle-001",
+//                         Instant.now(),
+//                         85.0,
+//                         200.0
+//                 )
+//         );
+//     }
 
     @Override
     public VehicleState getCurrentState(String vehicleId) {

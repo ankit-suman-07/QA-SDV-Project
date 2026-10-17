@@ -4,6 +4,7 @@ import com.ankit.sdv.backend.model.VehicleState;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,4 +41,18 @@ class InMemoryVehicleStateProviderTest {
                 provider.getCurrentState("vehicle-002")
         );
     }
+
+    @Test
+void shouldStartWithoutFabricatedVehicleState() {
+    InMemoryVehicleStateProvider provider =
+            new InMemoryVehicleStateProvider();
+
+    assertNull(
+            provider.getCurrentState("vehicle-001")
+    );
+
+    assertNull(
+            provider.getCurrentState("vehicle-002")
+    );
+}
 }
