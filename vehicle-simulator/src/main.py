@@ -48,6 +48,8 @@ CONTROL_PORT = int(
 )
 
 COOLING_FAILURE = "COOLING_SYSTEM_FAILURE"
+LIDAR_OBSTRUCTION = "LIDAR_OBSTRUCTION"
+LIDAR_SENSOR_FAILURE = "LIDAR_SENSOR_FAILURE"
 
 SIGNAL_PATHS = {
     "speed": "Vehicle.Speed",
@@ -67,6 +69,19 @@ SIGNAL_PATHS = {
         "Vehicle.Powertrain.CombustionEngine."
         "EngineCoolant.Pressure"
     ),
+    "lidar_distance_m": (
+        "Vehicle.Automation.Lidar.Front."
+        "NearestObstacleDistance"
+    ),
+    "lidar_sensor_healthy": (
+        "Vehicle.Automation.Lidar.Front.IsHealthy"
+    ),
+    "obstacle_warning": (
+        "Vehicle.Automation.ObstacleWarning.IsActive"
+    ),
+    "autonomous_braking": (
+        "Vehicle.Automation.AutonomousBraking.IsActive"
+    ),
 }
 
 
@@ -83,6 +98,42 @@ def create_scenario_controller():
         )
 
     return controller
+
+
+def scenario_is_active(controller, scenario):
+    return controller.is_active(
+        vehicle_id=SIMULATED_VEHICLE_ID,
+        scenario=scenario,
+    )
+
+
+def describe_modes(
+    cooling_failure,
+    lidar_obstruction,
+    lidar_failure,
+):
+    active_modes = []
+
+    if cooling_failure:
+        active_modes.append("COOLING_FAILURE")
+
+    if lidar_obstruction:
+        active_modes.append("LIDAR_OBSTRUCTION")
+
+    if lidar_failure:
+        active_modes.append("LIDAR_FAILURE")
+
+    if not active_modes:
+        return "normal"
+
+    return ",".join(active_modes)
+
+
+def format_signal_value(key, value):
+    if isinstance(value, bool):
+        return f"{key}={str(value).lower()}"
+
+    return f"{key}={value:.1f}"
 
 
 def main():
@@ -104,14 +155,26 @@ def main():
     try:
         with get_client() as client:
             while True:
-                fault_active = controller.is_active(
-                    vehicle_id=SIMULATED_VEHICLE_ID,
-                    scenario=COOLING_FAILURE,
+                cooling_failure = scenario_is_active(
+                    controller,
+                    COOLING_FAILURE,
+                )
+
+                lidar_obstruction = scenario_is_active(
+                    controller,
+                    LIDAR_OBSTRUCTION,
+                )
+
+                lidar_failure = scenario_is_active(
+                    controller,
+                    LIDAR_SENSOR_FAILURE,
                 )
 
                 state = next_state(
                     state,
-                    fault=fault_active,
+                    fault=cooling_failure,
+                    obstacle=lidar_obstruction,
+                    lidar_failure=lidar_failure,
                 )
 
                 client.set_current_values(
@@ -123,23 +186,23 @@ def main():
                 )
 
                 timestamp = datetime.now().isoformat()
-                mode = (
-                    "FAULT"
-                    if fault_active
-                    else "normal"
+                mode = describe_modes(
+                    cooling_failure,
+                    lidar_obstruction,
+                    lidar_failure,
+                )
+
+                signal_summary = " ".join(
+                    format_signal_value(key, value)
+                    for key, value in state.items()
                 )
 
                 print(
                     f"[{timestamp}] "
                     f"vehicle={SIMULATED_VEHICLE_ID} "
                     f"mode={mode} "
-                    f"interval="
-                    f"{PUBLISH_INTERVAL_SECONDS} "
-                    + " ".join(
-                        f"{key}={value:.1f}"
-                        for key, value
-                        in state.items()
-                    )
+                    f"interval={PUBLISH_INTERVAL_SECONDS} "
+                    f"{signal_summary}"
                 )
 
                 time.sleep(

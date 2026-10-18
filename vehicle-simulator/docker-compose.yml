@@ -1,9 +1,12 @@
 services:
   databroker:
     image: ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0
-    command: ["--insecure", "--vss", "/config/vss-with-coolant-pressure.json"]
+    command:
+      - "--insecure"
+      - "--vss"
+      - "/config/vss-with-autonomous-sensors.json"
     volumes:
-      - ./config/vss-with-coolant-pressure.json:/config/vss-with-coolant-pressure.json:ro
+      - ./config/vss-with-autonomous-sensors.json:/config/vss-with-autonomous-sensors.json:ro
     ports:
       - "55556:55555"
 
@@ -14,9 +17,10 @@ services:
     ports:
       - "${SIMULATOR_CONTROL_PORT:-8090}:8090"
     environment:
-      - DATABROKER_HOST=databroker
-      - DATABROKER_PORT=55555
-      - INJECT_FAULT=${INJECT_FAULT:-0}
-      - PUBLISH_INTERVAL_SECONDS=${PUBLISH_INTERVAL_SECONDS:-5.0}
-      - SIMULATOR_CONTROL_HOST=0.0.0.0
-      - SIMULATOR_CONTROL_PORT=8090
+      DATABROKER_HOST: databroker
+      DATABROKER_PORT: "55555"
+      SIMULATED_VEHICLE_ID: "${SIMULATED_VEHICLE_ID:-vehicle-001}"
+      INJECT_FAULT: "${INJECT_FAULT:-0}"
+      PUBLISH_INTERVAL_SECONDS: "${PUBLISH_INTERVAL_SECONDS:-5.0}"
+      SIMULATOR_CONTROL_HOST: "0.0.0.0"
+      SIMULATOR_CONTROL_PORT: "8090"
