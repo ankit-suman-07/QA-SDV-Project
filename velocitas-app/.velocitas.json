@@ -1,0 +1,22 @@
+{
+"packages": {
+    "devenv-runtimes": "v4.1.0",
+    "devenv-github-workflows": "v7.0.0",
+    "devenv-github-templates": "v1.0.5",
+    "devenv-devcontainer-setup": "v3.0.0"
+  },
+  "components": [
+    "runtime-local",
+    "runtime-kanto",
+    "deployment-kanto",
+    "vehicle-signal-interface"
+  ],
+  "variables": {
+    "language": "python",
+    "repoType": "app",
+    "appManifestPath": "app/AppManifest.json",
+    "githubRepoId": "ankit-suman-07/QA-SDV-Project",
+    "generatedModelPath": "./gen/vehicle_model"
+  },
+  "cliVersion": "v0.13.2"
+}

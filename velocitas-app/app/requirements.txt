@@ -1,0 +1,5 @@
+cmd2==1.5.0
+jsonpath-ng==1.8.0
+Pygments==2.20.0
+velocitas-sdk==0.15.7
+websockets==16.1

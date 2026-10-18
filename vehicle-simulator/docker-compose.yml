@@ -10,6 +10,17 @@ services:
     ports:
       - "55556:55555"
 
+  mqtt:
+    image: eclipse-mosquitto:2
+    command:
+      - "mosquitto"
+      - "-c"
+      - "/mosquitto/config/mosquitto.conf"
+    volumes:
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    ports:
+      - "1883:1883"
+
   provider:
     build: .
     depends_on:
@@ -24,3 +35,20 @@ services:
       PUBLISH_INTERVAL_SECONDS: "${PUBLISH_INTERVAL_SECONDS:-5.0}"
       SIMULATOR_CONTROL_HOST: "0.0.0.0"
       SIMULATOR_CONTROL_PORT: "8090"
+
+  autonomous-health-app:
+    image: qa-sdv-autonomous-health-app:local
+    build:
+      context: ../velocitas-app
+      dockerfile: app/Dockerfile
+    depends_on:
+      - databroker
+      - mqtt
+      - provider
+    environment:
+      SDV_VEHICLEDATABROKER_ADDRESS: "grpc://databroker:55555"
+      SDV_MQTT_ADDRESS: "mqtt://mqtt:1883"
+      DATABROKER_HOST: databroker
+      DATABROKER_PORT: "55555"
+      SIMULATED_VEHICLE_ID: "${SIMULATED_VEHICLE_ID:-vehicle-001}"
+    restart: unless-stopped
