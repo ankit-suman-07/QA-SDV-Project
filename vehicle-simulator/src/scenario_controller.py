@@ -10,6 +10,8 @@ class ScenarioController:
 
     SUPPORTED_SCENARIOS = {
         "COOLING_SYSTEM_FAILURE",
+        "LIDAR_OBSTRUCTION",
+        "LIDAR_SENSOR_FAILURE",
     }
 
     def __init__(self):

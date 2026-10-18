@@ -1,11 +1,26 @@
-import sys
 import os
-
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+import sys
 
 import pytest
 
-from signal_generator import initial_state, next_state, parse_interval, NORMAL_RANGES
+sys.path.insert(
+    0,
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        "src",
+    ),
+)
+
+from signal_generator import (
+    AUTONOMOUS_BRAKING_DISTANCE_M,
+    LIDAR_WARNING_DISTANCE_M,
+    NORMAL_LIDAR_DISTANCE_M,
+    NORMAL_RANGES,
+    initial_state,
+    next_state,
+    parse_interval,
+)
 
 
 def test_parse_interval_default_value():
@@ -34,25 +49,35 @@ def test_parse_interval_rejects_negative():
 
 def test_normal_signal_generation_stays_within_range():
     state = initial_state()
+
     for _ in range(200):
-        state = next_state(state, fault=False)
+        state = next_state(state)
+
         for key, (lo, hi) in NORMAL_RANGES.items():
-            assert lo <= state[key] <= hi, f"{key}={state[key]} outside normal range ({lo}, {hi})"
+            assert lo <= state[key] <= hi, (
+                f"{key}={state[key]} outside "
+                f"normal range ({lo}, {hi})"
+            )
 
 
 def test_fault_signal_generation_trends_toward_failure():
     state = initial_state()
     state["battery"] = 15.0
+
     initial_battery = state["battery"]
     initial_engine_temp = state["engine_temp"]
     initial_tire_pressure = state["tire_pressure"]
 
     for _ in range(20):
-        state = next_state(state, fault=True)
+        state = next_state(
+            state,
+            fault=True,
+        )
 
     assert state["battery"] <= initial_battery
     assert state["engine_temp"] >= initial_engine_temp
     assert state["tire_pressure"] <= initial_tire_pressure
+
 
 def test_initial_state_contains_normal_coolant_pressure():
     state = initial_state()
@@ -65,22 +90,92 @@ def test_fault_generation_reduces_coolant_pressure():
     initial_pressure = state["coolant_pressure"]
 
     for _ in range(20):
-        state = next_state(state, fault=True)
+        state = next_state(
+            state,
+            fault=True,
+        )
 
     assert state["coolant_pressure"] < initial_pressure
     assert state["coolant_pressure"] >= 100.0
+
 
 def test_coolant_pressure_recovers_after_fault_is_cleared():
     state = initial_state()
 
     for _ in range(30):
-        state = next_state(state, fault=True)
+        state = next_state(
+            state,
+            fault=True,
+        )
 
     fault_pressure = state["coolant_pressure"]
 
     for _ in range(50):
-        state = next_state(state, fault=False)
+        state = next_state(state)
 
     assert fault_pressure < 180.0
-    assert state["coolant_pressure"] >= 180.0
-    assert state["coolant_pressure"] <= 220.0
+    assert 180.0 <= state["coolant_pressure"] <= 220.0
+
+
+def test_initial_state_contains_healthy_lidar_signals():
+    state = initial_state()
+
+    assert (
+        state["lidar_distance_m"]
+        == NORMAL_LIDAR_DISTANCE_M
+    )
+    assert state["lidar_sensor_healthy"] is True
+    assert state["obstacle_warning"] is False
+    assert state["autonomous_braking"] is False
+
+
+def test_approaching_obstacle_triggers_warning_and_braking():
+    state = initial_state()
+    initial_speed = state["speed"]
+
+    for _ in range(20):
+        state = next_state(
+            state,
+            obstacle=True,
+        )
+
+    assert (
+        state["lidar_distance_m"]
+        <= AUTONOMOUS_BRAKING_DISTANCE_M
+    )
+    assert state["lidar_sensor_healthy"] is True
+    assert state["obstacle_warning"] is True
+    assert state["autonomous_braking"] is True
+    assert state["speed"] < initial_speed
+
+
+def test_obstacle_state_recovers_when_path_clears():
+    state = initial_state()
+
+    for _ in range(20):
+        state = next_state(
+            state,
+            obstacle=True,
+        )
+
+    for _ in range(20):
+        state = next_state(state)
+
+    assert (
+        state["lidar_distance_m"]
+        > LIDAR_WARNING_DISTANCE_M
+    )
+    assert state["obstacle_warning"] is False
+    assert state["autonomous_braking"] is False
+
+
+def test_lidar_failure_activates_fail_safe_braking():
+    state = next_state(
+        initial_state(),
+        lidar_failure=True,
+    )
+
+    assert state["lidar_distance_m"] == 0.0
+    assert state["lidar_sensor_healthy"] is False
+    assert state["obstacle_warning"] is True
+    assert state["autonomous_braking"] is True
