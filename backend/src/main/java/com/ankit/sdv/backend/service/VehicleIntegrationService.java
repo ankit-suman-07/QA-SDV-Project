@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class VehicleIntegrationService {
 
-    private static final String VEHICLE_ID = "vehicle-001";
+//     private static final String LEGACY_DEFAULT_VEHICLE_ID =
+//             "vehicle-001";
 
     private final KuksaAdapter kuksaAdapter;
     private final InMemoryVehicleStateProvider stateProvider;
@@ -36,11 +37,15 @@ public class VehicleIntegrationService {
         this.diagnosticService = diagnosticService;
     }
 
-    public void synchronizeVehicleState() {
-        VehicleState state =
-                kuksaAdapter.readCurrentState(VEHICLE_ID);
 
-        validateState(state);
+
+    public void synchronizeVehicleState(String vehicleId) {
+        validateRequestedVehicleId(vehicleId);
+
+        VehicleState state =
+                kuksaAdapter.readCurrentState(vehicleId);
+
+        validateState(vehicleId, state);
 
         HealthResult healthResult =
                 vehicleHealthEngine.evaluate(state);
@@ -55,17 +60,31 @@ public class VehicleIntegrationService {
         );
     }
 
-    private void validateState(VehicleState state) {
+    private void validateRequestedVehicleId(String vehicleId) {
+        if (vehicleId == null || vehicleId.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Vehicle ID must not be blank"
+            );
+        }
+    }
+
+    private void validateState(
+            String requestedVehicleId,
+            VehicleState state
+    ) {
         if (state == null) {
             throw new IllegalStateException(
-                    "Kuksa returned no state for vehicle-001"
+                    "Kuksa returned no state for "
+                            + requestedVehicleId
             );
         }
 
-        if (!VEHICLE_ID.equals(state.vehicleId())) {
+        if (!requestedVehicleId.equals(state.vehicleId())) {
             throw new IllegalStateException(
                     "Kuksa returned state for unexpected vehicle: "
                             + state.vehicleId()
+                            + "; expected: "
+                            + requestedVehicleId
             );
         }
     }

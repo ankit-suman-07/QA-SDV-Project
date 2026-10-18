@@ -2,10 +2,6 @@
 # Environment variables and secrets
 # ==================================================
 
-# macOS metadata
-.DS_Store
-**/.DS_Store
-
 .env
 .env.*
 !.env.example
@@ -127,8 +123,6 @@ uprotocol/generated/*
 .AppleDouble
 .LSOverride
 ._*
-.DS_Store
-**/.DS_Store
 
 Thumbs.db
 ehthumbs.db

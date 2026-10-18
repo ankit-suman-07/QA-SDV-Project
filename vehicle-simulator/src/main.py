@@ -16,6 +16,16 @@ from signal_generator import (
 
 load_dotenv()
 
+SIMULATED_VEHICLE_ID = os.getenv(
+    "SIMULATED_VEHICLE_ID",
+    "vehicle-001",
+).strip()
+
+if not SIMULATED_VEHICLE_ID:
+    raise ValueError(
+        "SIMULATED_VEHICLE_ID must not be blank"
+    )
+
 INITIAL_FAULT_MODE = os.getenv("INJECT_FAULT") == "1"
 
 raw_interval = os.getenv("PUBLISH_INTERVAL_SECONDS")
@@ -29,8 +39,12 @@ CONTROL_HOST = os.getenv(
     "SIMULATOR_CONTROL_HOST",
     "0.0.0.0",
 )
+
 CONTROL_PORT = int(
-    os.getenv("SIMULATOR_CONTROL_PORT", "8090")
+    os.getenv(
+        "SIMULATOR_CONTROL_PORT",
+        "8090",
+    )
 )
 
 COOLING_FAILURE = "COOLING_SYSTEM_FAILURE"
@@ -61,6 +75,7 @@ def create_scenario_controller():
 
     if INITIAL_FAULT_MODE:
         controller.execute(
+            vehicle_id=SIMULATED_VEHICLE_ID,
             action="INJECT_SCENARIO",
             scenario=COOLING_FAILURE,
             action_id="startup-fault",
@@ -80,8 +95,8 @@ def main():
     )
 
     print(
-        f"[Control] listening on "
-        f"{CONTROL_HOST}:{CONTROL_PORT}"
+        f"[Control] vehicle={SIMULATED_VEHICLE_ID} "
+        f"listening on {CONTROL_HOST}:{CONTROL_PORT}"
     )
 
     state = initial_state()
@@ -90,7 +105,8 @@ def main():
         with get_client() as client:
             while True:
                 fault_active = controller.is_active(
-                    COOLING_FAILURE
+                    vehicle_id=SIMULATED_VEHICLE_ID,
+                    scenario=COOLING_FAILURE,
                 )
 
                 state = next_state(
@@ -115,6 +131,7 @@ def main():
 
                 print(
                     f"[{timestamp}] "
+                    f"vehicle={SIMULATED_VEHICLE_ID} "
                     f"mode={mode} "
                     f"interval="
                     f"{PUBLISH_INTERVAL_SECONDS} "

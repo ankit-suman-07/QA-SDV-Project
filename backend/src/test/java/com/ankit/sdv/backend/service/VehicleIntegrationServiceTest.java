@@ -20,9 +20,9 @@ import static org.mockito.Mockito.when;
 class VehicleIntegrationServiceTest {
 
     @Test
-    void shouldProcessValidStateThroughCompletePipeline() {
+    void shouldProcessSpecifiedVehicleThroughCompletePipeline() {
         VehicleState kuksaState = new VehicleState(
-                "vehicle-001",
+                "vehicle-002",
                 Instant.parse("2026-07-15T16:00:00Z"),
                 95.0,
                 200.0
@@ -46,7 +46,7 @@ class VehicleIntegrationServiceTest {
         DiagnosticService diagnosticService =
                 mock(DiagnosticService.class);
 
-        when(kuksaAdapter.readCurrentState("vehicle-001"))
+        when(kuksaAdapter.readCurrentState("vehicle-002"))
                 .thenReturn(kuksaState);
 
         when(healthEngine.evaluate(kuksaState))
@@ -65,15 +65,17 @@ class VehicleIntegrationServiceTest {
                         diagnosticService
                 );
 
-        integrationService.synchronizeVehicleState();
+        integrationService.synchronizeVehicleState(
+                "vehicle-002"
+        );
 
         assertEquals(
                 kuksaState,
-                stateProvider.getCurrentState("vehicle-001")
+                stateProvider.getCurrentState("vehicle-002")
         );
 
         verify(kuksaAdapter)
-                .readCurrentState("vehicle-001");
+                .readCurrentState("vehicle-002");
 
         verify(healthEngine)
                 .evaluate(kuksaState);
@@ -129,7 +131,9 @@ class VehicleIntegrationServiceTest {
 
         assertThrows(
                 IllegalStateException.class,
-                integrationService::synchronizeVehicleState
+                () -> integrationService.synchronizeVehicleState(
+                        "vehicle-001"
+                )
         );
 
         assertEquals(
@@ -190,7 +194,9 @@ class VehicleIntegrationServiceTest {
 
         assertThrows(
                 IllegalStateException.class,
-                integrationService::synchronizeVehicleState
+                () -> integrationService.synchronizeVehicleState(
+                        "vehicle-001"
+                )
         );
 
         assertEquals(

@@ -7,6 +7,8 @@ import com.ankit.sdv.backend.model.DiagnosticAction;
 import com.ankit.sdv.backend.model.DiagnosticActionStatus;
 import com.ankit.sdv.backend.model.DiagnosticScenario;
 import com.ankit.sdv.backend.support.ActionIdGenerator;
+import com.ankit.sdv.backend.registry.VehicleRegistry;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
@@ -35,12 +37,22 @@ class DefaultDiagnosticActionServiceTest {
             ZoneOffset.UTC
     );
 
-    private final DefaultDiagnosticActionService service =
-            new DefaultDiagnosticActionService(
-                    simulatorControlAdapter,
-                    actionIdGenerator,
-                    clock
-            );
+    private final VehicleRegistry vehicleRegistry =
+        new VehicleRegistry(
+                List.of(
+                        "vehicle-001",
+                        "vehicle-002",
+                        "vehicle-003"
+                )
+        );
+
+        private final DefaultDiagnosticActionService service =
+        new DefaultDiagnosticActionService(
+                simulatorControlAdapter,
+                actionIdGenerator,
+                clock,
+                vehicleRegistry
+        );
 
     @Test
     void shouldAcceptAndForwardCoolingFailureInjection() {
@@ -290,4 +302,36 @@ class DefaultDiagnosticActionServiceTest {
                 service.getById("action-001").status()
         );
     }
+
+    @Test
+void shouldAcceptActionForAnotherConfiguredVehicle() {
+    DiagnosticActionRequest request =
+            new DiagnosticActionRequest(
+                    "vehicle-002",
+                    DiagnosticAction.INJECT_SCENARIO,
+                    DiagnosticScenario.COOLING_SYSTEM_FAILURE
+            );
+
+    DiagnosticActionResponse response =
+            service.submit(request);
+
+    assertEquals(
+            "vehicle-002",
+            response.vehicleId()
+    );
+
+    assertEquals(
+            DiagnosticActionStatus.ACCEPTED,
+            response.status()
+    );
+
+    verify(simulatorControlAdapter)
+            .executeAction(
+                    "vehicle-002",
+                    DiagnosticAction.INJECT_SCENARIO,
+                    DiagnosticScenario.COOLING_SYSTEM_FAILURE,
+                    "action-001",
+                    "action-001"
+            );
+}
 }

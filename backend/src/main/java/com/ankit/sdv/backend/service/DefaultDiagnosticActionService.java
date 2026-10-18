@@ -5,6 +5,7 @@ import com.ankit.sdv.backend.dto.DiagnosticActionRequest;
 import com.ankit.sdv.backend.dto.DiagnosticActionResponse;
 import com.ankit.sdv.backend.model.DiagnosticActionStatus;
 import com.ankit.sdv.backend.support.ActionIdGenerator;
+import com.ankit.sdv.backend.registry.VehicleRegistry;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -19,28 +20,33 @@ import java.util.Objects;
 public class DefaultDiagnosticActionService
         implements DiagnosticActionService {
 
-    private static final String SUPPORTED_VEHICLE_ID =
-            "vehicle-001";
+//     private static final String SUPPORTED_VEHICLE_ID =
+//             "vehicle-001";
 
     private final ConcurrentMap<String, DiagnosticActionResponse>
             actionsById = new ConcurrentHashMap<>();
 
+
+
+
     private final SimulatorControlAdapter simulatorControlAdapter;
+    private final VehicleRegistry vehicleRegistry;
     private final ActionIdGenerator actionIdGenerator;
     private final Clock clock;
 
     public DefaultDiagnosticActionService(
-            SimulatorControlAdapter simulatorControlAdapter,
-            ActionIdGenerator actionIdGenerator,
-            Clock clock
-    ) {
-        this.simulatorControlAdapter =
-                simulatorControlAdapter;
-        this.actionIdGenerator =
-                actionIdGenerator;
-        this.clock = clock;
-    }
-
+        SimulatorControlAdapter simulatorControlAdapter,
+        ActionIdGenerator actionIdGenerator,
+        Clock clock,
+        VehicleRegistry vehicleRegistry
+) {
+    this.simulatorControlAdapter =
+            simulatorControlAdapter;
+    this.actionIdGenerator =
+            actionIdGenerator;
+    this.clock = clock;
+    this.vehicleRegistry = vehicleRegistry;
+}
 
 
     @Override
@@ -52,7 +58,8 @@ public class DefaultDiagnosticActionService
                 "Diagnostic action request cannot be null"
         );
 
-        validateVehicleId(request.vehicleId());
+        //validateVehicleId(request.vehicleId());
+        vehicleRegistry.requireRegistered(request.vehicleId());
 
         String actionId = actionIdGenerator.generate();
         String traceId = actionId;
@@ -154,13 +161,13 @@ public class DefaultDiagnosticActionService
         return updated;
     }
 
-    private void validateVehicleId(String vehicleId) {
-        if (!SUPPORTED_VEHICLE_ID.equals(vehicleId)) {
-            throw new IllegalArgumentException(
-                    "Unsupported vehicle ID: " + vehicleId
-            );
-        }
-    }
+//     private void validateVehicleId(String vehicleId) {
+//         if (!SUPPORTED_VEHICLE_ID.equals(vehicleId)) {
+//             throw new IllegalArgumentException(
+//                     "Unsupported vehicle ID: " + vehicleId
+//             );
+//         }
+//     }
 
     private boolean isValidTransition(
             DiagnosticActionStatus current,
