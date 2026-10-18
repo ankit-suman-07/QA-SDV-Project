@@ -54,6 +54,7 @@ def test_health_endpoint_returns_ok(running_server):
     ) as response:
         body = json.load(response)
 
+    #assert body["vehicleId"] == "vehicle-002"
     assert response.status == 200
     assert body == {"status": "UP"}
 
@@ -65,6 +66,7 @@ def test_post_action_injects_scenario(running_server):
         server,
         "/api/v1/scenarios/actions",
         {
+            "vehicleId": "vehicle-002",
             "actionId": "action-001",
             "traceId": "trace-001",
             "action": "INJECT_SCENARIO",
@@ -72,10 +74,12 @@ def test_post_action_injects_scenario(running_server):
         },
     )
 
+    assert body["vehicleId"] == "vehicle-002"
     assert status == 200
     assert body["active"] is True
     assert controller.is_active(
-        "COOLING_SYSTEM_FAILURE"
+        vehicle_id="vehicle-002",
+        scenario="COOLING_SYSTEM_FAILURE",
     ) is True
 
 
@@ -87,6 +91,7 @@ def test_invalid_action_returns_bad_request(running_server):
             server,
             "/api/v1/scenarios/actions",
             {
+                "vehicleId": "vehicle-002",
                 "actionId": "action-001",
                 "traceId": "trace-001",
                 "action": "UNKNOWN_ACTION",
@@ -104,6 +109,7 @@ def test_chunked_post_action_injects_scenario(
 
     payload = json.dumps(
         {
+            "vehicleId": "vehicle-002",
             "actionId": "action-001",
             "traceId": "trace-001",
             "action": "INJECT_SCENARIO",
@@ -134,9 +140,11 @@ def test_chunked_post_action_injects_scenario(
     connection.close()
 
     assert response.status == 200
+    assert body["vehicleId"] == "vehicle-002"
     assert body["active"] is True
     assert controller.is_active(
-        "COOLING_SYSTEM_FAILURE"
+        vehicle_id="vehicle-002",
+        scenario="COOLING_SYSTEM_FAILURE",
     ) is True
 
 def test_get_scenario_state_returns_action_context(
@@ -148,6 +156,7 @@ def test_get_scenario_state_returns_action_context(
         server,
         "/api/v1/scenarios/actions",
         {
+            "vehicleId": "vehicle-002",
             "actionId": "action-001",
             "traceId": "trace-001",
             "action": "INJECT_SCENARIO",
@@ -160,7 +169,7 @@ def test_get_scenario_state_returns_action_context(
     with urlopen(
         (
             f"http://{host}:{port}"
-            "/api/v1/scenarios/"
+            "/api/v1/vehicles/vehicle-002/scenarios/"
             "COOLING_SYSTEM_FAILURE"
         ),
         timeout=2,
@@ -169,6 +178,7 @@ def test_get_scenario_state_returns_action_context(
 
     assert response.status == 200
     assert body == {
+        "vehicleId": "vehicle-002",
         "scenario": "COOLING_SYSTEM_FAILURE",
         "active": True,
         "actionId": "action-001",

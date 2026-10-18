@@ -18,16 +18,22 @@ def create_request_handler(controller):
                 )
                 return
 
-            scenario_prefix = "/api/v1/scenarios/"
+            path_parts = self.path.strip("/").split("/")
 
-            if self.path.startswith(scenario_prefix):
-                scenario = self.path[
-                    len(scenario_prefix):
-                ]
+            if (
+                len(path_parts) == 6
+                and path_parts[0] == "api"
+                and path_parts[1] == "v1"
+                and path_parts[2] == "vehicles"
+                and path_parts[4] == "scenarios"
+            ):
+                vehicle_id = path_parts[3]
+                scenario = path_parts[5]
 
                 try:
                     state = controller.get_state(
-                        scenario
+                        vehicle_id=vehicle_id,
+                        scenario=scenario,
                     )
                     self._write_json(200, state)
                 except ValueError as exception:
@@ -59,6 +65,7 @@ def create_request_handler(controller):
                 )
 
                 result = controller.execute(
+                    vehicle_id=payload["vehicleId"],
                     action=payload["action"],
                     scenario=payload["scenario"],
                     action_id=payload["actionId"],

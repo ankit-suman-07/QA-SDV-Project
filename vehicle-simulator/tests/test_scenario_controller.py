@@ -15,7 +15,8 @@ def test_scenario_is_inactive_by_default():
     controller = ScenarioController()
 
     assert controller.is_active(
-        "COOLING_SYSTEM_FAILURE"
+        vehicle_id="vehicle-001",
+        scenario="COOLING_SYSTEM_FAILURE",
     ) is False
 
 
@@ -23,6 +24,7 @@ def test_inject_action_activates_scenario():
     controller = ScenarioController()
 
     controller.execute(
+        vehicle_id="vehicle-001",
         action="INJECT_SCENARIO",
         scenario="COOLING_SYSTEM_FAILURE",
         action_id="action-001",
@@ -30,7 +32,8 @@ def test_inject_action_activates_scenario():
     )
 
     assert controller.is_active(
-        "COOLING_SYSTEM_FAILURE"
+        vehicle_id="vehicle-001",
+        scenario="COOLING_SYSTEM_FAILURE",
     ) is True
 
 
@@ -38,6 +41,7 @@ def test_clear_action_deactivates_scenario():
     controller = ScenarioController()
 
     controller.execute(
+        vehicle_id="vehicle-001",
         action="INJECT_SCENARIO",
         scenario="COOLING_SYSTEM_FAILURE",
         action_id="action-001",
@@ -45,6 +49,7 @@ def test_clear_action_deactivates_scenario():
     )
 
     controller.execute(
+        vehicle_id="vehicle-001",
         action="CLEAR_SCENARIO",
         scenario="COOLING_SYSTEM_FAILURE",
         action_id="action-002",
@@ -52,7 +57,8 @@ def test_clear_action_deactivates_scenario():
     )
 
     assert controller.is_active(
-        "COOLING_SYSTEM_FAILURE"
+        vehicle_id="vehicle-001",
+        scenario="COOLING_SYSTEM_FAILURE",
     ) is False
 
 
@@ -64,6 +70,7 @@ def test_unsupported_action_is_rejected():
         match="Unsupported diagnostic action",
     ):
         controller.execute(
+            vehicle_id="vehicle-001",
             action="UNKNOWN_ACTION",
             scenario="COOLING_SYSTEM_FAILURE",
             action_id="action-001",
@@ -79,6 +86,7 @@ def test_unsupported_scenario_is_rejected():
         match="Unsupported diagnostic scenario",
     ):
         controller.execute(
+            vehicle_id="vehicle-001",
             action="INJECT_SCENARIO",
             scenario="UNKNOWN_SCENARIO",
             action_id="action-001",
@@ -89,6 +97,7 @@ def test_scenario_state_preserves_action_context():
     controller = ScenarioController()
 
     controller.execute(
+        vehicle_id="vehicle-001",
         action="INJECT_SCENARIO",
         scenario="COOLING_SYSTEM_FAILURE",
         action_id="action-001",
@@ -96,11 +105,34 @@ def test_scenario_state_preserves_action_context():
     )
 
     assert controller.get_state(
-        "COOLING_SYSTEM_FAILURE"
+        vehicle_id="vehicle-001",
+        scenario="COOLING_SYSTEM_FAILURE",
     ) == {
+        "vehicleId": "vehicle-001",
         "scenario": "COOLING_SYSTEM_FAILURE",
         "active": True,
         "actionId": "action-001",
         "traceId": "trace-001",
         "action": "INJECT_SCENARIO",
     }
+
+def test_scenario_state_is_isolated_by_vehicle():
+    controller = ScenarioController()
+
+    controller.execute(
+        vehicle_id="vehicle-002",
+        action="INJECT_SCENARIO",
+        scenario="COOLING_SYSTEM_FAILURE",
+        action_id="action-002",
+        trace_id="trace-002",
+    )
+
+    assert controller.is_active(
+        vehicle_id="vehicle-002",
+        scenario="COOLING_SYSTEM_FAILURE",
+    ) is True
+
+    assert controller.is_active(
+        vehicle_id="vehicle-001",
+        scenario="COOLING_SYSTEM_FAILURE",
+    ) is False
