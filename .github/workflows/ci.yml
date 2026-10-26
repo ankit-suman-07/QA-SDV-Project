@@ -63,6 +63,18 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements-test.txt
 
+      - name: Generate Python Protobuf modules
+        run: |
+          mkdir -p uprotocol/generated
+          python -m grpc_tools.protoc \
+            -I uprotocol/proto \
+            --python_out=uprotocol/generated \
+            uprotocol/proto/common.proto \
+            uprotocol/proto/health_status.proto \
+            uprotocol/proto/vehicle_status.proto \
+            uprotocol/proto/vehicle_fault.proto \
+            uprotocol/proto/vehicle_diagnostic.proto
+
       - name: Run unit tests
         run: python -m pytest -q -ra -m "not integration"
 
@@ -94,12 +106,23 @@ jobs:
           ).decode().split("\0")
 
           count = 0
+          failures = []
+
           for filename in filter(None, files):
               path = Path(filename)
-              with path.open(encoding="utf-8-sig") as source:
-                  json.load(source)
-              print(f"Valid JSON: {path}")
-              count += 1
+              try:
+                  with path.open(encoding="utf-8-sig") as source:
+                      json.load(source)
+              except (ValueError, OSError) as error:
+                  failures.append(f"{path}: {error}")
+              else:
+                  print(f"Valid JSON: {path}")
+                  count += 1
+
+          if failures:
+              for failure in failures:
+                  print(f"INVALID JSON: {failure}")
+              raise SystemExit(1)
 
           print(f"Validated {count} JSON files.")
           PY
