@@ -1,0 +1,94 @@
+name: Pipeline integration
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: integration-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pipeline:
+    name: Synthetic pipeline integration
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
+
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      COMPOSE_PROJECT_NAME: sdv-ci
+      SIMULATED_VEHICLE_ID: vehicle-001
+      SIMULATOR_CONTROL_PORT: "8090"
+      PUBLISH_INTERVAL_SECONDS: "1.0"
+      INJECT_FAULT: "0"
+      DATABROKER_HOST: "127.0.0.1"
+      DATABROKER_PORT: "55556"
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements-test.txt
+            vehicle-simulator/requirements.txt
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-test.txt
+
+      - name: Validate Compose and demo script
+        run: |
+          sh -n scripts/run-autonomous-mvp-demo.sh
+          docker compose \
+            -f vehicle-simulator/docker-compose.yml \
+            config --quiet
+
+      - name: Verify healthy, braking and recovery events
+        run: |
+          timeout --signal=TERM --kill-after=30s 12m \
+            sh scripts/run-autonomous-mvp-demo.sh
+
+      - name: Verify published KUKSA signals
+        run: |
+          timeout --signal=TERM --kill-after=15s 2m \
+            python -m pytest \
+              -q \
+              -ra \
+              -m integration \
+              vehicle-simulator/tests/test_kuksa_publication.py
+
+      - name: Show service status and logs
+        if: always()
+        run: |
+          docker compose \
+            -f vehicle-simulator/docker-compose.yml \
+            ps --all
+
+          docker compose \
+            -f vehicle-simulator/docker-compose.yml \
+            logs --no-color --tail=200
+
+      - name: Clean up integration services
+        if: always()
+        run: |
+          docker compose \
+            -f vehicle-simulator/docker-compose.yml \
+            down --volumes --remove-orphans --timeout 20
