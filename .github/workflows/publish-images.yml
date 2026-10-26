@@ -1,0 +1,182 @@
+name: Publish container images
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+      - Pipeline integration
+    types:
+      - completed
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: false
+
+jobs:
+  validation:
+    name: Verify publication eligibility
+    if: >-
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    permissions:
+      contents: read
+      actions: read
+
+    outputs:
+      ready: ${{ steps.check.outputs.ready }}
+      sha: ${{ steps.check.outputs.sha }}
+
+    steps:
+      - name: Check both workflows for the source commit
+        id: check
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const sha = context.payload.workflow_run.head_sha;
+            core.setOutput("ready", "false");
+
+            const workflows = [
+              "ci.yml",
+              "integration-test.yml"
+            ];
+
+            for (const workflow of workflows) {
+              const response = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: workflow,
+                branch: "main",
+                event: "push",
+                head_sha: sha,
+                per_page: 100
+              });
+
+              const runs = response.data.workflow_runs
+                .filter(run =>
+                  run.head_sha === sha &&
+                  run.head_branch === "main" &&
+                  run.event === "push"
+                )
+                .sort((a, b) => b.id - a.id);
+
+              const run = runs[0];
+
+              if (
+                !run ||
+                run.status !== "completed" ||
+                run.conclusion !== "success"
+              ) {
+                core.info(
+                  `${workflow} has not passed for ${sha}. ` +
+                  "Publication is skipped. A later successful " +
+                  "workflow completion will check again."
+                );
+                return;
+              }
+
+              core.info(`${workflow} passed: ${run.html_url}`);
+            }
+
+            core.setOutput("sha", sha);
+            core.setOutput("ready", "true");
+
+  publish:
+    name: Publish ${{ matrix.service }}
+    needs: validation
+    if: needs.validation.outputs.ready == 'true'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      packages: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - service: provider
+            context: vehicle-simulator
+            dockerfile: vehicle-simulator/Dockerfile
+
+          - service: autonomous-health-app
+            context: velocitas-app
+            dockerfile: velocitas-app/app/Dockerfile
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Check out the validated source commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.validation.outputs.sha }}
+          persist-credentials: false
+
+      - name: Define image reference
+        env:
+          SOURCE_SHA: ${{ needs.validation.outputs.sha }}
+          SERVICE: ${{ matrix.service }}
+        run: |
+          repository="${GITHUB_REPOSITORY,,}"
+          image="ghcr.io/${repository}-${SERVICE}:sha-${SOURCE_SHA}"
+          echo "IMAGE_REF=${image}" >> "$GITHUB_ENV"
+
+      - name: Log in to GHCR
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s' "$GHCR_TOKEN" |
+            docker login ghcr.io \
+              --username "$GITHUB_ACTOR" \
+              --password-stdin
+
+      - name: Check whether the image is already published
+        id: existing
+        run: |
+          if docker manifest inspect "$IMAGE_REF" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Already published: $IMAGE_REF"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build image from validated source
+        if: steps.existing.outputs.exists != 'true'
+        env:
+          BUILD_CONTEXT: ${{ matrix.context }}
+          DOCKERFILE: ${{ matrix.dockerfile }}
+          SOURCE_SHA: ${{ needs.validation.outputs.sha }}
+        run: |
+          docker build \
+            --platform linux/amd64 \
+            --label "org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}" \
+            --label "org.opencontainers.image.revision=${SOURCE_SHA}" \
+            --file "$DOCKERFILE" \
+            --tag "$IMAGE_REF" \
+            "$BUILD_CONTEXT"
+
+      - name: Push image
+        if: steps.existing.outputs.exists != 'true'
+        run: docker push "$IMAGE_REF"
+
+      - name: Verify published manifest and record image reference
+        run: |
+          docker manifest inspect "$IMAGE_REF"
+          printf 'Published image: `%s`\n' "$IMAGE_REF" \
+            >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Log out of GHCR
+        if: always()
+        run: docker logout ghcr.io
