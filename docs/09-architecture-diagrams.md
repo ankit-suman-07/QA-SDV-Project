@@ -1,10 +1,10 @@
 # SDV fleet enhancement architecture
 
-Target architecture for Course V1 and V2, based on [project scope and acceptance](09-project-scope-and-acceptance.md). Both milestones run locally using host processes or containers. The diagrams describe delivery targets.
+Target architecture for Phase V1 and Phase V2, based on [project scope and acceptance](09-project-scope-and-acceptance.md). Both milestones run locally using host processes or containers. The diagrams describe delivery targets.
 
-## Course V1 — Two synthetic vehicles
+## Phase V1 — Two synthetic vehicles
 
-One KUKSA broker and one Velocitas app serve each vehicle. The shared MQTT broker delivers vehicle-specific events to the twin bridge. Spring Boot reads live Ditto state and routes simulator fault commands by vehicle ID.
+One KUKSA broker and one Velocitas app serve each vehicle. The shared MQTT broker delivers vehicle-specific events to the twin bridge. Spring Boot reads live vehicle and fleet state, serves the basic dashboard, and routes simulator fault commands by vehicle ID. Bayan’s Linux device runs the Kanto pilot for vehicle-002 using the main host’s KUKSA and Mosquitto LAN endpoints.
 
 ```mermaid
 flowchart TD
@@ -16,21 +16,25 @@ flowchart TD
         S2["Synthetic provider 002"] --> K2["KUKSA broker 002"]
         K2 --> A2["Velocitas app 002"]
     end
+    KA1["Kanto on Bayan’s Linux device"] -.->|"Launch and restart"| A2
     A1 --> M["Mosquitto"]
     A2 --> M
     M --> B["Twin bridge"]
     B -->|"Validate and route by vehicle ID"| D["Ditto vehicle twins 001 and 002"]
-    D -->|"Live state reads"| API["Spring Boot API"]
-    API -->|"Demo vehicle health"| C["API client"]
-    C -->|"Inject or clear fault on vehicle-002"| API
+    D --> F1["Fleet aggregator"]
+    F1 --> T1["Ditto fleet twin"]
+    D -->|"Live vehicle reads"| API["Spring Boot API"]
+    T1 -->|"Live fleet reads"| API
+    API -->|"Vehicle and fleet health"| UI1["Basic fleet dashboard"]
+    C["Scenario API client"] -->|"Inject or clear fault on vehicle-002"| API
     API -->|"Targeted HTTP scenario command"| S2
 ```
 
-**Acceptance run.** Start both vehicles healthy. Inject a LiDAR fault into `vehicle-002`, observe the fault in its twin and API response, then clear it and observe recovery. Verify that `vehicle-001` stays healthy and receives no corresponding fault.
+**Acceptance run.** Start both vehicles healthy. Inject a LiDAR fault into `vehicle-002`, observe the fault in its twin and API response, then clear it and observe recovery. Verify that `vehicle-001` stays healthy and receives no corresponding fault. Verify that the fleet summary and dashboard reflect the transitions. For the Kanto pilot, capture a fresh post-restart event updating the vehicle-002 twin.
 
-## Course V2 — CARLA fleet telemetry
+## Phase V2 — CARLA fleet telemetry
 
-The CARLA adapter maps three actors to three project vehicle IDs. It sends compact front LiDAR observations to the matching edge instance and records the injection timeline separately for evaluation.
+The CARLA adapter maps three actors to three project vehicle IDs. It sends compact front LiDAR observations to the matching edge instance and records the injection timeline separately for evaluation. Run CARLA and its Python adapter on a separate GPU-capable host if available. Validate one actor through the pipeline before connecting all three. Repeat the Phase V1 Kanto restart check against the CARLA-backed fleet.
 
 ```mermaid
 flowchart TD
@@ -52,7 +56,7 @@ flowchart TD
 
 Velocitas classifies LiDAR health. The bridge validates identity and freshness and applies the agreed duplicate and ordering rules. Fleet aggregation derives counts, availability and alerts from individual twin state. Store compact observations and diagnostic records in Ditto. Keep raw point clouds and labelled experiment inputs separately.
 
-## Course V2 — Diagnostic commands and outcomes
+## Phase V2 — Diagnostic commands and outcomes
 
 ```mermaid
 sequenceDiagram

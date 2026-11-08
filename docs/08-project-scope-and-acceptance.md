@@ -9,10 +9,10 @@ Develop and evaluate a reproducible local SDV platform for three simulated vehic
 | Stage | Commitment |
 |---|---|
 | Previous-term MVP | Preserve the single-vehicle baseline and its reproducible workflow. |
-| Phase V1 · November 16 | Deliver the two-vehicle synthetic workflow below using pre-prepared vendor skills. Target approximately 30% of the remaining effort. Submit video and report. |
-| Phase V2 · December 5 | Extend V1 to three CARLA vehicles, complete diagnostics, fleet views and Kanto runtime validation, and evaluate customized skills. Submit the product and report with demonstration evidence. |
+| Phase V1 · November 16 | Target approximately 60% of remaining effort. Deliver two synthetic vehicles, live Ditto and Spring Boot, fleet aggregation, a basic dashboard, fleet CI, and a one-vehicle Kanto pilot using pre-prepared vendor skills. Submit video and report. |
+| Phase V2 · December 5 | Target the remaining 40%. Extend Phase V1 to three CARLA vehicles with front LiDAR, complete diagnostic action tracking, validate Kanto with the CARLA fleet, demonstrate the agreed uProtocol and OpenSOVD operations, and evaluate customized skills. Submit the product and report with demonstration evidence. |
 
-Charter V2 names the enhancement charter. Phase V1 and V2 name this term’s submission milestones. The 30% target is an estimate of effort, and the acceptance criteria define milestone completion.
+Charter V2 names the enhancement charter. Phase V1 and Phase V2 name this term’s submission milestones. The 60/40 split estimates effort. The acceptance criteria define milestone completion.
 
 ## Product scope and architecture
 
@@ -39,8 +39,8 @@ This adapts the component responsibilities in `05-work-distribution.md`, with An
 
 | Member | Phase V1 | Phase V2 and continuing responsibility |
 |---|---|---|
-| **Ankit — Architecture, backend integration and quality lead** | Freeze shared contracts with the team. Connect Spring Boot to live twin state and expose per-vehicle APIs. Route inject/clear requests to the correct provider. Own system integration, CI, end-to-end verification and submission coordination. | Own backend integration across twins, fleet queries and diagnostic services. Implement fleet/vehicle APIs, action status and minimal fleet dashboard. Lead architecture decisions, CI/CD, measurement harness, final integration, stage comparison and evaluation/report consolidation. |
-| **Bayan — Messaging, twins and edge deployment lead** | Implement MQTT ingestion and vehicle-aware twin routing. Provision two twins, preserve event identity and source time, and test routing and malformed-input handling. Provide Ankit with twin schemas and read interfaces. | Complete three individual twins, fleet aggregator/twin, history and duplicate/out-of-order handling. Lead Kanto Linux runtime deployment and recovery evidence. Own the agreed uProtocol/OpenSOVD integration, coordinating backend command/result contracts with Ankit. |
+| **Ankit — Architecture, backend integration and quality lead** | Freeze shared contracts with the team. Connect Spring Boot to live twin state and expose per-vehicle APIs. Route inject/clear requests to the correct provider. Expose fleet state in the basic dashboard. Own system integration, fleet CI, end-to-end verification and submission coordination. | Own backend integration across twins, fleet queries and diagnostic services. Extend fleet/vehicle APIs and dashboard with diagnostic action status and history. Lead architecture decisions, CI/CD, measurement harness, final integration, stage comparison and evaluation/report consolidation. |
+| **Bayan — Messaging, twins and edge deployment lead** | Implement MQTT ingestion and vehicle-aware twin routing. Provision two twins, preserve event identity and source time, and test routing and malformed-input handling. Provide Ankit with twin schemas and read interfaces. Aggregate both twins and run the one-vehicle Kanto pilot on Linux. | Extend fleet aggregation to three twins and add history and duplicate/out-of-order handling. Repeat Kanto validation against the CARLA-backed fleet. Own the agreed uProtocol/OpenSOVD integration, coordinating backend command/result contracts with Ankit. |
 | **Emmanuel — Simulation, sensors and vehicle application lead** | Run two isolated synthetic providers, brokers and Velocitas apps. Supply targeted fault/clear scenarios and valid status events. Verify signal publication and per-vehicle independence. | Own CARLA setup, actor-to-vehicle mapping, front LiDAR observations, controlled degradation/dropout and reproducible scenarios for three vehicles. Extend Velocitas detection and recovery rules, and verify adapter units, freshness and sensor behavior. Supply runtime ground truth and component evidence. |
 | **All members** | Use pre-prepared skills, review another member’s work, test owned components and contribute video/report evidence. | Customize skills using course concepts, evaluate them on comparable cases, review PRs, participate in integrated runs and document actual contributions and limitations. |
 
@@ -54,9 +54,11 @@ Ankit coordinates quality while each component owner supplies its tests and runt
 | V1-02 | MQTT events update two live Ditto twins. A malformed event or unknown vehicle cannot overwrite either twin. | Event contract, representative inputs and live integration assertions. |
 | V1-03 | A targeted LiDAR fault/clear request reaches vehicle-002. Its state changes healthy → fault → healthy in Ditto and the backend API. Vehicle-001 stays healthy with no corresponding fault. | Repeatable script, API responses, correlated logs and isolation assertions. |
 | V1-04 | Backend reads reflect live twin data. Missing or stale readings are identifiable and use preserved source timestamps. | Backend tests, a disconnected-source check and sample responses. |
-| V1-05 | The existing baseline and relevant unit/integration checks pass. The actual dependencies used by each test are labelled. | CI run or recorded local results and mocked/live coverage table. |
+| V1-05 | The existing baseline and relevant unit/integration checks pass, including a repeatable two-vehicle fault/clear CI check. The actual dependencies used by each test are labelled. | CI run or recorded local results and mocked/live coverage table. |
 | V1-06 | Pre-prepared vendor skills guide actual tasks, with human review and requirement-to-test traceability. | Skill source/version, rationale, reviewed examples, spec/PR history and traceability table. |
 | V1-07 | The tagged V1 can be rerun, demonstrated and explained by the team. | Video, report, startup/scenario instructions and contribution statements. |
+| V1-08 | The fleet summary and basic dashboard reflect both live twins during fault and recovery. | Compare live Ditto state with the fleet API and dashboard. |
+| V1-09 | On Bayan’s Linux device, Kanto launches and restarts the vehicle-002 Velocitas app and a fresh event reaches its Ditto twin. | Kanto logs and correlated MQTT/twin evidence. Track separately from the core demo if the Linux or LAN setup blocks the pilot. |
 
 ## Phase V2 acceptance
 
@@ -66,7 +68,7 @@ Ankit coordinates quality while each component owner supplies its tests and runt
 | V2-02 | Controlled degradation/dropout produces the specified warning/failure state. Restored valid frames clear it after the recovery window. | Labelled fault timeline, threshold-boundary tests and repeated detection/recovery results. |
 | V2-03 | Individual twins, fleet counts and dashboard agree for healthy, faulty, recovering and unavailable vehicles. Other vehicles receive no injected fault. | Cross-view assertions, fleet aggregation tests and recorded demonstration. |
 | V2-04 | A dashboard diagnostic action is validated, targeted and tracked to a verifiable outcome. Unknown targets, unavailable services and timeout/failure outcomes are handled. | API tests, action/trace logs and live execution evidence. |
-| V2-05 | Kanto launches and restarts the selected app on Linux. Fresh post-restart events arrive and update its twin. | Linux/Kanto/image versions, status and correlated runtime events. An upstream suppressed sensor stream must be restored separately. |
+| V2-05 | Kanto launches and restarts the selected CARLA-backed app on Linux. Fresh post-restart events update its vehicle twin. | Linux/Kanto/image versions, status and correlated runtime events. An upstream suppressed sensor stream must be restored separately. |
 | V2-06 | The agreed uProtocol exchange and OpenSOVD operation execute against the selected implementations. | Exact supported operations, pinned versions, sender/receiver or request/response traces and failure-case checks. Compatible custom adapters are labelled accurately if full integration remains pending. |
 | V2-07 | Customized skills contain actionable changes grounded in cited course concepts and are evaluated against their originals on comparable tasks. | Original/customized diffs, versions, changelog, references, reviewed outputs and comparison results. |
 | V2-08 | Final code, specs, skills, tests, measurements and contributions are reproducible and traceable. | Release reference, report, demonstration, CI, raw results, rerun steps and individual explanations. |
