@@ -1,0 +1,6 @@
+trial,vehicle_id,fault_ms,recovery_ms,result,error
+1,vehicle-001,42426.514,10044.95,pass,
+2,vehicle-001,12075.315,16097.173,pass,
+3,vehicle-001,8034.951,10063.235,pass,
+4,vehicle-001,8051.279,10043.413,pass,
+5,vehicle-001,12111.783,16081.101,pass,
