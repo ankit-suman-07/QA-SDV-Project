@@ -1,2 +1,2 @@
 -r vehicle-simulator/requirements.txt
-requests==2.32.5
+-r ditto/requirements-mqtt.txt
