@@ -98,3 +98,19 @@ def test_gate_does_not_prime_on_invalid_observation():
     assert gate.next_event(Observation("bad", True, T0)) is None
     assert gate.next_event(obs(T1)) is None  # first valid observation primes
     assert gate.next_event(obs(T2))["eventId"] == "id-1"
+
+
+def test_gate_reports_why_nothing_was_published():
+    gate = make_gate()
+    gate.next_event(obs(T0))
+    assert gate.last_skip is None  # priming is not a skip
+    gate.next_event(Observation(5.0, True, None))
+    assert gate.last_skip == "incomplete"
+    gate.next_event(Observation("bad", True, T1))
+    assert gate.last_skip == "invalid"
+    gate.mark_published(gate.next_event(obs(T2)))
+    assert gate.last_skip is None
+    gate.next_event(obs(T1))
+    assert gate.last_skip == "older"
+    gate.next_event(obs(T2))
+    assert gate.last_skip is None  # same reading again is not a problem

@@ -6,6 +6,7 @@ import signal
 
 from health_logic import build_status_event
 from kuksa_client.grpc import VSSClient
+from kuksa_reconnect import reconnect
 from v1_event import (
     ObservationGate,
     observation_from_datapoints,
@@ -74,6 +75,12 @@ AUTONOMOUS_BRAKING_PATH = (
     "Vehicle.Automation.AutonomousBraking.IsActive"
 )
 
+V1_SKIP_MESSAGES = {
+    "incomplete": "LiDAR value or timestamp missing in KUKSA",
+    "invalid": "LiDAR reading is invalid (bad distance or naive timestamp)",
+    "older": "observation time went backwards; check the broker clock",
+}
+
 MONITORED_SIGNAL_PATHS = [
     SPEED_PATH,
     LIDAR_DISTANCE_PATH,
@@ -96,6 +103,7 @@ class AutonomousHealthApp(VehicleApp):
         self._kuksa_reconnect_needed = False
         self._v1_gate = ObservationGate(VEHICLE_ID)
         self._v1_topic = topic(VEHICLE_ID)
+        self._v1_last_skip_logged = None
 
     async def on_start(self):
         logger.info(
@@ -123,7 +131,8 @@ class AutonomousHealthApp(VehicleApp):
             return
         try:
             await asyncio.to_thread(
-                self._kuksa_client.connect
+                reconnect,
+                self._kuksa_client,
             )
             self._kuksa_reconnect_needed = False
             logger.info("Reconnected to KUKSA databroker")
@@ -143,12 +152,18 @@ class AutonomousHealthApp(VehicleApp):
             datapoints.get(LIDAR_DISTANCE_PATH),
             datapoints.get(LIDAR_HEALTH_PATH),
         )
-        if observation.observed_at is None:
-            logger.warning(
-                "v1: LiDAR values or timestamps not available yet"
-            )
-
         event = self._v1_gate.next_event(observation)
+
+        skip = self._v1_gate.last_skip
+        if skip != self._v1_last_skip_logged:
+            if skip is not None:
+                logger.warning(
+                    "v1: not publishing (%s): %s",
+                    skip,
+                    V1_SKIP_MESSAGES[skip],
+                )
+            self._v1_last_skip_logged = skip
+
         if event is None:
             return
 

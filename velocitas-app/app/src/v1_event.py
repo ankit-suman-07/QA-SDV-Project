@@ -134,12 +134,22 @@ class ObservationGate:
         self._id_factory = id_factory
         self._latest_at: datetime | None = None
         self._pending: tuple[dict, datetime] | None = None
+        # Why the last observation was not published: None, "incomplete"
+        # (missing value or timestamp), "invalid" (bad value or naive
+        # timestamp) or "older" (observation time went backwards).
+        self.last_skip: str | None = None
 
     def next_event(self, observation: Observation) -> dict | None:
-        candidate = self._build(observation)
-        if candidate is None:
+        if observation.observed_at is None:
+            self.last_skip = "incomplete"
             return self._pending_event()
 
+        candidate = self._build(observation)
+        if candidate is None:
+            self.last_skip = "invalid"
+            return self._pending_event()
+
+        self.last_skip = None
         if self._latest_at is None:
             self._latest_at = observation.observed_at
             return self._pending_event()
@@ -148,6 +158,8 @@ class ObservationGate:
             candidate["eventId"] = self._id_factory(self._vehicle_id)
             self._pending = (candidate, observation.observed_at)
             self._latest_at = observation.observed_at
+        elif observation.observed_at < self._latest_at:
+            self.last_skip = "older"
 
         return self._pending_event()
 
@@ -157,8 +169,6 @@ class ObservationGate:
             self._pending = None
 
     def _build(self, observation: Observation) -> dict | None:
-        if observation.observed_at is None:
-            return None
         try:
             return build_v1_event(
                 self._vehicle_id,
