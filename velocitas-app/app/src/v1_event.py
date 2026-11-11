@@ -9,7 +9,9 @@ from __future__ import annotations
 import json
 import math
 import uuid
+from dataclasses import dataclass
 from datetime import datetime, timezone
+from typing import Callable
 
 SCHEMA_VERSION = "1.0.0"
 WARNING_DISTANCE_M = 10.0
@@ -87,3 +89,86 @@ def build_v1_event(
 
 def serialize(event: dict) -> str:
     return json.dumps(event, separators=(",", ":"), allow_nan=False)
+
+
+@dataclass(frozen=True)
+class Observation:
+    distance: object
+    sensor_available: object
+    observed_at: datetime | None
+
+
+def observation_from_datapoints(distance_dp, health_dp) -> Observation:
+    """Build an observation from two KUKSA datapoints (.value, .timestamp).
+
+    The observation time is the later broker timestamp of the two, because
+    the provider writes both values in one call.
+    """
+    distance = distance_dp.value if distance_dp is not None else None
+    available = health_dp.value if health_dp is not None else None
+    timestamps = [
+        dp.timestamp
+        for dp in (distance_dp, health_dp)
+        if dp is not None and dp.timestamp is not None
+    ]
+    observed_at = max(timestamps) if len(timestamps) == 2 else None
+    return Observation(distance, available, observed_at)
+
+
+class ObservationGate:
+    """Decides what to publish on each poll: a new event, a retry, or nothing.
+
+    - The first valid observation only primes the gate, so a restarted app
+      does not republish a reading that ingress has already applied.
+    - Only a strictly newer observation produces a new event (new eventId).
+    - An unpublished event is retried unchanged until a newer one replaces it.
+    - Invalid observations are never published and never drop a pending event.
+    """
+
+    def __init__(
+        self,
+        vehicle_id: str,
+        id_factory: Callable[[str], str] = new_event_id,
+    ):
+        self._vehicle_id = vehicle_id
+        self._id_factory = id_factory
+        self._latest_at: datetime | None = None
+        self._pending: tuple[dict, datetime] | None = None
+
+    def next_event(self, observation: Observation) -> dict | None:
+        candidate = self._build(observation)
+        if candidate is None:
+            return self._pending_event()
+
+        if self._latest_at is None:
+            self._latest_at = observation.observed_at
+            return self._pending_event()
+
+        if observation.observed_at > self._latest_at:
+            candidate["eventId"] = self._id_factory(self._vehicle_id)
+            self._pending = (candidate, observation.observed_at)
+            self._latest_at = observation.observed_at
+
+        return self._pending_event()
+
+    def mark_published(self, event: dict) -> None:
+        pending = self._pending_event()
+        if pending is not None and pending["eventId"] == event.get("eventId"):
+            self._pending = None
+
+    def _build(self, observation: Observation) -> dict | None:
+        if observation.observed_at is None:
+            return None
+        try:
+            return build_v1_event(
+                self._vehicle_id,
+                observation.observed_at,
+                observation.distance,
+                observation.sensor_available,
+                event_id="",
+            )
+        except (ValueError, TypeError):
+            return None
+
+    def _pending_event(self) -> dict | None:
+        return self._pending[0] if self._pending is not None else None
