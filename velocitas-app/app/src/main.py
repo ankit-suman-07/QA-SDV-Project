@@ -6,6 +6,12 @@ import signal
 
 from health_logic import build_status_event
 from kuksa_client.grpc import VSSClient
+from v1_event import (
+    ObservationGate,
+    observation_from_datapoints,
+    serialize,
+    topic,
+)
 from vehicle import Vehicle, vehicle  # type: ignore
 from velocitas_sdk.util.log import (  # type: ignore
     get_opentelemetry_log_factory,
@@ -87,6 +93,9 @@ class AutonomousHealthApp(VehicleApp):
             DATABROKER_PORT,
         )
         self._monitor_task = None
+        self._kuksa_reconnect_needed = False
+        self._v1_gate = ObservationGate(VEHICLE_ID)
+        self._v1_topic = topic(VEHICLE_ID)
 
     async def on_start(self):
         logger.info(
@@ -103,22 +112,90 @@ class AutonomousHealthApp(VehicleApp):
             self.monitor_signals()
         )
 
-    def read_signals(self):
-        values = self._kuksa_client.get_current_values(
+    def read_datapoints(self):
+        """Current KUKSA datapoints (value + broker timestamp) by path."""
+        return self._kuksa_client.get_current_values(
             MONITORED_SIGNAL_PATHS
         )
 
-        return {
-            signal_path: values[signal_path].value
-            for signal_path in MONITORED_SIGNAL_PATHS
-        }
+    async def reconnect_kuksa_if_needed(self):
+        if not self._kuksa_reconnect_needed:
+            return
+        try:
+            await asyncio.to_thread(
+                self._kuksa_client.connect
+            )
+            self._kuksa_reconnect_needed = False
+            logger.info("Reconnected to KUKSA databroker")
+        except Exception:
+            logger.exception(
+                "KUKSA reconnect failed; retrying next poll"
+            )
+
+    async def publish_v1(self, datapoints):
+        """Publish a contract v1 health event when there is a new reading.
+
+        sourceTimestamp is the broker timestamp of the LiDAR reading, never
+        the poll or publish time. A failed publish stays pending and is
+        retried unchanged on the next poll.
+        """
+        observation = observation_from_datapoints(
+            datapoints.get(LIDAR_DISTANCE_PATH),
+            datapoints.get(LIDAR_HEALTH_PATH),
+        )
+        if observation.observed_at is None:
+            logger.warning(
+                "v1: LiDAR values or timestamps not available yet"
+            )
+
+        event = self._v1_gate.next_event(observation)
+        if event is None:
+            return
+
+        result = await self.pubsub_client.publish_event(
+            self._v1_topic,
+            serialize(event),
+        )
+        result_code = getattr(result, "rc", 0)
+        if result_code != 0:
+            logger.warning(
+                "v1: publish failed (rc=%s); will retry eventId=%s",
+                result_code,
+                event["eventId"],
+            )
+            return
+
+        self._v1_gate.mark_published(event)
+        logger.info(
+            "v1: published topic=%s eventId=%s health=%s "
+            "sourceTimestamp=%s",
+            self._v1_topic,
+            event["eventId"],
+            event["health"],
+            event["sourceTimestamp"],
+        )
 
     async def monitor_signals(self):
         while True:
+            await self.reconnect_kuksa_if_needed()
+
             try:
-                signals = await asyncio.to_thread(
-                    self.read_signals
+                datapoints = await asyncio.to_thread(
+                    self.read_datapoints
                 )
+            except Exception:
+                logger.exception(
+                    "Failed to read KUKSA signals"
+                )
+                self._kuksa_reconnect_needed = True
+                await asyncio.sleep(POLL_INTERVAL_SECONDS)
+                continue
+
+            try:
+                signals = {
+                    signal_path: datapoints[signal_path].value
+                    for signal_path in MONITORED_SIGNAL_PATHS
+                }
 
                 event = build_status_event(
                     vehicle_id=VEHICLE_ID,
@@ -152,6 +229,13 @@ class AutonomousHealthApp(VehicleApp):
             except Exception:
                 logger.exception(
                     "Failed to evaluate autonomous signals"
+                )
+
+            try:
+                await self.publish_v1(datapoints)
+            except Exception:
+                logger.exception(
+                    "v1: failed to publish health event"
                 )
 
             await asyncio.sleep(

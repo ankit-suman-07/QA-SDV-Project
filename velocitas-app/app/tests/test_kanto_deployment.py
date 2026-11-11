@@ -108,3 +108,15 @@ def test_kanto_container_connects_to_runtime_services():
         environment["SIMULATED_VEHICLE_ID"]
         == "vehicle-001"
     )
+
+def test_manifest_declares_v1_and_legacy_topics():
+    manifest = load_json(APP_MANIFEST_PATH)
+    pubsub = next(
+        interface
+        for interface in manifest["interfaces"]
+        if interface["type"] == "pubsub"
+    )
+    writes = pubsub["config"]["writes"]
+
+    assert "sdv/autonomy/status" in writes
+    assert "sdv/+/health" in writes

@@ -21,7 +21,8 @@
       "config": {
         "reads": [],
         "writes": [
-          "sdv/autonomy/status"
+          "sdv/autonomy/status",
+          "sdv/+/health"
         ]
       }
     }
