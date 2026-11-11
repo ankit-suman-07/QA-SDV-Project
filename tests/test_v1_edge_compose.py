@@ -79,3 +79,18 @@ def test_apps_restart_and_depend_on_own_broker_and_mqtt(services):
         assert {f"kuksa-{n}", "mqtt", f"provider-{n}"} <= depends_on
         assert f"kuksa-{other}" not in depends_on
         assert f"provider-{other}" not in depends_on
+
+
+def test_project_name_is_isolated_from_baseline():
+    if shutil.which("docker") is None:
+        pytest.skip("docker CLI not available")
+    result = subprocess.run(
+        [
+            "docker", "compose", "-f", str(COMPOSE_FILE),
+            "config", "--format", "json",
+        ],
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    assert json.loads(result.stdout)["name"] == "qa-sdv-v1"

@@ -14,6 +14,10 @@
 #   docker compose -f vehicle-simulator/docker-compose.v1.yml up -d --build
 #   docker compose -f vehicle-simulator/docker-compose.v1.yml down --volumes
 
+# Own project name, so `down --remove-orphans` on either file in this folder
+# never removes the other file's containers.
+name: qa-sdv-v1
+
 x-kuksa: &kuksa
   image: ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0
   command:
