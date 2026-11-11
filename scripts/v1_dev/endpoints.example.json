@@ -1,0 +1,26 @@
+{
+  "developmentOnly": true,
+  "contractVersion": "1.0.0",
+  "mqtt": {"host": "127.0.0.1", "port": 18883},
+  "dittoBaseUrl": "http://127.0.0.1:19080",
+  "backendPreviewBaseUrl": "http://127.0.0.1:19082",
+  "staleAfterSeconds": 5,
+  "unavailableAfterSeconds": 30,
+  "providerTimeoutSeconds": 2,
+  "vehicles": {
+    "vehicle-001": {
+      "providerBaseUrl": "http://127.0.0.1:19091",
+      "kuksaHost": "kuksa-001",
+      "kuksaPort": 55555,
+      "topic": "sdv/vehicle-001/health",
+      "thingId": "sdv:vehicle-001"
+    },
+    "vehicle-002": {
+      "providerBaseUrl": "http://127.0.0.1:19092",
+      "kuksaHost": "kuksa-002",
+      "kuksaPort": 55555,
+      "topic": "sdv/vehicle-002/health",
+      "thingId": "sdv:vehicle-002"
+    }
+  }
+}

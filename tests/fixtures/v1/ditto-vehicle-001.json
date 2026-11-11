@@ -1,0 +1,22 @@
+{
+  "thingId": "sdv:vehicle-001",
+  "attributes": {
+    "vehicleId": "vehicle-001"
+  },
+  "features": {
+    "v1": {
+      "properties": {
+        "schemaVersion": "1.0.0",
+        "vehicleId": "vehicle-001",
+        "sourceTimestamp": "2026-01-01T00:00:00Z",
+        "health": "HEALTHY",
+        "faults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "lastEventId": "vehicle-001-event-000"
+      }
+    }
+  }
+}

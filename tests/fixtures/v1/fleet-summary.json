@@ -1,0 +1,38 @@
+{
+  "generatedAt": "2026-01-01T00:00:04Z",
+  "totalVehicles": 2,
+  "availableVehicles": 2,
+  "staleVehicles": 0,
+  "unavailableVehicles": 0,
+  "healthyVehicles": 2,
+  "warningVehicles": 0,
+  "criticalVehicles": 0,
+  "vehicles": [
+    {
+      "vehicleId": "vehicle-001",
+      "thingId": "sdv:vehicle-001",
+      "healthStatus": "HEALTHY",
+      "availability": "AVAILABLE",
+      "activeFaults": [],
+      "lidar": {
+        "distanceMeters": 35.0,
+        "sensorAvailable": true
+      },
+      "sourceTimestamp": "2026-01-01T00:00:00Z",
+      "lastEventId": "vehicle-001-event-000"
+    },
+    {
+      "vehicleId": "vehicle-002",
+      "thingId": "sdv:vehicle-002",
+      "healthStatus": "HEALTHY",
+      "availability": "AVAILABLE",
+      "activeFaults": [],
+      "lidar": {
+        "distanceMeters": 35.0,
+        "sensorAvailable": true
+      },
+      "sourceTimestamp": "2026-01-01T00:00:00Z",
+      "lastEventId": "vehicle-002-event-000"
+    }
+  ]
+}

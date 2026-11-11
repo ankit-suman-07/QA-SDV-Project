@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0.0",
+  "eventId": "vehicle-002-event-004",
+  "vehicleId": "vehicle-002",
+  "health": "HEALTHY",
+  "faults": [],
+  "lidar": {
+    "distanceMeters": 35.0,
+    "sensorAvailable": "yes"
+  }
+}

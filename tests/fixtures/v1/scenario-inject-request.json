@@ -1,0 +1,5 @@
+{
+  "vehicleId": "vehicle-002",
+  "action": "INJECT_SCENARIO",
+  "scenario": "LIDAR_OBSTRUCTION"
+}
