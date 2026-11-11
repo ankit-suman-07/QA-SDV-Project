@@ -1,0 +1,113 @@
+# V1 two-vehicle edge deployment (task E1, docs/v1-interface-contracts.md C2).
+#
+# vehicle-001: provider-001 -> kuksa-001 -> app-001 -> mqtt  sdv/vehicle-001/health
+# vehicle-002: provider-002 -> kuksa-002 -> app-002 -> mqtt  sdv/vehicle-002/health
+#
+# Each vehicle has its own provider, KUKSA broker and Velocitas app; the two
+# share only the MQTT broker. Host ports can be overridden with the V1_*
+# environment variables below.
+#
+# Do not run this at the same time as docker-compose.yml (the single-vehicle
+# baseline): both bind host port 55556 by default.
+#
+# Usage:
+#   docker compose -f vehicle-simulator/docker-compose.v1.yml up -d --build
+#   docker compose -f vehicle-simulator/docker-compose.v1.yml down --volumes
+
+x-kuksa: &kuksa
+  image: ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0
+  command:
+    - "--insecure"
+    - "--vss"
+    - "/config/vss-with-autonomous-sensors.json"
+  volumes:
+    - ./config/vss-with-autonomous-sensors.json:/config/vss-with-autonomous-sensors.json:ro
+
+x-provider: &provider
+  build: .
+  image: qa-sdv-provider:local
+
+x-app: &app
+  image: qa-sdv-autonomous-health-app:local
+  build:
+    context: ../velocitas-app
+    dockerfile: app/Dockerfile
+  restart: unless-stopped
+
+services:
+  mqtt:
+    image: eclipse-mosquitto:2
+    command:
+      - "mosquitto"
+      - "-c"
+      - "/mosquitto/config/mosquitto.conf"
+    volumes:
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    ports:
+      - "${V1_MQTT_PORT:-18883}:1883"
+
+  kuksa-001:
+    <<: *kuksa
+    ports:
+      - "${V1_KUKSA_001_PORT:-55556}:55555"
+
+  kuksa-002:
+    <<: *kuksa
+    ports:
+      - "${V1_KUKSA_002_PORT:-55557}:55555"
+
+  provider-001:
+    <<: *provider
+    depends_on:
+      - kuksa-001
+    ports:
+      - "${V1_PROVIDER_001_PORT:-8091}:8090"
+    environment:
+      SIMULATED_VEHICLE_ID: "vehicle-001"
+      DATABROKER_HOST: "kuksa-001"
+      DATABROKER_PORT: "55555"
+      INJECT_FAULT: "0"
+      PUBLISH_INTERVAL_SECONDS: "${PUBLISH_INTERVAL_SECONDS:-5.0}"
+      SIMULATOR_CONTROL_HOST: "0.0.0.0"
+      SIMULATOR_CONTROL_PORT: "8090"
+
+  provider-002:
+    <<: *provider
+    depends_on:
+      - kuksa-002
+    ports:
+      - "${V1_PROVIDER_002_PORT:-8092}:8090"
+    environment:
+      SIMULATED_VEHICLE_ID: "vehicle-002"
+      DATABROKER_HOST: "kuksa-002"
+      DATABROKER_PORT: "55555"
+      INJECT_FAULT: "0"
+      PUBLISH_INTERVAL_SECONDS: "${PUBLISH_INTERVAL_SECONDS:-5.0}"
+      SIMULATOR_CONTROL_HOST: "0.0.0.0"
+      SIMULATOR_CONTROL_PORT: "8090"
+
+  app-001:
+    <<: *app
+    depends_on:
+      - kuksa-001
+      - mqtt
+      - provider-001
+    environment:
+      SIMULATED_VEHICLE_ID: "vehicle-001"
+      DATABROKER_HOST: "kuksa-001"
+      DATABROKER_PORT: "55555"
+      SDV_VEHICLEDATABROKER_ADDRESS: "grpc://kuksa-001:55555"
+      SDV_MQTT_ADDRESS: "mqtt://mqtt:1883"
+
+  app-002:
+    <<: *app
+    depends_on:
+      - kuksa-002
+      - mqtt
+      - provider-002
+    environment:
+      SIMULATED_VEHICLE_ID: "vehicle-002"
+      DATABROKER_HOST: "kuksa-002"
+      DATABROKER_PORT: "55555"
+      SDV_VEHICLEDATABROKER_ADDRESS: "grpc://kuksa-002:55555"
+      SDV_MQTT_ADDRESS: "mqtt://mqtt:1883"
