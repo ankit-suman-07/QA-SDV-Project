@@ -17,9 +17,18 @@ VEHICLES = ("001", "002")
 
 
 @pytest.fixture(scope="module")
-def services():
+def compose_config():
+    """Resolved Compose model; skip when Docker Compose v2 is unavailable."""
     if shutil.which("docker") is None:
         pytest.skip("docker CLI not available")
+    plugin = subprocess.run(
+        ["docker", "compose", "version"],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+    if plugin.returncode != 0:
+        pytest.skip("docker compose plugin not available")
     result = subprocess.run(
         [
             "docker", "compose", "-f", str(COMPOSE_FILE),
@@ -30,7 +39,12 @@ def services():
         timeout=60,
     )
     assert result.returncode == 0, result.stderr
-    return json.loads(result.stdout)["services"]
+    return json.loads(result.stdout)
+
+
+@pytest.fixture(scope="module")
+def services(compose_config):
+    return compose_config["services"]
 
 
 def published_ports(service):
@@ -81,16 +95,5 @@ def test_apps_restart_and_depend_on_own_broker_and_mqtt(services):
         assert f"provider-{other}" not in depends_on
 
 
-def test_project_name_is_isolated_from_baseline():
-    if shutil.which("docker") is None:
-        pytest.skip("docker CLI not available")
-    result = subprocess.run(
-        [
-            "docker", "compose", "-f", str(COMPOSE_FILE),
-            "config", "--format", "json",
-        ],
-        capture_output=True,
-        text=True,
-        timeout=60,
-    )
-    assert json.loads(result.stdout)["name"] == "qa-sdv-v1"
+def test_project_name_is_isolated_from_baseline(compose_config):
+    assert compose_config["name"] == "qa-sdv-v1"
