@@ -24,3 +24,10 @@ classifies the autonomous health state, and publishes status events to:
 
 ```text
 sdv/autonomy/status
+```
+
+## V1 vehicle-002 pilot preparation
+
+The vehicle-001 descriptor and `deploy.sh` above remain the legacy workflow.
+For non-deploying vehicle-002 rendering, dry-run checks, dependencies and pending
+Linux/MQTT/Ditto evidence, see [V1-PILOT.md](V1-PILOT.md).

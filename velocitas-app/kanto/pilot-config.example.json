@@ -1,0 +1,16 @@
+{
+  "vehicle_id": "vehicle-002",
+  "container_name": "autonomoushealthapp-vehicle-002",
+  "image": "registry.example.invalid/sdv/autonomous-health-app:v1-contract-1.0.0-example",
+  "remote_lan": true,
+  "kuksa_host": "192.0.2.10",
+  "kuksa_port": 55557,
+  "mqtt_host": "192.0.2.10",
+  "mqtt_port": 1883,
+  "poll_interval_seconds": 2.0,
+  "restart_policy": {
+    "type": "unless-stopped",
+    "maximum_retry_count": 0,
+    "retry_timeout": 0
+  }
+}
