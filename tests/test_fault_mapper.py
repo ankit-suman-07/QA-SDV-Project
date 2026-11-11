@@ -1,4 +1,6 @@
 import unittest
+import json
+from pathlib import Path
 
 from opensovd.fault_mapper import map_fault_to_opensovd, map_all_active_faults
 
@@ -26,6 +28,24 @@ def make_thing(battery=15, temperature=89, tire_fl=32, active_faults=None, proce
 
 
 class FaultMapperTest(unittest.TestCase):
+
+    def test_legacy_tire_unit_and_thresholds_remain_psi_pending_upstream_confirmation(self):
+        for pressure, severity, threshold in [(28, 'WARNING', 28), (24.01, 'WARNING', 28), (24, 'CRITICAL', 24)]:
+            thing = make_thing(tire_fl=pressure, active_faults=['TIRE_PRESSURE_LOW_FRONT_LEFT'])
+            mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT', thing)
+            self.assertEqual(('psi', pressure, severity, threshold),
+                             (mapped['unit'], mapped['observedValue'], mapped['severity'], mapped['threshold']))
+
+    def test_declared_kpa_upstream_and_legacy_psi_boundary_are_explicit(self):
+        config = json.loads((Path(__file__).parents[1] / 'vehicle-simulator/config/vss-with-autonomous-sensors.json').read_text())
+        node = config['Vehicle']
+        for part in 'Chassis.Axle.Row1.Wheel.Left.Tire.Pressure'.split('.'):
+            node = node['children'][part]
+        self.assertEqual('kPa', node['unit'])
+        mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT',
+                                       make_thing(tire_fl=32, active_faults=['TIRE_PRESSURE_LOW_FRONT_LEFT']))
+        self.assertEqual('psi', mapped['unit'])
+        self.assertEqual(32, mapped['observedValue'])  # no runtime conversion authorized yet
 
     def test_battery_low_maps_correctly(self):
         thing = make_thing(battery=15, active_faults=["BATTERY_LOW"])
@@ -218,4 +238,3 @@ class FaultMapperTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-    

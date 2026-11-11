@@ -1,5 +1,8 @@
 # Eclipse Ditto - Digital Twin (Atharva)
 
+For Bayan's B3 verifier repairs, read-only V1 consistency checks, pending unit
+decision and Ankit's individual-twin handoff, see [B3-HANDOFF.md](B3-HANDOFF.md).
+
 ## Setup
 ```bash
 git clone --depth 1 https://github.com/eclipse-ditto/ditto.git /tmp/ditto-src
