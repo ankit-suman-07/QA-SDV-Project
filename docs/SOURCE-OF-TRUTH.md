@@ -8,7 +8,8 @@ Use this file as the entry point for SDV project chats. Read the relevant source
 | `08-project-scope-and-acceptance.md` | Product scope, acceptance IDs and required evidence. Check its phase assignments against the latest approved task distribution. |
 | `10-detailed-task-distribution.md` | Current phase allocation, owners and handoffs. |
 | `09-architecture-diagrams.md` | Telemetry and diagnostic flows. Check the task distribution for work moved to Phase V1. |
-| `docs/interface-contracts.md` | Shared MQTT, Ditto, Spring Boot and scenario command behavior. Planned. Until approved, ask for the agreed contract before changing a shared interface. |
+| [v1-interface-contracts.md](v1-interface-contracts.md) | Proposed V1 MQTT, Ditto, Spring Boot and scenario baseline, fixtures and review status. Replaces the missing planned `docs/interface-contracts.md` entry for V1. Obtain affected-owner approval before changing production shared interfaces. |
+| [v1-independent-development.md](v1-independent-development.md) | Independent mock-based workflows, commands, verification limits and PR handoffs. |
 | `00-github-contribution-guidelines.md` | Branching, review and contribution practices. |
 | `evidence/README.md` and `evidence/v1/baseline.md` | Evidence index and verified single-vehicle MVP results. |
 | `evidence/v1/skill-sources.md` | Skill provenance and actual usage records. |

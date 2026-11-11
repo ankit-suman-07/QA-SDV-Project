@@ -1,0 +1,8 @@
+# Development/test broker only; no production or fleet deployment implied.
+services:
+  mqtt:
+    image: eclipse-mosquitto:2
+    ports:
+      - "127.0.0.1:${V1_MQTT_PORT:-18883}:1883"
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf:ro

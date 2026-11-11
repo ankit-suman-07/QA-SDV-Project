@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1.0.0",
+  "eventId": "vehicle-002-event-001",
+  "vehicleId": "vehicle-002",
+  "sourceTimestamp": "2026-01-01T00:00:01Z",
+  "health": "CRITICAL",
+  "faults": [
+    "LIDAR_OBSTRUCTION"
+  ],
+  "lidar": {
+    "distanceMeters": 3.0,
+    "sensorAvailable": true
+  }
+}
