@@ -11,6 +11,7 @@ Use this index to connect each Course V1 acceptance criterion to implementation 
 | V1-05 | Baseline regression and relevant tests pass. Identify mocked and live dependencies. | Ankit, with component owners | Pending |
 | V1-06 | Record skill source, task, human review and verification against the spec. | All teammates | Pending |
 | V1-07 | Reproduce the tagged V1 and submit the demo, report and contribution evidence. | Ankit, with all teammates | Pending |
+| V1-08 | Fleet API, materialized summary and dashboard agree for both individual twins. | Ankit | [A5 component and Java/browser mock-backed checks](v1/fleet-dashboard.md); live integrated acceptance pending |
 
 - [MVP baseline](v1/baseline.md)
 - [V1 skill sources and usage](v1/skill-sources.md)
@@ -18,3 +19,5 @@ Use this index to connect each Course V1 acceptance criterion to implementation 
 - [A2 live twin API setup and verification](v1/live-twin-api.md) — component checks executed; real Ditto and affected-owner review pending.
 
 - [A3 scenario routing setup and verification](v1/scenario-routing.md) — actual Spring Boot to prepared mocks; live propagation pending.
+
+- [A5 fleet dashboard setup and verification](v1/fleet-dashboard.md) — Java API/writer and Chrome checks executed with controlled HTTP substitutes; real Ditto/MQTT acceptance pending.
