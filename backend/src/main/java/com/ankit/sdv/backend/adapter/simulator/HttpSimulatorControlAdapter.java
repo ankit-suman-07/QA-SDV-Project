@@ -77,9 +77,10 @@ public final class HttpSimulatorControlAdapter implements SimulatorControlAdapte
         URI provider = providers.get(vehicleId);
         if (provider == null) throw new IllegalArgumentException("Unsupported provider vehicle ID");
         var body = new SimulatorActionRequest(vehicleId, action, scenario, actionId, traceId);
+        byte[] payload = json.writeValueAsBytes(body);
         URI target = URI.create(provider.toString().replaceAll("/+$", "") + "/api/v1/scenarios/actions");
         client.post().uri(target).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
-                    .body(body).exchange((request, response) -> {
+                    .contentLength(payload.length).body(payload).exchange((request, response) -> {
                         int status = response.getStatusCode().value();
                         if (status >= 400 && status < 500) throw new ProviderDispatchException(REJECTED);
                         if (status < 200 || status >= 300) throw new ProviderDispatchException(BAD_RESPONSE);

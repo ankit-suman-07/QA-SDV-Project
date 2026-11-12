@@ -37,6 +37,8 @@ class ScenarioRoutingTest {
     static final Map<String, AtomicInteger> counts = new ConcurrentHashMap<>();
     static final Map<String, String> modes = new ConcurrentHashMap<>();
     static final Map<String, JsonNode> received = new ConcurrentHashMap<>();
+    static final Map<String, String> contentLengths = new ConcurrentHashMap<>();
+    static final Map<String, Integer> wireLengths = new ConcurrentHashMap<>();
     static final ExecutorService executor = Executors.newCachedThreadPool();
     static final JsonMapper json = JsonMapper.builder().build();
     static volatile CountDownLatch release = new CountDownLatch(1);
@@ -51,7 +53,10 @@ class ScenarioRoutingTest {
             server.setExecutor(executor);
             server.createContext("/edge/api/v1/scenarios/actions", exchange -> {
                 counts.get(vehicle).incrementAndGet();
-                JsonNode request = json.readTree(exchange.getRequestBody().readAllBytes());
+                byte[] wire = exchange.getRequestBody().readAllBytes();
+                contentLengths.put(vehicle, Objects.toString(exchange.getRequestHeaders().getFirst("Content-Length"), ""));
+                wireLengths.put(vehicle, wire.length);
+                JsonNode request = json.readTree(wire);
                 received.put(vehicle, request);
                 String mode = modes.getOrDefault(vehicle, "ok");
                 try {
@@ -185,6 +190,10 @@ class ScenarioRoutingTest {
         assertThat(error.toString()).doesNotContain("private-provider-secret");
         assertThat(lookup(error.path("actionId").asText()).path("status").asText()).isEqualTo("FAILED");
         assertThat(counts.get("vehicle-002")).hasValue(1);
+    }
+    @Test void requestBodyHasFixedByteLengthForPythonProviderCompatibility() throws Exception {
+        submit(request("vehicle-002", "INJECT_SCENARIO", "LIDAR_OBSTRUCTION"), 202);
+        assertThat(contentLengths.get("vehicle-002")).isEqualTo(wireLengths.get("vehicle-002").toString());
     }
     @Test void clientSuppliedTargetAndIdsCannotOverrideBackendRoutingOrCorrelation() throws Exception {
         String body = request("vehicle-002", "INJECT_SCENARIO", "COOLING_SYSTEM_FAILURE").replace("}",
