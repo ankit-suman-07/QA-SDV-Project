@@ -1,71 +1,84 @@
 package com.ankit.sdv.backend.adapter.simulator;
 
+import com.ankit.sdv.backend.exception.ProviderDispatchException;
 import com.ankit.sdv.backend.model.DiagnosticAction;
 import com.ankit.sdv.backend.model.DiagnosticScenario;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition
-        .ConditionalOnProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestClientException;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.StreamReadFeature;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.json.JsonMapper;
 
-@Component
-@ConditionalOnProperty(
-        name = "sdv.simulator.mode",
-        havingValue = "http"
-)
-public class HttpSimulatorControlAdapter
-        implements SimulatorControlAdapter {
+import java.net.URI;
+import java.net.SocketTimeoutException;
+import java.net.http.HttpTimeoutException;
+import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
-    private static final String ACTION_PATH =
-            "/api/v1/scenarios/actions";
+import static com.ankit.sdv.backend.exception.ProviderDispatchException.Reason.*;
 
-    private final RestClient restClient;
+/** Exactly one POST to the configured vehicle target; success requires a matching acknowledgement. */
+public final class HttpSimulatorControlAdapter implements SimulatorControlAdapter {
+    private static final Logger LOG = LoggerFactory.getLogger(HttpSimulatorControlAdapter.class);
+    private static final int MAX_ACK_BYTES = 64 * 1024;
+    private final RestClient client;
+    private final Map<String, URI> providers;
+    private final JsonMapper json = JsonMapper.builder().enable(StreamReadFeature.STRICT_DUPLICATE_DETECTION)
+            .enable(DeserializationFeature.FAIL_ON_TRAILING_TOKENS).build();
 
-    public HttpSimulatorControlAdapter(
-            RestClient.Builder restClientBuilder,
-            @Value(
-                    "${sdv.simulator.base-url:"
-                            + "http://localhost:8090}"
-            )
-            String simulatorBaseUrl
-    ) {
-        this.restClient = restClientBuilder
-                .baseUrl(simulatorBaseUrl)
-                .build();
+    public HttpSimulatorControlAdapter(RestClient client, Map<String, URI> providers) {
+        this.client = client; this.providers = Map.copyOf(providers);
     }
+    @Override public boolean supportsVehicle(String vehicleId) { return providers.containsKey(vehicleId); }
+    @Override public boolean dispatchAcknowledged() { return true; }
 
-    @Override
-    public void executeAction(
-            String vehicleId,
-            DiagnosticAction action,
-            DiagnosticScenario scenario,
-            String actionId,
-            String traceId
-    ) {
-        SimulatorActionRequest request =
-                new SimulatorActionRequest(
-                        vehicleId,
-                        action,
-                        scenario,
-                        actionId,
-                        traceId
-                );
-
-        restClient.post()
-                .uri(ACTION_PATH)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(request)
-                .retrieve()
-                .toBodilessEntity();
+    @Override public void executeAction(String vehicleId, DiagnosticAction action, DiagnosticScenario scenario, String actionId, String traceId) {
+        URI provider = providers.get(vehicleId);
+        if (provider == null) throw new IllegalArgumentException("Unsupported provider vehicle ID");
+        var body = new SimulatorActionRequest(vehicleId, action, scenario, actionId, traceId);
+        URI target = URI.create(provider.toString().replaceAll("/+$", "") + "/api/v1/scenarios/actions");
+        try {
+            client.post().uri(target).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
+                    .body(body).exchange((request, response) -> {
+                        int status = response.getStatusCode().value();
+                        if (status >= 400 && status < 500) throw new ProviderDispatchException(REJECTED);
+                        if (status < 200 || status >= 300) throw new ProviderDispatchException(BAD_RESPONSE);
+                        byte[] bytes = response.getBody().readNBytes(MAX_ACK_BYTES + 1);
+                        if (bytes.length > MAX_ACK_BYTES) throw new ProviderDispatchException(BAD_RESPONSE);
+                        try {
+                            JsonNode ack = json.readTree(bytes);
+                            if (ack == null || !ack.isObject() || !matches(ack, "vehicleId", vehicleId)
+                                    || !matches(ack, "action", action.name()) || !matches(ack, "scenario", scenario.name())
+                                    || !matches(ack, "actionId", actionId) || !matches(ack, "traceId", traceId)
+                                    || !ack.path("active").isBoolean()
+                                    || ack.get("active").booleanValue() != (action == DiagnosticAction.INJECT_SCENARIO)) {
+                                throw new ProviderDispatchException(BAD_RESPONSE);
+                            }
+                        } catch (JacksonException error) { throw new ProviderDispatchException(BAD_RESPONSE); }
+                        return null;
+                    });
+        } catch (RestClientException error) {
+            var reason = timeout(error) ? TIMEOUT : UNAVAILABLE;
+            LOG.warn("provider_dispatch_failed vehicle={} actionId={} code={}", vehicleId, actionId, reason.code);
+            throw new ProviderDispatchException(reason);
+        } catch (ProviderDispatchException error) {
+            LOG.warn("provider_dispatch_failed vehicle={} actionId={} code={}", vehicleId, actionId, error.reason().code);
+            throw error;
+        }
     }
-
-    private record SimulatorActionRequest(
-            String vehicleId,
-            DiagnosticAction action,
-            DiagnosticScenario scenario,
-            String actionId,
-            String traceId
-    ) {
+    private static boolean matches(JsonNode ack, String field, String expected) {
+        return ack.path(field).isTextual() && expected.equals(ack.get(field).asText());
     }
+    private static boolean timeout(Throwable error) {
+        for (Throwable current = error; current != null; current = current.getCause()) {
+            if (current instanceof HttpTimeoutException || current instanceof SocketTimeoutException || current instanceof TimeoutException) return true;
+        }
+        return false;
+    }
+    private record SimulatorActionRequest(String vehicleId, DiagnosticAction action, DiagnosticScenario scenario, String actionId, String traceId) {}
 }

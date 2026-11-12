@@ -30,8 +30,8 @@ class HttpSimulatorControlAdapterTest {
 
         HttpSimulatorControlAdapter adapter =
                 new HttpSimulatorControlAdapter(
-                        builder,
-                        "http://localhost:8090"
+                        builder.build(),
+                        java.util.Map.of("vehicle-001", java.net.URI.create("http://localhost:8090"))
                 );
 
         server.expect(
@@ -63,6 +63,9 @@ class HttpSimulatorControlAdapterTest {
                         withSuccess(
                                 """
                                 {
+                                  "vehicleId": "vehicle-001",
+                                  "action": "INJECT_SCENARIO",
+                                  "scenario": "COOLING_SYSTEM_FAILURE",
                                   "actionId": "action-001",
                                   "traceId": "trace-001",
                                   "active": true
