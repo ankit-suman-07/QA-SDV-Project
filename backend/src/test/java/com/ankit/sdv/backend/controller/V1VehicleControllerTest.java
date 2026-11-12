@@ -51,6 +51,8 @@ class V1VehicleControllerTest {
             requests.incrementAndGet();
             assertThat(exchange.getRequestMethod()).isEqualTo("GET");
             assertThat(exchange.getRequestHeaders().getFirst("Accept")).isEqualTo("application/json");
+            assertThat(exchange.getRequestHeaders().getFirst("Authorization")).isEqualTo("Basic " +
+                    java.util.Base64.getEncoder().encodeToString("review-user:test-only-pass".getBytes(StandardCharsets.UTF_8)));
             String id = exchange.getRequestURI().getPath().substring("/api/2/things/sdv:".length());
             Reply reply = replies.getOrDefault(id, new Reply(404, "{}"));
             byte[] bytes = reply.body().getBytes(StandardCharsets.UTF_8);
@@ -61,6 +63,8 @@ class V1VehicleControllerTest {
         });
         ditto.start();
         properties.add("sdv.v1.ditto.mode", () -> "mock");
+        properties.add("sdv.v1.ditto.username", () -> "review-user");
+        properties.add("sdv.v1.ditto.password", () -> "test-only-pass");
         properties.add("sdv.v1.ditto.base-url", () -> "http://127.0.0.1:" + ditto.getAddress().getPort());
     }
 
@@ -156,6 +160,52 @@ class V1VehicleControllerTest {
         JsonNode state = read("vehicle-002", "health");
         assertThat(state.path("availability").asText()).isEqualTo("AVAILABLE");
         assertThat(state.path("healthStatus").asText()).isEqualTo("CRITICAL");
+    }
+    @ParameterizedTest @ValueSource(strings = {"thingId", "attributeId", "featureId", "schemaVersion", "eventId",
+            "timestamp", "timestampInvalidDate", "timestampLeapSecond", "timestamp24Hour", "health", "faults", "distance", "sensor", "context", "missingFeature", "missingDistance"})
+    void invalidIdentityTypesAndSemanticsCannotPopulateEitherVehicle(String defect) throws Exception {
+        var thing = (tools.jackson.databind.node.ObjectNode) json.readTree(fixture("vehicle-002"));
+        var props = (tools.jackson.databind.node.ObjectNode) thing.at("/features/v1/properties");
+        switch (defect) {
+            case "thingId" -> thing.put("thingId", "sdv:vehicle-001");
+            case "attributeId" -> ((tools.jackson.databind.node.ObjectNode) thing.get("attributes")).put("vehicleId", "vehicle-001");
+            case "featureId" -> props.put("vehicleId", "vehicle-001");
+            case "schemaVersion" -> props.put("schemaVersion", "2.0.0");
+            case "eventId" -> props.put("lastEventId", " ");
+            case "timestamp" -> props.put("sourceTimestamp", "2026-01-01T00:00:00");
+            case "timestampInvalidDate" -> props.put("sourceTimestamp", "2026-02-30T00:00:00Z");
+            case "timestampLeapSecond" -> props.put("sourceTimestamp", "2026-01-01T00:00:60Z");
+            case "timestamp24Hour" -> props.put("sourceTimestamp", "2026-01-01T24:00:00Z");
+            case "health" -> props.put("health", "CRITICAL");
+            case "faults" -> props.put("faults", "not-an-array");
+            case "distance" -> ((tools.jackson.databind.node.ObjectNode) props.get("lidar")).put("distanceMeters", true);
+            case "sensor" -> ((tools.jackson.databind.node.ObjectNode) props.get("lidar")).put("sensorAvailable", "true");
+            case "context" -> props.put("traceId", "");
+            case "missingFeature" -> ((tools.jackson.databind.node.ObjectNode) thing.get("features")).remove("v1");
+            case "missingDistance" -> ((tools.jackson.databind.node.ObjectNode) props.get("lidar")).remove("distanceMeters");
+            default -> throw new AssertionError(defect);
+        }
+        replies.put("vehicle-002", new Reply(200, thing.toString()));
+        assertNoSnapshot(read("vehicle-002", "state"));
+        assertThat(read("vehicle-001", "state").path("healthStatus").asText()).isEqualTo("HEALTHY");
+    }
+    @Test void preservesUtcOffsetTextAndPrecisionBeyondNanoseconds() throws Exception {
+        String timestamp = "2026-01-01T00:00:00.123456789012+00:00";
+        replies.put("vehicle-002", new Reply(200, fixture("vehicle-002").replace("2026-01-01T00:00:00Z", timestamp)));
+        assertThat(read("vehicle-002", "state").path("sourceTimestamp").asText()).isEqualTo(timestamp);
+    }
+    @ParameterizedTest @ValueSource(strings = {"duplicate", "surrogate", "nonfinite", "trailing"})
+    void strictJsonInputCannotBecomeTrustedState(String defect) throws Exception {
+        String body = fixture("vehicle-002");
+        body = switch (defect) {
+            case "duplicate" -> body.replace("\"health\": \"HEALTHY\"", "\"health\":\"CRITICAL\",\"health\":\"HEALTHY\"");
+            case "surrogate" -> body.replace("\"schemaVersion\"", "\"extension\":\"\\ud800\",\"schemaVersion\"");
+            case "nonfinite" -> body.replace("35.0", "1e999");
+            case "trailing" -> body + " {}";
+            default -> throw new AssertionError(defect);
+        };
+        replies.put("vehicle-002", new Reply(200, body));
+        assertNoSnapshot(read("vehicle-002", "state"));
     }
     record Reply(int status, String body) {}
     @TestConfiguration static class FixedClock {
