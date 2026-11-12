@@ -33,7 +33,8 @@ def provision(base_url, username, password, owner_subject, service_subject):
                          'resources': {'thing:/features/summary/properties':
                                        {'grant': ['READ', 'WRITE'], 'revoke': []}}}}}
     thing = {'policyId': 'sdv:fleet-v1-policy',
-             'attributes': {'kind': 'fleet', 'vehicleIds': ['vehicle-001', 'vehicle-002']}}
+             'attributes': {'kind': 'fleet', 'vehicleIds': ['vehicle-001', 'vehicle-002']},
+             'features': {'summary': {}}}
     auth = base64.b64encode(f'{username}:{password}'.encode()).decode()
     for resource, payload in [('policies/sdv:fleet-v1-policy', policy), ('things/sdv:fleet-v1', thing)]:
         request = Request(base_url.rstrip('/') + '/api/2/' + resource,

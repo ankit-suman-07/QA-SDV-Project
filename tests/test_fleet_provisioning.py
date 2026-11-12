@@ -42,7 +42,9 @@ class FleetProvisioningTest(unittest.TestCase):
         thing = json.loads(requests[1].data)
         self.assertEqual(thing['policyId'], 'sdv:fleet-v1-policy')
         self.assertEqual(thing['attributes'], {'kind': 'fleet', 'vehicleIds': ['vehicle-001', 'vehicle-002']})
-        self.assertNotIn('properties', thing.get('features', {}).get('summary', {}))
+        self.assertIn('features', thing)
+        self.assertIn('summary', thing['features'])
+        self.assertNotIn('properties', thing['features']['summary'])
 
     def test_rejects_missing_credentials_and_unsafe_configuration_without_requests(self):
         module = self.module()
