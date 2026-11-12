@@ -19,7 +19,7 @@ public class SimulatorControlConfiguration {
         var http = HttpClient.newBuilder().connectTimeout(properties.connectTimeout())
                 .followRedirects(HttpClient.Redirect.NEVER).build();
         var factory = new JdkClientHttpRequestFactory(http);
-        factory.setReadTimeout(properties.readTimeout());
-        return new HttpSimulatorControlAdapter(RestClient.builder().requestFactory(factory).build(), properties.providers());
+        // The adapter enforces one whole-response deadline, including body reads.
+        return new HttpSimulatorControlAdapter(RestClient.builder().requestFactory(factory).build(), properties.providers(), properties.readTimeout());
     }
 }

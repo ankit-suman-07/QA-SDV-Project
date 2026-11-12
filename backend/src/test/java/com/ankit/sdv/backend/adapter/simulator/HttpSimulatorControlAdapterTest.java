@@ -31,7 +31,7 @@ class HttpSimulatorControlAdapterTest {
         HttpSimulatorControlAdapter adapter =
                 new HttpSimulatorControlAdapter(
                         builder.build(),
-                        java.util.Map.of("vehicle-001", java.net.URI.create("http://localhost:8090"))
+                        java.util.Map.of("vehicle-001", java.net.URI.create("http://localhost:8090")), java.time.Duration.ofSeconds(2)
                 );
 
         server.expect(
@@ -84,5 +84,6 @@ class HttpSimulatorControlAdapterTest {
         );
 
         server.verify();
+        adapter.close();
     }
 }

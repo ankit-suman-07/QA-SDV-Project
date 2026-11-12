@@ -7,13 +7,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.bean.override.convention.TestBean;
 import org.springframework.test.web.servlet.MockMvc;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
@@ -34,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Import(ScenarioRoutingTest.FixedClock.class)
 class ScenarioRoutingTest {
     static final String ROUTE = "/api/v1/diagnostics/actions";
     static final Map<String, HttpServer> servers = new HashMap<>();
@@ -45,13 +41,15 @@ class ScenarioRoutingTest {
     static final JsonMapper json = JsonMapper.builder().build();
     static volatile CountDownLatch release = new CountDownLatch(1);
     @Autowired MockMvc mvc;
+    @TestBean(name = "systemClock", methodName = "fixedClock") Clock testClock;
+    static Clock fixedClock() { return Clock.fixed(Instant.parse("2026-01-01T00:00:04Z"), ZoneOffset.UTC); }
 
     @DynamicPropertySource static void properties(DynamicPropertyRegistry props) throws Exception {
         for (String vehicle : List.of("vehicle-001", "vehicle-002")) {
             counts.put(vehicle, new AtomicInteger());
             var server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
             server.setExecutor(executor);
-            server.createContext("/edge" + ROUTE, exchange -> {
+            server.createContext("/edge/api/v1/scenarios/actions", exchange -> {
                 counts.get(vehicle).incrementAndGet();
                 JsonNode request = json.readTree(exchange.getRequestBody().readAllBytes());
                 received.put(vehicle, request);
@@ -72,7 +70,7 @@ class ScenarioRoutingTest {
                         case "missing" -> ack.remove("vehicleId");
                         default -> { }
                     }
-                    String body = mode.equals("malformed") ? "{" : mode.equals("array") ? "[]"
+                    String body = mode.equals("malformed") ? "{private-provider-secret" : mode.equals("array") ? "[]"
                             : mode.equals("null") ? "null" : mode.equals("trailing") ? ack + " {}"
                             : mode.equals("duplicate") ? ack.toString().replace("\"active\":", "\"active\":false,\"active\":") : ack.toString();
                     int code = mode.equals("reject") ? 409 : mode.equals("unauthorized") ? 401
@@ -136,6 +134,10 @@ class ScenarioRoutingTest {
     }
 
     @ParameterizedTest @ValueSource(strings = {"{}", "{", "null",
+            "{\"vehicleId\":\"vehicle-001 \",\"action\":\"INJECT_SCENARIO\",\"scenario\":\"COOLING_SYSTEM_FAILURE\"}",
+            "{\"vehicleId\":\"vehicle-001\",\"action\":null,\"scenario\":\"COOLING_SYSTEM_FAILURE\"}",
+            "{\"vehicleId\":\"vehicle-001\",\"action\":\"INJECT_SCENARIO\",\"scenario\":null}",
+            "{\"vehicleId\":false,\"action\":\"INJECT_SCENARIO\",\"scenario\":\"COOLING_SYSTEM_FAILURE\"}",
             "{\"vehicleId\":\"\",\"action\":\"INJECT_SCENARIO\",\"scenario\":\"COOLING_SYSTEM_FAILURE\"}",
             "{\"vehicleId\":\" vehicle-001\",\"action\":\"INJECT_SCENARIO\",\"scenario\":\"COOLING_SYSTEM_FAILURE\"}",
             "{\"vehicleId\":123,\"action\":\"INJECT_SCENARIO\",\"scenario\":\"COOLING_SYSTEM_FAILURE\"}",
@@ -147,6 +149,7 @@ class ScenarioRoutingTest {
         var error = submit(body, 400);
         assertThat(error.path("code").asText()).isEqualTo("VALIDATION_ERROR");
         assertThat(error.path("path").asText()).isEqualTo(ROUTE);
+        assertThat(error.has("actionId")).isFalse();
         assertThat(error.has("timestamp")).isTrue();
         assertThat(counts.values().stream().mapToInt(AtomicInteger::get).sum()).isZero();
     }
@@ -179,6 +182,7 @@ class ScenarioRoutingTest {
         modes.put("vehicle-002", mode);
         var error = submit(request("vehicle-002", "CLEAR_SCENARIO", "COOLING_SYSTEM_FAILURE"), 502);
         assertThat(error.path("code").asText()).isEqualTo("PROVIDER_BAD_RESPONSE");
+        assertThat(error.toString()).doesNotContain("private-provider-secret");
         assertThat(lookup(error.path("actionId").asText()).path("status").asText()).isEqualTo("FAILED");
         assertThat(counts.get("vehicle-002")).hasValue(1);
     }
@@ -190,8 +194,5 @@ class ScenarioRoutingTest {
         assertThat(first.path("actionId").asText()).isNotEqualTo("supplied").isNotEqualTo(second.path("actionId").asText());
         assertThat(counts.get("vehicle-002")).hasValue(2);
         assertThat(counts.get("vehicle-001")).hasValue(0);
-    }
-    @TestConfiguration static class FixedClock {
-        @Bean @Primary Clock scenarioTestClock() { return Clock.fixed(Instant.parse("2026-01-01T00:00:04Z"), ZoneOffset.UTC); }
     }
 }
