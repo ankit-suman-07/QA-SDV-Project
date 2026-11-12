@@ -34,6 +34,11 @@ public final class FleetMaterializer implements AutoCloseable {
     }
 
     @Scheduled(fixedDelayString = "${sdv.v1.fleet.interval:2s}", initialDelayString = "${sdv.v1.fleet.initial-delay:2s}")
+    public void scheduledUpdate() {
+        // Keep the existing single-thread Spring scheduler free for the legacy vehicle pipeline.
+        if (!running.get()) writes.submit(this::update);
+    }
+
     public void update() {
         if (!running.compareAndSet(false, true)) return;
         Future<Boolean> pending = null;
