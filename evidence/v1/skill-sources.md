@@ -4,9 +4,13 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
 
 | Skill | Planned use | Upstream URL | Status |
 |---|---|---|---|
-| `test-driven-development` | Add behavior checks for vehicle-specific routing and invalid targets. | [Link](https://github.com/obra/superpowers/blob/main/skills/test-driven-development/SKILL.md) | Candidate |
+| `test-driven-development` | Add behavior checks for vehicle-specific routing and invalid targets. | [Link](https://github.com/obra/superpowers/blob/main/skills/test-driven-development/SKILL.md) | Used in E1 (see below) |
 | `verification-before-completion` | Verify the live fault and recovery flow in Ditto and Spring Boot. | [Link](https://github.com/obra/superpowers/blob/main/skills/verification-before-completion/SKILL.md) | Candidate |
 | `systematic-debugging` | Trace a failure across Velocitas, Mosquitto, Ditto and Spring Boot when needed. | [Link](https://github.com/obra/superpowers/blob/main/skills/systematic-debugging/SKILL.md) | Optional candidate |
+| `brainstorming` | Clarify scope and write the design before code. | [Link](https://github.com/obra/superpowers/blob/main/skills/brainstorming/SKILL.md) | Used in E1 |
+| `writing-plans` | Turn an approved spec into TDD tasks. | [Link](https://github.com/obra/superpowers/blob/main/skills/writing-plans/SKILL.md) | Used in E1 |
+| `executing-plans` | Run the plan and finish with a whole-branch review. | [Link](https://github.com/obra/superpowers/blob/main/skills/executing-plans/SKILL.md) | Used in E1 |
+| `finishing-a-development-branch` | Decide merge, PR or keep. | [Link](https://github.com/obra/superpowers/blob/main/skills/finishing-a-development-branch/SKILL.md) | Used in E1 |
 
 ## Usage entry template
 
@@ -17,3 +21,50 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
 - **Verification:** Record the command, observed result, and test or CI link.
 - **Implementation reference:** Link the PR or commit.
 - **Limitations:** Note mocked dependencies or checks that remain pending.
+
+## Usage entries
+
+### E1: two-vehicle edge publication (V1-01)
+
+- **Task and acceptance ID:** E1, V1-01. Branch `emmanuel/feature/v1-two-vehicle-edge`, owner Emmanuel.
+- **Skill, upstream commit and invocation evidence:** Superpowers plugin, release **6.4.2** ([obra/superpowers](https://github.com/obra/superpowers), MIT). The installed copy has no git metadata, so the exact upstream commit still has to be looked up from the 6.4.2 tag. All skills ran in a Claude Code session, invoked through its Skill tool:
+
+  | Skill | Use in E1 | Output |
+  |---|---|---|
+  | `brainstorming` | Clarified scope, compared approaches and wrote the design | Spec `cb976cb` |
+  | `writing-plans` | Turned the approved spec into 5 TDD tasks and a Review Focus list | Plan `48510a6` |
+  | `executing-plans` | Ran the plan in one session, then ran one fresh-context review of the whole branch | `7347614`..`1a6f50d` |
+  | `test-driven-development` | Every behaviour started as a failing test, including the review fixes | Tests in `velocitas-app/app/tests/`, `tests/test_v1_edge_compose.py` |
+  | `finishing-a-development-branch` | Merge, PR or keep decision; the branch goes through a PR so ingress can review it | No merge or push without the owner's request |
+
+- **Spec revision and expected behavior:** [design](../../docs/superpowers/specs/2026-11-11-v1-two-vehicle-edge-design.md) at `cb976cb`, against [v1-interface-contracts.md](../../docs/v1-interface-contracts.md) 1.0.0, sections C2–C4 and C9. Two vehicles each have their own provider, KUKSA broker and app. Each publishes C3 events to `sdv/<vehicleId>/health` with C4 health, and `sourceTimestamp` is the observation time.
+- **Generated output and human review:** Emmanuel made these decisions:
+  - scope: E1 only
+  - a new Compose file instead of editing the baseline one
+  - the feature first, with every fix on its own branch
+  - approach A
+  - approval of the spec, then the choice of in-session execution
+
+  The final review raised four Important findings:
+
+  | Finding | Outcome | Evidence |
+  |---|---|---|
+  | A KUKSA reconnect leaked the old gRPC channel | Fixed | Test-first in `1a6f50d` (`kuksa_reconnect.py`) |
+  | When the observation time went backwards, the app stopped publishing without logging why | Fixed | Test-first in `1a6f50d` (gate `last_skip`, warning logged once per change) |
+  | The publish result code might not be returned by the SDK | Refuted | The Velocitas SDK 0.15.7 source returns paho's `MQTTMessageInfo` |
+  | Events are published with QoS 0, but the contract says QoS 1 | Left open | Accepting it is the ingress owner's call, in the PR |
+
+  During live testing, a clash between the Compose project names showed up and was fixed (`a0b8e05`).
+- **Verification:** see [E1 record](E1-two-vehicle-edge.md):
+  - unit tests: 42 passed
+  - Compose tests: 4 passed on the host
+  - live capture: 24 contract-valid events, 12 per vehicle, exit 0
+  - isolation run: vehicle-001 kept publishing while provider-002 was stopped
+  - baseline MVP demo: passed
+  - full suite: 192 passed, 4 skipped
+- **Implementation reference:** commits `cb976cb`..`1a6f50d` on `emmanuel/feature/v1-two-vehicle-edge`. The PR link is still to be added.
+- **Limitations:**
+  - QoS 0 publishing, as above.
+  - After a restart, the first event can be delayed by up to 5 s.
+  - The reconnect path is covered by unit tests only. A live KUKSA restart recovered without it being triggered.
+  - Fault/recovery (E2) and Ditto/API integration are not covered.
