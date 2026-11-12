@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "checks": [
+    "fleet totals and selected vehicle from actual Java backend",
+    "inject acknowledgement and separately polled fault, vehicle-001 isolated",
+    "clear and observed mock recovery",
+    "stale health visibly labelled and excluded from current counts",
+    "missing twin shown unavailable with unknown health",
+    "outdated vehicle response cannot overwrite newer selection",
+    "request errors visibly label retained data as last known",
+    "375px layout has no horizontal overflow",
+    "legacy vehicle page remains accessible"
+  ],
+  "pageErrors": []
+}

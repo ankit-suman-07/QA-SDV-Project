@@ -1,0 +1,10 @@
+.fleet-detail { margin-top: 24px; }
+.fleet-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+.fleet-fields dt { color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 6px; }
+.fleet-fields dd { margin: 0; overflow-wrap: anywhere; }
+.fleet-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.fleet-notice { border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; }
+.fleet-notice--error { border-color: #b54747; }
+.fleet-help { color: var(--color-text-muted); line-height: 1.6; }
+#fleet-counts { grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); }
+#action-status { overflow-wrap: anywhere; }

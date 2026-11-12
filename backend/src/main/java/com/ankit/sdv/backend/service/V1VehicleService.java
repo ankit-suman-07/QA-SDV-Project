@@ -29,12 +29,17 @@ public class V1VehicleService {
     public List<String> vehicleIds() { return config.vehicleIds(); }
 
     public V1VehicleResponse read(String vehicleId) {
+        return readAt(vehicleId, null);
+    }
+
+    /** Fleet callers supply one captured time; single-vehicle reads keep evaluating after I/O. */
+    public V1VehicleResponse readAt(String vehicleId, Instant evaluationTime) {
         String thingId = config.things().get(vehicleId); // Exact identity: never trim or consult legacy registry.
         if (thingId == null) throw new IllegalArgumentException("Unknown V1 vehicle ID");
         var unavailable = V1VehicleResponse.unavailable(vehicleId, thingId);
         var snapshot = reader.read(vehicleId, thingId);
         if (snapshot.isEmpty()) return unavailable;
-        Instant evaluation = clock.instant();
+        Instant evaluation = evaluationTime == null ? clock.instant() : evaluationTime;
         BigDecimal now = BigDecimal.valueOf(evaluation.getEpochSecond())
                 .add(BigDecimal.valueOf(evaluation.getNano(), 9));
         var state = snapshot.get();
