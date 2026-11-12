@@ -14,6 +14,9 @@ function normalizeApiError(httpStatus, body) {
     code: body?.code ?? "UNKNOWN_ERROR",
     message: body?.message ?? "Something went wrong. Please try again.",
     path: body?.path,
+    actionId: body?.actionId,
+    traceId: body?.traceId,
+    dispatchStatus: body?.dispatchStatus,
     retryable: RETRYABLE_STATUSES.has(httpStatus),
   };
 }
