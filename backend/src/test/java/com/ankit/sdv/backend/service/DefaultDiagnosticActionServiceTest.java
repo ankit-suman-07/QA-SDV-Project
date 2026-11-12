@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 class DefaultDiagnosticActionServiceTest {
 
     private final SimulatorControlAdapter simulatorControlAdapter =
-            mock(SimulatorControlAdapter.class);
+            mock(SimulatorControlAdapter.class, org.mockito.Mockito.CALLS_REAL_METHODS);
 
     private final ActionIdGenerator actionIdGenerator =
             () -> "action-001";
