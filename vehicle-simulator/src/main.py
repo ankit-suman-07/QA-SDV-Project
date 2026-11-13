@@ -86,7 +86,9 @@ SIGNAL_PATHS = {
 
 
 def create_scenario_controller():
-    controller = ScenarioController()
+    controller = ScenarioController(
+        allowed_vehicle_id=SIMULATED_VEHICLE_ID,
+    )
 
     if INITIAL_FAULT_MODE:
         controller.execute(

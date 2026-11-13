@@ -185,3 +185,83 @@ def test_get_scenario_state_returns_action_context(
         "traceId": "trace-001",
         "action": "INJECT_SCENARIO",
     }
+
+@pytest.fixture
+def identity_server():
+    controller = ScenarioController(allowed_vehicle_id="vehicle-002")
+    server = start_control_server(
+        controller=controller,
+        host="127.0.0.1",
+        port=0,
+    )
+
+    yield server
+
+    server.shutdown()
+    server.server_close()
+
+
+def expect_http_error(server, method, path, body=None):
+    host, port = server.server_address
+    request = Request(
+        url=f"http://{host}:{port}{path}",
+        data=None if body is None else json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method=method,
+    )
+
+    with pytest.raises(HTTPError) as error:
+        urlopen(request, timeout=2)
+
+    return error.value.code, json.load(error.value)
+
+
+def test_post_for_other_vehicle_returns_409(identity_server):
+    status, body = expect_http_error(
+        identity_server,
+        "POST",
+        "/api/v1/scenarios/actions",
+        {
+            "vehicleId": "vehicle-001",
+            "action": "INJECT_SCENARIO",
+            "scenario": "LIDAR_OBSTRUCTION",
+            "actionId": "a",
+            "traceId": "t",
+        },
+    )
+    assert status == 409
+    assert body == {"error": "provider serves vehicle-002, not vehicle-001"}
+
+
+def test_context_get_for_other_vehicle_returns_409(identity_server):
+    status, _ = expect_http_error(
+        identity_server,
+        "GET",
+        "/api/v1/vehicles/vehicle-001/scenarios/LIDAR_OBSTRUCTION",
+    )
+    assert status == 409
+
+
+def test_context_get_for_url_encoded_padded_id_returns_409(identity_server):
+    status, _ = expect_http_error(
+        identity_server,
+        "GET",
+        "/api/v1/vehicles/%20vehicle-002/scenarios/LIDAR_OBSTRUCTION",
+    )
+    assert status == 409
+
+
+def test_non_string_vehicle_id_returns_400(identity_server):
+    status, _ = expect_http_error(
+        identity_server,
+        "POST",
+        "/api/v1/scenarios/actions",
+        {
+            "vehicleId": 2,
+            "action": "INJECT_SCENARIO",
+            "scenario": "LIDAR_OBSTRUCTION",
+            "actionId": "a",
+            "traceId": "t",
+        },
+    )
+    assert status == 400

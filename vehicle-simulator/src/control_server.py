@@ -5,6 +5,8 @@ from http.server import (
 )
 from threading import Thread
 
+from scenario_controller import WrongVehicleError
+
 
 def create_request_handler(controller):
 
@@ -36,6 +38,12 @@ def create_request_handler(controller):
                         scenario=scenario,
                     )
                     self._write_json(200, state)
+                except WrongVehicleError as exception:
+                    self._reject_wrong_vehicle(
+                        controller,
+                        vehicle_id,
+                        exception,
+                    )
                 except ValueError as exception:
                     self._write_json(
                         400,
@@ -73,6 +81,13 @@ def create_request_handler(controller):
                 )
 
                 self._write_json(200, result)
+
+            except WrongVehicleError as exception:
+                self._reject_wrong_vehicle(
+                    controller,
+                    payload.get("vehicleId"),
+                    exception,
+                )
 
             except (
                 ValueError,
@@ -135,6 +150,23 @@ def create_request_handler(controller):
             )
 
             return self.rfile.read(content_length)
+
+        def _reject_wrong_vehicle(
+            self,
+            controller,
+            requested_vehicle_id,
+            exception,
+        ):
+            print(
+                "[Control] rejected "
+                f"vehicle={requested_vehicle_id!r} "
+                f"configured={controller.allowed_vehicle_id}",
+                flush=True,
+            )
+            self._write_json(
+                409,
+                {"error": str(exception)},
+            )
 
         def _write_json(self, status_code, payload):
             response_body = json.dumps(payload).encode(
