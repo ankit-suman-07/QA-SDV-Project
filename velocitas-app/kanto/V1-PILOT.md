@@ -224,3 +224,40 @@ Docker/Kanto operations or shared-service access were used for this verification
 Preparation can be Draft-PR-ready while V1-09 remains pending. Static tests, an
 example descriptor or successful CLI help must never be presented as completed
 Kanto deployment or live V1 acceptance.
+
+
+## PR32-F01 portability correction (November 12, 2026)
+
+Reviewed the correction against authoritative `origin/main`
+`8e9566ed3fe24f75889325aa867e4395019f350b`, contract 1.0.0 (still proposed for
+affected-owner review), B5 allocation and the PR #32 review findings. C2 requires
+correct endpoints, not a fixed IPv4-mapped IPv6 spelling. Production rendering,
+configuration validation, descriptors, deployment preparation and CI are unchanged.
+
+Tests now compare parsed numeric IPv6 addresses and independently require the
+correct URI scheme, brackets and ports, including direct-client/SDK KUKSA agreement.
+Both `::ffff:c0a8:114` and `::ffff:192.168.1.20` are exercised as inputs and simulated
+renderer outputs. Hexadecimal mapped unspecified/multicast/link-local cases were
+added alongside their dotted equivalents; mapped loopback rejection remains.
+DNS/LAN, identity, image/restart, nonsecret configuration, descriptor consistency,
+legacy compatibility and safe dry-run checks remain intact.
+
+A controlled dotted-output probe reproduced both old assertion failures before
+correction and passed afterward. Fresh local verification on Python **3.12.10**:
+**156 app tests passed**; **296 available regression tests and 218 subtests passed**.
+Full pytest collection was attempted and stopped at the same four dependency-blocked
+modules listed above; they were explicitly ignored for the available run. No new
+interpreter or dependencies were installed. Both string renderings are simulated
+in focused tests; this is not an executed Python 3.12.16 run. Current supported-patch
+GitHub Actions must be rerun after the reviewed changes are pushed.
+
+Python AST syntax, tracked JSON parsing, targeted secret and `git diff --check`
+checks passed. Applied the existing repository systematic-debugging,
+test-driven-development and verification-before-completion instructions; missing
+supporting skills are not claimed. Changes remain unstaged/uncommitted for review.
+
+All evidence here is static/mock only. A compatible Emmanuel V1 image, genuine
+Linux/Kanto runtime, real KUKSA/MQTT connectivity, launch/restart, a fresh post-start
+event, matching `sdv:vehicle-002` twin state and vehicle-001 isolation evidence
+remain **pending live V1-09 acceptance**. No deployment, image publication, CLI help
+execution, live service access, merge or PR update was performed by this correction.

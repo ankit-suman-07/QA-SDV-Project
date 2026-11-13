@@ -1,10 +1,12 @@
 """B5 static/mock preparation checks; no Kanto, Docker or broker execution."""
 import importlib.util
+import ipaddress
 import json
 from pathlib import Path
 import subprocess
 import sys
 from unittest.mock import Mock, patch
+from urllib.parse import urlsplit
 
 import pytest
 
@@ -23,6 +25,16 @@ def module(name):
 
 def example():
     return json.loads((KANTO / 'pilot-config.example.json').read_text(encoding='utf-8'))
+
+
+def assert_ipv6_endpoint(uri, host, scheme, port):
+    """Check numeric identity separately from URI syntax and port selection."""
+    endpoint = urlsplit(uri)
+    assert endpoint.scheme == scheme
+    assert ipaddress.ip_address(endpoint.hostname) == ipaddress.ip_address(host)
+    assert endpoint.port == port
+    assert endpoint.netloc == f'[{endpoint.hostname}]:{port}'
+    assert not endpoint.path and not endpoint.query and not endpoint.fragment
 
 
 def test_vehicle_002_descriptor_identity_endpoints_and_restart():
@@ -104,7 +116,8 @@ def test_ambiguous_numeric_hosts_never_reach_descriptor(key, host, remote):
     ('192.168.1.20', '192.168.1.20'), ('10.0.0.8', '10.0.0.8'), ('172.16.1.9', '172.16.1.9'),
     ('kuksa.local', 'kuksa.local'), ('EDGE-002.EXAMPLE.ORG.', 'edge-002.example.org'),
     ('0x7f.example.org', '0x7f.example.org'), ('2001:db8::10', '2001:db8::10'),
-    ('::ffff:192.168.1.20', '::ffff:c0a8:114')])
+    ('::ffff:192.168.1.20', '::ffff:192.168.1.20'),
+    ('::ffff:c0a8:114', '::ffff:192.168.1.20')])
 @pytest.mark.parametrize('key', ['kuksa_host', 'mqtt_host'])
 def test_canonical_lan_and_legitimate_dns_hosts_are_preserved(key, host, normalized):
     renderer = module('render_pilot_config')
@@ -112,17 +125,52 @@ def test_canonical_lan_and_legitimate_dns_hosts_are_preserved(key, host, normali
     config[key] = host
     descriptor = renderer.render_descriptor(config)
     env = dict(entry.split('=', 1) for entry in descriptor['config']['env'])
-    authority = '[' + normalized + ']' if ':' in normalized else normalized
-    if key == 'kuksa_host':
+    if ':' in normalized:
+        if key == 'kuksa_host':
+            assert ipaddress.ip_address(env['DATABROKER_HOST']) == ipaddress.ip_address(normalized)
+            assert env['DATABROKER_PORT'] == '55557'
+            assert_ipv6_endpoint(env['SDV_VEHICLEDATABROKER_ADDRESS'], normalized, 'grpc', 55557)
+        else:
+            assert_ipv6_endpoint(env['SDV_MQTT_ADDRESS'], normalized, 'mqtt', 1883)
+    elif key == 'kuksa_host':
         assert env['DATABROKER_HOST'] == normalized
-        assert env['SDV_VEHICLEDATABROKER_ADDRESS'] == f'grpc://{authority}:55557'
+        assert env['SDV_VEHICLEDATABROKER_ADDRESS'] == f'grpc://{normalized}:55557'
     else:
-        assert env['SDV_MQTT_ADDRESS'] == f'mqtt://{authority}:1883'
+        assert env['SDV_MQTT_ADDRESS'] == f'mqtt://{normalized}:1883'
+
+
+@pytest.mark.parametrize('host', ['::ffff:192.168.1.20', '::ffff:c0a8:114'])
+@pytest.mark.parametrize('dotted_output', [False, True])
+def test_equivalent_mapped_spellings_keep_numeric_endpoints_brackets_and_ports(host, dotted_output):
+    renderer = module('render_pilot_config')
+    config = example()
+    config.update(kuksa_host=host, mqtt_host=host, kuksa_port=55558, mqtt_port=18883)
+    original = ipaddress.IPv6Address.__str__
+
+    def spelling(address):
+        # Exercise both stdlib spellings on one interpreter; not a second Python run.
+        if address.ipv4_mapped is not None:
+            if dotted_output:
+                return '::ffff:' + str(address.ipv4_mapped)
+            return '::ffff:' + format(int(address.ipv4_mapped) >> 16, 'x') + ':' + format(
+                int(address.ipv4_mapped) & 0xffff, 'x')
+        return original(address)
+
+    with patch.object(ipaddress.IPv6Address, '__str__', spelling):
+        descriptor = renderer.render_descriptor(config)
+    env = dict(entry.split('=', 1) for entry in descriptor['config']['env'])
+    assert ipaddress.ip_address(env['DATABROKER_HOST']) == ipaddress.ip_address(host)
+    assert ipaddress.ip_address(env['DATABROKER_HOST']).ipv4_mapped == ipaddress.ip_address('192.168.1.20')
+    assert env['DATABROKER_PORT'] == '55558'
+    assert_ipv6_endpoint(env['SDV_VEHICLEDATABROKER_ADDRESS'], host, 'grpc', 55558)
+    assert_ipv6_endpoint(env['SDV_MQTT_ADDRESS'], host, 'mqtt', 18883)
+    assert env['SIMULATED_VEHICLE_ID'] == 'vehicle-002'
 
 
 @pytest.mark.parametrize('host', ['::ffff:127.0.0.1', '::ffff:7f00:1',
                                  '0:0:0:0:0:ffff:7f00:1', '::ffff:0.0.0.0',
-                                 '::ffff:224.0.0.1', '::ffff:169.254.1.2'])
+                                 '::ffff:224.0.0.1', '::ffff:169.254.1.2',
+                                 '::ffff:0:0', '::ffff:e000:1', '::ffff:a9fe:102'])
 @pytest.mark.parametrize('key', ['kuksa_host', 'mqtt_host'])
 def test_mapped_ipv6_uses_underlying_ipv4_restrictions(key, host):
     renderer = module('render_pilot_config')
