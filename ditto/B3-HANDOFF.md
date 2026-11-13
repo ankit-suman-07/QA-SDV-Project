@@ -184,3 +184,48 @@ For Ankit:
 - [ ] Obtain Emmanuel's unit confirmation before any runtime tire conversion.
 - [ ] Keep aggregate counting and fleet Thing writes exclusively under A5.
 - [ ] Keep mock results separate from live evidence; rerun blocked regressions in CI.
+
+
+## PR31-F01 correction review (November 12, 2026)
+
+Authoritative documentation was read from fetched `origin/main` at
+`8e9566e` without merging or rebasing this independent PR branch. Contract
+1.0.0 remains proposed for affected-owner review; Ankit still exclusively owns A5.
+
+The confirmed failure was recursive `copy.deepcopy` after iterative finite-value
+validation. Copying of V1 properties (including the second sequence copy) and
+snapshot equality now use explicit stacks. Duplicate/conflict and whole-Thing
+isolation comparisons no longer recurse through extension containers. No shared
+depth limit has been invented: finite JSON arrays/dictionaries at depths 599,
+600, 601 and 1500 are covered. There is no MQTT wire-size check on persisted
+snapshots. Resource exhaustion for arbitrarily large input is not a guarantee
+this in-memory verifier can provide; HTTP/JSON parser limits remain the caller's
+responsibility. Cycles, non-string object keys and non-JSON extension types are
+controlled invalid snapshots (INVALID_STRUCTURE / INVALID_TYPE), not additional
+supported JSON forms. Rejection leaves observation state unchanged.
+
+Unicode is preserved, including valid non-ASCII and non-BMP text. The current
+contract does not explicitly settle lone surrogate code points in already-decoded
+persisted snapshots. Their existing acceptance is deliberately unchanged and
+tested, including dictionary keys: this is NOT a claim of safe unescaped UTF-8
+serialization. Ankit and affected owners must agree the consumer/ingress Unicode
+policy before integration; an unescaped UTF-8 serializer can reject these strings.
+No production serializer or PR #30 implementation is imported here.
+
+Fresh Python 3.12.10 mock/component checks:
+
+- The added regression tests failed before the fix with deep-copy RecursionError
+  and acceptance of cyclic non-JSON input, then passed after correction.
+- The six-module focused command above: **83 passed, 92 subtests passed**.
+- Full repository pytest was attempted: collection stopped at the same four
+  dependency-blocked modules listed above (common_pb2 / kuksa_client missing).
+- Available regressions with those four modules explicitly ignored and
+  `-m "not integration"`: **182 passed, 310 subtests passed**.
+- Python AST syntax and `git diff --check` passed. No live services were started,
+  no dependencies installed, and no staging, commit or push was performed.
+
+The three actual repository skill sources used were systematic-debugging,
+test-driven-development and verification-before-completion under `skills/`.
+The referenced writing-good-tests and debugging supporting files are absent;
+no use of those missing files or a separate code-review skill is claimed.
+Fresh GitHub Actions and live twin/provider verification remain pending.

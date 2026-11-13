@@ -178,3 +178,86 @@ class ConsistencyTests(unittest.TestCase):
         bad['vehicle-001']['attributes']['unexpected'] = True
         with self.assertRaises(self.m.ConsistencyError):
             self.m.verify_isolation(before, bad, now=NOW)
+
+
+    def test_deep_snapshots_copy_and_compare_without_recursion(self):
+        # Beyond deepcopy's limit and the normal interpreter recursion limit.
+        for depth in (1, 599, 600, 601, 1500):
+            for arrays in (True, False):
+                with self.subTest(depth=depth, arrays=arrays):
+                    thing = twin()
+                    extension = 42
+                    for _ in range(depth):
+                        extension = [extension] if arrays else {'child': extension}
+                    thing['features']['v1']['properties']['extension'] = extension
+                    result = self.m.inspect_v1_twin('vehicle-002', thing, now=NOW)
+                    original = extension
+                    cloned = result['properties']['extension']
+                    for _ in range(depth):
+                        self.assertIsNot(original, cloned)
+                        original = original[0] if arrays else original['child']
+                        cloned = cloned[0] if arrays else cloned['child']
+                    self.assertEqual(42, cloned)
+                    sequence = self.m.TwinSequence()
+                    self.assertEqual('INITIAL', sequence.observe('vehicle-002', thing, now=NOW))
+                    self.assertEqual('DUPLICATE_EVENT', sequence.observe('vehicle-002', thing, now=NOW))
+                    result['properties']['extension'] = None
+                    self.assertEqual('DUPLICATE_EVENT', sequence.observe('vehicle-002', thing, now=NOW))
+                    leaf = extension
+                    for _ in range(depth - 1):
+                        leaf = leaf[0] if arrays else leaf['child']
+                    leaf[0 if arrays else 'child'] = 43
+                    with self.assertRaises(self.m.ConsistencyError) as caught:
+                        sequence.observe('vehicle-002', thing, now=NOW)
+                    self.assertEqual('CONFLICTING_EVENT', caught.exception.code)
+
+    def test_cyclic_snapshot_rejection_preserves_state_and_both_vehicles_progress(self):
+        sequence = self.m.TwinSequence()
+        for vehicle in self.m.VEHICLES:
+            initial = twin(vehicle)
+            self.assertEqual('INITIAL', sequence.observe(vehicle, initial, now=NOW))
+            for arrays in (True, False):
+                bad = twin(vehicle)
+                extension = [] if arrays else {}
+                if arrays:
+                    extension.append(extension)
+                else:
+                    extension['cycle'] = extension
+                bad['features']['v1']['properties']['extension'] = extension
+                fresh = self.m.TwinSequence()
+                for check in (self.m.inspect_v1_twin, sequence.observe, fresh.observe):
+                    with self.assertRaises(self.m.ConsistencyError):
+                        check(vehicle, bad, now=NOW)
+                self.assertEqual('DUPLICATE_EVENT', sequence.observe(vehicle, initial, now=NOW))
+                self.assertEqual('INITIAL', fresh.observe(vehicle, initial, now=NOW))
+            later = twin(vehicle)
+            later['features']['v1']['properties'].update(lastEventId='later-' + vehicle,
+                                                       sourceTimestamp='2026-01-01T00:00:03Z')
+            self.assertEqual('UPDATED', sequence.observe(vehicle, later, now=NOW))
+
+    def test_deep_whole_thing_isolation_comparison(self):
+        before = {vehicle: twin(vehicle) for vehicle in self.m.VEHICLES}
+        after = {vehicle: twin(vehicle) for vehicle in self.m.VEHICLES}
+        for snapshots in (before, after):
+            extension = 0
+            for _ in range(1500):
+                extension = [extension]
+            snapshots['vehicle-001']['features']['v1']['properties']['extension'] = extension
+        self.m.verify_isolation(before, after, now=NOW)
+        leaf = after['vehicle-001']['features']['v1']['properties']['extension']
+        for _ in range(1499):
+            leaf = leaf[0]
+        leaf[0] = 1
+        with self.assertRaises(self.m.ConsistencyError) as caught:
+            self.m.verify_isolation(before, after, now=NOW)
+        self.assertEqual('ISOLATION_FAILURE', caught.exception.code)
+
+    def test_unicode_preserved_without_claiming_utf8_serializability(self):
+        for text in ('caf\u00e9', '\U0001f697', '\ud800', '\udfff'):
+            thing = twin()
+            thing['features']['v1']['properties']['extension'] = {text: [text]}
+            result = self.m.inspect_v1_twin('vehicle-002', thing, now=NOW)
+            self.assertEqual({text: [text]}, result['properties']['extension'])
+            sequence = self.m.TwinSequence()
+            self.assertEqual('INITIAL', sequence.observe('vehicle-002', thing, now=NOW))
+            self.assertEqual('DUPLICATE_EVENT', sequence.observe('vehicle-002', thing, now=NOW))

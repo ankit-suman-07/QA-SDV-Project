@@ -2,7 +2,6 @@
 
 Implements contract 1.0.0 C3-C6 independently of unmerged B1/B2 production code.
 """
-import copy
 from datetime import datetime, timezone
 import math
 import re
@@ -57,6 +56,62 @@ def _reject_nonfinite(properties):
             pending.extend(value.values() if isinstance(value, dict) else value)
 
 
+def _copy_json(value):
+    """Copy decoded JSON iteratively; cycles are not representable JSON.
+
+    No contract depth or MQTT wire-size limit is imposed on persisted state.
+    """
+    holder = [None]
+    active = set()
+    pending = [(value, holder, 0, False)]
+    while pending:
+        source, parent, key, leaving = pending.pop()
+        if leaving:
+            active.remove(id(source))
+        elif isinstance(source, (dict, list)):
+            _require(id(source) not in active, 'INVALID_STRUCTURE')
+            active.add(id(source))
+            target = {} if isinstance(source, dict) else [None] * len(source)
+            parent[key] = target
+            pending.append((source, None, None, True))
+            items = source.items() if isinstance(source, dict) else enumerate(source)
+            for child_key, child in items:
+                if isinstance(source, dict):
+                    _require(isinstance(child_key, str), 'INVALID_TYPE')
+                pending.append((child, target, child_key, False))
+        else:
+            _require(source is None or isinstance(source, (str, bool, int, float)), 'INVALID_TYPE')
+            parent[key] = source
+    return holder[0]
+
+
+def _equal_json(left, right):
+    """Compare JSON containers without recursive Python container equality."""
+    pending = [(left, right)]
+    visited = set()
+    while pending:
+        a, b = pending.pop()
+        if isinstance(a, dict) and isinstance(b, dict):
+            if a.keys() != b.keys():
+                return False
+            children = ((a[key], b[key]) for key in a)
+        elif isinstance(a, list) and isinstance(b, list):
+            if len(a) != len(b):
+                return False
+            children = zip(a, b)
+        elif isinstance(a, (dict, list)) or isinstance(b, (dict, list)):
+            return False
+        else:
+            if a != b:
+                return False
+            continue
+        pair = (id(a), id(b))
+        if pair not in visited:
+            visited.add(pair)
+            pending.extend(children)
+    return True
+
+
 def inspect_v1_twin(vehicle_id, thing, *, now=None, stale_after=5, unavailable_after=30):
     """Return validated properties and derived availability; never mutate a twin.
 
@@ -102,7 +157,7 @@ def inspect_v1_twin(vehicle_id, thing, *, now=None, stale_after=5, unavailable_a
     age = (now - source).total_seconds()
     _require(age >= -1, 'FUTURE_TIMESTAMP')
     availability = 'UNAVAILABLE' if age > unavailable_after else 'STALE' if age > stale_after else 'AVAILABLE'
-    return {'properties': copy.deepcopy(props), 'availability': availability}
+    return {'properties': _copy_json(props), 'availability': availability}
 
 
 class TwinSequence:
@@ -119,10 +174,10 @@ class TwinSequence:
         previous = self._previous.get(vehicle_id)
         if previous is not None:
             if current['lastEventId'] == previous['lastEventId']:
-                _require(current == previous, 'CONFLICTING_EVENT')
+                _require(_equal_json(current, previous), 'CONFLICTING_EVENT')
                 return 'DUPLICATE_EVENT'
             _require(_time_key(current['sourceTimestamp']) > _time_key(previous['sourceTimestamp']), 'OUT_OF_ORDER')
-        self._previous[vehicle_id] = copy.deepcopy(current)
+        self._previous[vehicle_id] = _copy_json(current)
         return 'INITIAL' if previous is None else 'UPDATED'
 
 
@@ -139,4 +194,4 @@ def verify_isolation(before, after, *, target='vehicle-002', now=None):
         inspect_v1_twin(vehicle, before[vehicle], now=now)
         inspect_v1_twin(vehicle, after[vehicle], now=now)
         if vehicle != target:
-            _require(before[vehicle] == after[vehicle], 'ISOLATION_FAILURE')
+            _require(_equal_json(before[vehicle], after[vehicle]), 'ISOLATION_FAILURE')
