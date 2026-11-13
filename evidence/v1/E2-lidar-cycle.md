@@ -5,7 +5,7 @@
 | Field | Recorded evidence |
 |---|---|
 | Task and acceptance | E2, V1-03 (edge part). Supports V1-01, V1-02 and V1-05. |
-| Branch and revision | `emmanuel/feature/v1-lidar-scenarios`. The live runs used `3d54600`. The only later change is `b41e0bb`, which is test-only. |
+| Branch and revision | `emmanuel/feature/v1-lidar-scenarios`. The live runs used `3d54600`. Later changes: `b41e0bb` (test-only) and `1b58120`, which makes the script's exit trap send a clear even if the inject check fails. `1b58120` is covered by `tests/test_v1_lidar_cycle_script.py` but was not re-run live. |
 | Spec and plan | [design](../../docs/superpowers/specs/2026-11-11-v1-lidar-scenarios-design.md), [plan](../../docs/superpowers/plans/2026-11-12-v1-lidar-scenarios.md). Contract: [v1-interface-contracts.md](../../docs/v1-interface-contracts.md) 1.0.0, sections C2, C4, C5, C8 and C9. |
 | Environment | macOS arm64, Docker 29.9.2, Docker Compose 5.6.1. Stack: [docker-compose.v1.yml](../../vehicle-simulator/docker-compose.v1.yml) (project `qa-sdv-v1`) with `PUBLISH_INTERVAL_SECONDS=5`. The capture ran in `python:3.12-slim` with `mosquitto-clients`. |
 | Command | `E2_CAPTURE_OUT=evidence/v1/e2-capture-20261113T045301Z.jsonl scripts/run-v1-lidar-cycle.sh` |
