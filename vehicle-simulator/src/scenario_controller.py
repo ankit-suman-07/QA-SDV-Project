@@ -1,6 +1,10 @@
 from threading import RLock
 
 
+class WrongVehicleError(ValueError):
+    """The request names a vehicle this provider does not serve."""
+
+
 class ScenarioController:
 
     SUPPORTED_ACTIONS = {
@@ -14,7 +18,10 @@ class ScenarioController:
         "LIDAR_SENSOR_FAILURE",
     }
 
-    def __init__(self):
+    def __init__(self, allowed_vehicle_id=None):
+        # When set, every request must name exactly this vehicle. None keeps
+        # the legacy any-vehicle behaviour (used only by older tests).
+        self._allowed_vehicle_id = allowed_vehicle_id
         self._scenario_states = {}
         self._active_scenarios = set()
         self._lock = RLock()
@@ -65,6 +72,10 @@ class ScenarioController:
 
             return dict(state)
 
+    @property
+    def allowed_vehicle_id(self):
+        return self._allowed_vehicle_id
+
     def is_active(self, vehicle_id, scenario):
         vehicle_id = self._validate_vehicle_id(vehicle_id)
         scenario_key = (vehicle_id, scenario)
@@ -99,8 +110,7 @@ class ScenarioController:
 
             return dict(state)
 
-    @staticmethod
-    def _validate_vehicle_id(vehicle_id):
+    def _validate_vehicle_id(self, vehicle_id):
         if (
             not isinstance(vehicle_id, str)
             or not vehicle_id.strip()
@@ -109,4 +119,14 @@ class ScenarioController:
                 "Vehicle ID must not be blank"
             )
 
-        return vehicle_id.strip()
+        if self._allowed_vehicle_id is None:
+            return vehicle_id.strip()
+
+        # Exact match: a padded ID is a different identity, not a typo to fix.
+        if vehicle_id != self._allowed_vehicle_id:
+            raise WrongVehicleError(
+                f"provider serves {self._allowed_vehicle_id}, "
+                f"not {vehicle_id}"
+            )
+
+        return vehicle_id
