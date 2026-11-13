@@ -1,13 +1,11 @@
-import importlib
+import importlib.util
 import os
 import sys
 
 import pytest
 
-sys.path.insert(
-    0,
-    os.path.join(os.path.dirname(__file__), "..", "src"),
-)
+SRC = os.path.join(os.path.dirname(__file__), "..", "src")
+sys.path.insert(0, SRC)
 
 from scenario_controller import WrongVehicleError  # noqa: E402
 
@@ -16,10 +14,14 @@ from scenario_controller import WrongVehicleError  # noqa: E402
 def provider_main(monkeypatch):
     monkeypatch.setenv("SIMULATED_VEHICLE_ID", "vehicle-002")
     monkeypatch.delenv("INJECT_FAULT", raising=False)
-    sys.modules.pop("main", None)
-    module = importlib.import_module("main")
+    # Load by path: other test packages also have a main.py on sys.path.
+    spec = importlib.util.spec_from_file_location(
+        "provider_main",
+        os.path.join(SRC, "main.py"),
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
     yield module
-    sys.modules.pop("main", None)
 
 
 def test_production_controller_enforces_configured_vehicle(provider_main):
