@@ -179,3 +179,48 @@ def test_lidar_failure_activates_fail_safe_braking():
     assert state["lidar_sensor_healthy"] is False
     assert state["obstacle_warning"] is True
     assert state["autonomous_braking"] is True
+
+def test_idle_lidar_distance_is_exactly_35():
+    state = initial_state()
+    for _ in range(50):
+        state = next_state(state)
+        assert state["lidar_distance_m"] == 35.0
+        assert state["lidar_step"] == 0
+
+
+def test_obstruction_cycle_publishes_exact_distances():
+    state, seen = initial_state(), []
+    for obstructed in [True] * 4 + [False] * 3:
+        state = next_state(state, obstacle=obstructed)
+        seen.append(state["lidar_distance_m"])
+    assert seen == [20.0, 8.0, 3.0, 3.0, 8.0, 20.0, 35.0]
+
+
+def test_flags_follow_ladder_thresholds():
+    state = initial_state()
+    flags = []
+    for _ in range(3):
+        state = next_state(state, obstacle=True)
+        flags.append(
+            (state["obstacle_warning"], state["autonomous_braking"])
+        )
+    assert flags == [(False, False), (True, False), (True, True)]
+
+
+def test_sensor_failure_keeps_rung_and_resumes():
+    state = next_state(
+        next_state(initial_state(), obstacle=True), obstacle=True
+    )  # 8 m, step 2
+    failed = next_state(state, obstacle=True, lidar_failure=True)
+    assert failed["lidar_distance_m"] == 0.0
+    assert failed["lidar_sensor_healthy"] is False
+    assert failed["lidar_step"] == 2
+    assert next_state(failed, obstacle=True)["lidar_distance_m"] == 3.0
+
+
+def test_inject_during_sensor_failure_climbs_after_failure_clears():
+    state = initial_state()
+    for _ in range(3):
+        state = next_state(state, obstacle=True, lidar_failure=True)
+    assert state["lidar_step"] == 0
+    assert next_state(state, obstacle=True)["lidar_distance_m"] == 20.0
