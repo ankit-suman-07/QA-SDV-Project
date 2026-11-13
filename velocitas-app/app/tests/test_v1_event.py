@@ -120,3 +120,15 @@ def test_event_ids_unique_and_prefixed():
     ids = {new_event_id("vehicle-001") for _ in range(100)}
     assert len(ids) == 100
     assert all(i.startswith("vehicle-001-") for i in ids)
+
+
+def test_provider_ladder_maps_to_expected_health():
+    # Literal copy of vehicle-simulator/src/lidar_trajectory.LADDER; the
+    # Velocitas package must not import the simulator.
+    ladder = {35.0: "HEALTHY", 20.0: "HEALTHY", 8.0: "WARNING", 3.0: "CRITICAL"}
+    for distance, health in ladder.items():
+        event = build_v1_event("vehicle-002", T0, distance, True, "id")
+        assert event["health"] == health
+        assert event["faults"] == (
+            [] if health == "HEALTHY" else ["LIDAR_OBSTRUCTION"]
+        )
