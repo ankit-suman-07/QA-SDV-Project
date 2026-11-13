@@ -48,8 +48,8 @@ end-to-end propagation guarantee.
 ## State validation and safe initialization
 
 Read responses are strict JSON objects (maximum 1 MiB) with duplicate keys and
-non-finite values rejected. Whole-Thing and attribute identities must match the
-requested vehicle. Existing `features.v1.properties` must match the third identity,
+non-finite values and lone surrogate text/keys rejected. Whole-Thing and attribute
+identities must match the requested vehicle. Existing `features.v1.properties` must match the third identity,
 schema, full health/fault/LiDAR rules, source timestamp and lastEventId. A malformed,
 null, empty or partial V1 feature blocks ingestion. A missing/unreadable Thing also
 blocks ingestion. Only an existing correctly identified Thing with the **V1 feature
@@ -65,10 +65,13 @@ differences in a stored response cannot by themselves trigger the MQTT size limi
 
 Ingress serializes writes per vehicle. On restart it loads each watermark from
 validated live state. Duplicate IDs and non-increasing source times cause no PUT.
-The watermark advances only after confirmed PUT success. After any failed PUT it
-is reloaded before another attempt, covering a server commit followed by a lost
-response. A read failure never resets it to empty. Run only one ingress writer for
-these twins; multiple-writer coordination/revision locking is outside this contract.
+The watermark advances only after confirmed PUT success. After a failed or
+uncertain dispatched PUT it is reloaded before another attempt, covering a server
+commit followed by a lost response. A deterministic local serialization failure
+before dispatch is an input rejection; it makes no HTTP call and never advances
+the watermark. See [correction evidence](MQTT-INGRESS.md#pr30-f01f02-correction-evidence-november-12-2026)
+for deep extensions, Unicode validation, runtime codec limits and mock results.
+A read failure never resets it to empty. Run only one ingress writer for these twins; multiple-writer coordination/revision locking is outside this contract.
 
 ## Reproducible provisioning and live commands
 

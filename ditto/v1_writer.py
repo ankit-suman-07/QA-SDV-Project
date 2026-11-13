@@ -1,7 +1,5 @@
 """B2 authenticated HTTP adapter and create-only individual-twin provisioning."""
-import copy
 from dataclasses import dataclass, field
-import json
 import math
 import os
 import time
@@ -9,7 +7,8 @@ from urllib.parse import quote, urlsplit
 
 import requests
 
-from ditto.mqtt_ingress import VEHICLES, EventError, WatermarkError, validate_event, decode_json
+from ditto.mqtt_ingress import (VEHICLES, EventError, WatermarkError, validate_event,
+                                decode_json, encode_json)
 
 THINGS = {vehicle: f'sdv:{vehicle}' for vehicle in VEHICLES}
 POLICIES = {vehicle: f'sdv:{vehicle}-policy' for vehicle in VEHICLES}
@@ -72,7 +71,8 @@ def validate_properties(vehicle_id, properties):
     _vehicle(vehicle_id)
     if not isinstance(properties, dict) or 'lastEventId' not in properties:
         raise DittoError('INVALID_PERSISTED_STATE')
-    event = copy.deepcopy(properties)
+    # Rename only the envelope key; validation never mutates nested values.
+    event = dict(properties)
     event['eventId'] = event.pop('lastEventId')
     try:
         validate_event(f'sdv/{vehicle_id}/health', event)
@@ -115,11 +115,7 @@ class DittoWriter:
         body = None
         if value is not None:
             headers['Content-Type'] = 'application/json'
-            try:
-                body = json.dumps(value, ensure_ascii=False, allow_nan=False,
-                                  separators=(',', ':')).encode('utf-8')
-            except (ValueError, TypeError, UnicodeError, RecursionError) as error:
-                raise DittoError('INVALID_DITTO_JSON') from error
+            body = encode_json(value)
         if create_only:
             headers['If-None-Match'] = '*'
         failure = DittoError('DITTO_UNAVAILABLE')

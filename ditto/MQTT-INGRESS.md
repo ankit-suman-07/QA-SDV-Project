@@ -11,7 +11,13 @@ checks classification against C4 without substituting its own classification for
 the publisher's result. It never writes processing time or availability.
 Only `decode_event` applies the 64 KiB MQTT budget to original UTF-8 bytes.
 `validate_event` shares all semantic checks with the B2 writer without serializing
-decoded objects or imposing that wire budget on persisted state. Ditto PUT bodies
+decoded objects or imposing that wire budget on persisted state. Text values and
+object keys, including extensions and context IDs, must contain Unicode scalar
+values: escaped lone high/low surrogates reject with MALFORMED_JSON. Valid escaped
+surrogate pairs decode to non-BMP characters and remain supported. Validation
+walks nested containers iteratively and rejects non-finite values and cycles.
+`decode_event` also preflights the UTF-8 persistence encoder before enqueueing;
+this does not reapply the wire-size budget to the encoded result. Ditto PUT bodies
 are compact UTF-8 JSON; Unicode is not unnecessarily expanded to ASCII escapes.
 
 `mqtt_subscriber.py` uses Paho MQTT 2.1.0, MQTT 3.1.1 and a persistent session.
@@ -82,7 +88,11 @@ state, even if their payload changed. Equal source timestamps are rejected.
 Ordering preserves ISO fractional precision beyond microseconds. A failed write
 invalidates the cached watermark: the next attempt first reloads the live twin,
 because a timed-out request may already have been applied. Downstream validation
-errors are persistence failures, never acknowledgments of rejected input.
+errors from reads/stored-state validation remain persistence failures, never
+acknowledgments of rejected input. The narrow `LocalJSONError(EventError)` exception
+identifies deterministic serialization failure **before HTTP dispatch**. It is
+rejected/ACKed without retry or watermark advancement. It must never be used for
+an HTTP response, timeout, connection failure or any uncertain write outcome.
 
 The queues are bounded; overflow or subscription/ACK failure visibly stops the
 subscriber without acknowledging queued work. Restart it after fixing the cause.
@@ -114,3 +124,70 @@ reason codes when the optional dependency is installed. No test here proves
 live Mosquitto delivery, real Ditto persistence, policy enforcement or a full
 Emmanuel-to-Ankit pipeline. A subsequent live integration run remains needed.
 Fleet counting/provisioning/materialization belongs to Ankit A5.
+
+
+## PR30-F01/F02 correction evidence (November 12, 2026)
+
+Read authoritative documentation and review findings from fetched `origin/main`
+`8e9566ed3fe24f75889325aa867e4395019f350b`, without merging/rebasing. Contract
+1.0.0 remains proposed for affected-owner review. A5 remains Ankit's responsibility.
+
+The 600-level extension previously passed validation then failed recursive
+`deepcopy`, entering persistence retry forever. Event-to-properties copying now
+uses the existing strict JSON codec without a byte budget, before watermark reads;
+the returned event and writer properties remain independent. B2 only needs a
+shallow envelope copy to rename lastEventId while validating stored properties;
+its validation never mutates nested data. No recursive deepcopy remains in either
+production path. The shared compact UTF-8 encoder returns a controlled
+LocalJSONError for local encoding failures instead of reporting a Ditto outage.
+The subscriber's existing input-rejection handler is retained; generic downstream
+errors still invalidate the cached watermark and retry without ACK.
+
+No new shared numeric depth limit is introduced. The standard-library JSON
+parser/encoder still have runtime-specific nesting limits; unsupported shapes
+produce controlled MALFORMED_JSON / LocalJSONError, not a raw local RecursionError.
+Tests cover arrays/dictionaries at 599, 600, 601 and 1400 levels and rejected
+5000-level wire input. These are test cases, not advertised protocol depth limits.
+A deployment-wide depth guarantee (including Ditto and Ankit's HTTP/JSON clients)
+requires affected-owner agreement and target-runtime verification. Unbounded input
+or universal decoder compatibility is not promised.
+
+The UTF-8 writer requires scalar text, so ingress rejects lone surrogates in both
+keys and values. PR #31 is a read-only decoded-snapshot consumer whose existing
+surrogate acceptance is explicitly pending affected-owner policy review. Ordinary
+Unicode, non-BMP text, fixtures, identity, ordering and classification remain
+compatible; do not claim that every snapshot accepted by #31 is UTF-8 serializable.
+No #31 production code is imported or changed by this correction.
+
+Fresh Python 3.12.10 verification (mock/component only):
+
+- Added regressions first reproduced the deep-copy/retry and surrogate failures.
+- Focused command below: **64 passed, 66 subtests passed**.
+- Full repository pytest attempted: collection stopped at four modules missing
+  common_pb2 / kuksa_client. Three are transport modules; one is the KUKSA
+  publication module. No installation was attempted.
+- Available regressions: **212 passed, 284 subtests passed**, explicitly ignoring
+  those four modules and selecting `-m "not integration"`.
+- A read-only in-memory compatibility probe against PR #31's corrected verifier
+  passed for four fixture events: both vehicles, healthy/fault/recovery, 600-level
+  extensions, Unicode command context and duplicate polls. It added no dependency
+  or source file from #31 to this branch.
+- AST syntax, tracked JSON parsing, targeted secret scan and `git diff --check`
+  passed. Fresh CI and live MQTT/Ditto acceptance remain pending.
+
+```powershell
+.\.venv-b1\Scripts\python.exe -X utf8 -B -m pytest -q -p no:cacheprovider tests/test_mqtt_poison_inputs.py tests/test_mqtt_ingress.py tests/test_mqtt_subscriber.py tests/test_ditto_v1_writer.py tests/test_ditto_v1_cli.py
+.\.venv-b1\Scripts\python.exe -X utf8 -B -m pytest -q -ra -p no:cacheprovider -m "not integration" --ignore=tests/test_uprotocol_transport.py --ignore=uprotocol/tests/test_extended_transport.py --ignore=uprotocol/tests/test_transport.py --ignore=vehicle-simulator/tests/test_kuksa_publication.py
+```
+
+New tests use in-memory HTTP and fake MQTT, finite synchronization waits, invalid
+input floods with a one-slot queue, later events for both vehicles, restart/late
+checks and genuine HTTP 503 retry/ACK gating. Existing exact-64-KiB and near-limit
+Unicode persistence/restart tests remain unchanged. Existing loopback HTTP tests
+use only a temporary mock server, not Eclipse Ditto. No live runtime services were
+contacted, dependencies installed, or files staged/committed/pushed.
+
+Applied the actual repository systematic-debugging, test-driven-development and
+verification-before-completion skill sources under `skills/`. Referenced supporting
+writing-good-tests/debugging files and a separate review skill are absent; their
+use is not claimed. `.venv-b1/` remains local, untracked and unstaged.

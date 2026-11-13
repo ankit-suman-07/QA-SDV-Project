@@ -2,7 +2,6 @@
 
 No network or development-tool dependencies. B2 supplies the TwinWriter.
 """
-import copy
 from datetime import datetime, timedelta
 import json
 import math
@@ -23,6 +22,10 @@ class EventError(ValueError):
         self.vehicle_id = None
         self.event_id = None
         super().__init__(code)
+
+
+class LocalJSONError(EventError):
+    """Deterministic pre-dispatch serialization failure, never an HTTP outcome."""
 
 
 class WatermarkError(RuntimeError):
@@ -51,17 +54,44 @@ def timestamp_key(value):
     return timestamp.replace(microsecond=0), fraction.removeprefix('.').rstrip('0')
 
 
-def _finite_numbers(value):
-    # Extensions must also be valid finite JSON; e.g. 1e999 is not JSON Infinity
-    # syntax, but Python decodes it as an infinite float.
-    if isinstance(value, float):
-        _require(math.isfinite(value), 'MALFORMED_JSON')
-    elif isinstance(value, dict):
-        for item in value.values():
-            _finite_numbers(item)
-    elif isinstance(value, list):
-        for item in value:
-            _finite_numbers(item)
+def _validate_json(value):
+    """Iteratively validate JSON scalars/keys, finite numbers and acyclic shape."""
+    pending = [(value, False)]
+    active = set()
+    while pending:
+        item, leaving = pending.pop()
+        if leaving:
+            active.remove(id(item))
+        elif isinstance(item, (dict, list)):
+            _require(id(item) not in active, 'MALFORMED_JSON')
+            active.add(id(item))
+            pending.append((item, True))
+            if isinstance(item, dict):
+                for key in item:
+                    _require(isinstance(key, str), 'MALFORMED_JSON')
+                    _require(not any(0xD800 <= ord(c) <= 0xDFFF for c in key), 'MALFORMED_JSON')
+                pending.extend((child, False) for child in item.values())
+            else:
+                pending.extend((child, False) for child in item)
+        elif isinstance(item, str):
+            _require(not any(0xD800 <= ord(c) <= 0xDFFF for c in item), 'MALFORMED_JSON')
+        elif isinstance(item, float):
+            _require(math.isfinite(item), 'MALFORMED_JSON')
+        else:
+            _require(item is None or isinstance(item, (bool, int)), 'MALFORMED_JSON')
+
+
+def encode_json(value):
+    """Compact UTF-8, with controlled local failures and no MQTT wire budget.
+
+    Only use LocalJSONError before dispatch: an uncertain HTTP result is not
+    evidence that an event is invalid and must never be ACKed as a rejection.
+    """
+    try:
+        return json.dumps(value, ensure_ascii=False, allow_nan=False,
+                          separators=(',', ':')).encode('utf-8')
+    except (ValueError, TypeError, UnicodeError, RecursionError) as error:
+        raise LocalJSONError('MALFORMED_JSON') from error
 
 
 def decode_json(payload, max_bytes=None):
@@ -82,7 +112,7 @@ def decode_json(payload, max_bytes=None):
         _require(max_bytes is None or len(wire) <= max_bytes, 'MALFORMED_JSON')
         event = json.loads(wire.decode('utf-8'), object_pairs_hook=pairs,
                            parse_constant=nonfinite)
-        _finite_numbers(event)
+        _validate_json(event)
     except (UnicodeError, ValueError, RecursionError) as error:
         if isinstance(error, EventError):
             raise
@@ -92,13 +122,17 @@ def decode_json(payload, max_bytes=None):
 
 def decode_event(topic, payload):
     """Decode strict UTF-8 JSON and validate the complete C3/C4 envelope."""
-    return validate_event(topic, decode_json(payload, max_bytes=MAX_PAYLOAD_BYTES))
+    event = validate_event(topic, decode_json(payload, max_bytes=MAX_PAYLOAD_BYTES))
+    # Check the actual persistence codec, not an invented shared depth limit.
+    # This is not a second size check on internally serialized bytes.
+    encode_json(event)
+    return event
 
 
 def validate_event(topic, event):
     """Validate decoded event semantics without imposing a wire encoding/budget."""
     try:
-        _finite_numbers(event)
+        _validate_json(event)
         return _validate_event(topic, event)
     except RecursionError as error:
         raise EventError('MALFORMED_JSON') from error
@@ -173,6 +207,10 @@ class Ingress:
     def process(self, topic, payload):
         event = decode_event(topic, payload)
         vehicle = event['vehicleId']
+        # JSON round-trip avoids deepcopy's lower recursion limit and gives the
+        # writer an independent snapshot. Codec failures occur before any read.
+        properties = decode_json(encode_json(event))
+        properties['lastEventId'] = properties.pop('eventId')
         with self._locks[vehicle]:
             if vehicle not in self._committed:
                 try:
@@ -193,11 +231,13 @@ class Ingress:
                 _require(event['eventId'] != previous[0], 'DUPLICATE_EVENT')
                 _require(timestamp_key(event['sourceTimestamp']) > timestamp_key(previous[1]),
                          'OUT_OF_ORDER')
-            properties = copy.deepcopy(event)
-            properties['lastEventId'] = properties.pop('eventId')
             # A writer must not be able to mutate the event used for ordering.
             try:
                 self.writer.persist(vehicle, properties)
+            except LocalJSONError:
+                # Only the encoder can certify no request was dispatched.
+                # Retain the trusted watermark and reject without retrying.
+                raise
             except Exception as error:
                 # A timeout can mean the server committed but its reply was lost.
                 # Reload live state before any retry or later event, never trust
