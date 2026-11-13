@@ -117,10 +117,12 @@ echo "Capture ready: vehicle-002 seen HEALTHY"
 
 
 # 4. Inject, hold for four ticks, read the context, clear, wait four ticks.
+#    Mark the scenario active before sending: the provider may apply the
+#    inject even if this script then fails, and CLEAR is idempotent.
+SCENARIO_ACTIVE=1
 status=$(post_action vehicle-002 INJECT_SCENARIO e2-cycle-inject)
 [ "${status}" = "200" ] && grep -q '"active": true' "${RESPONSE_FILE}" \
     || fail "inject returned ${status}: $(cat "${RESPONSE_FILE}")"
-SCENARIO_ACTIVE=1
 echo "Injected: $(cat "${RESPONSE_FILE}")"
 
 sleep "$(seconds 4)"
