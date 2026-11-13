@@ -146,8 +146,10 @@ errors still invalidate the cached watermark and retry without ACK.
 No new shared numeric depth limit is introduced. The standard-library JSON
 parser/encoder still have runtime-specific nesting limits; unsupported shapes
 produce controlled MALFORMED_JSON / LocalJSONError, not a raw local RecursionError.
-Tests cover arrays/dictionaries at 599, 600, 601 and 1400 levels and rejected
-5000-level wire input. These are test cases, not advertised protocol depth limits.
+Tests cover arrays/dictionaries at 599, 600, 601 and 1400 levels. The original
+assumption that 5000 levels always exceed codec capacity was incorrect across
+runtimes; see the CI correction below. These are test cases, not advertised
+protocol depth limits.
 A deployment-wide depth guarantee (including Ditto and Ankit's HTTP/JSON clients)
 requires affected-owner agreement and target-runtime verification. Unbounded input
 or universal decoder compatibility is not promised.
@@ -159,7 +161,7 @@ Unicode, non-BMP text, fixtures, identity, ordering and classification remain
 compatible; do not claim that every snapshot accepted by #31 is UTF-8 serializable.
 No #31 production code is imported or changed by this correction.
 
-Fresh Python 3.12.10 verification (mock/component only):
+Initial Python 3.12.10 verification (mock/component only; updated CI correction below):
 
 - Added regressions first reproduced the deep-copy/retry and surrogate failures.
 - Focused command below: **64 passed, 66 subtests passed**.
@@ -191,3 +193,61 @@ Applied the actual repository systematic-debugging, test-driven-development and
 verification-before-completion skill sources under `skills/`. Referenced supporting
 writing-good-tests/debugging files and a separate review skill are absent; their
 use is not claimed. `.venv-b1/` remains local, untracked and unstaged.
+
+
+## CI correction: runtime-dependent nesting expectations
+
+Two subsequent CI assertion failures shared one test-data defect: a valid,
+under-budget 5000-level extension was assumed to be invalid on every Python
+runtime. The local Python 3.12.10 codec rejects it, while the reported CI codec
+accepts it. CI selects floating Python `3.12`; it does not promise a fixed JSON
+nesting capacity. Both exact assertion failures were independently reproduced on
+the already-installed Python 3.15.2, whose codec also accepts the extension.
+No Python 3.12.16 interpreter was available for a direct local run.
+
+The flood's message 19 was that valid event. It entered the vehicle worker and
+correctly had no immediate rejection ACK: successful persistence must precede
+its ACK. Waiting longer for a rejection ACK would leave the incorrect no-writer
+expectation intact. Production ingress, subscriber, Ditto writer and CI remain
+unchanged by this correction; no depth restriction or broader ACK rule is added.
+
+Test corrections and added evidence:
+
+- The invalid-input flood uses genuinely malformed deep arrays/objects (trailing
+  comma / invalid token), all below 64 KiB. Every invalid delivery must still be
+  rejected/ACKed synchronously without any worker call, HTTP request, watermark
+  advance or queue overflow. Later valid events for both vehicles must persist.
+- The codec-limit test injects RecursionError independently at the actual JSON
+  decoder and encoder for arrays and objects. It verifies MALFORMED_JSON before
+  HTTP/watermark access, then verifies progress for both vehicles. No numerical
+  rejection threshold is assumed, and no test is skipped.
+- A real 5000-level extension test checks the native codec's capability: where
+  supported it must persist, preserve its leaf, recover its watermark on restart
+  and reject a duplicate. Where the native codec itself raises RecursionError,
+  ingress must reject with a controlled error and no I/O. Both paths must allow
+  subsequent events for both vehicles.
+- A blocked-PUT test explicitly withholds ACK for a supported deep message 19,
+  lets vehicle-001 progress, then releases persistence and verifies vehicle-002's
+  next event. It uses bounded synchronization instead of immediate worker-ACK
+  assumptions. Older persistence-failure/uncertain-write tests remain intact.
+- The prior-state rejection test now requires MALFORMED_JSON for malformed deep
+  input; a DUPLICATE_EVENT can no longer mask the incorrect depth assumption.
+
+Fresh verification after correction, all static/mock/component only:
+
+- Both formerly failing tests: 20 consecutive runs each on Python 3.12.10 and
+  Python 3.15.2, **80 executions passed**.
+- Python 3.12.10 focused suite: **66 passed, 72 subtests passed**.
+- Python 3.12.10 available regressions: **214 passed, 290 subtests passed**.
+- Additional Python 3.15.2 unittest probe: **all 12 poison-input tests passed**,
+  including accepted 5000-level arrays/objects and persistence-gated ACKs. This
+  reused installed pure-Python test dependencies; no installation was performed.
+- Full Python 3.12 collection still stops at the four local common_pb2 /
+  kuksa_client dependency blockers listed above. These are separate from the
+  reported CI assertion failures, where collection completed.
+- Syntax and `git diff --check` passed. No staging, commit, push, deployment or
+  live-service access was performed. The local environment remains preserved.
+
+Fresh supported-patch GitHub Actions, affected-owner shared-interface review and
+real MQTT/Ditto acceptance remain pending. The 3.15 probe demonstrates the runtime
+variation and exercises both codec capability paths; it does not replace 3.12 CI.

@@ -3,7 +3,7 @@ import json
 import threading
 from types import SimpleNamespace
 import unittest
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 from ditto.mqtt_ingress import Ingress, EventError, decode_event, validate_event
 from ditto.mqtt_subscriber import Subscriber, MqttConfig
@@ -16,6 +16,13 @@ TOPIC = 'sdv/vehicle-002/health'
 
 def wire_extension(raw):
     return (json.dumps(fixture())[:-1] + ', "extension":' + raw + '}').encode()
+
+
+def malformed_deep_wires():
+    # Trailing array comma / invalid object token: never valid extensions, even
+    # when a Python patch accepts 5000 levels. Both stay below the wire budget.
+    return [wire_extension('[' * 5000 + '0,' + ']' * 5000),
+            wire_extension('{"child":' * 5000 + '@' + '}' * 5000)]
 
 
 class MemoryHTTP:
@@ -75,17 +82,57 @@ class PoisonInputTests(unittest.TestCase):
                     self.assertEqual({}, self.http.things['sdv:vehicle-001']['features'])
 
     def test_unsupported_codec_depth_rejected_before_io_then_both_vehicles_progress(self):
-        depth = 5000
-        for raw in ('[' * depth + '0' + ']' * depth,
-                    '{"child":' * depth + '0' + '}' * depth):
-            with self.assertRaises(EventError) as caught:
-                self.ingress.process(TOPIC, wire_extension(raw))
-            self.assertEqual('MALFORMED_JSON', caught.exception.code)
+        # Exercise the real error conversion, not an assumed numerical depth cap.
+        wires = {'array': wire_extension('[' * 600 + '0' + ']' * 600),
+                 'object': wire_extension('{"child":' * 600 + '0' + '}' * 600)}
+        for codec in ('loads', 'dumps'):
+            for container, wire in wires.items():
+                with self.subTest(codec=codec, container=container):
+                    with patch('ditto.mqtt_ingress.json.' + codec,
+                               side_effect=RecursionError('codec capacity')) as operation:
+                        with self.assertRaises(EventError) as caught:
+                            self.ingress.process(TOPIC, wire)
+                        self.assertEqual('MALFORMED_JSON', caught.exception.code)
+                        operation.assert_called_once()
         self.assertEqual([], self.http.calls)
         self.assertEqual({}, self.ingress._committed)
         self.send(fixture())
         self.send(fixture('vehicle-001-healthy'))
         self.assertEqual(2, sum(method == 'PUT' for method, _, _ in self.http.calls))
+
+    def test_5000_level_extensions_follow_actual_codec_support_and_restart(self):
+        for array in (True, False):
+            with self.subTest(array=array):
+                self.setUp()
+                raw = '[' * 5000 + '0' + ']' * 5000 if array else (
+                    '{"child":' * 5000 + '0' + '}' * 5000)
+                wire = wire_extension(raw)
+                self.assertLess(len(wire), 65536)
+                try:
+                    native = json.loads(wire)
+                    json.dumps(native, ensure_ascii=False).encode('utf-8')
+                except RecursionError:
+                    # A genuine limitation must be a controlled input rejection.
+                    with self.assertRaises(EventError) as caught:
+                        self.ingress.process(TOPIC, wire)
+                    self.assertEqual('MALFORMED_JSON', caught.exception.code)
+                    self.assertEqual([], self.http.calls)
+                    self.assertEqual({}, self.ingress._committed)
+                else:
+                    # Valid extensions must not be rejected just to satisfy CI.
+                    self.ingress.process(TOPIC, wire)
+                    properties = self.http.things['sdv:vehicle-002']['features']['v1']['properties']
+                    leaf = properties['extension']
+                    for _ in range(5000):
+                        leaf = leaf[0] if array else leaf['child']
+                    self.assertEqual(0, leaf)
+                    with self.assertRaises(EventError) as caught:
+                        Ingress(self.writer).process(TOPIC, wire)
+                    self.assertEqual('DUPLICATE_EVENT', caught.exception.code)
+                self.send(fixture('vehicle-002-fault'))
+                self.send(fixture('vehicle-001-healthy'))
+                self.assertEqual(fixture('vehicle-002-fault')['eventId'],
+                                 self.writer.load_watermark('vehicle-002')[0])
 
     def bad_events(self):
         for surrogate in ('\ud800', '\udfff'):
@@ -163,9 +210,9 @@ class PoisonInputTests(unittest.TestCase):
         process = Mock(wraps=self.ingress.process)
         self.ingress.process = process
         bad = [json.dumps(event).encode() for event in self.bad_events()]
-        bad.append(wire_extension('[' * (5000) + '0' +
-                                  ']' * (5000)))
+        bad.extend(malformed_deep_wires())
         for mid, wire in enumerate(bad, 1):
+            self.assertLess(len(wire), 65536)
             self.deliver(subscriber, client, wire, mid)
             self.assertIn(mid, acks, 'Invalid input must be rejected/ACKed before queueing')
         process.assert_not_called()
@@ -252,10 +299,14 @@ class PoisonInputTests(unittest.TestCase):
         watermark = dict(self.ingress._committed)
         calls = len(self.http.calls)
         for event in self.bad_events():
-            with self.assertRaises(EventError):
+            with self.assertRaises(EventError) as caught:
                 self.send(event)
-        with self.assertRaises(EventError):
-            self.ingress.process(TOPIC, wire_extension('[' * 5000 + '0' + ']' * 5000))
+            self.assertEqual('MALFORMED_JSON', caught.exception.code)
+        for wire in malformed_deep_wires():
+            with self.assertRaises(EventError) as caught:
+                self.ingress.process(TOPIC, wire)
+            # DUPLICATE_EVENT would mask the same invalid-depth assumption.
+            self.assertEqual('MALFORMED_JSON', caught.exception.code)
         self.assertEqual(before, json.dumps(self.http.things, sort_keys=True))
         self.assertEqual(watermark, self.ingress._committed)
         self.assertEqual(calls, len(self.http.calls))
@@ -263,3 +314,43 @@ class PoisonInputTests(unittest.TestCase):
         self.send(fixture('vehicle-002-recovered'))
         self.send(fixture('vehicle-001-healthy'))
         self.assertEqual('vehicle-002-event-002', self.writer.load_watermark('vehicle-002')[0])
+
+    def test_supported_deep_extension_ack_waits_for_put_then_later_events_progress(self):
+        wire = wire_extension('[' * 5000 + '0' + ']' * 5000)
+        try:
+            json.dumps(json.loads(wire), ensure_ascii=False).encode('utf-8')
+        except RecursionError:
+            wire = wire_extension('[' * 600 + '0' + ']' * 600)
+        subscriber, client, condition, acks = self.subscriber(queue_size=1)
+        entered, release = threading.Event(), threading.Event()
+        self.addCleanup(release.set)
+        original = self.writer._request
+
+        def request(method, url, **kwargs):
+            if method == 'PUT' and 'vehicle-002/' in url and not release.is_set():
+                entered.set()
+                if not release.wait(5):
+                    raise AssertionError('test did not release blocked PUT')
+            return original(method, url, **kwargs)
+
+        self.writer._request = request
+        self.deliver(subscriber, client, wire, 19)
+        self.assertTrue(entered.wait(1))
+        self.assertNotIn(19, acks)
+        self.assertIsNone(self.ingress._committed.get('vehicle-002'))
+        self.assertEqual({}, self.http.things['sdv:vehicle-002']['features'])
+        other = fixture('vehicle-001-healthy')
+        self.deliver(subscriber, client, json.dumps(other).encode(), 20, 'sdv/vehicle-001/health')
+        with condition:
+            self.assertTrue(condition.wait_for(lambda: 20 in acks, timeout=2))
+        self.assertNotIn(19, acks)
+        release.set()
+        with condition:
+            self.assertTrue(condition.wait_for(lambda: 19 in acks, timeout=2))
+        self.deliver(subscriber, client, json.dumps(fixture('vehicle-002-fault')).encode(), 21)
+        with condition:
+            self.assertTrue(condition.wait_for(lambda: 21 in acks, timeout=2))
+        self.assertEqual([19, 20, 21], sorted(acks))
+        self.assertIsNone(subscriber._fatal)
+        self.assertEqual(fixture('vehicle-002-fault')['eventId'],
+                         self.writer.load_watermark('vehicle-002')[0])
