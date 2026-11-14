@@ -22,6 +22,8 @@ from ditto.fault_details import (
 )
 from experiments.pipeline_evaluator import PipelineEvaluator
 from experiments.result_summary import summarize_records
+from ditto.pressure_units import kpa_to_psi
+
 from uprotocol.transport import (
     publish_correlated_fault_cleared,
     publish_correlated_fault_detected,
@@ -188,7 +190,7 @@ with VSSClient("127.0.0.1", 55556) as client:
             coolant_pressure_kpa=float(
                 coolant_pressure
             ),
-            tire_pressure_psi=float(tire_fl),
+            tire_pressure_psi=kpa_to_psi(tire_fl),
         )
 
         received_event = receive_vehicle_status(

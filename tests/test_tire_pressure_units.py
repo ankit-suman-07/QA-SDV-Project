@@ -32,7 +32,7 @@ def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
     assert app.publication_values(state)[app.SIGNAL_PATHS['tire_pressure']].value == kpa
 
 
-@pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+@pytest.mark.parametrize('kpa,psi', [(0, 0), (6.894757293168, 1), (100, 14.5037737730217), (221, 32.0533400383779)])
 def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
     from ditto.pressure_units import kpa_to_psi
     assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)

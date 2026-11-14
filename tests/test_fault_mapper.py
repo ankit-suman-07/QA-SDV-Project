@@ -29,7 +29,7 @@ def make_thing(battery=15, temperature=89, tire_fl=32, active_faults=None, proce
 
 class FaultMapperTest(unittest.TestCase):
 
-    def test_legacy_tire_unit_and_thresholds_remain_psi_pending_upstream_confirmation(self):
+    def test_legacy_tire_unit_and_thresholds_remain_psi(self):
         for pressure, severity, threshold in [(28, 'WARNING', 28), (24.01, 'WARNING', 28), (24, 'CRITICAL', 24)]:
             thing = make_thing(tire_fl=pressure, active_faults=['TIRE_PRESSURE_LOW_FRONT_LEFT'])
             mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT', thing)
@@ -45,7 +45,7 @@ class FaultMapperTest(unittest.TestCase):
         mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT',
                                        make_thing(tire_fl=32, active_faults=['TIRE_PRESSURE_LOW_FRONT_LEFT']))
         self.assertEqual('psi', mapped['unit'])
-        self.assertEqual(32, mapped['observedValue'])  # no runtime conversion authorized yet
+        self.assertEqual(32, mapped['observedValue'])  # mapper receives already-converted legacy psi
 
     def test_battery_low_maps_correctly(self):
         thing = make_thing(battery=15, active_faults=["BATTERY_LOW"])

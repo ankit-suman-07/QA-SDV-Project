@@ -7,6 +7,8 @@ NORMAL_LIDAR_DISTANCE_M = 35.0
 LIDAR_WARNING_DISTANCE_M = 10.0
 AUTONOMOUS_BRAKING_DISTANCE_M = 5.0
 
+# Internal tire-pressure state/range and random changes retain legacy psi.
+# main.publication_values converts once to the declared KUKSA uint16 kPa.
 NORMAL_RANGES = {
     "speed": (0, 120),
     "battery": (40, 100),
