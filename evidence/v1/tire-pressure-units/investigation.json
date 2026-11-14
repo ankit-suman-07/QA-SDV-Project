@@ -1,0 +1,19 @@
+{
+  "baseline": "f33e7cbbb4968fec28d2d5acf4f10df246fa9fba",
+  "VSS": {
+    "path": "Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure",
+    "unit": "kPa",
+    "datatype": "uint16"
+  },
+  "intendedGeneratorPhysicalUnit": "psi",
+  "supportingFacts": [
+    "initial32 and normal30-34; fault reduces0.1-0.3 each step",
+    "legacy contract32psi, warning28psi and critical24psi",
+    "protobuf tire_pressure_psi and Ditto tirePressurePsi",
+    "OpenSOVD mapper already expects psi; must not convert twice"
+  ],
+  "factorKpaPerPsi": 6.894757293168,
+  "decision": "Retain VSS kPa and legacy psi. Convert once before KUKSA, once before legacy protobuf. User assigns implementation to Ankit; draft review does not invent shared approval.",
+  "generatorHistory": "4f4a19a fix: align tire pressure source and diagnostic units\nb1a0e88 feat(simulator): drive LiDAR distance from the fixed ladder\nd00995f feat: add synthetic autonomous lidar pipeline\nef16737 feat(simulator): add coolant pressure signal lifecycle\nf89b615 Feature: Add configurable PUBLISH_INTERVAL_SECONDS with validation and logging\n51ddcd7 Refactor: Remove old eclipse-components/kuksa structure\n",
+  "noChangedLidarContract": true
+}

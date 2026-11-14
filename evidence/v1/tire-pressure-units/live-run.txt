@@ -1,0 +1,40 @@
+[uProtocol Publisher] VehicleStatusUpdated eventId=57c2ca87-5770-42e3-be48-2fd9856b5bcc bytes=245
+[uProtocol Receiver] VehicleStatusUpdated eventId=57c2ca87-5770-42e3-be48-2fd9856b5bcc receptionTimestamp=2026-11-14T06:15:38.178054+00:00 battery=80.0 
+[
+  {
+    "phase": "healthy",
+    "kpa": 220,
+    "psi": 31.908302300647698,
+    "sourceTimestamp": "2026-11-14 06:15:29.317030+00:00"
+  },
+  {
+    "phase": "fault",
+    "kpa": 164,
+    "psi": 23.78618898775556,
+    "protobufPsi": 23.78618898775556,
+    "sourceTimestamp": "2026-11-14 06:15:38.070416+00:00",
+    "mapped": {
+      "faultId": null,
+      "code": "TIRE_PRESSURE_LOW_FRONT_LEFT",
+      "description": "Tire pressure below safe threshold (frontLeft)",
+      "severity": "CRITICAL",
+      "status": "ACTIVE",
+      "affectedSignal": "tirePressurePsi.frontLeft",
+      "observedValue": 23.78618898775556,
+      "unit": "psi",
+      "threshold": 24,
+      "sourceTimestamp": null,
+      "detectedTimestamp": null,
+      "lastUpdatedTimestamp": null,
+      "clearedTimestamp": null,
+      "correlationId": null,
+      "source": "activeFaults"
+    },
+    "mapperFaultCode": "explicit controlled fixture, not a live bridge-generated fault"
+  },
+  {
+    "phase": "clear",
+    "kpa": 207,
+    "psi": 30.02281171015488
+  }
+]

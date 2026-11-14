@@ -1,0 +1,41 @@
+{
+  "observations": [
+    {
+      "phase": "healthy",
+      "kpa": 220,
+      "psi": 31.908302300647698,
+      "sourceTimestamp": "2026-11-14 06:15:29.317030+00:00"
+    },
+    {
+      "phase": "fault",
+      "kpa": 164,
+      "psi": 23.78618898775556,
+      "protobufPsi": 23.78618898775556,
+      "sourceTimestamp": "2026-11-14 06:15:38.070416+00:00",
+      "mapped": {
+        "faultId": null,
+        "code": "TIRE_PRESSURE_LOW_FRONT_LEFT",
+        "description": "Tire pressure below safe threshold (frontLeft)",
+        "severity": "CRITICAL",
+        "status": "ACTIVE",
+        "affectedSignal": "tirePressurePsi.frontLeft",
+        "observedValue": 23.78618898775556,
+        "unit": "psi",
+        "threshold": 24,
+        "sourceTimestamp": null,
+        "detectedTimestamp": null,
+        "lastUpdatedTimestamp": null,
+        "clearedTimestamp": null,
+        "correlationId": null,
+        "source": "activeFaults"
+      },
+      "mapperFaultCode": "explicit controlled fixture, not a live bridge-generated fault"
+    },
+    {
+      "phase": "clear",
+      "kpa": 207,
+      "psi": 30.02281171015488
+    }
+  ],
+  "boundary": "Actual provider and KUKSA; conversion/protobuf/mapper in-process. No real legacy bridge loop, Ditto or OpenSOVD gateway."
+}

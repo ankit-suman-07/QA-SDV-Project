@@ -1,0 +1,71 @@
+[
+  {
+    "command": [
+      "/tmp/qa-review-venv/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "-p",
+      "no:cacheprovider",
+      "-m",
+      "not integration"
+    ],
+    "cwd": "/tmp/qa-v1-pressure",
+    "startedAt": "2026-11-14T06:17:24.778167+00:00",
+    "exitCode": 0,
+    "output": "final-check-0.txt",
+    "envOverrides": {
+      "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+    }
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--quiet"
+    ],
+    "cwd": "/tmp/qa-v1-pressure",
+    "startedAt": "2026-11-14T06:17:40.465513+00:00",
+    "exitCode": 0,
+    "output": "final-check-1.txt",
+    "envOverrides": {
+      "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+    }
+  },
+  {
+    "command": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.yml",
+      "config",
+      "--quiet"
+    ],
+    "cwd": "/tmp/qa-v1-pressure",
+    "startedAt": "2026-11-14T06:17:40.534587+00:00",
+    "exitCode": 0,
+    "output": "final-check-2.txt",
+    "envOverrides": {
+      "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+    }
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "/tmp/qa-v1-pressure",
+    "startedAt": "2026-11-14T06:17:40.594870+00:00",
+    "exitCode": 0,
+    "output": "final-check-3.txt",
+    "envOverrides": {
+      "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+    }
+  }
+]
