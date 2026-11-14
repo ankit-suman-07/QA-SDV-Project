@@ -52,7 +52,7 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
   | A KUKSA reconnect leaked the old gRPC channel | Fixed | Test-first in `1a6f50d` (`kuksa_reconnect.py`) |
   | When the observation time went backwards, the app stopped publishing without logging why | Fixed | Test-first in `1a6f50d` (gate `last_skip`, warning logged once per change) |
   | The publish result code might not be returned by the SDK | Refuted | The Velocitas SDK 0.15.7 source returns paho's `MQTTMessageInfo` |
-  | Events are published with QoS 0, but the contract says QoS 1 | Left open | Accepting it is the ingress owner's call, in the PR |
+  | Events are published with QoS 0, but the contract says QoS 1 | Left open, then fixed | The PR #33 review showed the merged ingress rejects QoS 0. Fixed test-first in `a3e20c1` (branch `emmanuel/fix/v1-qos1-publication`) and re-checked live into the real ingress |
 
   During live testing, a clash between the Compose project names showed up and was fixed (`a0b8e05`).
 - **Verification:** see [E1 record](E1-two-vehicle-edge.md):
@@ -64,7 +64,7 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
   - full suite: 192 passed, 4 skipped
 - **Implementation reference:** commits `cb976cb`..`1a6f50d` on `emmanuel/feature/v1-two-vehicle-edge`. The PR link is still to be added.
 - **Limitations:**
-  - QoS 0 publishing, as above.
+  - QoS 0 publishing, fixed later in `a3e20c1`.
   - After a restart, the first event can be delayed by up to 5 s.
   - The reconnect path is covered by unit tests only. A live KUKSA restart recovered without it being triggered.
   - Fault/recovery (E2) and Ditto/API integration are not covered.
