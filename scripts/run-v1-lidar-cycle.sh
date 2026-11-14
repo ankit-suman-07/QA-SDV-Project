@@ -30,6 +30,8 @@ PROVIDER="${PROVIDER_002_URL:-http://localhost:8092}"
 ACTIONS_URL="${PROVIDER}/api/v1/scenarios/actions"
 CONTEXT_URL="${PROVIDER}/api/v1/vehicles/vehicle-002/scenarios/LIDAR_OBSTRUCTION"
 CAPTURE_NAME="v1-lidar-cycle-capture-$$"
+# Upper bound for each provider request, so a stuck provider cannot hang the run.
+CURL_MAX_TIME=10
 
 WORK_DIRECTORY=$(mktemp -d)
 CAPTURE_LOG="${WORK_DIRECTORY}/capture.log"
@@ -44,7 +46,7 @@ seconds() {
 
 post_action() {
     # $1 vehicleId, $2 action, $3 actionId; prints the HTTP status code.
-    curl -sS -o "${RESPONSE_FILE}" -w '%{http_code}' \
+    curl -sS --max-time "${CURL_MAX_TIME}" -o "${RESPONSE_FILE}" -w '%{http_code}' \
         -X POST \
         -H "Content-Type: application/json" \
         -d "{\"vehicleId\":\"$1\",\"action\":\"$2\",\"scenario\":\"LIDAR_OBSTRUCTION\",\"actionId\":\"$3\",\"traceId\":\"$3\"}" \
@@ -82,7 +84,7 @@ for service in mqtt provider-001 provider-002 app-001 app-002; do
     fi
 done
 
-curl -fsS "${PROVIDER}/health" >/dev/null || fail "provider-002 is not answering at ${PROVIDER}"
+curl -fsS --max-time "${CURL_MAX_TIME}" "${PROVIDER}/health" >/dev/null || fail "provider-002 is not answering at ${PROVIDER}"
 
 
 # 2. Capture both vehicles' events with the cycle oracle.
@@ -120,15 +122,17 @@ echo "Capture ready: vehicle-002 seen HEALTHY"
 #    Mark the scenario active before sending: the provider may apply the
 #    inject even if this script then fails, and CLEAR is idempotent.
 SCENARIO_ACTIVE=1
-status=$(post_action vehicle-002 INJECT_SCENARIO e2-cycle-inject)
+status=$(post_action vehicle-002 INJECT_SCENARIO e2-cycle-inject) \
+    || fail "provider-002 unreachable during inject"
 [ "${status}" = "200" ] && grep -q '"active": true' "${RESPONSE_FILE}" \
     || fail "inject returned ${status}: $(cat "${RESPONSE_FILE}")"
 echo "Injected: $(cat "${RESPONSE_FILE}")"
 
 sleep "$(seconds 4)"
-echo "Context: $(curl -sS "${CONTEXT_URL}")"
+echo "Context: $(curl -sS --max-time "${CURL_MAX_TIME}" "${CONTEXT_URL}" || echo unavailable)"
 
-status=$(post_action vehicle-002 CLEAR_SCENARIO e2-cycle-clear)
+status=$(post_action vehicle-002 CLEAR_SCENARIO e2-cycle-clear) \
+    || fail "provider-002 unreachable during clear"
 [ "${status}" = "200" ] && grep -q '"active": false' "${RESPONSE_FILE}" \
     || fail "clear returned ${status}: $(cat "${RESPONSE_FILE}")"
 SCENARIO_ACTIVE=0
@@ -138,7 +142,8 @@ sleep "$(seconds 4)"
 
 
 # 5. provider-002 must refuse a command for vehicle-001.
-status=$(post_action vehicle-001 INJECT_SCENARIO e2-cycle-wrong-vehicle)
+status=$(post_action vehicle-001 INJECT_SCENARIO e2-cycle-wrong-vehicle) \
+    || fail "provider-002 unreachable during the wrong-vehicle check"
 [ "${status}" = "409" ] || fail "wrong-vehicle request returned ${status}, expected 409"
 echo "Wrong vehicle rejected (409): $(cat "${RESPONSE_FILE}")"
 

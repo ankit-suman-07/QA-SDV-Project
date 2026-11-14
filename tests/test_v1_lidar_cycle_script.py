@@ -38,16 +38,23 @@ printf 200
 """
 
 
+# Like a real curl that cannot reach the provider: prints 000, exits 7.
+FAKE_CURL_UNREACHABLE = FAKE_CURL.replace(
+    "[ -n \"$out\" ] && echo",
+    "case \"$*\" in *INJECT_SCENARIO*) printf 000; exit 7 ;; esac\n[ -n \"$out\" ] && echo",
+)
+
+
 def _write_exe(path, text):
     path.write_text(text)
     path.chmod(path.stat().st_mode | stat.S_IEXEC)
 
 
-def test_failed_inject_check_still_clears_scenario(tmp_path):
+def _run(tmp_path, curl_text):
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
     _write_exe(bin_dir / "docker", FAKE_DOCKER)
-    _write_exe(bin_dir / "curl", FAKE_CURL)
+    _write_exe(bin_dir / "curl", curl_text)
     calls = tmp_path / "calls.log"
 
     env = dict(
@@ -63,10 +70,30 @@ def test_failed_inject_check_still_clears_scenario(tmp_path):
         text=True,
         timeout=60,
     )
+    return result, calls.read_text().splitlines()
+
+
+def test_failed_inject_check_still_clears_scenario(tmp_path):
+    result, requests = _run(tmp_path, FAKE_CURL)
 
     assert result.returncode == 1, result.stderr
-    requests = calls.read_text()
-    assert "INJECT_SCENARIO" in requests
-    assert "CLEAR_SCENARIO" in requests, (
+    assert any("INJECT_SCENARIO" in r for r in requests)
+    assert any("CLEAR_SCENARIO" in r for r in requests), (
         "inject may have been applied; the exit trap must clear it"
     )
+
+
+def test_every_provider_request_has_a_time_limit(tmp_path):
+    _, requests = _run(tmp_path, FAKE_CURL)
+
+    assert requests
+    for request in requests:
+        assert "--max-time" in request, request
+
+
+def test_unreachable_provider_during_inject_reports_fail_and_clears(tmp_path):
+    result, requests = _run(tmp_path, FAKE_CURL_UNREACHABLE)
+
+    assert result.returncode == 1
+    assert "FAIL: provider-002 unreachable during inject" in result.stderr
+    assert any("CLEAR_SCENARIO" in r for r in requests)
