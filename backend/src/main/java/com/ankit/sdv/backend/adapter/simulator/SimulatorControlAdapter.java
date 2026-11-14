@@ -5,6 +5,12 @@ import com.ankit.sdv.backend.model.DiagnosticScenario;
 
 public interface SimulatorControlAdapter {
 
+    /** Legacy/development adapters do not provide real provider acknowledgement evidence. */
+    default boolean dispatchAcknowledged() { return false; }
+
+    default boolean supportsVehicle(String vehicleId) { return true; }
+
+
     void executeAction(
             String vehicleId,
             DiagnosticAction action,

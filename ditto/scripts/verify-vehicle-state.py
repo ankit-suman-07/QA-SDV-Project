@@ -40,7 +40,7 @@ VALID_HEALTH_STATUSES = {"HEALTHY", "WARNING", "CRITICAL"}
 NUMERIC_SIGNAL_FIELDS = ["speedKph", "batteryPercent", "temperatureCelsius", "coolantPressureKpa"]
 
 # Matches docs/10-iteration-3-contract.md "Correlated Health Rule". Only
-# the activation side is checked - see validate_correlated_faults.
+# the complete recovery conjunction is checked - see validate_correlated_faults.
 CORRELATED_FAULT_RULES = {
     "COOLING_SYSTEM_FAILURE": {
         "temperatureCelsius": {"activation_threshold": 105.0, "recovery_threshold": 100.0, "direction": "above"},
@@ -76,6 +76,9 @@ def fetch_thing(ditto_url: str, thing_id: str, auth=("ditto", "ditto"), timeout:
 
 def compute_max_age_seconds(publication_interval_seconds=None, explicit_max_age_seconds=None) -> float:
     """Per docs/04 Section 6: max(3 x expected interval, 5 seconds)."""
+    for value in (publication_interval_seconds, explicit_max_age_seconds):
+        if value is not None and (not _is_valid_number(value) or value <= 0):
+            raise ValueError('Freshness intervals must be finite positive numbers')
     if explicit_max_age_seconds is not None:
         return explicit_max_age_seconds
     if publication_interval_seconds is not None:
@@ -90,14 +93,29 @@ def _is_valid_number(value) -> bool:
         return False
     if not isinstance(value, (int, float)):
         return False
-    return math.isfinite(value)
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        return False
+
+
+def _parse_timestamp(value):
+    if not isinstance(value, str) or 'T' not in value:
+        raise ValueError('Expected timezone-aware ISO 8601 timestamp')
+    parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ValueError('Timestamp must include a timezone')
+    try:
+        return parsed.astimezone(timezone.utc)
+    except OverflowError as error:
+        raise ValueError('Timestamp is outside the supported UTC range') from error
 
 
 def _is_valid_iso8601(value) -> bool:
     if not isinstance(value, str):
         return False
     try:
-        datetime.fromisoformat(value.replace("Z", "+00:00"))
+        _parse_timestamp(value)
         return True
     except ValueError:
         return False
@@ -142,13 +160,21 @@ def validate_health(thing: dict, result: VerificationResult) -> None:
             result.add_error(f"Missing health field: {field_name}")
 
     status = health.get("status")
-    if status is not None and status not in VALID_HEALTH_STATUSES:
+    if status is not None and (not isinstance(status, str) or status not in VALID_HEALTH_STATUSES):
         result.add_error(f"Unrecognized health status: {status!r}")
     if status in ("WARNING", "CRITICAL") and not health.get("activeFaults"):
         result.add_error(f"health.status is {status} but activeFaults is empty")
 
     fault_count = health.get("faultCount")
     active_faults = health.get("activeFaults")
+    if type(fault_count) is not int or fault_count < 0:
+        result.add_error('faultCount must be a nonnegative integer')
+    if not isinstance(active_faults, list) or not all(isinstance(code, str) and code for code in active_faults):
+        result.add_error('activeFaults must be an array of nonempty fault codes')
+    elif len(set(active_faults)) != len(active_faults):
+        result.add_error('activeFaults must contain unique codes')
+    if status == 'HEALTHY' and active_faults:
+        result.add_error('health.status is HEALTHY but activeFaults is not empty')
     if fault_count is not None and isinstance(active_faults, list) and fault_count != len(active_faults):
         result.add_error(
             f"faultCount ({fault_count}) does not match activeFaults length ({len(active_faults)})"
@@ -191,12 +217,11 @@ def validate_correlated_faults(thing: dict, result: VerificationResult) -> None:
                 else value >= rule["recovery_threshold"]
             )
             recovery_checks.append(recovered)
-            if recovered:
-                result.add_error(
-                    f"Correlated fault {code} is active but {signal_name}={value} "
-                    f"has already recovered past its threshold "
-                    f"({'<=' if rule['direction'] == 'above' else '>='} {rule['recovery_threshold']})"
-                )
+        if all(recovery_checks):
+            result.add_error(
+                f"Correlated fault {code} is active but both temperatureCelsius "
+                "and coolantPressureKpa have recovered past their thresholds"
+            )
 
 
 def validate_active_fault_details(thing: dict, result: VerificationResult) -> None:
@@ -224,6 +249,12 @@ def validate_active_fault_details(thing: dict, result: VerificationResult) -> No
         for field_name in REQUIRED_ACTIVE_FAULT_DETAIL_FIELDS:
             if field_name not in detail or detail[field_name] is None:
                 result.add_error(f"activeFaultDetails[{code}] is missing field: {field_name}")
+        for field_name in ('observedValues', 'activationThresholds', 'recoveryThresholds'):
+            if field_name in detail and not isinstance(detail[field_name], dict):
+                result.add_error(f'activeFaultDetails[{code}].{field_name} must be an object')
+        if 'affectedSignals' in detail and (not isinstance(detail['affectedSignals'], list) or
+                not all(isinstance(signal, str) for signal in detail['affectedSignals'])):
+            result.add_error(f'activeFaultDetails[{code}].affectedSignals must be an array of strings')
 
         detected_at = detail.get("detectedAt")
         if detected_at is not None and not _is_valid_iso8601(detected_at):
@@ -232,41 +263,91 @@ def validate_active_fault_details(thing: dict, result: VerificationResult) -> No
 
 def validate_freshness(thing: dict, result: VerificationResult, max_age_seconds: float, now: datetime = None) -> None:
     now = now if now is not None else datetime.now(timezone.utc)
-    health = thing.get("features", {}).get("health", {}).get("properties", {})
-    raw_ts = health.get("processedTimestamp")
-    if not raw_ts:
-        return  # already reported by validate_health
-    try:
-        processed_ts = datetime.fromisoformat(str(raw_ts).replace("Z", "+00:00"))
-    except ValueError:
-        result.add_error(f"processedTimestamp is not valid ISO 8601: {raw_ts!r}")
+    if not isinstance(now, datetime):
+        result.add_error('Evaluation clock must return a timezone-aware datetime')
         return
-    age_seconds = (now - processed_ts).total_seconds()
-    if age_seconds > max_age_seconds:
-        result.add_error(
-            f"Stale digital twin: processedTimestamp is {age_seconds:.1f}s old "
-            f"(max allowed {max_age_seconds}s)"
-        )
+    try:
+        now = _parse_timestamp(now.isoformat())
+    except ValueError:
+        result.add_error('Evaluation clock must be timezone-aware')
+        return
+    for feature, field_name in [('signals', 'sourceTimestamp'), ('health', 'processedTimestamp')]:
+        raw_ts = thing['features'].get(feature, {}).get('properties', {}).get(field_name)
+        try:
+            timestamp = _parse_timestamp(raw_ts)
+        except (ValueError, TypeError):
+            result.add_error(f'{field_name} is missing or not timezone-aware ISO 8601')
+            continue
+        age_seconds = (now - timestamp).total_seconds()
+        if age_seconds < -1:
+            result.add_error(f'{field_name} is more than 1 second in the future')
+        elif age_seconds > max_age_seconds:
+            result.add_error(f'Stale digital twin: {field_name} is {age_seconds:.1f}s old (max allowed {max_age_seconds}s)')
+    details = thing['features'].get('diagnostics', {}).get('properties', {}).get('activeFaultDetails', [])
+    for index, detail in enumerate(details):
+        if not isinstance(detail, dict):
+            result.add_error(f'activeFaultDetails[{index}] must be an object')
+            continue
+        for field_name in ('detectedAt', 'clearedAt'):
+            if detail.get(field_name) is None:
+                continue  # detectedAt is required above for an active correlated record
+            try:
+                timestamp = _parse_timestamp(detail[field_name])
+            except (ValueError, TypeError):
+                result.add_error(f'activeFaultDetails[{index}].{field_name} must be timezone-aware ISO 8601')
+                continue
+            if (timestamp - now).total_seconds() > 1:
+                result.add_error(f'activeFaultDetails[{index}].{field_name} is more than 1 second in the future')
 
 
 def verify_vehicle_state(
     ditto_url: str = DEFAULT_DITTO_URL,
     thing_id: str = DEFAULT_THING_ID,
     max_age_seconds: float = DEFAULT_MAX_AGE_SECONDS,
+    *,
+    clock=None,
 ) -> VerificationResult:
     result = VerificationResult(ok=True)
+    if not _is_valid_number(max_age_seconds) or max_age_seconds <= 0:
+        result.add_error('max_age_seconds must be a finite positive number')
+        return result
     try:
         thing = fetch_thing(ditto_url, thing_id)
-    except requests.RequestException as exc:
-        result.add_error(f"Failed to query Ditto: {exc}")
+    except (requests.RequestException, ValueError):
+        result.add_error('Failed to query Ditto or decode its JSON response')
         return result
 
     result.thing = thing
+    if not isinstance(thing, dict):
+        result.add_error('Thing must be an object')
+        return result
+    vehicle_id = thing_id.removeprefix('sdv:') if isinstance(thing_id, str) else None
+    if (vehicle_id not in ('vehicle-001', 'vehicle-002') or thing_id != f'sdv:{vehicle_id}' or
+            thing.get('thingId') != thing_id or not isinstance(thing.get('attributes'), dict) or
+            thing['attributes'].get('vehicleId') != vehicle_id):
+        result.add_error('Requested and returned vehicle/Thing identity do not match')
+        return result
+    features = thing.get('features')
+    if not isinstance(features, dict):
+        result.add_error('features must be an object')
+        return result
+    for name in ('signals', 'health', 'diagnostics'):
+        if name in features and (not isinstance(features[name], dict) or
+                not isinstance(features[name].get('properties'), dict)):
+            result.add_error(f'{name}.properties must be an object')
+    if not result.ok:
+        return result
+    health = features.get('health', {}).get('properties', {})
+    details = features.get('diagnostics', {}).get('properties', {}).get('activeFaultDetails', [])
+    if not isinstance(health.get('activeFaults', []), list) or not isinstance(details, list):
+        result.add_error('activeFaults and activeFaultDetails must be arrays')
+        return result
     validate_signals(thing, result)
     validate_health(thing, result)
     validate_correlated_faults(thing, result)
     validate_active_fault_details(thing, result)
-    validate_freshness(thing, result, max_age_seconds)
+    validate_freshness(thing, result, max_age_seconds,
+                       now=clock() if clock else datetime.now(timezone.utc))
     return result
 
 
@@ -278,7 +359,10 @@ def main() -> int:
     parser.add_argument("--max-age-seconds", type=float, default=None)
     args = parser.parse_args()
 
-    max_age = compute_max_age_seconds(args.publication_interval_seconds, args.max_age_seconds)
+    try:
+        max_age = compute_max_age_seconds(args.publication_interval_seconds, args.max_age_seconds)
+    except ValueError as error:
+        parser.error(str(error))
     result = verify_vehicle_state(args.ditto_url, args.thing_id, max_age)
 
     if result.ok:

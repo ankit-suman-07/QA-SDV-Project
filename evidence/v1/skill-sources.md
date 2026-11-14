@@ -68,3 +68,15 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
   - After a restart, the first event can be delayed by up to 5 s.
   - The reconnect path is covered by unit tests only. A live KUKSA restart recovered without it being triggered.
   - Fault/recovery (E2) and Ditto/API integration are not covered.
+## A5 actual usage — November 12, 2026
+
+- Task/acceptance: A5, primarily V1-08, supporting V1-03/04/05/06/07.
+- Read/applied the repository copies of `skills/test-driven-development.md`,
+  `skills/systematic-debugging.md` and `skills/verification-before-completion.md`
+  from baseline `2803429`; no upstream revision pin is claimed.
+- Red/green fleet endpoint, materialization, provisioning, frontend state and
+  scheduler interference checks are recorded in [A5 evidence](fleet-dashboard.md).
+- Missing supporting files: `skills/writing-good-tests.md` and the supporting
+  technique files referenced by systematic debugging. Their usage is not claimed.
+- Human affected-owner review remains pending. Java, browser and controlled HTTP
+  checks verify components; no live fleet/MQTT acceptance is claimed.

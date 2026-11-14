@@ -1,5 +1,15 @@
 # Eclipse Ditto - Digital Twin (Atharva)
 
+
+For the new V1 MQTT ingress (Bayan B1) and its B2 writer boundary, see
+[MQTT-INGRESS.md](MQTT-INGRESS.md). The legacy setup below remains unchanged.
+For B2's real HTTP adapter, safe two-twin provisioning and live commands, see
+[V1-TWINS.md](V1-TWINS.md).
+
+For Bayan's B3 verifier repairs, read-only V1 consistency checks, pending unit
+decision and Ankit's individual-twin handoff, see [B3-HANDOFF.md](B3-HANDOFF.md).
+
+
 ## Setup
 ```bash
 git clone --depth 1 https://github.com/eclipse-ditto/ditto.git /tmp/ditto-src
