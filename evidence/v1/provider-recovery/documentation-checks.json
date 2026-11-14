@@ -8,5 +8,6 @@
     "artifact": "python-suite.txt",
     "count": 1,
     "reason": "Synthetic fixture Authorization header in failed-test traceback redacted; no real credentials supplied."
-  }
+  },
+  "branchToMainDiffCheckExitCode": 0
 }

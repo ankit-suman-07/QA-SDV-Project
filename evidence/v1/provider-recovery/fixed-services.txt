@@ -187,9 +187,9 @@ app-002-1       | 	status = StatusCode.UNAVAILABLE
 app-002-1       | 	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.3:55555: Failed to connect to remote host: connect: Connection refused (111)"
 app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-14T06:12:57.986061919+00:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.3:55555: Failed to connect to remote host: connect: Connection refused (111)"}"
 app-002-1       | >
-app-002-1       | 
+app-002-1       |
 app-002-1       | The above exception was the direct cause of the following exception:
-app-002-1       | 
+app-002-1       |
 app-002-1       | Traceback (most recent call last):
 app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
 app-002-1       |     datapoints = await asyncio.to_thread(
@@ -223,9 +223,9 @@ app-002-1       | 	status = StatusCode.UNAVAILABLE
 app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"
 app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found", grpc_status:14, created_time:"2026-11-14T06:13:01.562315404+00:00"}"
 app-002-1       | >
-app-002-1       | 
+app-002-1       |
 app-002-1       | The above exception was the direct cause of the following exception:
-app-002-1       | 
+app-002-1       |
 app-002-1       | Traceback (most recent call last):
 app-002-1       |   File "/workspace/app/src/main.py", line 135, in reconnect_kuksa_if_needed
 app-002-1       |     await asyncio.to_thread(
@@ -255,9 +255,9 @@ app-002-1       | 	status = StatusCode.UNAVAILABLE
 app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"
 app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-14T06:13:01.563772375+00:00", grpc_status:14, grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"}"
 app-002-1       | >
-app-002-1       | 
+app-002-1       |
 app-002-1       | The above exception was the direct cause of the following exception:
-app-002-1       | 
+app-002-1       |
 app-002-1       | Traceback (most recent call last):
 app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
 app-002-1       |     datapoints = await asyncio.to_thread(
@@ -291,9 +291,9 @@ app-002-1       | 	status = StatusCode.UNAVAILABLE
 app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"
 app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-14T06:13:06.378646337+00:00", grpc_status:14, grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"}"
 app-002-1       | >
-app-002-1       | 
+app-002-1       |
 app-002-1       | The above exception was the direct cause of the following exception:
-app-002-1       | 
+app-002-1       |
 app-002-1       | Traceback (most recent call last):
 app-002-1       |   File "/workspace/app/src/main.py", line 135, in reconnect_kuksa_if_needed
 app-002-1       |     await asyncio.to_thread(
@@ -323,9 +323,9 @@ app-002-1       | 	status = StatusCode.UNAVAILABLE
 app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"
 app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found", grpc_status:14, created_time:"2026-11-14T06:13:06.379925561+00:00"}"
 app-002-1       | >
-app-002-1       | 
+app-002-1       |
 app-002-1       | The above exception was the direct cause of the following exception:
-app-002-1       | 
+app-002-1       |
 app-002-1       | Traceback (most recent call last):
 app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
 app-002-1       |     datapoints = await asyncio.to_thread(

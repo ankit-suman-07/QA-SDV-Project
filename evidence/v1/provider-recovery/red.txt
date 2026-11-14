@@ -18,23 +18,23 @@ failures = 1
         stop = Stop(stop_after=failures + 2)
         clients = []
         writes = []
-    
+
         class Client:
             closed = False
-    
+
             def __enter__(self):
                 clients.append(self)
                 return self
-    
+
             def __exit__(self, *args):
                 self.closed = True
-    
+
             def set_current_values(self, values, **kwargs):
                 assert kwargs['timeout'] == 2.0
                 if len(clients) <= failures:
                     raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
                 writes.append(values)
-    
+
         monkeypatch.setattr(provider_main, 'get_client', Client)
 >       provider_main.publish_loop(controller, stop)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -59,23 +59,23 @@ failures = 4
         stop = Stop(stop_after=failures + 2)
         clients = []
         writes = []
-    
+
         class Client:
             closed = False
-    
+
             def __enter__(self):
                 clients.append(self)
                 return self
-    
+
             def __exit__(self, *args):
                 self.closed = True
-    
+
             def set_current_values(self, values, **kwargs):
                 assert kwargs['timeout'] == 2.0
                 if len(clients) <= failures:
                     raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
                 writes.append(values)
-    
+
         monkeypatch.setattr(provider_main, 'get_client', Client)
 >       provider_main.publish_loop(controller, stop)
         ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -90,17 +90,17 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd050fdfd40>
     def test_shutdown_interrupts_unavailable_dependency_backoff(provider_main, monkeypatch):
         from kuksa_client.grpc import VSSClientError
         closed = []
-    
+
         class Client:
             def __enter__(self):
                 return self
-    
+
             def __exit__(self, *args):
                 closed.append(True)
-    
+
             def set_current_values(self, *args, **kwargs):
                 raise VSSClientError({'code': 4, 'reason': 'deadline'}, [])
-    
+
         monkeypatch.setattr(provider_main, 'get_client', Client)
         stop = Stop(stop_after=1)
 >       provider_main.publish_loop(provider_main.create_scenario_controller(), stop)
@@ -115,17 +115,17 @@ monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd050fde0f0>
 
     def test_non_transient_client_error_is_not_retried(provider_main, monkeypatch):
         from kuksa_client.grpc import VSSClientError
-    
+
         class Client:
             def __enter__(self):
                 return self
-    
+
             def __exit__(self, *args):
                 pass
-    
+
             def set_current_values(self, *args, **kwargs):
                 raise VSSClientError({'code': 7, 'reason': 'permission denied'}, [])
-    
+
         monkeypatch.setattr(provider_main, 'get_client', Client)
         stop = Stop()
         with pytest.raises(VSSClientError):

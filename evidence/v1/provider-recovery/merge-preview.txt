@@ -31,7 +31,7 @@ merged
 -            tire_pressure_psi=float(tire_fl),
 +            tire_pressure_psi=kpa_to_psi(tire_fl),
          )
- 
+
          received_event = receive_vehicle_status(
 added in remote
   their  100644 6b4a3bb28de86a0b7be605bce70db0113aa200c4 evidence/v1/tire-pressure-units/initial-collection-attempt.txt
@@ -178,7 +178,7 @@ added in remote
 +        value = next(k.value for k in calls[0].keywords if k.arg=='tire_pressure_psi')
 +>       assert ast.unparse(value) == 'kpa_to_psi(tire_fl)'
 +E       AssertionError: assert 'float(tire_fl)' == 'kpa_to_psi(tire_fl)'
-+E         
++E
 +E         - kpa_to_psi(tire_fl)
 +E         + float(tire_fl)
 +
@@ -232,9 +232,9 @@ merged
   result 100644 55ee535a125575e4415c1c709ea7aa950a16f98d tests/test_fault_mapper.py
   our    100644 28a065841f4836dd507e9dd0a70436c6b300ed2b tests/test_fault_mapper.py
 @@ -29,7 +29,7 @@
- 
+
  class FaultMapperTest(unittest.TestCase):
- 
+
 -    def test_legacy_tire_unit_and_thresholds_remain_psi_pending_upstream_confirmation(self):
 +    def test_legacy_tire_unit_and_thresholds_remain_psi(self):
          for pressure, severity, threshold in [(28, 'WARNING', 28), (24.01, 'WARNING', 28), (24, 'CRITICAL', 24)]:
@@ -246,7 +246,7 @@ merged
          self.assertEqual('psi', mapped['unit'])
 -        self.assertEqual(32, mapped['observedValue'])  # no runtime conversion authorized yet
 +        self.assertEqual(32, mapped['observedValue'])  # mapper receives already-converted legacy psi
- 
+
      def test_battery_low_maps_correctly(self):
          thing = make_thing(battery=15, active_faults=["BATTERY_LOW"])
 added in remote
@@ -332,8 +332,8 @@ changed in both
   their  100644 f3fb5007e4a5c2b54c208cf4134bb6b644ae04f6 vehicle-simulator/src/main.py
 @@ -139,8 +139,36 @@
      return f"{key}={value:.1f}"
- 
- 
+
+
 +<<<<<<< .our
  def publish_loop(controller, stop):
      """Keep scenario state across transient outages; publish only fresh observations.
@@ -364,7 +364,7 @@ changed in both
 +        f"listening on {CONTROL_HOST}:{CONTROL_PORT}"
 +    )
 +>>>>>>> .their
- 
+
      Each RPC has a deadline. A fresh client/channel on recovery discards broker
      metadata caches; context exit closes the old channel before interruptible
 @@ -224,12 +252,66 @@
@@ -440,7 +440,7 @@ merged
 @@ -7,6 +7,8 @@
  LIDAR_WARNING_DISTANCE_M = 10.0
  AUTONOMOUS_BRAKING_DISTANCE_M = 5.0
- 
+
 +# Internal tire-pressure state/range and random changes retain legacy psi.
 +# main.publication_values converts once to the declared KUKSA uint16 kPa.
  NORMAL_RANGES = {
@@ -451,11 +451,11 @@ merged
   our    100644 7b6fcfc530802ca75313b40d4e807a36b6103935 vehicle-simulator/tests/test_kuksa_publication.py
 @@ -92,7 +92,8 @@
      value = read_signal(TIRE_PRESSURE_PATH)
- 
+
      assert value is not None
 -    assert 0 <= value <= 34
 +    # Published VSS path is integer kPa, not the generator's internal psi.
 +    assert 0 <= value <= round(34 * 6.894757293168)
- 
- 
+
+
  def test_coolant_pressure_is_published_and_in_range():

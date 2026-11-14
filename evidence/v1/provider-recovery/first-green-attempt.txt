@@ -18,23 +18,23 @@ failures = 1
         stop = Stop(stop_after=failures + 2)
         clients = []
         writes = []
-    
+
         class Client:
             closed = False
-    
+
             def __enter__(self):
                 clients.append(self)
                 return self
-    
+
             def __exit__(self, *args):
                 self.closed = True
-    
+
             def set_current_values(self, values, **kwargs):
                 assert kwargs['timeout'] == 2.0
                 if len(clients) <= failures:
                     raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
                 writes.append(values)
-    
+
         monkeypatch.setattr(provider_main, 'get_client', Client)
         provider_main.publish_loop(controller, stop)
         assert all(client.closed for client in clients)
@@ -43,7 +43,7 @@ failures = 1
         path = provider_main.SIGNAL_PATHS['lidar_distance_m']
 >       assert [write[path].value for write in writes] == [20.0, 10.0]
 E       assert [20.0, 8.0] == [20.0, 10.0]
-E         
+E
 E         At index 1 diff: 8.0 != 10.0
 E         Use -v to get more diff
 
@@ -70,23 +70,23 @@ failures = 4
         stop = Stop(stop_after=failures + 2)
         clients = []
         writes = []
-    
+
         class Client:
             closed = False
-    
+
             def __enter__(self):
                 clients.append(self)
                 return self
-    
+
             def __exit__(self, *args):
                 self.closed = True
-    
+
             def set_current_values(self, values, **kwargs):
                 assert kwargs['timeout'] == 2.0
                 if len(clients) <= failures:
                     raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
                 writes.append(values)
-    
+
         monkeypatch.setattr(provider_main, 'get_client', Client)
         provider_main.publish_loop(controller, stop)
         assert all(client.closed for client in clients)
@@ -95,7 +95,7 @@ failures = 4
         path = provider_main.SIGNAL_PATHS['lidar_distance_m']
 >       assert [write[path].value for write in writes] == [20.0, 10.0]
 E       assert [20.0, 8.0] == [20.0, 10.0]
-E         
+E
 E         At index 1 diff: 8.0 != 10.0
 E         Use -v to get more diff
 
