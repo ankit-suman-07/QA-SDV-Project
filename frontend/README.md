@@ -11,8 +11,8 @@ Browsers block `fetch()` of local JSON files when a page is opened via
 
 ```bash
 cd frontend
-python3 -m http.server 8080
-# then open http://localhost:8080/index.html
+python3 -m http.server 3000
+# then open http://localhost:3000/index.html
 ```
 
 Or with Node: `npx serve .`
@@ -31,7 +31,7 @@ export const CONFIG = {
 };
 ```
 
-With `USE_MOCK_API: true`, all data comes from `mocks/*.json` and the
+On legacy pages, `USE_MOCK_API: true` loads data from `mocks/*.json` and the
 dev-only fixture switcher (visible at the top of Dashboard/Diagnostics)
 lets you preview every required state without a backend.
 
@@ -45,7 +45,8 @@ READY but this hadn't been independently confirmed as of this build).
 
 ```
 frontend/
-  index.html            Vehicle Dashboard
+  index.html            V1 fleet dashboard
+  vehicle.html          Legacy vehicle dashboard
   diagnostics.html      Diagnostics
   performance.html      Performance & Testing
   css/
@@ -102,6 +103,41 @@ by hand and check off each item before calling a page done:
 
 ## Known gaps / next steps
 
-- No automated tests (would need a test runner, which conflicts with the "no framework" constraint — if that changes, Vitest + jsdom works with zero build config).
+- Legacy pages retain the manual checklist above; A5 fleet state/client and opt-in browser checks are documented below.
 - Backend test count in `mocks/performance.json` (`backend.verified: false`) — 15 JUnit tests exist but couldn't be run in this environment (no Maven access); confirm pass count via `mvn test` before treating that number as final.
 - `GET /api/v1/diagnostics/actions/{actionId}` stays mocked until the backend confirms it's live — swap the implementation in `diagnostic-api.js`'s `getAction` usage in `diagnostics.js` when ready.
+
+## Phase V1 fleet dashboard (A5)
+
+`index.html` is now the fleet overview; the original vehicle dashboard is
+preserved at `vehicle.html`. Diagnostics and performance remain available.
+The fleet page uses `/api/v1/fleet`, `/api/v1/vehicles/{id}/state`, and A3's
+scenario POST. It displays availability independently of observed health and
+never treats dispatch acknowledgement as execution completion.
+
+`CONFIG.API_BASE_URL` defaults to Java at `http://localhost:8082` and accepts
+an optional `globalThis.SDV_CONFIG.API_BASE_URL` override set before modules
+load. The V1 page uses HTTP APIs; the legacy `USE_MOCK_API` fixture switch
+continues to apply to the legacy pages. For isolated UI preview on 19082,
+set `FLEET_PREVIEW=true` as well as the API URL; the page labels that mode.
+No preview verifies Java or fleet-twin persistence.
+
+Dependency-free state/client tests (Node 22 or newer):
+
+```bash
+(cd frontend && npm test)
+```
+
+The experimental isolation flag only avoids child-process test reporting;
+there is no frontend build system or runtime dependency. Browser integration
+is opt-in with `playwright-core` and Chrome, using
+`tests/fleet-browser.mjs` and the real Java smoke stack. Exact setup,
+provisioning and launch commands are in
+[backend fleet setup](../backend/docs/v1-fleet-dashboard.md); executed
+checks and mocked/live boundaries are in
+[fleet evidence](../evidence/v1/fleet-dashboard.md).
+
+The earlier "What's real vs. mocked" and manual checklist above describe
+the preserved legacy pages. V1 active faults and LiDAR values now come from
+validated individual twins. Real MQTT/individual-twin/fleet/UI acceptance
+remains integrated A4 work.

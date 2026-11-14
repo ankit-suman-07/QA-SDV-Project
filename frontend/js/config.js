@@ -2,7 +2,8 @@
 // Section 10-15 of the handoff guide.
 export const CONFIG = {
   USE_MOCK_API: false,
-  API_BASE_URL: "http://localhost:8082",
+  API_BASE_URL: globalThis.SDV_CONFIG?.API_BASE_URL ?? "http://localhost:8082",
+  FLEET_PREVIEW: globalThis.SDV_CONFIG?.FLEET_PREVIEW === true,
   POLL_INTERVAL_MS: 2000,
   STALE_AFTER_MS: 5000,
   ACTION_POLL_MS: 1000,

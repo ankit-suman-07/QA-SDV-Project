@@ -15,6 +15,8 @@ SPEC.loader.exec_module(vvs)
 def make_thing(status="HEALTHY", active_faults=None, processed_ts=None, overrides=None):
     now = processed_ts or datetime.now(timezone.utc).isoformat()
     thing = {
+        "thingId": "sdv:vehicle-001",
+        "attributes": {"vehicleId": "vehicle-001"},
         "features": {
             "signals": {
                 "properties": {
@@ -39,6 +41,91 @@ def make_thing(status="HEALTHY", active_faults=None, processed_ts=None, override
 
 
 class VerifyVehicleStateTest(unittest.TestCase):
+
+    def test_partial_recovery_requires_both_conditions(self):
+        for temperature, pressure in [(99, 160), (103, 185), (103, 165)]:
+            thing = make_thing(status='CRITICAL', active_faults=['COOLING_SYSTEM_FAILURE'],
+                               overrides={'signals': {'temperatureCelsius': temperature,
+                                                     'coolantPressureKpa': pressure}})
+            result = vvs.VerificationResult(ok=True)
+            vvs.validate_correlated_faults(thing, result)
+            self.assertTrue(result.ok, result.errors)
+
+    def test_source_and_processing_freshness_use_injected_clock(self):
+        now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        for field in ('sourceTimestamp', 'processedTimestamp'):
+            for value in [None, '', 'bad', '2026-01-01T00:00:00',
+                          '0001-01-01T00:00:00+01:00',
+                          (now + timedelta(seconds=2)).isoformat(),
+                          (now - timedelta(seconds=31)).isoformat()]:
+                thing = make_thing(processed_ts=now.isoformat())
+                feature = 'signals' if field == 'sourceTimestamp' else 'health'
+                thing['features'][feature]['properties'][field] = value
+                with self.subTest(field=field, value=value), patch.object(vvs, 'fetch_thing', return_value=thing):
+                    result = vvs.verify_vehicle_state(clock=lambda: now)
+                    self.assertFalse(result.ok)
+                    self.assertTrue(any(field in error for error in result.errors), result.errors)
+
+    def test_wrong_or_missing_identity_fails(self):
+        for identity in ['sdv:vehicle-002', None]:
+            thing = make_thing()
+            thing['thingId'] = identity
+            with patch.object(vvs, 'fetch_thing', return_value=thing):
+                self.assertFalse(vvs.verify_vehicle_state().ok)
+
+    def test_malformed_nested_structures_return_errors(self):
+        cases = [None, [], {'features': []}, {'features': {'signals': []}},
+                 {'features': {'signals': {'properties': []}}}]
+        for thing in cases:
+            with self.subTest(thing=thing), patch.object(vvs, 'fetch_thing', return_value=thing):
+                self.assertFalse(vvs.verify_vehicle_state().ok)
+
+    def test_invalid_health_and_fault_detail_structures_fail_without_crashing(self):
+        for key, value in [('status', []), ('activeFaults', None), ('activeFaults', [None]),
+                           ('faultCount', True), ('faultCount', -1)]:
+            thing = make_thing(overrides={'health': {key: value}})
+            with self.subTest(key=key), patch.object(vvs, 'fetch_thing', return_value=thing):
+                self.assertFalse(vvs.verify_vehicle_state().ok)
+
+    def test_fault_detail_future_and_naive_timestamps_are_rejected(self):
+        now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        for field in ('detectedAt', 'clearedAt'):
+            for value in ['2026-01-01T00:00:00', 'bad', '2026-01-01T00:00:02Z']:
+                thing = make_thing(processed_ts=now.isoformat())
+                thing['features']['diagnostics'] = {'properties': {'activeFaultDetails': [{field: value}]}}
+                with self.subTest(field=field, value=value), patch.object(vvs, 'fetch_thing', return_value=thing):
+                    result = vvs.verify_vehicle_state(clock=lambda: now)
+                    self.assertFalse(result.ok)
+                    self.assertTrue(any(field in error for error in result.errors), result.errors)
+
+    def test_offset_timestamps_and_future_tolerance_preserve_legacy_compatibility(self):
+        now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        thing = make_thing(processed_ts='2025-12-31T19:00:00-05:00')
+        thing['features']['signals']['properties']['sourceTimestamp'] = '2026-01-01T00:00:01Z'
+        with patch.object(vvs, 'fetch_thing', return_value=thing):
+            self.assertTrue(vvs.verify_vehicle_state(clock=lambda: now).ok)
+        self.assertEqual(30, vvs.compute_max_age_seconds())
+
+    def test_full_recovery_exact_threshold_is_inconsistent_with_active_fault(self):
+        thing = make_thing(status='CRITICAL', active_faults=['COOLING_SYSTEM_FAILURE'],
+                           overrides={'signals': {'temperatureCelsius': 100, 'coolantPressureKpa': 180}})
+        result = vvs.VerificationResult(ok=True)
+        vvs.validate_correlated_faults(thing, result)
+        self.assertFalse(result.ok)
+
+    def test_invalid_clock_and_freshness_configuration_are_reported(self):
+        for clock_value in [datetime(2026, 1, 1), 'not a datetime']:
+            with patch.object(vvs, 'fetch_thing', return_value=make_thing()):
+                self.assertFalse(vvs.verify_vehicle_state(clock=lambda: clock_value).ok)
+        for value in [0, -1, float('nan'), float('inf'), True]:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                vvs.compute_max_age_seconds(explicit_max_age_seconds=value)
+
+    def test_correct_vehicle_002_identity_is_supported(self):
+        thing = make_thing()
+        thing.update(thingId='sdv:vehicle-002', attributes={'vehicleId': 'vehicle-002'})
+        with patch.object(vvs, 'fetch_thing', return_value=thing):
+            self.assertTrue(vvs.verify_vehicle_state(thing_id='sdv:vehicle-002').ok)
 
     @patch("requests.get")
     def test_valid_fresh_thing_passes(self, mock_get):
