@@ -12,9 +12,9 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 from ditto.ditto_http import (
-    get_json_with_retry,
     put_json_with_retry,
 )
+from ditto.scenario_context import get_scenario_context as fetch_scenario_context
 from ditto.fault_details import (
     build_active_fault_detail,
     is_activation_condition,
@@ -41,11 +41,6 @@ DITTO_URL = (
 SIMULATOR_CONTROL_URL = os.getenv(
     "SIMULATOR_CONTROL_URL",
     "http://localhost:8090",
-)
-
-COOLING_SCENARIO_CONTEXT_URL = (
-    f"{SIMULATOR_CONTROL_URL}/api/v1/scenarios/"
-    "COOLING_SYSTEM_FAILURE"
 )
 
 AUTH = ("ditto", "ditto")
@@ -119,17 +114,11 @@ def put_ditto_property(path, value):
 
 
 def get_cooling_scenario_context():
-    context = get_json_with_retry(
-        url=COOLING_SCENARIO_CONTEXT_URL,
-        attempts=3,
-        timeout_seconds=2,
-        retry_delay_seconds=0.2,
+    return fetch_scenario_context(
+        SIMULATOR_CONTROL_URL,
+        vehicle_id='vehicle-001',
+        scenario='COOLING_SYSTEM_FAILURE',
     )
-
-    if not isinstance(context, dict):
-        return {}
-
-    return context
 
 
 evaluator = PipelineEvaluator(

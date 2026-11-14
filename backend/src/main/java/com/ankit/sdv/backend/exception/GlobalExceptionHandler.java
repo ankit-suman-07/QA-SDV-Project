@@ -1,6 +1,8 @@
 package com.ankit.sdv.backend.exception;
 
 import com.ankit.sdv.backend.dto.ApiErrorResponse;
+import com.ankit.sdv.backend.dto.DiagnosticDispatchErrorResponse;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,23 @@ import java.time.Instant;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ProviderDispatchException.class)
+    public ResponseEntity<DiagnosticDispatchErrorResponse> handleDispatchFailure(
+            ProviderDispatchException exception, HttpServletRequest request) {
+        var action = exception.action();
+        var response = new DiagnosticDispatchErrorResponse(Instant.now(), exception.reason().code,
+                exception.getMessage(), request.getRequestURI(), action == null ? null : action.actionId(),
+                action == null ? null : action.traceId(), exception.reason().dispatch);
+        return ResponseEntity.status(exception.reason().httpStatus).body(response);
+    }
+
+    @ExceptionHandler({InvalidDiagnosticRequestException.class, HttpMessageNotReadableException.class})
+    public ResponseEntity<ApiErrorResponse> handleInvalidRequest(Exception exception, HttpServletRequest request) {
+        return ResponseEntity.badRequest().body(new ApiErrorResponse(Instant.now(), "VALIDATION_ERROR",
+                "Invalid diagnostic request fields or JSON", request.getRequestURI()));
+    }
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ApiErrorResponse>
