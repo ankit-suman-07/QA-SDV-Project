@@ -28,6 +28,9 @@ x-kuksa: &kuksa
     - ./config/vss-with-autonomous-sensors.json:/config/vss-with-autonomous-sensors.json:ro
 
 x-provider: &provider
+  # SDK publication has bounded per-RPC deadlines; allow an in-flight batch
+  # to finish and close its channel/control listener on SIGTERM.
+  stop_grace_period: 30s
   build: .
   image: qa-sdv-provider:local
 

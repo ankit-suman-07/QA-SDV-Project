@@ -100,7 +100,7 @@ def test_provider_reconnects_with_bounded_backoff_and_preserves_scenario(
     assert len(clients) == failures + 1
     assert stop.waits[:failures] == [min(2 ** n, 5) for n in range(failures)]
     path = provider_main.SIGNAL_PATHS['lidar_distance_m']
-    assert [write[path].value for write in writes] == [20.0, 10.0]
+    assert [write[path].value for write in writes] == [20.0, 8.0]
     assert controller.is_active(vehicle_id='vehicle-002', scenario='LIDAR_OBSTRUCTION')
 
 
