@@ -1,0 +1,236 @@
+[
+  {
+    "path": "/api/v1/vehicles",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "vehicleIds": [
+        "vehicle-001",
+        "vehicle-002"
+      ]
+    },
+    "monotonicSeconds": 3.52496439099923
+  },
+  {
+    "path": "/api/v1/vehicles",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "vehicleIds": [
+        "vehicle-001",
+        "vehicle-002"
+      ]
+    },
+    "monotonicSeconds": 3.529875535999963
+  },
+  {
+    "path": "/api/v1/vehicles/vehicle-001/state",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "vehicleId": "vehicle-001",
+      "thingId": "sdv:vehicle-001",
+      "healthStatus": null,
+      "availability": "UNAVAILABLE",
+      "activeFaults": null,
+      "lidar": null,
+      "sourceTimestamp": null,
+      "lastEventId": null
+    },
+    "monotonicSeconds": 3.596687088998806
+  },
+  {
+    "path": "/api/v1/vehicles/vehicle-002/state",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "vehicleId": "vehicle-002",
+      "thingId": "sdv:vehicle-002",
+      "healthStatus": null,
+      "availability": "UNAVAILABLE",
+      "activeFaults": null,
+      "lidar": null,
+      "sourceTimestamp": null,
+      "lastEventId": null
+    },
+    "monotonicSeconds": 3.6027012469985493
+  },
+  {
+    "path": "/api/v1/vehicles/vehicle-003/state",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 404,
+    "response": {
+      "timestamp": "2026-11-14T05:20:33.969215542Z",
+      "code": "VEHICLE_NOT_FOUND",
+      "message": "Unknown V1 vehicle ID",
+      "path": "/api/v1/vehicles/vehicle-003/state"
+    },
+    "monotonicSeconds": 3.612078432999624
+  },
+  {
+    "path": "/api/v1/fleet",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "generatedAt": "2026-11-14T05:20:33.975924208Z",
+      "totalVehicles": 2,
+      "availableVehicles": 0,
+      "staleVehicles": 0,
+      "unavailableVehicles": 2,
+      "healthyVehicles": 0,
+      "warningVehicles": 0,
+      "criticalVehicles": 0,
+      "vehicles": [
+        {
+          "vehicleId": "vehicle-001",
+          "thingId": "sdv:vehicle-001",
+          "healthStatus": null,
+          "availability": "UNAVAILABLE",
+          "activeFaults": null,
+          "lidar": null,
+          "sourceTimestamp": null,
+          "lastEventId": null
+        },
+        {
+          "vehicleId": "vehicle-002",
+          "thingId": "sdv:vehicle-002",
+          "healthStatus": null,
+          "availability": "UNAVAILABLE",
+          "activeFaults": null,
+          "lidar": null,
+          "sourceTimestamp": null,
+          "lastEventId": null
+        }
+      ]
+    },
+    "monotonicSeconds": 3.6307107920001727
+  },
+  {
+    "path": "/api/v1/diagnostics/actions",
+    "base": "http://127.0.0.1:28082",
+    "request": {
+      "vehicleId": "vehicle-002",
+      "action": "INJECT_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION"
+    },
+    "status": 202,
+    "response": {
+      "actionId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+      "traceId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+      "vehicleId": "vehicle-002",
+      "action": "INJECT_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "status": "ACCEPTED",
+      "requestedAt": "2026-11-14T05:20:35.186585428Z",
+      "dispatchStatus": "DISPATCHED"
+    },
+    "monotonicSeconds": 4.859044532999178
+  },
+  {
+    "path": "/api/v1/diagnostics/actions/bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "actionId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+      "traceId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+      "vehicleId": "vehicle-002",
+      "action": "INJECT_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "status": "ACCEPTED",
+      "requestedAt": "2026-11-14T05:20:35.186585428Z",
+      "dispatchStatus": "DISPATCHED"
+    },
+    "monotonicSeconds": 4.863422573998832
+  },
+  {
+    "path": "/api/v1/vehicles/vehicle-002/scenarios/LIDAR_OBSTRUCTION",
+    "base": "http://127.0.0.1:28092",
+    "request": null,
+    "status": 200,
+    "response": {
+      "vehicleId": "vehicle-002",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "active": true,
+      "actionId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+      "traceId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+      "action": "INJECT_SCENARIO"
+    },
+    "monotonicSeconds": 4.865062601998943
+  },
+  {
+    "path": "/api/v1/diagnostics/actions",
+    "base": "http://127.0.0.1:28082",
+    "request": {
+      "vehicleId": "vehicle-002",
+      "action": "CLEAR_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION"
+    },
+    "status": 202,
+    "response": {
+      "actionId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+      "traceId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+      "vehicleId": "vehicle-002",
+      "action": "CLEAR_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "status": "ACCEPTED",
+      "requestedAt": "2026-11-14T05:20:51.162327661Z",
+      "dispatchStatus": "DISPATCHED"
+    },
+    "monotonicSeconds": 20.810565517000214
+  },
+  {
+    "path": "/api/v1/diagnostics/actions/46e84366-1c03-4a22-9e36-37ff37e7cccc",
+    "base": "http://127.0.0.1:28082",
+    "request": null,
+    "status": 200,
+    "response": {
+      "actionId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+      "traceId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+      "vehicleId": "vehicle-002",
+      "action": "CLEAR_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "status": "ACCEPTED",
+      "requestedAt": "2026-11-14T05:20:51.162327661Z",
+      "dispatchStatus": "DISPATCHED"
+    },
+    "monotonicSeconds": 20.81674715599911
+  },
+  {
+    "path": "/api/v1/vehicles/vehicle-002/scenarios/LIDAR_OBSTRUCTION",
+    "base": "http://127.0.0.1:28092",
+    "request": null,
+    "status": 200,
+    "response": {
+      "vehicleId": "vehicle-002",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "active": false,
+      "actionId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+      "traceId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+      "action": "CLEAR_SCENARIO"
+    },
+    "monotonicSeconds": 20.819425314999535
+  },
+  {
+    "path": "/api/v1/scenarios/actions",
+    "base": "http://127.0.0.1:28092",
+    "request": {
+      "vehicleId": "vehicle-001",
+      "action": "INJECT_SCENARIO",
+      "scenario": "LIDAR_OBSTRUCTION",
+      "actionId": "owned-wrong",
+      "traceId": "owned-wrong"
+    },
+    "status": 409,
+    "response": {
+      "error": "provider serves vehicle-002, not vehicle-001"
+    },
+    "monotonicSeconds": 34.86119598000005
+  }
+]

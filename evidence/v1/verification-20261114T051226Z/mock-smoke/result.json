@@ -1,0 +1,205 @@
+{
+  "checks": [
+    "healthy fixture projection",
+    "materialized projection apart from evaluation timestamp",
+    "targeted injection and lookup",
+    "fleet fault isolation",
+    "clear/recovery",
+    "stale exclusion",
+    "missing isolation",
+    "unavailable isolation",
+    "write failure preserves API",
+    "scheduled retry recovery",
+    "provisioning policy/Thing",
+    "service authentication"
+  ],
+  "healthy": {
+    "generatedAt": "2026-11-14T05:16:22.142618895Z",
+    "totalVehicles": 2,
+    "availableVehicles": 2,
+    "staleVehicles": 0,
+    "unavailableVehicles": 0,
+    "healthyVehicles": 2,
+    "warningVehicles": 0,
+    "criticalVehicles": 0,
+    "vehicles": [
+      {
+        "vehicleId": "vehicle-001",
+        "thingId": "sdv:vehicle-001",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.137Z",
+        "lastEventId": "mock-vehicle-001-0001"
+      },
+      {
+        "vehicleId": "vehicle-002",
+        "thingId": "sdv:vehicle-002",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.139Z",
+        "lastEventId": "mock-vehicle-002-0002"
+      }
+    ]
+  },
+  "fault": {
+    "generatedAt": "2026-11-14T05:16:22.416602829Z",
+    "totalVehicles": 2,
+    "availableVehicles": 2,
+    "staleVehicles": 0,
+    "unavailableVehicles": 0,
+    "healthyVehicles": 1,
+    "warningVehicles": 0,
+    "criticalVehicles": 1,
+    "vehicles": [
+      {
+        "vehicleId": "vehicle-001",
+        "thingId": "sdv:vehicle-001",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.137Z",
+        "lastEventId": "mock-vehicle-001-0001"
+      },
+      {
+        "vehicleId": "vehicle-002",
+        "thingId": "sdv:vehicle-002",
+        "healthStatus": "CRITICAL",
+        "availability": "AVAILABLE",
+        "activeFaults": [
+          "LIDAR_OBSTRUCTION"
+        ],
+        "lidar": {
+          "distanceMeters": 3.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.398Z",
+        "lastEventId": "mock-vehicle-002-0003"
+      }
+    ]
+  },
+  "stale": {
+    "generatedAt": "2026-11-14T05:16:22.500108682Z",
+    "totalVehicles": 2,
+    "availableVehicles": 1,
+    "staleVehicles": 1,
+    "unavailableVehicles": 0,
+    "healthyVehicles": 1,
+    "warningVehicles": 0,
+    "criticalVehicles": 0,
+    "vehicles": [
+      {
+        "vehicleId": "vehicle-001",
+        "thingId": "sdv:vehicle-001",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.137Z",
+        "lastEventId": "mock-vehicle-001-0001"
+      },
+      {
+        "vehicleId": "vehicle-002",
+        "thingId": "sdv:vehicle-002",
+        "healthStatus": "HEALTHY",
+        "availability": "STALE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:16.497Z",
+        "lastEventId": "mock-vehicle-002-0005"
+      }
+    ]
+  },
+  "missing": {
+    "generatedAt": "2026-11-14T05:16:22.510696847Z",
+    "totalVehicles": 2,
+    "availableVehicles": 1,
+    "staleVehicles": 0,
+    "unavailableVehicles": 1,
+    "healthyVehicles": 1,
+    "warningVehicles": 0,
+    "criticalVehicles": 0,
+    "vehicles": [
+      {
+        "vehicleId": "vehicle-001",
+        "thingId": "sdv:vehicle-001",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.137Z",
+        "lastEventId": "mock-vehicle-001-0001"
+      },
+      {
+        "vehicleId": "vehicle-002",
+        "thingId": "sdv:vehicle-002",
+        "healthStatus": null,
+        "availability": "UNAVAILABLE",
+        "activeFaults": null,
+        "lidar": null,
+        "sourceTimestamp": null,
+        "lastEventId": null
+      }
+    ]
+  },
+  "materialized": {
+    "generatedAt": "2026-11-14T05:16:22.257431918Z",
+    "totalVehicles": 2,
+    "availableVehicles": 2,
+    "staleVehicles": 0,
+    "unavailableVehicles": 0,
+    "healthyVehicles": 2,
+    "warningVehicles": 0,
+    "criticalVehicles": 0,
+    "vehicles": [
+      {
+        "vehicleId": "vehicle-001",
+        "thingId": "sdv:vehicle-001",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.137Z",
+        "lastEventId": "mock-vehicle-001-0001"
+      },
+      {
+        "vehicleId": "vehicle-002",
+        "thingId": "sdv:vehicle-002",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-14T05:16:22.139Z",
+        "lastEventId": "mock-vehicle-002-0002"
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "originalAppRestartRow": "NOT VERIFIED: initial check counted any new receipt during Docker restart, potentially an in-flight message; 0.067s is NOT a valid post-start timing. Preserve raw row, exclude it from conclusions.",
+  "correctedCheck": "../app-restart/result.json",
+  "KuksaProviderRecoveryRow": "Confirmed failure: provider exit status1 before and after broker restart; manual provider start restored publication.",
+  "MqttOutageRow": "Passed observed resumption; full broker durability and real Ditto persistence not established."
+}

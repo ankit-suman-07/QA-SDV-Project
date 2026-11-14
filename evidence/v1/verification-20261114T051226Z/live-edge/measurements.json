@@ -1,0 +1,32 @@
+[
+  {
+    "operation": "INJECT_SCENARIO",
+    "status": "PASS",
+    "boundary": "command submission to observed MQTT status; includes scenario progression; not pure transport latency",
+    "commandMonotonicSeconds": 4.733547813999394,
+    "acknowledgementMonotonicSeconds": 4.859065066999392,
+    "completionMonotonicSeconds": 20.750799826999355,
+    "completionSeconds": 16.01725201299996,
+    "acknowledgementSeconds": 0.12551725299999816,
+    "actionId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+    "traceId": "bb04e505-dd06-4ae1-9f17-85b8d2b16dd5",
+    "observedEventId": "vehicle-002-d43b0a8154a744feb61a56bbe6656a3d",
+    "sourceTimestamp": "2026-11-14T05:20:49.808300Z",
+    "causalContextInMqtt": false
+  },
+  {
+    "operation": "CLEAR_SCENARIO",
+    "status": "PASS",
+    "boundary": "command submission to observed MQTT status; includes scenario progression; not pure transport latency",
+    "commandMonotonicSeconds": 20.79428941599872,
+    "acknowledgementMonotonicSeconds": 20.81058542199935,
+    "completionMonotonicSeconds": 30.786583325998436,
+    "completionSeconds": 9.992293909999717,
+    "acknowledgementSeconds": 0.01629600600062986,
+    "actionId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+    "traceId": "46e84366-1c03-4a22-9e36-37ff37e7cccc",
+    "observedEventId": "vehicle-002-64b5725995a141a19888ca042e7ea5a2",
+    "sourceTimestamp": "2026-11-14T05:20:59.841586Z",
+    "causalContextInMqtt": false
+  }
+]

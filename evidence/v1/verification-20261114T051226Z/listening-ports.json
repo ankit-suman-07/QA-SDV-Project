@@ -1,0 +1,13 @@
+{
+  "name": "listening-ports",
+  "startedAt": "2026-11-14T05:14:34.091163+00:00",
+  "command": [
+    "ss",
+    "-ltn"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.006,
+  "output": "listening-ports.log"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "json-configuration",
+  "startedAt": "2026-11-14T05:16:53.221687+00:00",
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import json,subprocess; from pathlib import Path; paths=[p for p in subprocess.check_output([\"git\",\"ls-files\",\"*.json\"],text=True).splitlines()]; [json.loads(Path(p).read_text(encoding=\"utf-8-sig\")) for p in paths]; print(\"Validated\",len(paths),\"tracked JSON files\")"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.076,
+  "output": "json-configuration.log"
+}

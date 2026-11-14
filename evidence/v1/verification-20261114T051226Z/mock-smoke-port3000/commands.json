@@ -1,0 +1,16 @@
+{
+  "smoke": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "-m",
+    "scripts.v1_dev.fleet_smoke",
+    "--java",
+    "/tmp/qa-v1-tooling/amazon-corretto-21.0.13.0.11-linux-x64/bin/java",
+    "--artifacts-dir",
+    "/home/ankitsuman/Desktop/SDV/QA-SDV-Project/evidence/v1/verification-20261114T051226Z/mock-smoke-port3000",
+    "--frontend-port",
+    "3000",
+    "--hold"
+  ],
+  "boundary": "Actual packaged Spring Boot and Chrome; HTTP mocks and controlled fleet-write capture, NOT real Ditto/providers/MQTT"
+}

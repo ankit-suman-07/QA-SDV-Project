@@ -1,0 +1,22 @@
+{
+  "name": "edge-rendered-configuration",
+  "startedAt": "2026-11-14T05:23:02.433282+00:00",
+  "command": [
+    "docker",
+    "compose",
+    "-p",
+    "qa-v1verify20261114",
+    "-f",
+    "vehicle-simulator/docker-compose.v1.yml",
+    "-f",
+    "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+    "config",
+    "--format",
+    "json"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.137,
+  "output": "edge-rendered-configuration.log"
+}

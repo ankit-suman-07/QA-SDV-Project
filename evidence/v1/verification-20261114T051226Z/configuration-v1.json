@@ -1,0 +1,17 @@
+{
+  "name": "configuration-v1",
+  "startedAt": "2026-11-14T05:16:19.449037+00:00",
+  "command": [
+    "docker",
+    "compose",
+    "-f",
+    "vehicle-simulator/docker-compose.v1.yml",
+    "config",
+    "--quiet"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.109,
+  "output": "configuration-v1.log"
+}

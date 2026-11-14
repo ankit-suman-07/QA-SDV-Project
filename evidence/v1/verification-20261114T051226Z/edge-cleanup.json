@@ -1,0 +1,20 @@
+{
+  "name": "edge-cleanup",
+  "startedAt": "2026-11-14T05:25:27.854675+00:00",
+  "command": [
+    "docker",
+    "compose",
+    "-p",
+    "qa-v1verify20261114",
+    "-f",
+    "vehicle-simulator/docker-compose.v1.yml",
+    "-f",
+    "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+    "down"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 12.539,
+  "output": "edge-cleanup.log"
+}

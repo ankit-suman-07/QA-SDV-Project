@@ -1,0 +1,13 @@
+{
+  "name": "final-ports",
+  "startedAt": "2026-11-14T05:25:41.185951+00:00",
+  "command": [
+    "ss",
+    "-ltn"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.011,
+  "output": "final-ports.log"
+}

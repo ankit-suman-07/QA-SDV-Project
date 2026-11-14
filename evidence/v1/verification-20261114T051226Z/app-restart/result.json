@@ -1,0 +1,19 @@
+{
+  "check": "post-start new source observation; excludes in-flight pre-restart messages",
+  "result": "PASS",
+  "containerStartedAt": "2026-11-14T05:24:26.173094181Z",
+  "commandToFreshMqttSeconds": 3.1377060759987216,
+  "firstFreshEvent": {
+    "schemaVersion": "1.0.0",
+    "eventId": "vehicle-002-2bb827bafe36491b83e6b866e4e636fa",
+    "vehicleId": "vehicle-002",
+    "sourceTimestamp": "2026-11-14T05:24:27.820583Z",
+    "health": "HEALTHY",
+    "faults": [],
+    "lidar": {
+      "distanceMeters": 35.0,
+      "sensorAvailable": true
+    }
+  },
+  "boundary": "Docker restart command -> MQTT receipt whose sourceTimestamp is after new container StartedAt; includes stop/start/provider interval/app poll; not a strict SLA or twin acceptance"
+}

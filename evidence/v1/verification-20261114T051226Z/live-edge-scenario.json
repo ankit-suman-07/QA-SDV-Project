@@ -1,0 +1,16 @@
+{
+  "name": "live-edge-scenario",
+  "startedAt": "2026-11-14T05:20:06.547112+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "/tmp/qa-v1-tooling/live_edge_check.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {
+    "PYTHONPATH": "/tmp/qa-v1-tooling/protobuf"
+  },
+  "exitCode": 1,
+  "durationSeconds": 0.284,
+  "output": "live-edge-scenario.log"
+}

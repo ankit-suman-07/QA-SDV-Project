@@ -1,0 +1,14 @@
+{
+  "name": "app-restart-fresh",
+  "startedAt": "2026-11-14T05:24:23.703138+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "/tmp/qa-v1-tooling/app_restart_check.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 5.291,
+  "output": "app-restart-fresh.log"
+}

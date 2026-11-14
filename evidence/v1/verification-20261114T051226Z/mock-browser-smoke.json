@@ -1,0 +1,14 @@
+{
+  "name": "mock-browser-smoke",
+  "startedAt": "2026-11-14T05:16:18.227327+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "/tmp/qa-v1-tooling/mock_browser_smoke.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 1,
+  "durationSeconds": 36.431,
+  "output": "mock-browser-smoke.log"
+}

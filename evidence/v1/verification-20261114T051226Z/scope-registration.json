@@ -1,0 +1,15 @@
+{
+  "name": "scope-registration",
+  "startedAt": "2026-11-14T05:20:36.763262+00:00",
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "import json; from pathlib import Path; p=Path(\"backend/src/main/resources/application.properties\").read_text(); print(\"V1 identity mapping: vehicle-001/002 only (V1DittoProperties validates exact map)\"); print(next(s for s in p.splitlines() if s.startswith(\"sdv.vehicles.ids=\"))); print(\"Legacy registry includes003 by default; V1 controllers do not use that broader list.\")"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.022,
+  "output": "scope-registration.log"
+}

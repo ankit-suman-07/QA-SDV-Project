@@ -1,0 +1,21 @@
+{
+  "name": "browser-tool-install",
+  "startedAt": "2026-11-14T05:15:04.637049+00:00",
+  "command": [
+    "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64/bin/npm",
+    "install",
+    "--prefix",
+    "/tmp/qa-v1-tooling/browser",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "playwright-core@1.56.1"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {
+    "PATH": "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64/bin:/usr/local/bin:/usr/bin:/bin"
+  },
+  "exitCode": 0,
+  "durationSeconds": 1.47,
+  "output": "browser-tool-install.log"
+}

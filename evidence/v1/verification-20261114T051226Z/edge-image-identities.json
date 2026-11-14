@@ -1,0 +1,20 @@
+{
+  "name": "edge-image-identities",
+  "startedAt": "2026-11-14T05:18:04.185690+00:00",
+  "command": [
+    "docker",
+    "image",
+    "inspect",
+    "qa-v1verify-app:20261114",
+    "qa-v1verify-provider:20261114",
+    "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+    "eclipse-mosquitto:2",
+    "--format",
+    "{{.Id}} {{json .RepoDigests}}"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.118,
+  "output": "edge-image-identities.log"
+}

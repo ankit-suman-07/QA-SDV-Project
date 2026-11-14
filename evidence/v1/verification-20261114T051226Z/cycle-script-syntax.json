@@ -1,0 +1,14 @@
+{
+  "name": "cycle-script-syntax",
+  "startedAt": "2026-11-14T05:16:19.793787+00:00",
+  "command": [
+    "sh",
+    "-n",
+    "scripts/run-v1-lidar-cycle.sh"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.003,
+  "output": "cycle-script-syntax.log"
+}

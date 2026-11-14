@@ -1,0 +1,17 @@
+{
+  "name": "configuration-baseline",
+  "startedAt": "2026-11-14T05:16:19.626191+00:00",
+  "command": [
+    "docker",
+    "compose",
+    "-f",
+    "vehicle-simulator/docker-compose.yml",
+    "config",
+    "--quiet"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.094,
+  "output": "configuration-baseline.log"
+}

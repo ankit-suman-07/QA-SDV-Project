@@ -1,0 +1,14 @@
+{
+  "status": "INCOMPLETE/SUPERSEDED; do not use as final browser evidence",
+  "firstAttempt": {
+    "frontendPort": 23000,
+    "apiChecks": 12,
+    "browser": "Timed out at healthyVehicles; backend CORS allowlist excludes localhost:23000"
+  },
+  "secondAttempt": {
+    "frontendPort": 3000,
+    "setupError": "Harness reused first attempt stack.json before new process readiness; browser ECONNREFUSED to prior mock port. This was a verification orchestration error, not a product defect."
+  },
+  "finalAttemptDirectory": "../mock-smoke-port3000",
+  "warning": "The second orchestration attempt reused this scratch directory; commands/browser/harness logs were replaced. Result and stack artifacts must not be treated as a coherent second run."
+}

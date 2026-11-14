@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-11-14T05:31:47.204243+00:00",
+  "relativeLinksChecked": 92,
+  "missing": [],
+  "tableColumnErrors": [],
+  "whitespaceChecks": [
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--no-index",
+        "--check",
+        "/dev/null",
+        "docs/findings/v1-implementation-verification.md"
+      ],
+      "exitCode": 1,
+      "output": "",
+      "interpretation": "Exit1 may only indicate new content; whitespace errors are diagnosed by nonempty output."
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--no-index",
+        "--check",
+        "/dev/null",
+        "evidence/v1/verification-20261114T051226Z/README.md"
+      ],
+      "exitCode": 1,
+      "output": "",
+      "interpretation": "Exit1 may only indicate new content; whitespace errors are diagnosed by nonempty output."
+    }
+  ],
+  "finalStatus": "?? docs/findings/v1-implementation-verification.md\n?? evidence/v1/verification-20261114T051226Z/\n",
+  "credentialPatternScan": "No authorization header/token/access-key/private-key patterns found in saved artifacts; only synthetic fixture authentication in mock tooling."
+}

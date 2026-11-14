@@ -1,0 +1,15 @@
+{
+  "name": "final-owned-context",
+  "startedAt": "2026-11-14T05:25:27.225039+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "-c",
+    "import json; from urllib.request import urlopen; url=\"http://127.0.0.1:28092/api/v1/vehicles/vehicle-002/scenarios/LIDAR_OBSTRUCTION\"; r=json.load(urlopen(url,timeout=3)); print(json.dumps(r)); assert r[\"active\"] is False"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.241,
+  "output": "final-owned-context.log"
+}

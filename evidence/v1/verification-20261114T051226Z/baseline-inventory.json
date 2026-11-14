@@ -1,0 +1,16 @@
+{
+  "git-history": {
+    "exitCode": 0,
+    "output": "ac701cd evidence: mvp vs V1\n3561c00 Merge pull request #37 from ankit-suman-07/emmanuel/feature/v1-lidar-scenarios\n5115168 Merge pull request #33 from ankit-suman-07/emmanuel/feature/v1-two-vehicle-edge\n43386fc Merge branch 'emmanuel/feature/v1-two-vehicle-edge' into emmanuel/feature/v1-lidar-scenarios\naf1bd39 docs(evidence): note the QoS 1 fix in the E1 skill-usage entry\n3ad10e1 docs(evidence): update QoS notes after the E1 QoS 1 fix\n0abc244 Merge branch 'emmanuel/fix/v1-qos1-publication' into emmanuel/feature/v1-two-vehicle-edge\n00ff23a Merge branch 'emmanuel/feature/v1-two-vehicle-edge' into emmanuel/feature/v1-lidar-scenarios\nfa49750 docs(evidence): record the E1 QoS 1 re-check and correct provenance\na3e20c1 fix(velocitas): publish v1 health events at QoS 1 and retry until acknowledged\n4a0a3b4 docs(evidence): record E2 skill usage and the post-merge live run\n473253c docs: PR #33 review\n6ad55b4 fix(scripts): time-limit provider requests and report unreachable providers in the LiDAR cycle\n8edc998 Merge branch 'emmanuel/feature/v1-two-vehicle-edge' into emmanuel/feature/v1-lidar-scenarios\nc5dcbe7 Merge branch 'main' into emmanuel/feature/v1-two-vehicle-edge\n80a781f Merge pull request #32 from ankit-suman-07/bayan/config/v1-kanto-pilot\nfa65329 Merge pull request #30 from ankit-suman-07/bayan/feature/v1-mqtt-twins\n2c21cdc Merge branch 'main' into bayan/feature/v1-mqtt-twins\n"
+  },
+  "java-system": {
+    "exitCode": 0,
+    "output": "openjdk version \"25.0.5\" 2026-10-20\nOpenJDK Runtime Environment (Red_Hat-25.0.5.0.8-3) (build 25.0.5+8)\nOpenJDK 64-Bit Server VM (Red_Hat-25.0.5.0.8-3) (build 25.0.5+8, mixed mode, sharing)\n"
+  },
+  "python-supported": {
+    "exitCode": 0,
+    "output": "Python 3.12.16\n"
+  },
+  "initialStatus": "clean",
+  "assessedMatchesOriginMain": true
+}

@@ -1,0 +1,13 @@
+{
+  "name": "docker-version",
+  "startedAt": "2026-11-14T05:14:34.145279+00:00",
+  "command": [
+    "docker",
+    "version"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.026,
+  "output": "docker-version.log"
+}

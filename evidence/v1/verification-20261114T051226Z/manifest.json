@@ -1,0 +1,805 @@
+{
+  "startedAt": "2026-11-14T05:12:26Z",
+  "branch": "main",
+  "head": "ac701cd9a56ffd1031d6cd8744e413075ab4b955",
+  "originMain": "ac701cd9a56ffd1031d6cd8744e413075ab4b955",
+  "initialTrackedAndUntrackedStatus": "clean (captured before evidence creation)",
+  "scope": "Phase V1 V1-01 through V1-09; V1-09 separately tracked, not deferred; excludes unrelated Phase V2",
+  "liveDittoPrerequisites": {
+    "configuredEnvironmentVariablesPresent": false,
+    "runningDittoContainerFound": false,
+    "decision": "BLOCKED: no configured credentials or approved real Ditto deployment; do not invent authentication or provision shared resources"
+  },
+  "commands": [
+    {
+      "metadata": "app-restart-fresh.json",
+      "name": "app-restart-fresh",
+      "startedAt": "2026-11-14T05:24:23.703138+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/app_restart_check.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 5.291,
+      "output": "app-restart-fresh.log"
+    },
+    {
+      "metadata": "app-runtime-packages.json",
+      "name": "app-runtime-packages",
+      "startedAt": "2026-11-14T05:20:36.601374+00:00",
+      "command": [
+        "docker",
+        "exec",
+        "qa-v1verify20261114-app-001-1",
+        "python3",
+        "-c",
+        "import sys,importlib.metadata as m; print(sys.version); print(\"\\n\".join(p+\"==\"+m.version(p) for p in (\"velocitas-sdk\",\"kuksa_client\",\"paho-mqtt\",\"grpcio\",\"protobuf\")))"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.114,
+      "output": "app-runtime-packages.log"
+    },
+    {
+      "metadata": "backend.json",
+      "name": "backend",
+      "startedAt": "2026-11-14T05:14:28.485371+00:00",
+      "command": [
+        "bash",
+        "./mvnw",
+        "--batch-mode",
+        "--no-transfer-progress",
+        "-Dmaven.repo.local=/tmp/qa-m2",
+        "clean",
+        "verify"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project/backend",
+      "environmentOverrides": {
+        "JAVA_HOME": "/tmp/qa-v1-tooling/amazon-corretto-21.0.13.0.11-linux-x64",
+        "MAVEN_USER_HOME": "/tmp/qa-maven"
+      },
+      "exitCode": 0,
+      "durationSeconds": 31.772,
+      "output": "backend.log"
+    },
+    {
+      "metadata": "browser-tool-install.json",
+      "name": "browser-tool-install",
+      "startedAt": "2026-11-14T05:15:04.637049+00:00",
+      "command": [
+        "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64/bin/npm",
+        "install",
+        "--prefix",
+        "/tmp/qa-v1-tooling/browser",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "playwright-core@1.56.1"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "PATH": "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64/bin:/usr/local/bin:/usr/bin:/bin"
+      },
+      "exitCode": 0,
+      "durationSeconds": 1.47,
+      "output": "browser-tool-install.log"
+    },
+    {
+      "metadata": "compose-inventory.json",
+      "name": "compose-inventory",
+      "startedAt": "2026-11-14T05:14:33.996378+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "ls",
+        "--format",
+        "json"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.048,
+      "output": "compose-inventory.log"
+    },
+    {
+      "metadata": "configuration-baseline.json",
+      "name": "configuration-baseline",
+      "startedAt": "2026-11-14T05:16:19.626191+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-f",
+        "vehicle-simulator/docker-compose.yml",
+        "config",
+        "--quiet"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.094,
+      "output": "configuration-baseline.log"
+    },
+    {
+      "metadata": "configuration-v1.json",
+      "name": "configuration-v1",
+      "startedAt": "2026-11-14T05:16:19.449037+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "config",
+        "--quiet"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.109,
+      "output": "configuration-v1.log"
+    },
+    {
+      "metadata": "cycle-script-syntax.json",
+      "name": "cycle-script-syntax",
+      "startedAt": "2026-11-14T05:16:19.793787+00:00",
+      "command": [
+        "sh",
+        "-n",
+        "scripts/run-v1-lidar-cycle.sh"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.003,
+      "output": "cycle-script-syntax.log"
+    },
+    {
+      "metadata": "docker-inventory.json",
+      "name": "docker-inventory",
+      "startedAt": "2026-11-14T05:14:33.933544+00:00",
+      "command": [
+        "docker",
+        "ps",
+        "-a",
+        "--format",
+        "{{json .}}"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.018,
+      "output": "docker-inventory.log"
+    },
+    {
+      "metadata": "docker-version.json",
+      "name": "docker-version",
+      "startedAt": "2026-11-14T05:14:34.145279+00:00",
+      "command": [
+        "docker",
+        "version"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.026,
+      "output": "docker-version.log"
+    },
+    {
+      "metadata": "edge-build.json",
+      "name": "edge-build",
+      "startedAt": "2026-11-14T05:15:07.974614+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "build",
+        "provider-001",
+        "app-001"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 157.616,
+      "output": "edge-build.log"
+    },
+    {
+      "metadata": "edge-cleanup.json",
+      "name": "edge-cleanup",
+      "startedAt": "2026-11-14T05:25:27.854675+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "down"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 12.539,
+      "output": "edge-cleanup.log"
+    },
+    {
+      "metadata": "edge-final-service-logs.json",
+      "name": "edge-final-service-logs",
+      "startedAt": "2026-11-14T05:25:27.560633+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "logs",
+        "--no-color",
+        "--timestamps"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.197,
+      "output": "edge-final-service-logs.log"
+    },
+    {
+      "metadata": "edge-image-identities.json",
+      "name": "edge-image-identities",
+      "startedAt": "2026-11-14T05:18:04.185690+00:00",
+      "command": [
+        "docker",
+        "image",
+        "inspect",
+        "qa-v1verify-app:20261114",
+        "qa-v1verify-provider:20261114",
+        "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+        "eclipse-mosquitto:2",
+        "--format",
+        "{{.Id}} {{json .RepoDigests}}"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.118,
+      "output": "edge-image-identities.log"
+    },
+    {
+      "metadata": "edge-recovery.json",
+      "name": "edge-recovery",
+      "startedAt": "2026-11-14T05:22:30.035050+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/edge_recovery_check.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 1,
+      "durationSeconds": 69.079,
+      "output": "edge-recovery.log"
+    },
+    {
+      "metadata": "edge-rendered-configuration.json",
+      "name": "edge-rendered-configuration",
+      "startedAt": "2026-11-14T05:23:02.433282+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "config",
+        "--format",
+        "json"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.137,
+      "output": "edge-rendered-configuration.log"
+    },
+    {
+      "metadata": "edge-service-logs.json",
+      "name": "edge-service-logs",
+      "startedAt": "2026-11-14T05:24:26.965974+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "logs",
+        "--no-color",
+        "--timestamps"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.171,
+      "output": "edge-service-logs.log"
+    },
+    {
+      "metadata": "edge-start.json",
+      "name": "edge-start",
+      "startedAt": "2026-11-14T05:18:01.136846+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "up",
+        "-d",
+        "--no-build"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 2.995,
+      "output": "edge-start.log"
+    },
+    {
+      "metadata": "edge-status.json",
+      "name": "edge-status",
+      "startedAt": "2026-11-14T05:18:04.359851+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "ps",
+        "--all"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.116,
+      "output": "edge-status.log"
+    },
+    {
+      "metadata": "final-docker-inventory.json",
+      "name": "final-docker-inventory",
+      "startedAt": "2026-11-14T05:25:41.066130+00:00",
+      "command": [
+        "docker",
+        "ps",
+        "-a",
+        "--format",
+        "{{json .}}"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.034,
+      "output": "final-docker-inventory.log"
+    },
+    {
+      "metadata": "final-owned-context.json",
+      "name": "final-owned-context",
+      "startedAt": "2026-11-14T05:25:27.225039+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "-c",
+        "import json; from urllib.request import urlopen; url=\"http://127.0.0.1:28092/api/v1/vehicles/vehicle-002/scenarios/LIDAR_OBSTRUCTION\"; r=json.load(urlopen(url,timeout=3)); print(json.dumps(r)); assert r[\"active\"] is False"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.241,
+      "output": "final-owned-context.log"
+    },
+    {
+      "metadata": "final-ports.json",
+      "name": "final-ports",
+      "startedAt": "2026-11-14T05:25:41.185951+00:00",
+      "command": [
+        "ss",
+        "-ltn"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.011,
+      "output": "final-ports.log"
+    },
+    {
+      "metadata": "frontend-unit.json",
+      "name": "frontend-unit",
+      "startedAt": "2026-11-14T05:14:31.756909+00:00",
+      "command": [
+        "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64/bin/npm",
+        "--prefix",
+        "frontend",
+        "test"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "PATH": "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64/bin:/usr/local/bin:/usr/bin:/bin"
+      },
+      "exitCode": 0,
+      "durationSeconds": 0.181,
+      "output": "frontend-unit.log"
+    },
+    {
+      "metadata": "json-configuration.json",
+      "name": "json-configuration",
+      "startedAt": "2026-11-14T05:16:53.221687+00:00",
+      "command": [
+        "python3",
+        "-B",
+        "-c",
+        "import json,subprocess; from pathlib import Path; paths=[p for p in subprocess.check_output([\"git\",\"ls-files\",\"*.json\"],text=True).splitlines()]; [json.loads(Path(p).read_text(encoding=\"utf-8-sig\")) for p in paths]; print(\"Validated\",len(paths),\"tracked JSON files\")"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.076,
+      "output": "json-configuration.log"
+    },
+    {
+      "metadata": "kuksa-live-signals.json",
+      "name": "kuksa-live-signals",
+      "startedAt": "2026-11-14T05:20:33.684010+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "-m",
+        "integration",
+        "vehicle-simulator/tests/test_kuksa_publication.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "DATABROKER_HOST": "127.0.0.1",
+        "DATABROKER_PORT": "56556"
+      },
+      "exitCode": 0,
+      "durationSeconds": 0.727,
+      "output": "kuksa-live-signals.log"
+    },
+    {
+      "metadata": "listening-ports.json",
+      "name": "listening-ports",
+      "startedAt": "2026-11-14T05:14:34.091163+00:00",
+      "command": [
+        "ss",
+        "-ltn"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.006,
+      "output": "listening-ports.log"
+    },
+    {
+      "metadata": "live-edge-scenario-final.json",
+      "name": "live-edge-scenario-final",
+      "startedAt": "2026-11-14T05:20:30.004503+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/live_edge_check.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "PYTHONPATH": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project:/tmp/qa-v1-tooling/protobuf"
+      },
+      "exitCode": 0,
+      "durationSeconds": 58.021,
+      "output": "live-edge-scenario-final.log"
+    },
+    {
+      "metadata": "live-edge-scenario.json",
+      "name": "live-edge-scenario",
+      "startedAt": "2026-11-14T05:20:06.547112+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/live_edge_check.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "PYTHONPATH": "/tmp/qa-v1-tooling/protobuf"
+      },
+      "exitCode": 1,
+      "durationSeconds": 0.284,
+      "output": "live-edge-scenario.log"
+    },
+    {
+      "metadata": "mock-browser-smoke-final.json",
+      "name": "mock-browser-smoke-final",
+      "startedAt": "2026-11-14T05:17:17.659382+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/mock_browser_smoke_final.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 1,
+      "durationSeconds": 1.042,
+      "output": "mock-browser-smoke-final.log"
+    },
+    {
+      "metadata": "mock-browser-smoke-port3000.json",
+      "name": "mock-browser-smoke-port3000",
+      "startedAt": "2026-11-14T05:17:45.372488+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/mock_browser_smoke_port3000.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 11.066,
+      "output": "mock-browser-smoke-port3000.log"
+    },
+    {
+      "metadata": "mock-browser-smoke.json",
+      "name": "mock-browser-smoke",
+      "startedAt": "2026-11-14T05:16:18.227327+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/mock_browser_smoke.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 1,
+      "durationSeconds": 36.431,
+      "output": "mock-browser-smoke.log"
+    },
+    {
+      "metadata": "mqtt-live-transport.json",
+      "name": "mqtt-live-transport",
+      "startedAt": "2026-11-14T05:20:34.859871+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "-m",
+        "integration",
+        "velocitas-app/app/tests/test_v1_publisher_integration.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "V1_MQTT_TEST_HOST": "127.0.0.1",
+        "V1_MQTT_TEST_PORT": "28884"
+      },
+      "exitCode": 0,
+      "durationSeconds": 4.013,
+      "output": "mqtt-live-transport.log"
+    },
+    {
+      "metadata": "post-recovery-services.json",
+      "name": "post-recovery-services",
+      "startedAt": "2026-11-14T05:24:27.351383+00:00",
+      "command": [
+        "docker",
+        "compose",
+        "-p",
+        "qa-v1verify20261114",
+        "-f",
+        "vehicle-simulator/docker-compose.v1.yml",
+        "-f",
+        "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+        "ps",
+        "--all"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.158,
+      "output": "post-recovery-services.log"
+    },
+    {
+      "metadata": "provider-restart-policy.json",
+      "name": "provider-restart-policy",
+      "startedAt": "2026-11-14T05:24:27.227147+00:00",
+      "command": [
+        "docker",
+        "inspect",
+        "qa-v1verify20261114-provider-002-1",
+        "--format",
+        "{{json .HostConfig.RestartPolicy}}"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.034,
+      "output": "provider-restart-policy.log"
+    },
+    {
+      "metadata": "python-unit-final.json",
+      "name": "python-unit-final",
+      "startedAt": "2026-11-14T05:15:01.948181+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "-m",
+        "not integration"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+      },
+      "exitCode": 0,
+      "durationSeconds": 17.521,
+      "output": "python-unit-final.log"
+    },
+    {
+      "metadata": "python-unit.json",
+      "name": "python-unit",
+      "startedAt": "2026-11-14T05:14:08.738462+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "-m",
+        "not integration"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {
+        "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+      },
+      "exitCode": 2,
+      "durationSeconds": 2.395,
+      "output": "python-unit.log"
+    },
+    {
+      "metadata": "runtime-python-packages.json",
+      "name": "runtime-python-packages",
+      "startedAt": "2026-11-14T05:20:36.466015+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "-c",
+        "import importlib.metadata as m; print(\"\\n\".join(p+\"==\"+m.version(p) for p in (\"pytest\",\"grpcio\",\"grpcio-tools\",\"protobuf\",\"kuksa_client\",\"paho-mqtt\",\"requests\")))"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.089,
+      "output": "runtime-python-packages.log"
+    },
+    {
+      "metadata": "scope-registration.json",
+      "name": "scope-registration",
+      "startedAt": "2026-11-14T05:20:36.763262+00:00",
+      "command": [
+        "python3",
+        "-B",
+        "-c",
+        "import json; from pathlib import Path; p=Path(\"backend/src/main/resources/application.properties\").read_text(); print(\"V1 identity mapping: vehicle-001/002 only (V1DittoProperties validates exact map)\"); print(next(s for s in p.splitlines() if s.startswith(\"sdv.vehicles.ids=\"))); print(\"Legacy registry includes003 by default; V1 controllers do not use that broader list.\")"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.022,
+      "output": "scope-registration.log"
+    },
+    {
+      "metadata": "tire-unit-boundary.json",
+      "name": "tire-unit-boundary",
+      "startedAt": "2026-11-14T05:21:14.705103+00:00",
+      "command": [
+        "/tmp/qa-review-venv/bin/python",
+        "-B",
+        "/tmp/qa-v1-tooling/unit_boundary_probe.py"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.62,
+      "output": "tire-unit-boundary.log"
+    },
+    {
+      "metadata": "transport-broker-cleanup.json",
+      "name": "transport-broker-cleanup",
+      "startedAt": "2026-11-14T05:25:40.486445+00:00",
+      "command": [
+        "docker",
+        "stop",
+        "qa-v1verify-transport"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.489,
+      "output": "transport-broker-cleanup.log"
+    },
+    {
+      "metadata": "transport-broker-start.json",
+      "name": "transport-broker-start",
+      "startedAt": "2026-11-14T05:20:34.455967+00:00",
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "-d",
+        "--name",
+        "qa-v1verify-transport",
+        "-p",
+        "127.0.0.1:28884:1883",
+        "-v",
+        "/home/ankitsuman/Desktop/SDV/QA-SDV-Project/vehicle-simulator/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro",
+        "eclipse-mosquitto:2",
+        "mosquitto",
+        "-c",
+        "/mosquitto/config/mosquitto.conf"
+      ],
+      "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+      "environmentOverrides": {},
+      "exitCode": 0,
+      "durationSeconds": 0.358,
+      "output": "transport-broker-start.log"
+    }
+  ],
+  "finishedAt": "2026-11-14T05:31:07.665832+00:00",
+  "finalHead": "ac701cd9a56ffd1031d6cd8744e413075ab4b955",
+  "cleanup": {
+    "ownedScenariosCleared": true,
+    "ownedComposeDownExitCode": 0,
+    "transportBrokerStopped": true,
+    "runningOwnedServices": 0,
+    "volumesDeleted": false,
+    "unrelatedServicesStopped": false
+  },
+  "tooling": {
+    "java21": "/tmp/qa-v1-tooling/amazon-corretto-21.0.13.0.11-linux-x64",
+    "node": "/tmp/qa-v1-tooling/node-v22.16.0-linux-x64",
+    "testPython": "/tmp/qa-review-venv/bin/python",
+    "sdkTarget": "/tmp/qa-sdk-0157",
+    "generatedProtobuf": "/tmp/qa-v1-tooling/protobuf"
+  },
+  "finalChanges": "Only docs/findings/v1-implementation-verification.md and this fresh evidence directory; build/cache outputs ignored. No tracked implementation edits.",
+  "rawLogs": "Locally saved; existing *.log ignore rule unchanged; not staged"
+}

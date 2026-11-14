@@ -1,0 +1,14 @@
+{
+  "api": "http://localhost:58305",
+  "mock": "http://127.0.0.1:59963",
+  "frontend": "http://localhost:23000",
+  "ports": {
+    "ditto": 59963,
+    "provider001": 38075,
+    "provider002": 59745,
+    "preview": 35529,
+    "capture": 49809,
+    "backend": 58305
+  },
+  "dependencies": "prepared HTTP mocks plus controlled fleet capture; no live MQTT/Ditto"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "tire-unit-boundary",
+  "startedAt": "2026-11-14T05:21:14.705103+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "/tmp/qa-v1-tooling/unit_boundary_probe.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.62,
+  "output": "tire-unit-boundary.log"
+}

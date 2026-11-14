@@ -1,0 +1,14 @@
+{
+  "name": "transport-broker-cleanup",
+  "startedAt": "2026-11-14T05:25:40.486445+00:00",
+  "command": [
+    "docker",
+    "stop",
+    "qa-v1verify-transport"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.489,
+  "output": "transport-broker-cleanup.log"
+}

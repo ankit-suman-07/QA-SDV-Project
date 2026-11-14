@@ -1,0 +1,23 @@
+{
+  "name": "python-unit-final",
+  "startedAt": "2026-11-14T05:15:01.948181+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-ra",
+    "-p",
+    "no:cacheprovider",
+    "-m",
+    "not integration"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {
+    "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+  },
+  "exitCode": 0,
+  "durationSeconds": 17.521,
+  "output": "python-unit-final.log"
+}

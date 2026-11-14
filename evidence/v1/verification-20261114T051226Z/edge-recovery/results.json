@@ -1,0 +1,32 @@
+[
+  {
+    "check": "actual app MQTT outage/reconnect",
+    "result": "PASS",
+    "outageSeconds": 12
+  },
+  {
+    "check": "actual app002 restart then fresh publication",
+    "result": "PASS",
+    "commandToFirstObservedEventSeconds": 0.06776468600037333,
+    "includesDockerStopGraceAndStartup": true,
+    "availabilityAgainstRealDitto": "BLOCKED"
+  },
+  {
+    "check": "automatic edge002 recovery after KUKSA outage",
+    "result": "FAILED",
+    "outageSeconds": 12,
+    "providerDuringOutage": {
+      "Status": "exited",
+      "Running": false,
+      "ExitCode": 1,
+      "Error": ""
+    },
+    "providerAfterBrokerRestart": {
+      "Status": "exited",
+      "Running": false,
+      "ExitCode": 1,
+      "Error": ""
+    },
+    "manualTestOwnedProviderRestartRestoredPublication": true
+  }
+]

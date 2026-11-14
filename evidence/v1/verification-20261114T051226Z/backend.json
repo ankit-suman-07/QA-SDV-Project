@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "startedAt": "2026-11-14T05:14:28.485371+00:00",
+  "command": [
+    "bash",
+    "./mvnw",
+    "--batch-mode",
+    "--no-transfer-progress",
+    "-Dmaven.repo.local=/tmp/qa-m2",
+    "clean",
+    "verify"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project/backend",
+  "environmentOverrides": {
+    "JAVA_HOME": "/tmp/qa-v1-tooling/amazon-corretto-21.0.13.0.11-linux-x64",
+    "MAVEN_USER_HOME": "/tmp/qa-maven"
+  },
+  "exitCode": 0,
+  "durationSeconds": 31.772,
+  "output": "backend.log"
+}

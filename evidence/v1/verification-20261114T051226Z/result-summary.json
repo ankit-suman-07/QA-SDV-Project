@@ -1,0 +1,68 @@
+{
+  "overallVerdict": "DEFECTS FOUND",
+  "assessedHead": "ac701cd9a56ffd1031d6cd8744e413075ab4b955",
+  "python": {
+    "exitCode": 0,
+    "passed": 488,
+    "subtestsPassed": 385,
+    "skippedModules": 1,
+    "deselectedTests": 9,
+    "initialCollectionFailure": "3 missing-Protobuf import errors; generation in /tmp resolved; retained separately"
+  },
+  "backend": {
+    "exitCode": 0,
+    "tests": 208,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontend": {
+    "exitCode": 0,
+    "passed": 7,
+    "skipped": 0
+  },
+  "liveKuksaSignalTests": {
+    "exitCode": 0,
+    "passed": 9
+  },
+  "liveMqttTransportTests": {
+    "exitCode": 0,
+    "passed": 2
+  },
+  "mockJavaApiWriter": {
+    "exitCode": 0,
+    "checks": 12
+  },
+  "mockChrome": {
+    "exitCode": 0,
+    "checks": 9,
+    "pageErrors": []
+  },
+  "liveRoutingBoundary": {
+    "exitCode": 0,
+    "captureMessages": 28,
+    "description": "Actual Java A3/providers/KUKSA/apps/MQTT; actual ingress + MOCK in-memory writer"
+  },
+  "recovery": {
+    "mqttOutage": "PASS",
+    "appRestartFreshSource": "PASS; use app-restart/result.json, not superseded edge-recovery original timing",
+    "kuksaProviderAutomaticRecovery": "FAILED; provider exited1 and did not restart; test-owned manual restart restored publication"
+  },
+  "confirmedDefects": [
+    {
+      "id": "V1-F01",
+      "severity": "P2",
+      "description": "Provider002 fails to resume after its KUKSA broker returns; unhandled gRPC error and no restart policy"
+    },
+    {
+      "id": "V1-F02",
+      "severity": "P2",
+      "description": "Existing declared-kPa to legacy-psi boundary relabels raw value without conversion"
+    }
+  ],
+  "fullRealDittoIntegratedAcceptance": "BLOCKED",
+  "kantoV1_09": "BLOCKED; required separately tracked criterion, not deferred",
+  "releaseTagReadiness": "NOT READY",
+  "v2FromVerifiedIntegratedBaseline": "NOT ESTABLISHED",
+  "boundaries": "Component passes and real edge routing do not establish real twin/fleet/dashboard acceptance; submissions/approvals remain separate"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "mock-browser-smoke-port3000",
+  "startedAt": "2026-11-14T05:17:45.372488+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "/tmp/qa-v1-tooling/mock_browser_smoke_port3000.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 11.066,
+  "output": "mock-browser-smoke-port3000.log"
+}

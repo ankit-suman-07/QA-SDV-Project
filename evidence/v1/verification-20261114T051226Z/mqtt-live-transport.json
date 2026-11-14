@@ -1,0 +1,25 @@
+{
+  "name": "mqtt-live-transport",
+  "startedAt": "2026-11-14T05:20:34.859871+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-ra",
+    "-p",
+    "no:cacheprovider",
+    "-m",
+    "integration",
+    "velocitas-app/app/tests/test_v1_publisher_integration.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {
+    "V1_MQTT_TEST_HOST": "127.0.0.1",
+    "V1_MQTT_TEST_PORT": "28884"
+  },
+  "exitCode": 0,
+  "durationSeconds": 4.013,
+  "output": "mqtt-live-transport.log"
+}

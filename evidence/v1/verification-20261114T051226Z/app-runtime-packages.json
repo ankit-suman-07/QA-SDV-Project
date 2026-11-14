@@ -1,0 +1,17 @@
+{
+  "name": "app-runtime-packages",
+  "startedAt": "2026-11-14T05:20:36.601374+00:00",
+  "command": [
+    "docker",
+    "exec",
+    "qa-v1verify20261114-app-001-1",
+    "python3",
+    "-c",
+    "import sys,importlib.metadata as m; print(sys.version); print(\"\\n\".join(p+\"==\"+m.version(p) for p in (\"velocitas-sdk\",\"kuksa_client\",\"paho-mqtt\",\"grpcio\",\"protobuf\")))"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.114,
+  "output": "app-runtime-packages.log"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "post-recovery-services",
+  "startedAt": "2026-11-14T05:24:27.351383+00:00",
+  "command": [
+    "docker",
+    "compose",
+    "-p",
+    "qa-v1verify20261114",
+    "-f",
+    "vehicle-simulator/docker-compose.v1.yml",
+    "-f",
+    "evidence/v1/verification-20261114T051226Z/edge-override.yaml",
+    "ps",
+    "--all"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.158,
+  "output": "post-recovery-services.log"
+}

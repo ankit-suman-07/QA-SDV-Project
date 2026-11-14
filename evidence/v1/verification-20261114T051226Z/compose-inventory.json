@@ -1,0 +1,16 @@
+{
+  "name": "compose-inventory",
+  "startedAt": "2026-11-14T05:14:33.996378+00:00",
+  "command": [
+    "docker",
+    "compose",
+    "ls",
+    "--format",
+    "json"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.048,
+  "output": "compose-inventory.log"
+}

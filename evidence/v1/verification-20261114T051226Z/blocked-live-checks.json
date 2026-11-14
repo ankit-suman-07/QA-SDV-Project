@@ -1,0 +1,21 @@
+{
+  "state": "BLOCKED",
+  "reason": "No existing Ditto container/deployment, no configured Ditto read/write credentials and no approved authentication subject mapping were available. No credentials invented; real policies/twins not provisioned.",
+  "checks": [
+    "healthy live individual/fleet Thing snapshots",
+    "command fault/recovery observed through real twin/API/fleet/dashboard",
+    "real Ditto authentication failure and recovery",
+    "real twin write failure, watermark persistence and broker replay",
+    "real fleet write outage/recovery",
+    "real source silence at A2/A5 configured5s/30s boundaries",
+    "Linux/Kanto V1-09"
+  ],
+  "nextPrerequisites": [
+    "Approved isolated Ditto HTTP deployment",
+    "SDV_DITTO_BASE_URL, SDV_DITTO_USERNAME, SDV_DITTO_PASSWORD securely supplied for B1/B2",
+    "Ankit read/fleet service credentials and approved Ditto subject IDs",
+    "Create-only provisioning using ditto.v1 and scripts/v1_fleet_provision.py",
+    "Agreed one ingress writer per individual feature and one enabled fleet writer",
+    "Bayan Linux/Kanto device/image/endpoint approval for V1-09"
+  ]
+}

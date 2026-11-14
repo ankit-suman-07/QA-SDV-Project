@@ -1,0 +1,14 @@
+{
+  "automated": "208 Java + 488 Python + 385 subtests + 7 frontend; 9 live KUKSA and2 real MQTT transport separately",
+  "mock": "12 packaged-Java API/writer checks +9 Chrome checks; source freshness/auth/read/write failures tested by production unit/mock code",
+  "blocked": [
+    "Real Eclipse Ditto auth/policies/provisioning",
+    "Real MQTT-to-individual-twin persistence",
+    "Real twin-to-A2/A5/browser health cycle",
+    "Real fleet Thing writes and outage/recovery",
+    "Real source silence -> A2/A5 5s/30s boundaries",
+    "Linux/Kanto V1-09",
+    "Formal contract approval/provenance and Phase V1 release/report/video"
+  ],
+  "registration": "V1 maps exactly two canonical IDs; legacy registry defaults to003 as backward compatibility, not a third V1 edge"
+}

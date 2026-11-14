@@ -1,0 +1,15 @@
+{
+  "name": "runtime-python-packages",
+  "startedAt": "2026-11-14T05:20:36.466015+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "-c",
+    "import importlib.metadata as m; print(\"\\n\".join(p+\"==\"+m.version(p) for p in (\"pytest\",\"grpcio\",\"grpcio-tools\",\"protobuf\",\"kuksa_client\",\"paho-mqtt\",\"requests\")))"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.089,
+  "output": "runtime-python-packages.log"
+}

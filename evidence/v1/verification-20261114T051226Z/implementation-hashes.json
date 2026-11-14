@@ -1,0 +1,12 @@
+{
+  "ditto/mqtt_ingress.py": "6220941db1a16344b597f26ea4d04165a0949e4cb9c64b63856f38e3a9231605",
+  "ditto/mqtt_subscriber.py": "d4794343dfe60109bedbbac3fe2c69af15aa7812c0f33f126f733296982e7eab",
+  "ditto/v1_writer.py": "dbf7752244fcfa48684a29e27a29ba61f610ef96575da3297474d7b9f096a77b",
+  "backend/src/main/java/com/ankit/sdv/backend/service/FleetService.java": "481814eac2d5753359f151c55cea3928b103768e0dbb5f38212c1286312cded8",
+  "backend/src/main/java/com/ankit/sdv/backend/service/FleetMaterializer.java": "9d6c69ccf2e772acf3d9ae641726b565e94b876f933929c57d68ab9466a5f952",
+  "backend/src/main/java/com/ankit/sdv/backend/adapter/ditto/HttpVehicleTwinReader.java": "0f51cbd54ca07c2647b23f4f80fa5c1cc78269fa7dac99fb2ab9d55f7c2b7a6b",
+  "backend/src/main/java/com/ankit/sdv/backend/adapter/simulator/HttpSimulatorControlAdapter.java": "5736c234939a8bf840ac868bac2d48097263226ee878c5ac60ac9a8d0b1aaac8",
+  "velocitas-app/app/src/v1_publisher.py": "b6068c100ce15d6a0eb21d180033c01fa7cd5b1b0b26291d2ab32cc5371845c6",
+  "velocitas-app/app/src/v1_event.py": "bf0a9dd5a9481e5bf30342164aa1bcbf33e3328e373c62a4614201e0ba9983f5",
+  "vehicle-simulator/docker-compose.v1.yml": "8c42ae931f577b662615c5e6e06fb94fab8b4c8471fac858922f17d7a0ef7247"
+}

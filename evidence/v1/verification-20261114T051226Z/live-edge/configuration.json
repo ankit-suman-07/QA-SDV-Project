@@ -1,0 +1,30 @@
+{
+  "javaCommand": [
+    "/tmp/qa-v1-tooling/amazon-corretto-21.0.13.0.11-linux-x64/bin/java",
+    "-jar",
+    "backend/target/backend-0.0.1-SNAPSHOT.jar",
+    "--server.address=127.0.0.1",
+    "--server.port=28082",
+    "--sdv.simulator.mode=http",
+    "--sdv.simulator.providers[vehicle-001]=http://127.0.0.1:28091",
+    "--sdv.simulator.providers[vehicle-002]=http://127.0.0.1:28092",
+    "--sdv.v1.ditto.mode=live",
+    "--sdv.v1.ditto.base-url=http://127.0.0.1:8080",
+    "--sdv.v1.fleet.enabled=false",
+    "--sdv.vehicles.ids=vehicle-001,vehicle-002"
+  ],
+  "compose": [
+    "docker",
+    "compose",
+    "-p",
+    "qa-v1verify20261114",
+    "-f",
+    "vehicle-simulator/docker-compose.v1.yml",
+    "-f",
+    "evidence/v1/verification-20261114T051226Z/edge-override.yaml"
+  ],
+  "backendBoundary": "LIVE A3 to actual providers; Ditto absent at default port8080; A2/fleet must show unavailable; materializer disabled because real credentials unavailable",
+  "ingressBoundary": "Actual Subscriber+Ingress with IN-MEMORY RecordingWriter. NOT Eclipse Ditto; simulated writer failures/restart watermarks are MOCK-VERIFIED",
+  "providerIntervalSeconds": 5,
+  "appPollSeconds": 2
+}

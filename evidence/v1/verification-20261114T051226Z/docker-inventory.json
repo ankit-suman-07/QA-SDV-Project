@@ -1,0 +1,16 @@
+{
+  "name": "docker-inventory",
+  "startedAt": "2026-11-14T05:14:33.933544+00:00",
+  "command": [
+    "docker",
+    "ps",
+    "-a",
+    "--format",
+    "{{json .}}"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {},
+  "exitCode": 0,
+  "durationSeconds": 0.018,
+  "output": "docker-inventory.log"
+}

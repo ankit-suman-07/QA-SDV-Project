@@ -1,0 +1,25 @@
+{
+  "name": "kuksa-live-signals",
+  "startedAt": "2026-11-14T05:20:33.684010+00:00",
+  "command": [
+    "/tmp/qa-review-venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-ra",
+    "-p",
+    "no:cacheprovider",
+    "-m",
+    "integration",
+    "vehicle-simulator/tests/test_kuksa_publication.py"
+  ],
+  "cwd": "/home/ankitsuman/Desktop/SDV/QA-SDV-Project",
+  "environmentOverrides": {
+    "DATABROKER_HOST": "127.0.0.1",
+    "DATABROKER_PORT": "56556"
+  },
+  "exitCode": 0,
+  "durationSeconds": 0.727,
+  "output": "kuksa-live-signals.log"
+}

@@ -1,0 +1,23 @@
+{
+  "checks": [
+    "actual Java backend ready",
+    "ingress connected",
+    "two actual edges publish healthy through real MQTT into mock writer",
+    "observed CRITICAL after INJECT_SCENARIO",
+    "matching mock-writer event for INJECT_SCENARIO",
+    "observed HEALTHY after CLEAR_SCENARIO",
+    "matching mock-writer event for CLEAR_SCENARIO",
+    "recovery observed at35m",
+    "source silence preserves original002 source/event while001 continues; real A2 aging blocked by absent Ditto",
+    "six isolated malformed/unknown/mismatched/duplicate/equal/late messages leave mock twin unchanged",
+    "ingress connected",
+    "subscriber restart reloads mock-writer watermark and rejects duplicate",
+    "simulated002 write outage encountered",
+    "mock-writer recovery progresses",
+    "real publisher deliveries QoS1 retain=false; IDs/source preserved into mock writer"
+  ],
+  "recordedMessages": 28,
+  "simulatedWriteFailures": 1,
+  "realDitto": "BLOCKED",
+  "realTwinApiFleetDashboardAcceptance": "BLOCKED"
+}
