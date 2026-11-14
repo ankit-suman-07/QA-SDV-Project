@@ -1,5 +1,7 @@
 import random
 
+from lidar_trajectory import distance, next_step
+
 
 NORMAL_LIDAR_DISTANCE_M = 35.0
 LIDAR_WARNING_DISTANCE_M = 10.0
@@ -23,6 +25,7 @@ def initial_state():
         "tire_pressure": 32.0,
         "coolant_pressure": 200.0,
         "lidar_distance_m": NORMAL_LIDAR_DISTANCE_M,
+        "lidar_step": 0,
         "lidar_sensor_healthy": True,
         "obstacle_warning": False,
         "autonomous_braking": False,
@@ -37,6 +40,7 @@ def next_state(
 ):
     (
         lidar_distance,
+        lidar_step,
         lidar_sensor_healthy,
         obstacle_warning,
         autonomous_braking,
@@ -109,6 +113,7 @@ def next_state(
         "tire_pressure": tire_pressure,
         "coolant_pressure": coolant_pressure,
         "lidar_distance_m": lidar_distance,
+        "lidar_step": lidar_step,
         "lidar_sensor_healthy": lidar_sensor_healthy,
         "obstacle_warning": obstacle_warning,
         "autonomous_braking": autonomous_braking,
@@ -148,33 +153,16 @@ def _next_lidar_state(
     obstacle,
     lidar_failure,
 ):
-    current_distance = state.get(
-        "lidar_distance_m",
-        NORMAL_LIDAR_DISTANCE_M,
-    )
+    # The ladder rung is kept separately from the published distance, so a
+    # sensor failure pauses the scenario instead of resetting it.
+    lidar_step = state.get("lidar_step", 0)
 
     if lidar_failure:
         lidar_distance = 0.0
         lidar_sensor_healthy = False
-    elif obstacle:
-        lidar_distance = max(
-            1.0,
-            current_distance - random.uniform(2, 5),
-        )
-        lidar_sensor_healthy = True
-    elif current_distance < NORMAL_LIDAR_DISTANCE_M:
-        lidar_distance = min(
-            NORMAL_LIDAR_DISTANCE_M,
-            current_distance + random.uniform(2, 5),
-        )
-        lidar_sensor_healthy = True
     else:
-        lidar_distance = _bounded_random_change(
-            current_distance,
-            "lidar_distance_m",
-            -1,
-            1,
-        )
+        lidar_step = next_step(lidar_step, obstacle)
+        lidar_distance = distance(lidar_step)
         lidar_sensor_healthy = True
 
     obstacle_warning = (
@@ -190,6 +178,7 @@ def _next_lidar_state(
 
     return (
         lidar_distance,
+        lidar_step,
         lidar_sensor_healthy,
         obstacle_warning,
         autonomous_braking,

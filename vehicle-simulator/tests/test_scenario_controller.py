@@ -174,3 +174,54 @@ def test_autonomous_scenarios_are_supported(scenario):
         vehicle_id=VEHICLE_ID,
         scenario=scenario,
     ) is True
+
+from scenario_controller import WrongVehicleError  # noqa: E402
+
+ALLOWED = "vehicle-002"
+
+
+def test_wrong_vehicle_is_rejected_without_state_change():
+    controller = ScenarioController(allowed_vehicle_id=ALLOWED)
+    with pytest.raises(
+        WrongVehicleError,
+        match="provider serves vehicle-002, not vehicle-001",
+    ):
+        controller.execute(
+            vehicle_id="vehicle-001",
+            action="INJECT_SCENARIO",
+            scenario="LIDAR_OBSTRUCTION",
+            action_id="a",
+            trace_id="t",
+        )
+    assert controller.get_state(ALLOWED, "LIDAR_OBSTRUCTION")["actionId"] is None
+    with pytest.raises(WrongVehicleError):
+        controller.is_active("vehicle-001", "LIDAR_OBSTRUCTION")
+    with pytest.raises(WrongVehicleError):
+        controller.get_state("vehicle-001", "LIDAR_OBSTRUCTION")
+
+
+def test_padded_vehicle_id_is_rejected():
+    controller = ScenarioController(allowed_vehicle_id=ALLOWED)
+    with pytest.raises(WrongVehicleError):
+        controller.is_active(" vehicle-002", "LIDAR_OBSTRUCTION")
+
+
+@pytest.mark.parametrize("bad", ["", "   ", None, 2, ["vehicle-002"]])
+def test_blank_or_non_string_id_is_plain_value_error(bad):
+    controller = ScenarioController(allowed_vehicle_id=ALLOWED)
+    with pytest.raises(ValueError) as error:
+        controller.is_active(bad, "LIDAR_OBSTRUCTION")
+    assert not isinstance(error.value, WrongVehicleError)
+
+
+def test_allowed_vehicle_executes_normally():
+    controller = ScenarioController(allowed_vehicle_id=ALLOWED)
+    state = controller.execute(
+        vehicle_id=ALLOWED,
+        action="INJECT_SCENARIO",
+        scenario="LIDAR_OBSTRUCTION",
+        action_id="a",
+        trace_id="t",
+    )
+    assert state["active"] is True
+    assert controller.allowed_vehicle_id == ALLOWED
