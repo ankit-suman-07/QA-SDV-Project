@@ -1,0 +1,17 @@
+services:
+  mqtt:
+    ports: !override ["127.0.0.1:29883:1883"]
+  kuksa-001:
+    ports: !override ["127.0.0.1:57556:55555"]
+  kuksa-002:
+    ports: !override ["127.0.0.1:57557:55555"]
+  provider-001:
+    image: qa-provider-recovery:fixed
+    ports: !override ["127.0.0.1:29091:8090"]
+  provider-002:
+    image: qa-provider-recovery:fixed
+    ports: !override ["127.0.0.1:29092:8090"]
+  app-001:
+    image: qa-v1verify-app:20261114
+  app-002:
+    image: qa-v1verify-app:20261114
