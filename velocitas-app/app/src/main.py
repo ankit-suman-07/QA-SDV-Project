@@ -10,9 +10,9 @@ from kuksa_reconnect import reconnect
 from v1_event import (
     ObservationGate,
     observation_from_datapoints,
-    serialize,
     topic,
 )
+from v1_publisher import deliver, pub_client_of
 from vehicle import Vehicle, vehicle  # type: ignore
 from velocitas_sdk.util.log import (  # type: ignore
     get_opentelemetry_log_factory,
@@ -104,6 +104,8 @@ class AutonomousHealthApp(VehicleApp):
         self._v1_gate = ObservationGate(VEHICLE_ID)
         self._v1_topic = topic(VEHICLE_ID)
         self._v1_last_skip_logged = None
+        # QoS 1 publisher for v1 events (the SDK's publish_event sends QoS 0).
+        self._v1_mqtt = pub_client_of(self.pubsub_client)
 
     async def on_start(self):
         logger.info(
@@ -145,8 +147,9 @@ class AutonomousHealthApp(VehicleApp):
         """Publish a contract v1 health event when there is a new reading.
 
         sourceTimestamp is the broker timestamp of the LiDAR reading, never
-        the poll or publish time. A failed publish stays pending and is
-        retried unchanged on the next poll.
+        the poll or publish time. Events go out at QoS 1, retain=false; one
+        that is not acknowledged stays pending and is retried unchanged
+        (same eventId and sourceTimestamp) on the next poll.
         """
         observation = observation_from_datapoints(
             datapoints.get(LIDAR_DISTANCE_PATH),
@@ -167,20 +170,18 @@ class AutonomousHealthApp(VehicleApp):
         if event is None:
             return
 
-        result = await self.pubsub_client.publish_event(
+        if not await deliver(
+            self._v1_gate,
+            event,
+            self._v1_mqtt,
             self._v1_topic,
-            serialize(event),
-        )
-        result_code = getattr(result, "rc", 0)
-        if result_code != 0:
+        ):
             logger.warning(
-                "v1: publish failed (rc=%s); will retry eventId=%s",
-                result_code,
+                "v1: publish not acknowledged; will retry eventId=%s",
                 event["eventId"],
             )
             return
 
-        self._v1_gate.mark_published(event)
         logger.info(
             "v1: published topic=%s eventId=%s health=%s "
             "sourceTimestamp=%s",
