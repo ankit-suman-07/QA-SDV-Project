@@ -12,13 +12,13 @@ ______________ ERROR at setup of test_health_endpoint_returns_ok _______________
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:22: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:22:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -51,13 +51,13 @@ _____________ ERROR at setup of test_post_action_injects_scenario ______________
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:22: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:22:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -90,13 +90,13 @@ __________ ERROR at setup of test_invalid_action_returns_bad_request ___________
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:22: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:22:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -129,13 +129,13 @@ _________ ERROR at setup of test_chunked_post_action_injects_scenario __________
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:22: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:22:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -168,13 +168,13 @@ _______ ERROR at setup of test_get_scenario_state_returns_action_context _______
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:22: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:22:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -207,13 +207,13 @@ __________ ERROR at setup of test_post_for_other_vehicle_returns_409 ___________
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:192: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:192:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -246,13 +246,13 @@ _______ ERROR at setup of test_context_get_for_other_vehicle_returns_409 _______
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:192: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:192:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -285,13 +285,13 @@ ___ ERROR at setup of test_context_get_for_url_encoded_padded_id_returns_409 ___
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:192: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:192:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>
@@ -324,13 +324,13 @@ ___________ ERROR at setup of test_non_string_vehicle_id_returns_400 ___________
             port=0,
         )
 
-vehicle-simulator/tests/test_control_server.py:192: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+vehicle-simulator/tests/test_control_server.py:192:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 vehicle-simulator/src/control_server.py:199: in start_control_server
     server = ThreadingHTTPServer(
 ../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/socketserver.py:453: in __init__
     self.socket = socket.socket(self.address_family,
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <socket.socket fd=-1, family=0, type=0, proto=0>
 family = <AddressFamily.AF_INET: 2>, type = <SocketKind.SOCK_STREAM: 1>

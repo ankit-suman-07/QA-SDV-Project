@@ -121,7 +121,7 @@ ___________ test_runtime_bridge_uses_kpa_conversion_before_protobuf ____________
         value = next(k.value for k in calls[0].keywords if k.arg=='tire_pressure_psi')
 >       assert ast.unparse(value) == 'kpa_to_psi(tire_fl)'
 E       AssertionError: assert 'float(tire_fl)' == 'kpa_to_psi(tire_fl)'
-E         
+E
 E         - kpa_to_psi(tire_fl)
 E         + float(tire_fl)
 

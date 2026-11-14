@@ -9,7 +9,7 @@ kpa = 165, psi = 23.931208726
         from ditto.pressure_units import kpa_to_psi
 >       assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
 E       assert 23.931226725485775 == 23.931208726 ± 1.0e-08
-E         
+E
 E         comparison failed
 E         Obtained: 23.931226725485775
 E         Expected: 23.931208726 ± 1.0e-08
@@ -24,7 +24,7 @@ kpa = 193, psi = 27.992262328
         from ditto.pressure_units import kpa_to_psi
 >       assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
 E       assert 27.992283381931845 == 27.992262328 ± 1.0e-08
-E         
+E
 E         comparison failed
 E         Obtained: 27.992283381931845
 E         Expected: 27.992262328 ± 1.0e-08
@@ -39,7 +39,7 @@ kpa = 221, psi = 32.053315931
         from ditto.pressure_units import kpa_to_psi
 >       assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
 E       assert 32.05334003837792 == 32.053315931 ± 1.0e-08
-E         
+E
 E         comparison failed
 E         Obtained: 32.05334003837792
 E         Expected: 32.053315931 ± 1.0e-08

@@ -1,5 +1,5 @@
 [uProtocol Publisher] VehicleStatusUpdated eventId=ee932b29-d936-42d7-af11-277f45272025 bytes=245
-[uProtocol Receiver] VehicleStatusUpdated eventId=ee932b29-d936-42d7-af11-277f45272025 receptionTimestamp=2026-11-14T06:14:00.915362+00:00 battery=80.0 
+[uProtocol Receiver] VehicleStatusUpdated eventId=ee932b29-d936-42d7-af11-277f45272025 receptionTimestamp=2026-11-14T06:14:00.915362+00:00 battery=80.0
 [
   {
     "phase": "healthy",

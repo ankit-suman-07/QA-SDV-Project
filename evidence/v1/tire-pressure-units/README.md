@@ -42,3 +42,5 @@ Branch is independent of provider recovery but overlaps in provider main. Rebase
 ## Merge preview
 
 A three-tree preview against the common baseline confirms **content conflicts in `vehicle-simulator/src/main.py`**. [Preview](merge-preview.txt) contains both branches’ source, not an accepted resolution. Recommended order: recovery first, then rebase pressure on updated main and use `publication_values(observation)` inside the recovered loop with `timeout=2.0`. Keep the helper definition and both sets of tests. This is an integration conflict, not a functional dependency; the pressure branch remains independently based on main.
+
+Captured text artifacts have trailing whitespace/excess final blank lines normalized for the branch-to-main whitespace check. [Normalization record](text-normalization.json) preserves before/after hashes; original checkpoint blobs remain in Git history. Test outcomes/content are unchanged.
