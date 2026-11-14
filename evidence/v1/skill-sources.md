@@ -62,12 +62,46 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
   - isolation run: vehicle-001 kept publishing while provider-002 was stopped
   - baseline MVP demo: passed
   - full suite: 192 passed, 4 skipped
-- **Implementation reference:** commits `cb976cb`..`1a6f50d` on `emmanuel/feature/v1-two-vehicle-edge`. The PR link is still to be added.
+- **Implementation reference:** commits `cb976cb`..`1a6f50d` on `emmanuel/feature/v1-two-vehicle-edge`, [PR #33](https://github.com/ankit-suman-07/QA-SDV-Project/pull/33).
 - **Limitations:**
   - QoS 0 publishing, as above.
   - After a restart, the first event can be delayed by up to 5 s.
   - The reconnect path is covered by unit tests only. A live KUKSA restart recovered without it being triggered.
   - Fault/recovery (E2) and Ditto/API integration are not covered.
+
+### E2: deterministic vehicle-002 LiDAR fault and recovery (V1-03, edge part)
+
+- **Task and acceptance ID:** E2, V1-03 (edge part). Branch `emmanuel/feature/v1-lidar-scenarios`, owner Emmanuel.
+- **Skill, upstream commit and invocation evidence:** the same Superpowers 6.4.2 plugin as E1, invoked through Claude Code's Skill tool:
+
+  | Skill | Use in E2 | Output |
+  |---|---|---|
+  | `brainstorming` | Scope, three approaches, design in three approved parts | Spec `2df2826` |
+  | `writing-plans` | 6 TDD tasks with a Review Focus list of five uncovered cases | Plan `2fcac7c` |
+  | `executing-plans` | Ran the plan in one session with a per-task ledger, then one fresh-context review of the whole branch | `f4a9b8e`..`516b2f3` |
+  | `test-driven-development` | Every behaviour change started as a failing test, including the review fixes | Tests in `vehicle-simulator/tests/`, `tests/test_v1_lidar_cycle_script.py` |
+  | `finishing-a-development-branch` | Merge, PR or keep decision; the branch was kept for a PR | No merge or push without the owner's request |
+
+- **Spec revision and expected behavior:** [design](../../docs/superpowers/specs/2026-11-11-v1-lidar-scenarios-design.md) at `2df2826`, against contract 1.0.0 sections C2, C4, C5, C8 and C9. Inject on vehicle-002 steps the LiDAR distance `35 → 20 → 8 → 3` m, one rung per tick; clear steps it back. vehicle-001 stays HEALTHY. A provider returns 409 for any other vehicle ID.
+- **Generated output and human review:** Emmanuel chose:
+  - a fixed ramp over an instant jump or a seeded random ramp
+  - a fixed 35 m idle distance
+  - approach A (a separate trajectory module and an identity check in the controller)
+  - approval of each design part and of the spec, then in-session execution
+
+  Three implementer rulings are recorded in the PR: test helper shapes, waiting for a real HEALTHY event before injecting, and loading the provider's `main.py` by path. The final review found one Important issue: the script's exit trap could miss an applied inject. It was fixed test-first in `1b58120`. Two Minor findings were fixed test-first afterwards in `6ad55b4` (request time limits, a `FAIL:` line when the provider is unreachable). The other four are listed in the PR as deferred.
+- **Verification:** see [E2 record](E2-lidar-cycle.md):
+  - two live cycles with `cycleComplete: true` and the same distances
+  - a 409 for the wrong vehicle
+  - the interrupt and stack-down checks
+  - a third live cycle after merging `main`, at `6ad55b4`
+  - full suite after merging `main`: 472 passed, 5 skipped
+- **Implementation reference:** branch `emmanuel/feature/v1-lidar-scenarios`. The PR link is still to be added.
+- **Limitations:**
+  - Spring Boot, Ditto and the UI were not part of this run.
+  - `LIDAR_SENSOR_FAILURE` is covered by unit tests only.
+  - Publisher QoS is still 0.
+
 ## A5 actual usage — November 12, 2026
 
 - Task/acceptance: A5, primarily V1-08, supporting V1-03/04/05/06/07.
