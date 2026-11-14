@@ -13,7 +13,7 @@
 | Historical CI | The [October Testing and DevOps Report](https://chatgpt.com/library?file_id=libfile_6e6d9fdc09a48191a778ee3ee9339f59&account_id=personal) reports six passing checks for PR #27, including the scenario and nine live KUKSA signal checks. This rerun records the demo only. |
 | Performance measurements | A separate timing run passed all five trials for `vehicle-001`. See the results below. |
 
-Keep two-vehicle isolation and live Ditto and Spring Boot checks in the separate Course V1 evidence.
+Keep two-vehicle isolation and live Ditto and Spring Boot checks in the separate Phase V1 evidence.
 
 ## MVP timing results
 
@@ -38,3 +38,7 @@ LiDAR obstruction in each trial. It measures elapsed time from each HTTP
 command to receipt of the expected MQTT status for `vehicle-001`.
 
 The updated demo script uses one host monotonic clock to measure elapsed time from immediately before the HTTP request to receipt of the expected MQTT status for the selected vehicle. These times include the simulated scenario's progression and the status delivery path. All five trials are included. The first fault trial took 42.43 s, and the CSV does not establish the cause.
+
+## Clarification — November 14, 2026 UTC
+
+The referenced `mvp-demo.log` is missing from the inspected repository and has no tracked history at that path. The run description above is preserved as the historical record, not newly reproduced verification. `mvp-revision.txt` contains `f06aa9583d23d1aee0ff87313186d1398f05fe7a`; `098fd2e` is its direct child and changes only evidence scaffolding, so their implementation code is identical. The exact previous-term submission and the separate timing run's tested revision remain unresolved. Neither hash has been overwritten or assigned to that timing run. See the [MVP → Phase V1 comparison](../../docs/findings/mvp-to-v1-comparison.md) for history, exact recalculated statistics and evidence limitations.

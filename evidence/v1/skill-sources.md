@@ -1,4 +1,4 @@
-# Course V1 skill sources and usage
+# Phase V1 skill sources and usage
 
 These are candidate pre-prepared skills from the [Superpowers repository](https://github.com/obra/superpowers). Pin the upstream commit and preserve the original files and license when adopting a skill. Record actual usage as work happens.
 
