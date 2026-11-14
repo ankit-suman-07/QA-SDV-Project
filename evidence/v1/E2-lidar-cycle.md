@@ -100,5 +100,5 @@ The run also includes WARNING events (`faults: ["LIDAR_OBSTRUCTION"]`, distance 
   - the Spring Boot control entry point, Ditto twins, the API or the UI. The full V1-03 run repeats this cycle through `POST /api/v1/diagnostics/actions`.
   - `LIDAR_SENSOR_FAILURE` and cooling. Both are still supported and covered by unit tests, but neither was run live.
 - **Dev tool:** the capture oracle in `scripts/v1_dev` labels its own output `mockTool: true`. The events it checked were published by the real providers, KUKSA brokers and Velocitas apps.
-- **Publisher QoS is still 0**, the same open question as in E1.
+- **Publisher QoS:** the runs above were at QoS 0. After the E1 QoS 1 fix (`a3e20c1`) was merged into this branch, the cycle passed live again at `00ff23a` (36 events, `cycleComplete: true`), now publishing at QoS 1, retain false.
 - **Timing:** each ladder step lasts one 5 s tick and the app polls every 2 s, so a short WARNING step could in principle be missed. CRITICAL is held for as long as the scenario is active, so the cycle check does not depend on catching WARNING.
