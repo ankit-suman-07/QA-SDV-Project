@@ -1,0 +1,284 @@
+{
+  "at": "2026-11-15T15:58:47.300509+00:00",
+  "refs": {
+    "main": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+    "ankit/fix/v1-ditto-feature-initialization": "cd89160ccdd1b65901d365e46431b1af73ea1efc",
+    "ankit/fix/v1-ditto-http-compatibility": "0a010eb30e81a63595638b88f81096dc561c5b28",
+    "ankit/fix/v1-graceful-app-shutdown": "52113759df178057c24749cbd4baef5303c67589",
+    "ankit/test/v1-release-candidate-20261115": "49f8b8d59eeef7245ba643f9f88f86709c44e99a"
+  },
+  "includesD8c1f40": true,
+  "fullCombinedAfterD8c1f40": "PENDING",
+  "kantoAfterD8c1f40": "PENDING",
+  "priorFullCandidate": "6a6badc207e3cf43f6bba1d1c9584538d6450fed",
+  "priorKantoSource": "6ad9a4bef847f55fe735b71632adb7690dee43f9",
+  "prs": [
+    {
+      "headRefOid": "cd89160ccdd1b65901d365e46431b1af73ea1efc",
+      "isDraft": true,
+      "number": 44,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:23:34Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555461/job/132858758589",
+          "name": "Backend tests",
+          "startedAt": "2026-11-15T15:22:52Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:23:52Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555558/job/132859008944",
+          "name": "Offline acceptance assertion controls (no live services)",
+          "startedAt": "2026-11-15T15:23:44Z",
+          "status": "COMPLETED",
+          "workflowName": "Phase V1 real two-vehicle acceptance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:24:48Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555673/job/132858758796",
+          "name": "Synthetic pipeline integration",
+          "startedAt": "2026-11-15T15:22:51Z",
+          "status": "COMPLETED",
+          "workflowName": "Pipeline integration"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:23:22Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555461/job/132858758241",
+          "name": "Python unit tests",
+          "startedAt": "2026-11-15T15:22:51Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:30:50Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555558/job/132859008639",
+          "name": "Real two-vehicle core (Kanto and release remain separate)",
+          "startedAt": "2026-11-15T15:23:43Z",
+          "status": "COMPLETED",
+          "workflowName": "Phase V1 real two-vehicle acceptance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:22:58Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555461/job/132858758632",
+          "name": "Configuration validation",
+          "startedAt": "2026-11-15T15:22:51Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:23:11Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555461/job/132858758539",
+          "name": "Docker build (provider)",
+          "startedAt": "2026-11-15T15:22:51Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:24:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43729555461/job/132858758547",
+          "name": "Docker build (autonomous-health-app)",
+          "startedAt": "2026-11-15T15:22:52Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        }
+      ],
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/pull/44"
+    },
+    {
+      "headRefOid": "0a010eb30e81a63595638b88f81096dc561c5b28",
+      "isDraft": true,
+      "number": 45,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:07:54Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061143/job/132854231428",
+          "name": "Backend tests",
+          "startedAt": "2026-11-15T15:07:07Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:07:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061172/job/132854231157",
+          "name": "Offline acceptance assertion controls (no live services)",
+          "startedAt": "2026-11-15T15:07:06Z",
+          "status": "COMPLETED",
+          "workflowName": "Phase V1 real two-vehicle acceptance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:09:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061153/job/132854231159",
+          "name": "Synthetic pipeline integration",
+          "startedAt": "2026-11-15T15:07:06Z",
+          "status": "COMPLETED",
+          "workflowName": "Pipeline integration"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:07:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061143/job/132854231380",
+          "name": "Python unit tests",
+          "startedAt": "2026-11-15T15:07:07Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:15:43Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061172/job/132854231436",
+          "name": "Real two-vehicle core (Kanto and release remain separate)",
+          "startedAt": "2026-11-15T15:07:07Z",
+          "status": "COMPLETED",
+          "workflowName": "Phase V1 real two-vehicle acceptance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:07:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061143/job/132854231218",
+          "name": "Configuration validation",
+          "startedAt": "2026-11-15T15:07:06Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:07:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061143/job/132854231399",
+          "name": "Docker build (provider)",
+          "startedAt": "2026-11-15T15:07:06Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:08:50Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43728061143/job/132854231519",
+          "name": "Docker build (autonomous-health-app)",
+          "startedAt": "2026-11-15T15:07:07Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        }
+      ],
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/pull/45"
+    },
+    {
+      "headRefOid": "52113759df178057c24749cbd4baef5303c67589",
+      "isDraft": true,
+      "number": 46,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731276/job/132868558901",
+          "name": "Synthetic pipeline integration",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Pipeline integration"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:58:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731350/job/132868559076",
+          "name": "Backend tests",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:57:40Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731283/job/132868558957",
+          "name": "Offline acceptance assertion controls (no live services)",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "COMPLETED",
+          "workflowName": "Phase V1 real two-vehicle acceptance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731283/job/132868559329",
+          "name": "Real two-vehicle core (Kanto and release remain separate)",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "Phase V1 real two-vehicle acceptance"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:58:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731350/job/132868559017",
+          "name": "Python unit tests",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:57:36Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731350/job/132868558808",
+          "name": "Configuration validation",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-15T15:57:52Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731350/job/132868559083",
+          "name": "Docker build (provider)",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "COMPLETED",
+          "workflowName": "CI"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "0001-01-01T00:00:00Z",
+          "conclusion": "",
+          "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43732731350/job/132868559106",
+          "name": "Docker build (autonomous-health-app)",
+          "startedAt": "2026-11-15T15:57:28Z",
+          "status": "IN_PROGRESS",
+          "workflowName": "CI"
+        }
+      ],
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/pull/46"
+    }
+  ]
+}

@@ -227,3 +227,21 @@ historical logs or pins were invented. New fix/candidate raw outputs, snapshots,
 images/source identities, screenshots and hashes are tracked and independently
 available. Human rubric/provenance disposition or original external artifacts
 remain necessary where those older records are required.
+
+
+## Final d8c1f40 inclusion and stop handoff
+
+Both current candidate and this stacked readiness branch **include**
+`d8c1f4048522da3e79a81e6ee5919017b941b00d` through shutdown checkpoint5211375.
+[Final references/CI snapshot](../../evidence/v1/release-readiness-20261115/final-checkpoint.json)
+and [persistent handoff](../../evidence/v1/release-readiness-20261115/HANDOFF.md).
+[Targeted latest verification](../../evidence/v1/app-shutdown-bounded-join-20261115/targeted-verification.json):
+214 app tests, two skips, and all five actual Docker cases exit0. A stalled join
+now fails nonzero within budget rather than hanging the default executor.
+
+The all-eight-green CI snapshot and full candidate results earlier in this document
+precede this final shutdown delta where identified. Latest shutdown-head CI must
+be checked separately. Full combined verification and Kanto on d8c1f40 remain
+**PENDING**. Earlier source6ad9a4b Kanto and candidate6a6badc full-suite/live results
+are retained as prior evidence, not relabelled. The user requested a clean stop
+checkpoint at8% remaining usage; no additional enhancement was started.

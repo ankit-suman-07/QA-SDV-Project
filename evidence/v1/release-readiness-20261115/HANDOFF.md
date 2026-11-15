@@ -1,0 +1,55 @@
+# Persistent Phase V1 handoff — final stop checkpoint
+
+No merges, tags, releases, approvals or report/video work performed.
+
+## Exact references
+
+- main — `6a965bbaf5966d096e18c57058cfdbee6185ee2e`
+- ankit/fix/v1-ditto-feature-initialization — `cd89160ccdd1b65901d365e46431b1af73ea1efc` https://github.com/ankit-suman-07/QA-SDV-Project/pull/44
+- ankit/fix/v1-ditto-http-compatibility — `0a010eb30e81a63595638b88f81096dc561c5b28` https://github.com/ankit-suman-07/QA-SDV-Project/pull/45
+- ankit/fix/v1-graceful-app-shutdown — `52113759df178057c24749cbd4baef5303c67589` https://github.com/ankit-suman-07/QA-SDV-Project/pull/46
+- ankit/test/v1-release-candidate-20261115 — `49f8b8d59eeef7245ba643f9f88f86709c44e99a`
+
+- Shutdown source: `d8c1f4048522da3e79a81e6ee5919017b941b00d`; branch checkpoint5211375 includes targeted evidence.
+- Readiness: `ankit/docs/v1-release-readiness`, stacked on candidate; draft PR reference added after creation. Resolve current exact head with git rev-parse or gh pr view.
+
+## Verified and pending
+
+- F03:532 Python tests/386 subtests,2 skips/9 deselections; real isolated first-event initialization, conditional properties update and restart PASS. PR44 prior exact head all8 CI PASS.
+- F04:209 Java tests; actual baseline400/fixed individual reads+fleet writes through original nginx PASS. PR45 exact head all8 CI PASS.
+- Previous combined candidate6a6badc:540 Python/386 subtests,209 Java,7 frontend;2 skips/9 deselections; nine affected real gates/five fault+clear trials PASS. This source PRECEDES d8c1f40.
+- Prior Kanto source6ad9a4b: three managed cycles and158 final healthy001 samples PASS. This source PRECEDES d8c1f40.
+- d8c1f40:214 app tests,2 skips PASS. Confirmed stalled-join red timed out9s; corrected regression returns NONZERO incomplete-cleanup error within budget. Five actual-image Docker cases all application exits0, fresh real-Ditto polling matches, absent broker/KUKSA and unacknowledged publication checked.
+- Current candidate AND readiness branch include d8c1f40. Final combined verification and Kanto on this final delta PENDING. Latest shutdown/docs exact-head CI pending inspection/completion. Do not relabel previous PASS as final main.
+
+## Resume order — no enhancement first
+
+1. Inspect clean/dirty state in all persistent worktrees; inspect latest PR heads/status and do not duplicate PRs.
+2. Verify exact latest shutdown-head CI. On current candidate run relevant combined regression/smoke; full combined re-verification is pending. Preserve previous full-run evidence and reuse unaffected gates explicitly.
+3. If privileged Kanto delta check is needed, use own terminal: sudo -v, then persistent Python evidence/v1/app-shutdown-bounded-join-20261115/kanto_lifecycle.py from app-shutdown worktree. Runner creates a NEW name, imports the pinned d8c image and requires existing namespace apps stopped. It is prepared, NOT executed; no passwords in chat.
+4. Obtain real human approvals. Suggested merge order #44 → #45 → #46; fixes independently target main. After approved merges, update later branches with origin/main normally; preserve both README append follow-ups. No reset/rebase/force-push.
+5. Never merge the temporary candidate branch. Merge current origin/main into readiness branch after fix merges, confirm implementation diff empty, retarget its existing documentation PR to main. Detailed commands: docs/findings/v1-release-readiness.md.
+6. Run final merged-main Java21/Python/frontend/Compose checks, exact-head CI and clean-init/header/lifecycle smoke with fresh isolated resources/new images. Record exact SHA and source hashes. No tag/release before owner decisions and V1-06/07 gates.
+
+## Persistent locations and evidence
+
+- Root: $HOME/.local/share/qa-sdv-v1/. Original checkout remains main6a965bb, clean.
+- worktrees/ditto-initialization, ditto-http, app-shutdown, release-candidate, release-readiness.
+- runtime/venv-3.12, jdk21, node22, ditto-source, ditto-restored.json (original), ditto-engineering.json (separate stopped Part B stack), image archives. Never depend on old /tmp.
+- Newest shutdown: evidence/v1/app-shutdown-bounded-join-20261115/README.md and targeted-verification.json.
+- Prior full candidate: evidence/v1/release-candidate-20261115/README.md; raw evidence/v1/release-candidate-live-20261115T152908Z/.
+- CI/references: final-checkpoint.json. Final services: final-service-state.json. Skill reference/license/diff and ten historical missing raw-log targets recorded here.
+
+## Service/cleanup state
+
+- Original MQTT, both KUKSA/providers, app-001, real Ditto/MongoDB and one ingress remain running; dedicated Kanto daemon active.
+- Original Docker app-002 stays stopped. Both prior Kanto pilot containers recorded stopped; no new d8c Kanto trial.
+- New Docker lifecycle test apps/brokers and separate Part B Ditto stack stopped; retained for inspection. Some third-party Ditto stop exits137/143 preserved; only application target exit0 is claimed.
+- Candidate test projects cleaned up without volume deletion. Original volumes, policies/twins, historical evidence, unrelated workloads and unused docker_default network preserved.
+
+## Human decisions/remaining release limits
+
+- C1–C10 owner review; exact principal/resource/TLS decisions;5s/30s/1s freshness defaults; update/dispatch budgets and clock assumptions.
+- B5 remote-LAN wording decision; same-device V1-09 passed, remote LAN and automatic crash recovery NOT verified.
+- Skill provenance: current v6.4.2 reference found, two exact copies and two-line debugging redaction difference; no invented historical E1/E2 installed/invocation pins. Ten old raw logs absent; command metadata is not raw output.
+- Report/video creation/recording/submission excluded and pending. Final main/release acceptance/tag decision still human; full V1 NOT accepted.

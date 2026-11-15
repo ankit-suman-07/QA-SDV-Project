@@ -1,0 +1,43 @@
+{
+  "at": "2026-11-15T15:59:45.941806+00:00",
+  "checks": [
+    {
+      "argv": [
+        "docker",
+        "ps",
+        "-a",
+        "--format",
+        "{{.Names}} {{.Status}}"
+      ],
+      "exit": 0,
+      "stdout": "qa-v1-shutdown-app-1794758088-4 Exited (0) 4 minutes ago\nqa-v1-shutdown-app-1794758086-3 Exited (0) 4 minutes ago\nqa-v1-shutdown-app-1794758084-2 Exited (0) 4 minutes ago\nqa-v1-shutdown-app-1794758081-1 Exited (0) 5 minutes ago\nqa-v1-shutdown-app-1794758074-0 Exited (0) 5 minutes ago\nqa-v1-shutdown-mqtt-1794758074 Exited (0) 4 minutes ago\nqa-v1-shutdown-app-1794756028-4 Exited (0) 39 minutes ago\nqa-v1-shutdown-app-1794756027-3 Exited (0) 39 minutes ago\nqa-v1-shutdown-app-1794756024-2 Exited (0) 39 minutes ago\nqa-v1-shutdown-app-1794756020-1 Exited (0) 39 minutes ago\nqa-v1-shutdown-app-1794756015-0 Exited (0) 39 minutes ago\nqa-v1-shutdown-mqtt-1794756015 Exited (0) 39 minutes ago\nqa-v1-shutdown-app-0 Exited (1) 43 minutes ago\nqa-v1-shutdown-mqtt Exited (0) 43 minutes ago\nqa-v1-release-engineering-ditto-nginx-1 Exited (0) 2 minutes ago\nqa-v1-release-engineering-ditto-things-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-connectivity-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-things-search-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-gateway-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-swagger-ui-1 Exited (0) 2 minutes ago\nqa-v1-release-engineering-ditto-ditto-ui-1 Exited (0) 2 minutes ago\nqa-v1-release-engineering-ditto-mongodb-1 Exited (0) 2 minutes ago\nqa-v1-release-engineering-ditto-policies-1 Exited (143) 2 minutes ago\nqa-v1-kanto-prereq-ditto-nginx-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up 2 hours\nqa-v1-kanto-prereq-edge-app-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-app-002-1 Exited (1) 9 hours ago\nqa-v1-kanto-prereq-edge-provider-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-policies-1 Up 2 hours (healthy)\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "systemctl",
+        "show",
+        "qa-sdv-v1-kanto",
+        "-p",
+        "ActiveState",
+        "-p",
+        "SubState"
+      ],
+      "exit": 0,
+      "stdout": "ActiveState=active\nSubState=running\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "worktree",
+        "list",
+        "--porcelain"
+      ],
+      "exit": 0,
+      "stdout": "worktree /home/ankitsuman/Desktop/SDV/QA-SDV-Project\nHEAD 6a965bbaf5966d096e18c57058cfdbee6185ee2e\nbranch refs/heads/main\n\nworktree /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/app-shutdown\nHEAD 52113759df178057c24749cbd4baef5303c67589\nbranch refs/heads/ankit/fix/v1-graceful-app-shutdown\n\nworktree /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http\nHEAD 0a010eb30e81a63595638b88f81096dc561c5b28\nbranch refs/heads/ankit/fix/v1-ditto-http-compatibility\n\nworktree /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-initialization\nHEAD cd89160ccdd1b65901d365e46431b1af73ea1efc\nbranch refs/heads/ankit/fix/v1-ditto-feature-initialization\n\nworktree /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/release-candidate\nHEAD 49f8b8d59eeef7245ba643f9f88f86709c44e99a\nbranch refs/heads/ankit/test/v1-release-candidate-20261115\n\nworktree /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/release-readiness\nHEAD 1af3823fbf2041efa7470227b98cd5dc6cd37369\nbranch refs/heads/ankit/docs/v1-release-readiness\n\n",
+      "stderr": ""
+    }
+  ],
+  "notes": "Original workloads left running. All new test containers/Part B stack stopped; database volumes retained. Kanto prior recorded pilots stopped; no new d8c1f40 Kanto execution."
+}
