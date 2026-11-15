@@ -1,0 +1,8 @@
+NAME                                              IMAGE                                          COMMAND                  SERVICE        CREATED          STATUS          PORTS
+qa-v1-20261115191503-326857-edge-app-001-1        qa-v1-20261115191503-326857-app                "python3 src/main.py"    app-001        44 seconds ago   Up 2 seconds
+qa-v1-20261115191503-326857-edge-app-002-1        qa-v1-20261115191503-326857-app                "python3 src/main.py"    app-002        44 seconds ago   Up 2 seconds
+qa-v1-20261115191503-326857-edge-kuksa-001-1      ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0   "/app/databroker --i…"   kuksa-001      44 seconds ago   Up 43 seconds   127.0.0.1:46489->55555/tcp
+qa-v1-20261115191503-326857-edge-kuksa-002-1      ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0   "/app/databroker --i…"   kuksa-002      44 seconds ago   Up 42 seconds   127.0.0.1:39339->55555/tcp
+qa-v1-20261115191503-326857-edge-mqtt-1           eclipse-mosquitto:2                            "/docker-entrypoint.…"   mqtt           44 seconds ago   Up 42 seconds   127.0.0.1:46019->1883/tcp
+qa-v1-20261115191503-326857-edge-provider-001-1   qa-v1-20261115191503-326857-provider           "python -u src/main.…"   provider-001   44 seconds ago   Up 41 seconds   127.0.0.1:51757->8090/tcp
+qa-v1-20261115191503-326857-edge-provider-002-1   qa-v1-20261115191503-326857-provider           "python -u src/main.…"   provider-002   44 seconds ago   Up 41 seconds   127.0.0.1:52233->8090/tcp

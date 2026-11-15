@@ -1,0 +1,5 @@
+{
+  "mainSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+  "result": "FAIL",
+  "scope": "focused clean-init, packaged Spring individual/fleet, one fault-clear, restart ordering; historical broader campaign inherited explicitly"
+}

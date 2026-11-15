@@ -1,0 +1,48 @@
+{
+  "result": "PASS",
+  "mainSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+  "cycles": [
+    {
+      "cycle": 1,
+      "eventId": "vehicle-002-319e5a88af4f4dc6b3577f69e9e21484",
+      "sourceMarginSeconds": 1.350233,
+      "stopExit": 0
+    },
+    {
+      "cycle": 2,
+      "eventId": "vehicle-002-8b906303905943cdaaec8d0ebc4c4cbe",
+      "sourceMarginSeconds": 0.873631,
+      "stopExit": 0
+    },
+    {
+      "cycle": 3,
+      "eventId": "vehicle-002-badfbff9697747a08c644b8a382ac051",
+      "sourceMarginSeconds": 5.490585,
+      "stopExit": 0
+    }
+  ],
+  "finalState": {
+    "pid": -1,
+    "started_at": "2026-11-15T19:18:54.033227219Z",
+    "error": "",
+    "exit_code": 0,
+    "finished_at": "2026-11-15T19:19:01.973515111Z",
+    "exited": false,
+    "dead": false,
+    "restarting": false,
+    "paused": false,
+    "running": false,
+    "oomKilled": false,
+    "status": 3
+  },
+  "finalTwinSamples": 174,
+  "maxSampleGapSeconds": 0.426044,
+  "oldPidsAbsentAtReview": [
+    343639,
+    344351,
+    344969,
+    345581
+  ],
+  "shutdownCompletedEntries": 4,
+  "scope": "same-device managed lifecycle only"
+}

@@ -353,3 +353,16 @@ then listed was first-attempt `14143631616` (readiness BLOCKED, no configured se
 The replacement final-SHA workflow is required; no successful live CI result is
 claimed by these local runs. Existing standard CI and baseline pipeline at `2118300`
 passed. Final PR checks/artifact IDs remain the source for newer CI status.
+
+
+## Post-merge main verification — November 15, 2026
+
+PRs #44–#46 are merged. [Fresh merged-main verification](../../evidence/v1/merged-main-20261115/README.md) tests exact
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe`: Python541 +386 subtests, Java209,
+frontend7/config checks, focused real clean initialization and packaged Spring
+individual/fleet HTTP through upstream nginx, one fault/clear, watermark restart
+and three Kanto managed cycles PASS (all exits0;174 healthy001 twin samples).
+Original live-wrapper summary FAIL/exit1 is retained and qualified as a gate-count
+instrumentation error; selected-gate independent review passes. Historical candidate
+results remain candidate evidence. PR47 targets main; temporary PR48 remains unmerged.
+Human decisions/provenance/report-video gates stay open; no full acceptance/tag claim.

@@ -1,0 +1,21 @@
+{
+  "liveSmoke": {
+    "argv": [
+      "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python",
+      "evidence/v1/merged-main-20261115/live_smoke.py"
+    ],
+    "exit": 1,
+    "instrumentationError": "Original summary counted preallocated unselected gates; selected-gates-review.json independently confirms four selected PASS. Original FAIL retained."
+  },
+  "ociBuild": {
+    "exit": 0,
+    "argv": "docker buildx build --platform linux/amd64 --tag docker.io/library/qa-v1-main-app:sha-4afbbd8c11425a9e0e1701fea66b7ed13731abfe --output type=oci,dest=/home/ankitsuman/.local/share/qa-sdv-v1/runtime/kanto-main-4afbbd8.tar -f velocitas-app/app/Dockerfile velocitas-app"
+  },
+  "offlineReview": {
+    "argv": [
+      "python3",
+      "evidence/v1/merged-main-20261115/review_results.py"
+    ],
+    "exit": 0
+  }
+}

@@ -63,3 +63,16 @@ remediation, integration, Kanto and release work. Lead names above preserve comp
 contribution history. The prepared-deployment results do not close unmodified setup
 failures, #38/#39, V1-09, approvals or submission gates. Original findings/evidence
 remain preserved. [Latest dated verification](../docs/findings/v1-implementation-verification.md#follow-up--2026-11-15-utc-integrated-acceptance-on-an-isolated-prepared-deployment).
+
+
+## Post-merge main verification — November 15, 2026
+
+PRs #44–#46 are merged. [Fresh merged-main verification](v1/merged-main-20261115/README.md) tests exact
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe`: Python541 +386 subtests, Java209,
+frontend7/config checks, focused real clean initialization and packaged Spring
+individual/fleet HTTP through upstream nginx, one fault/clear, watermark restart
+and three Kanto managed cycles PASS (all exits0;174 healthy001 twin samples).
+Original live-wrapper summary FAIL/exit1 is retained and qualified as a gate-count
+instrumentation error; selected-gate independent review passes. Historical candidate
+results remain candidate evidence. PR47 targets main; temporary PR48 remains unmerged.
+Human decisions/provenance/report-video gates stay open; no full acceptance/tag claim.

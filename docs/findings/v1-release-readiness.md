@@ -1,5 +1,59 @@
 # Phase V1 engineering and release readiness — November 15, 2026
 
+## Post-merge main review — November 15, 2026
+
+PRs [#44](https://github.com/ankit-suman-07/QA-SDV-Project/pull/44),
+[#45](https://github.com/ankit-suman-07/QA-SDV-Project/pull/45) and
+[#46](https://github.com/ankit-suman-07/QA-SDV-Project/pull/46) are merged at
+`5b485cb4f9aff8aae26ac615c8c208bd2c7bde9a`,
+`0a4c5513d23db922e540e2323f0f2160cd33b227` and
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe` respectively.
+PR #47 now targets **main**. Its pre-update head `9ea2652100ca2d5e02e101ba977df46a654d4c05`
+is retained locally as `backup/pr47-before-main-20261115`. Main was merged normally,
+without rewriting published history. Only README ordering conflicted; both follow-ups
+were preserved. The application/config/frontend/acceptance implementation diff against
+main is empty. Unique candidate evidence remains in this documentation PR.
+
+Fresh checks use a separate initially clean detached worktree at exact main
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe`. Results and fresh/inherited boundaries
+are recorded in [merged-main verification](../../evidence/v1/merged-main-20261115/README.md).
+The historical candidate sections below retain their original revision and scope;
+this section supersedes their future merge/retarget instructions. Temporary candidate
+[PR #48](https://github.com/ankit-suman-07/QA-SDV-Project/pull/48) remains open and
+unmerged. Do not merge it as part of preparing #47.
+
+Human approvals, historical skill provenance qualifications, report/video delivery,
+B5 LAN wording and production authentication/freshness/timing decisions remain open.
+No remote-LAN, automatic crash restart or full V1 acceptance claim is made.
+
+## Current post-merge technical assessment
+
+Fresh main verification PASS: Python541 +386 subtests (2 skips/9 deselections),
+Java209, frontend7, both Compose configs, four selected real gates and three Kanto
+managed cycles;174 final healthy001 samples. All current main CI/baseline/real-core
+workflows pass. The live wrapper aggregate-count defect is qualified with original
+FAIL/exit1 retained and named per-gate independent review; no product defect found.
+
+| Criterion | Fresh main / inherited coverage | Remaining gate |
+|---|---|---|
+| V1-01 | Fresh two-vehicle clean-start/live healthy; inherited provider recovery | Human review |
+| V1-02 | Fresh real first-event initialization and persisted watermark restart; full negative/denied-write campaign inherited | Production principals/policies and contract decisions |
+| V1-03 | Fresh one backend fault/clear at twin/API/fleet/dashboard,001 isolation; five-trial campaign historical | Human review/timing decisions |
+| V1-04 | Fresh Spring individual reads through original nginx; aging/null inherited and exact-main live CI | Freshness/clock approval |
+| V1-05 | Fresh Python/Java/frontend/config + green exact-main CI/baseline/live-core | Latest #47 CI/review; explicit skips remain |
+| V1-06 | Current sources/use/traceability recorded | Human review and historical provenance qualification |
+| V1-07 | Reproduction/evidence/readiness prepared | Review/tag decision, report/video/submission pending/excluded |
+| V1-08 | Fresh packaged Spring fleet writes/API/dashboard, upstream nginx | Production writer authorization/owner approval |
+| V1-09 | Fresh main-image three-cycle Kanto managed PASS, exit0 and174 healthy001 samples | B5 LAN wording; remote LAN/crash auto-restart not verified |
+
+After #47 review/CI, recheck expected head and unchanged origin/main before merging.
+If main changes, assess implementation delta and rerun affected checks; do not
+relabel this pinned run. After its documentation-only merge, inspect exact final-main
+CI and ensure the implementation remains identical. No redundant full campaign is
+required solely for a docs merge. No tag until outstanding human/V1-06/V1-07 gates close.
+
+## Historical candidate record — original revision and scope retained
+
 ## Resumed final result — d8c1f40 engineering verification PASS
 
 [Final combined verification](../../evidence/v1/release-candidate-d8c1f40-20261115/README.md)
@@ -145,7 +199,7 @@ until affected-owner review is actually evidenced.
 | C1–C10 and skill review | Exact schema/identity/unit/context behavior and PR traceability; provenance lookup below | Obtain actual affected-owner and team-member review; no approval on anyone's behalf |
 | Release/submission | Engineering candidate passing, unmerged; all PRs draft | Decide final main SHA after reviewed merges/checks. Report/video creation/recording/submission remain outside this work and pending |
 
-## Merge/update procedure — humans only
+## Historical merge/update procedure — completed for fixes and retargeting
 
 Suggested review order: #44, #45, #46, then documentation. Fixes are independent;
 this is an integration sequence, not a claim that #45/#46 depend on unmerged #44.
@@ -176,7 +230,7 @@ gh pr edit DOCUMENTATION_PR_NUMBER --base main
 The documentation can retain exact unmerged-candidate evidence as historical evidence;
 new final-main evidence must have its own actual revision, not relabelled old results.
 
-## Exact final-main checks still required
+## Final-main check recipe — execution status in post-merge evidence
 
 After humans merge approved PRs, use a clean persistent checkout/worktree; preserve
 any local changes and run fetch/switch main/pull --ff-only as usual. Record the new

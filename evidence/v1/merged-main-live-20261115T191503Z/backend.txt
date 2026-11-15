@@ -1,0 +1,39 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T14:17:32.465-05:00  INFO 335640 --- [backend] [           main] c.ankit.sdv.backend.BackendApplication   : Starting BackendApplication v0.0.1-SNAPSHOT using Java 21.0.13 with PID 335640 (/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/backend/target/backend-0.0.1-SNAPSHOT.jar started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification)
+2026-11-15T14:17:32.473-05:00  INFO 335640 --- [backend] [           main] c.ankit.sdv.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T14:17:35.373-05:00  INFO 335640 --- [backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 54387 (http)
+2026-11-15T14:17:35.426-05:00  INFO 335640 --- [backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15T14:17:35.427-05:00  INFO 335640 --- [backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-11-15T14:17:35.478-05:00  INFO 335640 --- [backend] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2848 ms
+2026-11-15T14:17:37.783-05:00  INFO 335640 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T14:17:37.889-05:00  INFO 335640 --- [backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 54387 (http) with context path '/'
+2026-11-15T14:17:37.906-05:00  INFO 335640 --- [backend] [           main] c.ankit.sdv.backend.BackendApplication   : Started BackendApplication in 7.296 seconds (process running for 8.767)
+2026-11-15T14:17:38.233-05:00  INFO 335640 --- [backend] [io-54387-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15T14:17:38.234-05:00  INFO 335640 --- [backend] [io-54387-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15T14:17:38.236-05:00  INFO 335640 --- [backend] [io-54387-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-11-15T14:17:40.165-05:00  INFO 335640 --- [backend] [     virtual-67] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:41.998-05:00  INFO 335640 --- [backend] [     virtual-92] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:43.956-05:00  INFO 335640 --- [backend] [    virtual-118] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:45.953-05:00  INFO 335640 --- [backend] [    virtual-142] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:47.953-05:00  INFO 335640 --- [backend] [    virtual-163] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:49.952-05:00  INFO 335640 --- [backend] [    virtual-191] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:51.949-05:00  INFO 335640 --- [backend] [    virtual-212] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:53.954-05:00  INFO 335640 --- [backend] [    virtual-223] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:55.956-05:00  INFO 335640 --- [backend] [    virtual-230] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:57.962-05:00  INFO 335640 --- [backend] [    virtual-237] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:17:59.964-05:00  INFO 335640 --- [backend] [    virtual-244] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:18:01.955-05:00  INFO 335640 --- [backend] [    virtual-251] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:18:03.971-05:00  INFO 335640 --- [backend] [    virtual-258] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:18:05.966-05:00  INFO 335640 --- [backend] [    virtual-263] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:18:07.949-05:00  INFO 335640 --- [backend] [    virtual-273] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T14:18:08.940-05:00  INFO 335640 --- [backend] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-15T14:18:08.945-05:00  INFO 335640 --- [backend] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete

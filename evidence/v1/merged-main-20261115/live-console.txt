@@ -1,0 +1,19 @@
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /css/tokens.css HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /css/layout.css HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /js/fleet-dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /css/components.css HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /css/fleet.css HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /js/fleet-api.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /js/fleet-model.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /js/diagnostic-api.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /js/config.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /js/api-client.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Nov/2026 14:17:41] code 404, message File not found
+127.0.0.1 - - [15/Nov/2026 14:17:41] "GET /favicon.ico HTTP/1.1" 404 -
+readiness PASS
+healthy-individual-fleet-dashboard PASS
+one-routed-fault-clear-isolation PASS
+persisted-watermark-restart PASS
+Evidence: evidence/v1/merged-main-live-20261115T191503Z
+FAIL

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "bash",
+    "./mvnw",
+    "--batch-mode",
+    "--no-transfer-progress",
+    "clean",
+    "verify"
+  ],
+  "exit": 0,
+  "seconds": 28.750383246000638
+}

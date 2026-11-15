@@ -1,0 +1,222 @@
+[
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "seconds": 0.11646795400156407,
+    "output": "command-000.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "version"
+    ],
+    "exit": 0,
+    "seconds": 0.06493619399952877,
+    "output": "command-001.txt"
+  },
+  {
+    "argv": [
+      "java",
+      "-version"
+    ],
+    "exit": 0,
+    "seconds": 0.06471877599869913,
+    "output": "command-002.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-ditto",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/ditto.json",
+      "up",
+      "-d"
+    ],
+    "exit": 0,
+    "seconds": 4.834931589000917,
+    "output": "command-003.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "up",
+      "-d",
+      "--build"
+    ],
+    "exit": 0,
+    "seconds": 113.08875609399911,
+    "output": "command-004.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "image",
+      "ls",
+      "--digests",
+      "--no-trunc"
+    ],
+    "exit": 0,
+    "seconds": 0.6689162410002609,
+    "output": "command-005.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "stop",
+      "app-001",
+      "app-002"
+    ],
+    "exit": 0,
+    "seconds": 0.5159996829988813,
+    "output": "command-006.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "start",
+      "app-001",
+      "app-002"
+    ],
+    "exit": 0,
+    "seconds": 0.8676358369993977,
+    "output": "command-007.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "start",
+      "kuksa-001",
+      "kuksa-002",
+      "mqtt"
+    ],
+    "exit": 0,
+    "seconds": 0.16566601299928152,
+    "output": "command-008.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "ps",
+      "--all"
+    ],
+    "exit": 0,
+    "seconds": 0.1654467090011167,
+    "output": "command-009.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "500"
+    ],
+    "exit": 0,
+    "seconds": 0.16962005000095814,
+    "output": "command-010.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-edge",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/edge.json",
+      "down",
+      "--timeout",
+      "15"
+    ],
+    "exit": 0,
+    "seconds": 2.17031235200011,
+    "output": "command-011.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-ditto",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/ditto.json",
+      "ps",
+      "--all"
+    ],
+    "exit": 0,
+    "seconds": 0.1154573399999208,
+    "output": "command-012.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-ditto",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/ditto.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "500"
+    ],
+    "exit": 0,
+    "seconds": 0.18775781799922697,
+    "output": "command-013.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115191503-326857-ditto",
+      "-f",
+      "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/evidence/v1/merged-main-live-20261115T191503Z/ditto.json",
+      "down",
+      "--timeout",
+      "15"
+    ],
+    "exit": 0,
+    "seconds": 31.425333518000116,
+    "output": "command-014.txt"
+  }
+]

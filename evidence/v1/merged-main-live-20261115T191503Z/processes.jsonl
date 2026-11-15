@@ -1,0 +1,3 @@
+{"argv": ["/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python", "-B", "-m", "ditto.v1", "run"], "pid": 335639, "log": "ingress.txt"}
+{"argv": ["java", "-jar", "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/backend/target/backend-0.0.1-SNAPSHOT.jar"], "pid": 335640, "log": "backend.txt"}
+{"argv": ["/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python", "-B", "-m", "ditto.v1", "run"], "pid": 340233, "log": "ingress-2.txt"}

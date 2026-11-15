@@ -1,0 +1,261 @@
+{
+  "original-compose": {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.yml",
+      "config",
+      "--quiet"
+    ],
+    "exit": 0
+  },
+  "v1-compose": {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--quiet"
+    ],
+    "exit": 0
+  },
+  "main-ci": [
+    {
+      "conclusion": "success",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43751117350"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43751071378"
+    },
+    {
+      "conclusion": "skipped",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750922278"
+    },
+    {
+      "conclusion": "skipped",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750897141"
+    },
+    {
+      "conclusion": "",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Phase V1 real two-vehicle acceptance",
+      "status": "in_progress",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750886943"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "CI",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750886953"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Pipeline integration",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750887022"
+    },
+    {
+      "conclusion": "skipped",
+      "headSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750884712"
+    },
+    {
+      "conclusion": "cancelled",
+      "headSha": "0a4c5513d23db922e540e2323f0f2160cd33b227",
+      "name": "Pipeline integration",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750851421"
+    },
+    {
+      "conclusion": "cancelled",
+      "headSha": "0a4c5513d23db922e540e2323f0f2160cd33b227",
+      "name": "Phase V1 real two-vehicle acceptance",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750851346"
+    },
+    {
+      "conclusion": "cancelled",
+      "headSha": "0a4c5513d23db922e540e2323f0f2160cd33b227",
+      "name": "CI",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750851323"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "5b485cb4f9aff8aae26ac615c8c208bd2c7bde9a",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750820981"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "5b485cb4f9aff8aae26ac615c8c208bd2c7bde9a",
+      "name": "CI",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750683463"
+    },
+    {
+      "conclusion": "cancelled",
+      "headSha": "5b485cb4f9aff8aae26ac615c8c208bd2c7bde9a",
+      "name": "Phase V1 real two-vehicle acceptance",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750683456"
+    },
+    {
+      "conclusion": "cancelled",
+      "headSha": "5b485cb4f9aff8aae26ac615c8c208bd2c7bde9a",
+      "name": "Pipeline integration",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750683351"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43726068308"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+      "name": "Publish container images",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43726022044"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+      "name": "Phase V1 real two-vehicle acceptance",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43725895750"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+      "name": "CI",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43725895756"
+    },
+    {
+      "conclusion": "success",
+      "headSha": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+      "name": "Pipeline integration",
+      "status": "completed",
+      "url": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43725895745"
+    }
+  ],
+  "pr-state": {
+    "baseRefName": "main",
+    "headRefOid": "9ea2652100ca2d5e02e101ba977df46a654d4c05",
+    "reviewDecision": "",
+    "reviews": [],
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:52:10Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749095206/job/132918828813",
+        "name": "Backend tests",
+        "startedAt": "2026-11-15T18:51:28Z",
+        "status": "COMPLETED",
+        "workflowName": "CI"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:51:34Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749094514/job/132918826328",
+        "name": "Offline acceptance assertion controls (no live services)",
+        "startedAt": "2026-11-15T18:51:27Z",
+        "status": "COMPLETED",
+        "workflowName": "Phase V1 real two-vehicle acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:53:38Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749094465/job/132918826100",
+        "name": "Synthetic pipeline integration",
+        "startedAt": "2026-11-15T18:51:27Z",
+        "status": "COMPLETED",
+        "workflowName": "Pipeline integration"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:52:04Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749095206/job/132918828782",
+        "name": "Python unit tests",
+        "startedAt": "2026-11-15T18:51:28Z",
+        "status": "COMPLETED",
+        "workflowName": "CI"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:58:54Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749094514/job/132918826592",
+        "name": "Real two-vehicle core (Kanto and release remain separate)",
+        "startedAt": "2026-11-15T18:51:27Z",
+        "status": "COMPLETED",
+        "workflowName": "Phase V1 real two-vehicle acceptance"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:51:40Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749095206/job/132918828573",
+        "name": "Configuration validation",
+        "startedAt": "2026-11-15T18:51:28Z",
+        "status": "COMPLETED",
+        "workflowName": "CI"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:51:49Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749095206/job/132918828769",
+        "name": "Docker build (provider)",
+        "startedAt": "2026-11-15T18:51:28Z",
+        "status": "COMPLETED",
+        "workflowName": "CI"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-11-15T18:52:59Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43749095206/job/132918828932",
+        "name": "Docker build (autonomous-health-app)",
+        "startedAt": "2026-11-15T18:51:28Z",
+        "status": "COMPLETED",
+        "workflowName": "CI"
+      }
+    ]
+  },
+  "candidate-pr": {
+    "baseRefName": "main",
+    "headRefName": "ankit/test/v1-release-candidate-20261115",
+    "headRefOid": "57fd7d7b31bd6f3699767d7c40f3ab411833ddd4",
+    "state": "OPEN"
+  },
+  "sourceEquivalenceToCandidate": ""
+}

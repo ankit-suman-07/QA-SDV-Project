@@ -1,3 +1,35 @@
+# PR47 post-merge preparation checkpoint — November 15, 2026
+
+This current section supersedes merge/retarget instructions in the historical handoff.
+PR44 merged5b485cb4f9aff8aae26ac615c8c208bd2c7bde9a;
+PR45 merged0a4c5513d23db922e540e2323f0f2160cd33b227;
+PR46 merged4afbbd8c11425a9e0e1701fea66b7ed13731abfe.
+PR47 now targets main, normal merge used, no force-push. Backup reference:
+backup/pr47-before-main-20261115 at9ea2652100ca2d5e02e101ba977df46a654d4c05.
+PR48/candidate remains open/unmerged; do not merge or delete it here.
+
+Fresh exact-main4afbbd8 verification:541 Python+386 subtests,209 Java,7 frontend,
+both Compose configs, four selected real gates and three actual Kanto cycles PASS.
+174 final healthy001 twin samples, clean stops exit0, exact fresh MQTT/Ditto.
+New evidence: evidence/v1/merged-main-20261115/README.md plus linked live directories.
+Original live wrapper FAIL/exit1 retained and qualified as selected-gate count error;
+raw selected gates and independent review PASS. No product defect found or fixed.
+Main CI/baseline/real acceptance all green. Latest PR47 head/CI/reviews must be
+inspected after push; persistent root HANDOFF.md records final non-self-referential SHA.
+
+All application implementation diff against main empty. Final PR diff preserves
+unique candidate evidence and adds only docs/verification tools/artifacts/evidence.
+Original workloads remain; own smoke projects down without volume deletion; new
+Kanto pilot retained stopped, Docker002 remains stopped, original001/ingress active.
+No merge/tag/release/submission or permissions weakening performed.
+
+Next: human PR47 review + exact-head CI; merge only by authorized human, inspect final
+merged-main CI and unchanged implementation. If main changes, assess/rerun affected
+checks. C1–C10/auth/TLS/freshness/timing/LAN decisions, skill provenance review and
+report/video/delivery gates remain. No full V1 acceptance/tag justified yet.
+
+## Historical checkpoint retained
+
 # Persistent Phase V1 handoff — resumed final engineering checkpoint
 
 This section supersedes the historical stop handoff retained below. No PR merge,

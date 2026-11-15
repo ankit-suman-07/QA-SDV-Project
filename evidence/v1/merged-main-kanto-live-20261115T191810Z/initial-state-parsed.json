@@ -1,0 +1,90 @@
+{
+  "container_id": "b1e5dde9-12f0-4c21-9369-82b8cf49ca9c",
+  "container_name": "autonomoushealthapp-vehicle-002-shutdown-20261115191810",
+  "image": {
+    "name": "docker.io/library/qa-v1-main-app:sha-4afbbd8c11425a9e0e1701fea66b7ed13731abfe"
+  },
+  "domain_name": "autonomoushealthapp-vehicle-002-shutdown-20261115191810-domain",
+  "host_name": "fedora",
+  "resolv_conf_path": "/var/lib/qa-sdv-v1-kanto/containers/b1e5dde9-12f0-4c21-9369-82b8cf49ca9c/resolv.conf",
+  "hosts_path": "/var/lib/qa-sdv-v1-kanto/containers/b1e5dde9-12f0-4c21-9369-82b8cf49ca9c/hosts",
+  "hostname_path": "/var/lib/qa-sdv-v1-kanto/containers/b1e5dde9-12f0-4c21-9369-82b8cf49ca9c/hostname",
+  "mount_points": null,
+  "hooks": null,
+  "config": {
+    "env": [
+      "SDV_MIDDLEWARE_TYPE=native",
+      "SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557",
+      "SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883",
+      "DATABROKER_HOST=127.0.0.1",
+      "DATABROKER_PORT=55557",
+      "SIMULATED_VEHICLE_ID=vehicle-002",
+      "AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0"
+    ]
+  },
+  "host_config": {
+    "devices": null,
+    "network_mode": "host",
+    "privileged": false,
+    "restart_policy": {
+      "maximum_retry_count": 0,
+      "retry_timeout": 0,
+      "type": "unless-stopped"
+    },
+    "runtime": "io.containerd.runc.v2",
+    "extra_hosts": null,
+    "extra_capabilities": null,
+    "port_mappings": null,
+    "log_config": {
+      "driver_config": {
+        "type": "json-file",
+        "max_files": 2,
+        "max_size": "100M"
+      },
+      "mode_config": {
+        "mode": "blocking"
+      }
+    },
+    "resources": null
+  },
+  "io_config": {
+    "attach_stderr": false,
+    "attach_stdin": false,
+    "attach_stdout": false,
+    "open_stdin": false,
+    "stdin_once": false,
+    "tty": false
+  },
+  "network_settings": {
+    "networks": {
+      "host": {
+        "id": "14f7fbb4de4cd824c68ad89323e5b02d7a95c157cae591733db461919a10c43f",
+        "gateway": "",
+        "ip_address": "",
+        "mac_address": "",
+        "network_id": "4068d2f6c7bd44801a72a10dedb57182b32b7d8e1060d249328f2deec2690b68"
+      }
+    },
+    "sandbox_id": "9a3e5200f33e599533fbc62cae5bcc1f7cf4ca57ed05ac8cac21dee566166578",
+    "sandbox_key": "/run/qa-sdv-v1-kanto/netns/default",
+    "network_controller_id": "cca0296bcefb9329f6cd43057bf4006666f04a6a2049ddf8a1463aeb59536c50"
+  },
+  "state": {
+    "pid": 343639,
+    "started_at": "2026-11-15T19:18:36.653250781Z",
+    "error": "",
+    "exit_code": 0,
+    "finished_at": "",
+    "exited": false,
+    "dead": false,
+    "restarting": false,
+    "paused": false,
+    "running": true,
+    "oomKilled": false,
+    "status": 2
+  },
+  "created": "2026-11-15T19:18:36.30056099Z",
+  "restart_count": 0,
+  "manually_stopped": false,
+  "started_successfully_before": false
+}

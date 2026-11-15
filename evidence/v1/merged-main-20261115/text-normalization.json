@@ -1,0 +1,30 @@
+{
+  "transform": "authentication redaction and trailing whitespace only; event/source/exits unchanged",
+  "files": [
+    {
+      "file": "evidence/v1/merged-main-20261115/java.txt",
+      "before": "befd42e664b5f8d9510d3c326df770b4d99af29fe3a226deb016710a29c7ed4a",
+      "after": "eed6ec33cc6145f44183156fc0eea55f7fcb88162d9092f33a7fd4c43445c897"
+    },
+    {
+      "file": "evidence/v1/merged-main-20261115/image-build.txt",
+      "before": "5f05e90158dd52a1154c53a7b4f730427cd4ed9ea8a3818d5250324838560897",
+      "after": "aacaddbcdce615957052d0dc6728ce422d23a3a31f8d813dd187b185a92146fe"
+    },
+    {
+      "file": "evidence/v1/merged-main-live-20261115T191503Z/harness-source.json",
+      "before": "bec896a9c1f6c79c0c07443ca26dc07b1f8147a2f19e46fc224644899d1317a5",
+      "after": "158632e91c929b4fef795301fd91fbeb544c0fffe443c02e2cabfaf19341219a"
+    },
+    {
+      "file": "evidence/v1/merged-main-live-20261115T191503Z/ditto.json",
+      "before": "3eff735394f02ee51a991d90684820064eca79ff6de709532d822becf20360a2",
+      "after": "4e3c34d7109c2fec3ad16b293ae99db8fe2596691ed1174f86f9e3571a46d51a"
+    },
+    {
+      "file": "evidence/v1/merged-main-kanto-live-20261115T191810Z/mqtt.stderr",
+      "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "after": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ]
+}

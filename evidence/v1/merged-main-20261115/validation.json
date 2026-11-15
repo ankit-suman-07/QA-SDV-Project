@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-15T19:25:18.967295+00:00",
+  "priorArtifactHashesVerifiedOrDocumentedNormalization": 51,
+  "normalizedArtifacts": [
+    "evidence/v1/merged-main-live-20261115T191503Z/harness-source.json",
+    "evidence/v1/merged-main-live-20261115T191503Z/ditto.json"
+  ],
+  "freshFilesSecretScanned": 137,
+  "relativeLinksChecked": 190,
+  "newMissingLinks": [],
+  "historicalMissingLinks": [
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/python-unit-final.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/backend.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/frontend-unit.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/kuksa-live-signals.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/mqtt-live-transport.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/edge-rendered-configuration.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/edge-image-identities.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/provider-restart-policy.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/edge-final-service-logs.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/tire-unit-boundary.log"
+    }
+  ],
+  "newPythonToolsAst": "PASS",
+  "applicationDiff": "empty",
+  "scope": "documentation/evidence only"
+}

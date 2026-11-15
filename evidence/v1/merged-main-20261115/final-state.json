@@ -1,0 +1,53 @@
+{
+  "main-ci": {
+    "argv": [
+      "gh",
+      "run",
+      "list",
+      "--branch",
+      "main",
+      "--limit",
+      "8",
+      "--json",
+      "headSha,status,conclusion,name,url"
+    ],
+    "exit": 0,
+    "stdout": "[{\"conclusion\":\"success\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Publish container images\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43751117350\"},{\"conclusion\":\"success\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Publish container images\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43751071378\"},{\"conclusion\":\"skipped\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Publish container images\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750922278\"},{\"conclusion\":\"skipped\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Publish container images\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750897141\"},{\"conclusion\":\"success\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"CI\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750886953\"},{\"conclusion\":\"success\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Pipeline integration\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750887022\"},{\"conclusion\":\"success\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Phase V1 real two-vehicle acceptance\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750886943\"},{\"conclusion\":\"skipped\",\"headSha\":\"4afbbd8c11425a9e0e1701fea66b7ed13731abfe\",\"name\":\"Publish container images\",\"status\":\"completed\",\"url\":\"https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43750884712\"}]\n",
+    "stderr": ""
+  },
+  "services": {
+    "argv": [
+      "docker",
+      "ps",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit": 0,
+    "stdout": "qa-v1-kanto-prereq-ditto-nginx-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up 5 hours\nqa-v1-kanto-prereq-edge-app-001-1 Up 5 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 5 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 5 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 5 hours\nqa-v1-kanto-prereq-edge-provider-002-1 Up 5 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-policies-1 Up 5 hours (healthy)\n",
+    "stderr": ""
+  },
+  "networks": {
+    "argv": [
+      "docker",
+      "network",
+      "ls",
+      "--format",
+      "{{.Name}}"
+    ],
+    "exit": 0,
+    "stdout": "bridge\ndocker_default\nhost\nnone\nqa-v1-kanto-prereq-ditto_default\nqa-v1-kanto-prereq-edge_default\nqa-v1-release-engineering-ditto_default\n",
+    "stderr": ""
+  },
+  "ingress": {
+    "argv": [
+      "ps",
+      "-p",
+      "24753",
+      "-o",
+      "pid=,comm="
+    ],
+    "exit": 0,
+    "stdout": "  24753 python\n",
+    "stderr": ""
+  }
+}
