@@ -1,0 +1,13 @@
+{
+  "skills": {
+    "skills/verification-before-completion.md": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+    "skills/test-driven-development.md": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+    "skills/systematic-debugging.md": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202"
+  },
+  "use": {
+    "test-driven-development": "wrote offline identity/count/preservation controls; observed three missing-implementation AssertionError failures before implementing; five controls passed. No production code changed.",
+    "systematic-debugging": "isolated browser CORS origin, MQTT test contamination, missing feature PUT404, and Spring duplicate Accept-Encoding400 with direct/packaged client probes before deployment preparation.",
+    "verification-before-completion": "fresh Java/Python/frontend/live results and diff checks before completion claims"
+  },
+  "limits": "repository skill copies used; missing supporting files and upstream original provenance not claimed; no customized skill comparison (Phase V2)"
+}

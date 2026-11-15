@@ -140,3 +140,182 @@ Use a new UTC evidence directory for subsequent runs. Record revision/dirty stat
 Test-owned scenarios were cleared; final provider context had no active scenario. The owned edge Compose project was brought down **without deleting volumes**, and the isolated transport broker was stopped. Harness-owned Java, HTTP mocks and browser processes were terminated. Final Docker inventory has no running test-owned services; no unrelated service was stopped. Build images, stopped transport-test container and ignored build/dependency caches may remain as non-running artifacts. Existing listeners were preserved.
 
 The [manifest](../../evidence/v1/verification-20261114T051226Z/manifest.json), [machine-readable summary](../../evidence/v1/verification-20261114T051226Z/result-summary.json), [artifact hashes](../../evidence/v1/verification-20261114T051226Z/artifact-sha256.json), final service logs and copied harnesses preserve this run. Repository `*.log` ignore rules apply to raw outputs; files are saved locally and linked here, without changing ignore policy or staging them. Source/config hashes identify the assessed inputs. Only this report and fresh evidence artifacts were created. Markdown relative links and whitespace were checked after writing.
+
+## Follow-up — 2026-11-15 UTC: integrated acceptance on an isolated prepared deployment
+
+This dated follow-up preserves the November 14 assessment above. Ankit owns all
+remaining Phase V1 remediation, integration, Kanto validation and release work.
+The independent documentation alignment is [draft PR #40](https://github.com/ankit-suman-07/QA-SDV-Project/pull/40);
+this harness/evidence work is [draft PR #41](https://github.com/ankit-suman-07/QA-SDV-Project/pull/41),
+branched directly from main `f33e7cb`, without the documentation branch's commits.
+The C1–C10 proposed status and pending decisions remain unchanged.
+
+**V1 remains unaccepted and not ready to tag.** The prepared local deployment
+passed the implemented core gates below. Unmodified deployment setup still has
+confirmed defects; provider-recovery #38 and tire-unit #39 are open/unmerged,
+Kanto/V1-09 is required and unverified, and release/submission/approval gates remain.
+A successful run on a prepared deployment does not approve a new shared interface
+or close the unmodified startup defects.
+
+### Runs, dependencies and reproducibility
+
+- [Initial attempt](../../evidence/v1/verification-20261115T023010Z/README.md): real Ditto and edges started; browser origin `127.0.0.1:3000` was outside existing CORS. Readiness failed; cleanup ran. No downstream acceptance claimed.
+- [Unmodified stack](../../evidence/v1/verification-20261115T023435Z/README.md): legitimate local authentication worked, but no individual `v1` feature existed and the Spring client received HTTP 400. Healthy failed, two attempted operations timed out, and the observer was interrupted through cleanup (exit 130). Later gates were not reached.
+- [Prepared deployment](../../evidence/v1/verification-20261115T024001Z/README.md): harness/application revision `2118300d313a973da6b6857507115f74418c8b35`; source was committed, dirty state contained only new evidence directories. All ten implemented core gates recorded PASS. The tool reported launcher exit 143 despite finalized results/cleanup; this anomaly is retained, not represented as an exit-zero run. A separately launched repeat records the observer's actual return code.
+
+The [independently launched repeat](../../evidence/v1/verification-20261115T024553Z/README.md)
+completed with **observer exit 0** recorded in `launcher.json`, all ten core gates
+PASS and five more fault/recovery trials. Its own n/median/range and raw samples are
+retained separately; no trials are pooled or discarded. It resolves the launcher
+ambiguity for this repeat, without rewriting the earlier tool-reported exit 143.
+The 12s outage recovered again under the 1s workload, not a closure of historical
+F01/default-workload behavior. Both runs cleared scenarios and stopped owned projects.
+
+All live components were real: two providers → two KUKSA brokers → two Velocitas
+apps → one Mosquitto → the production ingress/Ditto writer → Eclipse Ditto 3.8.4
+→ packaged Java 21 Spring Boot → derived fleet API and separately materialized
+`sdv:fleet-v1` → an actual Chrome dashboard. No HTTP mock, memory twin writer,
+request interception or third production vehicle participated. Invalid/replay inputs
+were isolated component probes with apps stopped; they are distinct from the five
+real-provider trials. Offline harness controls and existing mocked unit tests remain
+labelled as such.
+
+The [runner and rerun instructions](../../scripts/v1_acceptance/README.md) reuse the
+existing two-edge Compose and pin official Ditto deployment source
+`5dbb05e6294e5ac0103506102baff9eab755d180`. It assigns unique projects, loopback ports,
+one ingress and one fleet writer. Credentials use the official local sample's
+existing nginx authentication, passed through environment and excluded from evidence.
+No shared twin/policy reset or unrelated service/volume removal occurred. The local
+sample deliberately uses one subject for all roles; production subject separation
+and permission approval remain open. Mutable third-party image tags are identified
+by the captured image list; stronger digest pinning remains a deployment limitation.
+
+### New confirmed setup defects and explicit preparation
+
+**V1-F03 — properties-only persistence cannot initialize a missing feature.** The
+existing create-only provisioning CLI creates a Thing with attributes but no `v1`
+feature. The real ingress calls PUT `/features/v1/properties`; Ditto returns 404
+and the observation stays pending. The unmodified-stack nginx/ingress logs show
+successful whole-Thing GET followed by failing properties PUT. Unit mocks did not
+establish this real creation behavior. Release needs an approved initialization
+path that handles absence without fabricating health or losing watermarks, plus a
+real clean-namespace regression.
+
+**V1-F04 — packaged Spring client sends duplicate Accept-Encoding fields.** Real
+Ditto returns HTTP 400 `gateway:duplicate.header.field` for both backend reads and
+fleet writes. [Packaged Spring reproduction](../../evidence/v1/verification-20261115T023435Z/spring-http-response.txt)
+and its Java source are retained. Direct Java HTTP/1.1 and HTTP/2 probes, including
+Accept JSON, both returned 200; changing HTTP version alone did not explain it.
+Release needs an approved client/proxy compatibility decision and regression.
+
+The prepared deployment explicitly normalizes `Accept-Encoding` in its isolated
+nginx configuration. Before ingress starts, it creates each initial `v1` feature
+from that vehicle's **first real captured MQTT observation**, preserving IDs and
+source time in `bootstrap-real-observations.json`. Those seed writes are provisioning,
+not evidence of ingress persistence. Subsequent real observations and all fault/clear
+transitions traverse the real ingress. Neither preparation changes application code,
+adds a simultaneous writer, invents observations or resolves F03/F04 on the unmodified
+stack. They are disclosed configuration prerequisites, not mock substitution.
+
+### Verified boundaries on the prepared deployment
+
+| Boundary | Recorded outcome / limits |
+| --- | --- |
+| Healthy and identity/source preservation | Exactly 001/002; actual topic/schema/QoS1/retain=false capture, Thing identities, source/event/LiDAR fields and API projections checked. |
+| A3 fault/clear and isolation | Five actual backend injects and five clears; each reached all six observed boundaries. Vehicle-001 stayed healthy without corresponding faults; its own telemetry could advance. Dispatch acknowledgements recorded separately. |
+| A2 freshness and nulls | Stopping only app-002 preserved source time while it aged STALE then UNAVAILABLE. Missing isolated feature returned explicit null health/faults/LiDAR/source/event fields. Both registered vehicles stayed in the fleet denominator. |
+| A5 counts and materialization | Availability/health partition invariants checked independently for API and stored summary. API derives from individual twins; scheduled materialization has a separate evaluation time. Neither reads an old fleet Thing to answer vehicle/fleet queries. |
+| Negative/replay/restart | Malformed, unknown, mismatched, duplicate, equal and late publications each left snapshots unchanged. Restarted ingress rejected replay from the persisted watermark and accepted a valid successor. |
+| Individual write failure | Real test-owned policy denied only 002 feature writes: no snapshot/watermark advancement; 001 successor persisted. Restoring policy allowed the pending observation to persist. |
+| Fleet write failure | Real fleet-policy denial held the stored summary unchanged while individual event IDs progressed and derived reads remained usable. Restoration resumed materialization. |
+| Reconnect and outage | Actual MQTT stop/start recovered. A 12s KUKSA-002 stop/start recovered in this 1s-provider workload without a manual provider start; a fresh source timestamp after broker return reached Ditto. This single observation does not close historical F01 or merge #38. |
+| Dashboard | Actual browser showed live healthy/fault/recovery views; screenshots saved for all ten operations. No page errors. A missing favicon 404 is visible in HTTP capture. |
+| Baseline | Existing single-vehicle script passed separately. Runner's baseline row deliberately says separately required; see external-checks.json for the actual baseline pass and cleanup. |
+| Kanto / V1-09 | BLOCKED: no installed Kanto CLI/runtime validation on the intended Linux host. Docker stop/start is not Kanto evidence. |
+
+### Measurements and regression checks
+
+[Raw trials](../../evidence/v1/verification-20261115T024001Z/measurements.json),
+[statistics](../../evidence/v1/verification-20261115T024001Z/statistics.json),
+[resources](../../evidence/v1/verification-20261115T024001Z/resource-summary.json)
+and [limitations](../../evidence/v1/verification-20261115T024001Z/measurement-limitations.json)
+are durable run artifacts. Each table cell is median seconds [minimum–maximum], n=5
+for fault and n=5 for recovery; no recorded trial boundary failed in this prepared run.
+
+| Command → observed boundary | Fault | Recovery |
+| --- | --- | --- |
+| MQTT | 3.688 [2.479–4.292] | 2.409 [2.147–4.067] |
+| Individual twin | 4.138 [2.567–4.507] | 2.552 [2.345–4.280] |
+| Vehicle API | 4.162 [2.582–4.523] | 2.568 [2.388–4.301] |
+| Derived fleet API | 4.185 [2.597–4.542] | 2.583 [2.406–4.320] |
+| Materialized fleet Thing | 5.584 [3.738–5.931] | 3.777 [3.488–5.930] |
+| Dashboard | 5.588 [3.976–5.857] | 3.869 [3.721–5.932] |
+
+Ten dispatch acknowledgements had median 0.007675s [0.005182–0.100842]. Completion
+uses one host monotonic clock starting before A3 POST. These include deterministic
+scenario progression, polling, reads and browser work; **not pure transport latency**.
+Optional MQTT action/trace fields are absent, so isolated temporal association is
+not causal command-ID matching. The 1s provider configuration and workload differ
+from the MVP; no speedup is claimed. Source→twin polling observations assume shared
+host-kernel UTC, without a measured clock error bound; 66 repeated observations
+(including repeated event IDs) had median 1.251s [0.144–2.828], not 66 independent
+propagation trials. The resource capture contains 536 Docker CPU/memory rows during
+this workload; per-service counts/distributions and exact memory units are retained.
+Observed trial success (5/5 each) is not every-message delivery/persistence success.
+
+[External checks](../../evidence/v1/verification-20261115T024001Z/external-checks.json)
+retain commands, exits and outputs: Java21 208 tests; Python3.12 492 tests plus 385
+subtests (two explicit skips, nine integration tests deselected); Node22 seven tests;
+actual KUKSA nine tests; isolated actual MQTT two tests; native SDK publisher eleven
+tests in a disposable image with test-only pytest (two SDK Paho deprecation warnings).
+The skipped host SDK/MQTT boundaries were exercised separately. Failed protobuf
+collection, sandbox socket/stall attempt, contaminated MQTT negative control and
+missing-pytest image attempt remain recorded. No failed attempt is counted as a pass.
+
+### CI, Kanto and release prerequisites
+
+The new bounded real-services workflow has readiness, a 30-minute observer bound,
+cleanup, separate offline controls and 30-day named artifacts. The existing baseline
+workflow remains unchanged. Repository-local sample authentication is configured via
+Actions secrets `V1_LOCAL_DITTO_USERNAME` / `V1_LOCAL_DITTO_PASSWORD` and variable
+`V1_LOCAL_DITTO_SUBJECT`; no production credentials are committed. CI outcomes and
+artifact availability must be checked at the final PR SHA; implementation of a job
+is not a successful CI execution. Preserve durable evidence before artifact expiry.
+
+Ankit must finish V1-09 on a genuine Linux Kanto/container runtime: record OS/runtime
+versions and architecture; use a reachable pinned V1-compatible image (current
+publication targets linux/amd64); replace descriptor placeholders with actual
+vehicle-002 KUKSA/MQTT LAN endpoints and verify firewall/auth/TLS support; use the
+installed CLI's reviewed descriptor/lifecycle procedure; stop the Docker app-002 so
+only Kanto publishes for 002. Capture pre/post-start source/event IDs with source
+time strictly after the recorded start boundary, QoS/identity/freshness and matching
+real Ditto updates while 001 stays unaffected. Restore suppressed source input
+separately. Follow the [pilot preparation](../../velocitas-app/kanto/V1-PILOT.md),
+whose historical placeholders and preparation-only claims do not constitute a run.
+
+Before release: merge reviewed remediation through normal human review (no merges
+or approvals were performed here), rerun F01 under its failing/default workload and
+F02 at the legacy physical-unit boundary, resolve F03/F04, obtain affected-owner
+contract/authentication/freshness/budget decisions, pass live CI/baseline and Kanto,
+complete skill provenance/human review, report/video/contributions and a reviewed
+release SHA/tag decision. Phase V2 CARLA and customized-skill comparison remain open.
+
+Final evidence handling: upstream service logs included encoded Basic authentication.
+Before any evidence push, the fresh text outputs were authentication-redacted and
+trailing whitespace normalized; event/source IDs, timestamps and exit/results were
+preserved. A failing redaction control preceded the sanitizer implementation; all
+six offline controls and the full final Python suite passed (493 tests plus 385
+subtests, two explicit skips and nine deselections). See `python-sanitizer-final.txt`
+and red/green controls in the prepared run. The two actual live runs assessed
+committed `2118300`; final `fc28548` adds only this tested evidence handling, with
+no application or live acceptance assertion change.
+
+CI run [43669268812](https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43669268812)
+at `2118300` had passing offline controls; its first live attempt correctly blocked
+on then-absent credential settings. After configuration, attempt 2 reached real
+verification but was force-cancelled before upload because it predated the sanitizer.
+No credential-bearing artifact from that attempt was published. The only artifact
+then listed was first-attempt `14143631616` (readiness BLOCKED, no configured secrets).
+The replacement final-SHA workflow is required; no successful live CI result is
+claimed by these local runs. Existing standard CI and baseline pipeline at `2118300`
+passed. Final PR checks/artifact IDs remain the source for newer CI status.

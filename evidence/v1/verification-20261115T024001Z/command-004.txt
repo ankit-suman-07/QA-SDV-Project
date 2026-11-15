@@ -1,0 +1,209 @@
+ Image qa-v1-20261115024001-40525-app Building
+ Image qa-v1-20261115024001-40525-app Building
+ Image qa-v1-20261115024001-40525-provider Building
+ Image qa-v1-20261115024001-40525-provider Building
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.06kB done
+#1 DONE 0.0s
+
+#2 [provider-002 internal] load build definition from Dockerfile
+#2 transferring dockerfile:
+#2 transferring dockerfile: 261B done
+#2 DONE 0.1s
+
+#3 [app-002 internal] load build definition from Dockerfile
+#3 transferring dockerfile: 941B done
+#3 DONE 0.1s
+
+#4 [app-001] resolve image config for docker-image://docker.io/docker/dockerfile:1.2
+#4 DONE 0.6s
+
+#5 [provider-001 internal] load metadata for docker.io/library/python:3.10-slim
+#5 DONE 0.6s
+
+#6 [provider-002 internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [provider-002 internal] load build context
+#7 transferring context: 1.61kB done
+#7 DONE 0.0s
+
+#8 [app-001] docker-image://docker.io/docker/dockerfile:1.2@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
+#8 resolve docker.io/docker/dockerfile:1.2@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc 0.1s done
+#8 CACHED
+
+#9 [provider-002 1/5] FROM docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d
+#9 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.1s done
+#9 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.1s done
+#9 DONE 0.1s
+
+#10 [provider-001 4/5] RUN pip install --no-cache-dir -r requirements.txt
+#10 CACHED
+
+#11 [provider-001 2/5] WORKDIR /app
+#11 CACHED
+
+#12 [provider-001 3/5] COPY requirements.txt .
+#12 CACHED
+
+#13 [provider-001 5/5] COPY src/ ./src/
+#13 CACHED
+
+#14 [app-002 internal] load build definition from Dockerfile
+#14 transferring dockerfile: 90B done
+#14 DONE 0.1s
+
+#15 [app-001 internal] load build definition from Dockerfile
+#15 transferring dockerfile: 90B done
+#15 DONE 0.1s
+
+#16 [app-001 internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [app-002 internal] load .dockerignore
+#17 transferring context: 2B done
+#17 DONE 0.1s
+
+#18 [app-001 internal] load metadata for ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
+#18 ...
+
+#19 [provider-001] exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:590c498cb72b1c94ed0d9074e9cf6b005632da4d6efd7c0d92df120cbc6d5395 0.0s done
+#19 exporting config sha256:8bef8c1b864c7ec8af507676347880bb2cf146ab775bf5dd99242e0636ab435f 0.0s done
+#19 exporting attestation manifest sha256:98c2d4321f767c507ba6b3e2816348ba9a1adb0f398866f7e2e5689b5ff13868 0.1s done
+#19 exporting manifest list sha256:accdaf94ed639548e6be115c8f49e9fce46d19dd963e5e42ef54335e65e9b166 0.0s done
+#19 naming to docker.io/library/qa-v1-20261115024001-40525-provider:latest 0.0s done
+#19 unpacking to docker.io/library/qa-v1-20261115024001-40525-provider:latest 0.0s done
+#19 DONE 0.3s
+
+#20 [provider-002] exporting to image
+#20 exporting layers done
+#20 exporting manifest sha256:2394743279b216353a84f05c875b8693b89a9f53cebcd1024eee0e454d1a7920 0.0s done
+#20 exporting config sha256:86d9e80e4a267d1243b639ef63086a4aea1c2dda952a6e535ab7ecc78e2633c3 0.0s done
+#20 exporting attestation manifest sha256:66c9d815e13e3884c2eeb6bad4866d0352871b80830a40c4154fe2361a26f8b0 0.1s done
+#20 exporting manifest list sha256:b78804790973abf8f0d2edf98e3d63507c62313b78f6f0a860f3667025eb0dc4 0.0s done
+#20 naming to docker.io/library/qa-v1-20261115024001-40525-provider:latest 0.0s done
+#20 unpacking to docker.io/library/qa-v1-20261115024001-40525-provider:latest 0.0s done
+#20 DONE 0.3s
+
+#18 [app-002 internal] load metadata for ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
+#18 ...
+
+#21 [provider-001] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#22 [provider-002] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#18 [app-002 internal] load metadata for ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
+#18 DONE 0.8s
+
+#23 [app-001 internal] load build context
+#23 DONE 0.0s
+
+#24 [app-002 internal] load build context
+#24 DONE 0.0s
+
+#25 [app-002  1/10] FROM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774
+#25 resolve ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774 0.0s done
+#25 resolve ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774 0.0s done
+#25 DONE 0.0s
+
+#23 [app-001 internal] load build context
+#23 transferring context: 4.09kB done
+#23 DONE 0.0s
+
+#24 [app-002 internal] load build context
+#24 transferring context: 4.09kB done
+#24 DONE 0.0s
+
+#26 [app-002  5/10] RUN pip3 install --no-cache-dir     -r /workspace/app/requirements.txt
+#26 CACHED
+
+#27 [app-002  6/10] RUN pip3 install     --no-cache-dir     --no-deps     kuksa_client==0.5.1
+#27 CACHED
+
+#28 [app-002  2/10] COPY ./.velocitas.json /workspace/.velocitas.json
+#28 CACHED
+
+#29 [app-002  3/10] COPY ./.velocitas-lock.json     /workspace/.velocitas-lock.json
+#29 CACHED
+
+#30 [app-002  4/10] COPY ./app /workspace/app
+#30 CACHED
+
+#31 [app-002  9/10] RUN velocitas init
+#31 CACHED
+
+#32 [app-002  7/10] RUN pip3 install     --no-cache-dir     --force-reinstall     --no-deps     grpcio==1.68.0
+#32 CACHED
+
+#33 [app-002  8/10] WORKDIR /workspace
+#33 CACHED
+
+#34 [app-002 10/10] WORKDIR /workspace/app
+#34 CACHED
+
+#35 [app-002] exporting to image
+#35 exporting layers done
+#35 exporting manifest sha256:4f8aa0920443c161b82270a2977635c5de4485b9e15b01f968330e1778c498ad 0.0s done
+#35 exporting config sha256:1af32241d2dd5ebaedf5379b6b24784f3749b5fc6e8f608fa33ded34e111d9df 0.0s done
+#35 exporting attestation manifest sha256:e11ccc1118adf4219d9e517f9a332ebf92bad25502be2df15bb8f39bd2476594 0.0s done
+#35 exporting manifest list sha256:1136eac3811d22b1366a7eccba2185b0d8085958f8c9adb10b2c56e26bb5506c 0.0s done
+#35 naming to docker.io/library/qa-v1-20261115024001-40525-app:latest
+#35 naming to docker.io/library/qa-v1-20261115024001-40525-app:latest done
+#35 unpacking to docker.io/library/qa-v1-20261115024001-40525-app:latest 0.0s done
+#35 DONE 0.2s
+
+#36 [app-001] exporting to image
+#36 exporting layers done
+#36 exporting manifest sha256:1bec7811795708d7ac7d6f6a4c87c3c95c6a90430b50fdbf8f663719d19828e4 0.0s done
+#36 exporting config sha256:e8bf9a618d5ddafabc02b75df486eca8334e9e916e5986a74914df08ce36aefd 0.0s done
+#36 exporting attestation manifest sha256:0fca407c4dd099576475e642725c1ae09adc30cc71adcfbfc229eac88e40d338 0.0s done
+#36 exporting manifest list sha256:4e71a69734c3bcee73bf96380276575ced857b062ed98804d9d38edcfe731a50 0.0s done
+#36 naming to docker.io/library/qa-v1-20261115024001-40525-app:latest done
+#36 unpacking to docker.io/library/qa-v1-20261115024001-40525-app:latest 0.0s done
+#36 DONE 0.2s
+
+#37 [app-001] resolving provenance for metadata file
+#37 DONE 0.1s
+
+#38 [app-002] resolving provenance for metadata file
+#38 DONE 0.0s
+ Image qa-v1-20261115024001-40525-app Built
+ Image qa-v1-20261115024001-40525-provider Built
+ Image qa-v1-20261115024001-40525-provider Built
+ Image qa-v1-20261115024001-40525-app Built
+ Network qa-sdv-v1_default Creating
+ Network qa-sdv-v1_default Created
+ Container qa-v1-20261115024001-40525-edge-mqtt-1 Creating
+ Container qa-v1-20261115024001-40525-edge-kuksa-002-1 Creating
+ Container qa-v1-20261115024001-40525-edge-kuksa-001-1 Creating
+ Container qa-v1-20261115024001-40525-edge-kuksa-002-1 Created
+ Container qa-v1-20261115024001-40525-edge-provider-002-1 Creating
+ Container qa-v1-20261115024001-40525-edge-kuksa-001-1 Created
+ Container qa-v1-20261115024001-40525-edge-provider-001-1 Creating
+ Container qa-v1-20261115024001-40525-edge-mqtt-1 Created
+ Container qa-v1-20261115024001-40525-edge-provider-002-1 Created
+ Container qa-v1-20261115024001-40525-edge-app-002-1 Creating
+ Container qa-v1-20261115024001-40525-edge-provider-001-1 Created
+ Container qa-v1-20261115024001-40525-edge-app-001-1 Creating
+ Container qa-v1-20261115024001-40525-edge-app-001-1 Created
+ Container qa-v1-20261115024001-40525-edge-app-002-1 Created
+ Container qa-v1-20261115024001-40525-edge-kuksa-001-1 Starting
+ Container qa-v1-20261115024001-40525-edge-kuksa-002-1 Starting
+ Container qa-v1-20261115024001-40525-edge-mqtt-1 Starting
+ Container qa-v1-20261115024001-40525-edge-kuksa-002-1 Started
+ Container qa-v1-20261115024001-40525-edge-provider-002-1 Starting
+ Container qa-v1-20261115024001-40525-edge-kuksa-001-1 Started
+ Container qa-v1-20261115024001-40525-edge-provider-001-1 Starting
+ Container qa-v1-20261115024001-40525-edge-mqtt-1 Started
+ Container qa-v1-20261115024001-40525-edge-provider-002-1 Started
+ Container qa-v1-20261115024001-40525-edge-app-002-1 Starting
+ Container qa-v1-20261115024001-40525-edge-provider-001-1 Started
+ Container qa-v1-20261115024001-40525-edge-app-001-1 Starting
+ Container qa-v1-20261115024001-40525-edge-app-002-1 Started
+ Container qa-v1-20261115024001-40525-edge-app-001-1 Started

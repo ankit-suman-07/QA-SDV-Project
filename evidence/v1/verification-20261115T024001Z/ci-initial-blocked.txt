@@ -1,0 +1,21 @@
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	﻿2026-11-15T02:46:55.4796521Z ##[group]Run run_dir="evidence/v1/verification-$(date -u +%Y%m%dT%H%M%SZ)"
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4797291Z ^[[36;1mrun_dir="evidence/v1/verification-$(date -u +%Y%m%dT%H%M%SZ)"^[[0m
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4797857Z ^[[36;1mecho "V1_RUN_DIR=$run_dir" >> "$GITHUB_ENV"^[[0m
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4798584Z ^[[36;1mtimeout --signal=TERM --kill-after=90s 30m python -B -m scripts.v1_acceptance.run --output "$run_dir"^[[0m
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4838454Z shell: /usr/bin/bash -e {0}
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4838922Z env:
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4839273Z   SDV_ACCEPTANCE_DITTO_USERNAME:
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4839579Z   SDV_ACCEPTANCE_DITTO_PASSWORD:
+[REDACTED] two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4839914Z   SDV_ACCEPTANCE_DITTO_SUBJECT:
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4840322Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4841069Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4841547Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4842024Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4842573Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4843019Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4843445Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4843953Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4844363Z   MAVEN_ARGS: -ntp
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.4844636Z ##[endgroup]
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.8469599Z readiness BLOCKED
+Real two-vehicle core (Kanto and release remain separate)	Run five real fault and recovery trials and failure probes	2026-11-15T02:46:55.8704596Z ##[error]Process completed with exit code 2.

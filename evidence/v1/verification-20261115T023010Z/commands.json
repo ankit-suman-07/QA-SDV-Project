@@ -1,0 +1,201 @@
+[
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "seconds": 0.166762707000089,
+    "output": "command-000.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "version"
+    ],
+    "exit": 0,
+    "seconds": 0.06643827200002761,
+    "output": "command-001.txt"
+  },
+  {
+    "argv": [
+      "java",
+      "-version"
+    ],
+    "exit": 0,
+    "seconds": 0.06503214000008484,
+    "output": "command-002.txt"
+  },
+  {
+    "argv": [
+      "/tmp/qa-v1-env/bin/python",
+      "-m",
+      "pip",
+      "freeze"
+    ],
+    "exit": 1,
+    "seconds": 0.03308081300008325,
+    "output": "command-003.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/ditto.json",
+      "up",
+      "-d"
+    ],
+    "exit": 0,
+    "seconds": 37.01593088799996,
+    "output": "command-004.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/edge.json",
+      "up",
+      "-d",
+      "--build"
+    ],
+    "exit": 0,
+    "seconds": 106.197259669,
+    "output": "command-005.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "image",
+      "ls",
+      "--digests",
+      "--no-trunc"
+    ],
+    "exit": 0,
+    "seconds": 0.165885931000048,
+    "output": "command-006.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/edge.json",
+      "start",
+      "kuksa-001",
+      "kuksa-002",
+      "mqtt"
+    ],
+    "exit": 0,
+    "seconds": 0.16635147299996333,
+    "output": "command-007.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/edge.json",
+      "ps",
+      "--all"
+    ],
+    "exit": 0,
+    "seconds": 0.16524182000000565,
+    "output": "command-008.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/edge.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "500"
+    ],
+    "exit": 0,
+    "seconds": 0.16533876100004363,
+    "output": "command-009.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/edge.json",
+      "down",
+      "--timeout",
+      "15"
+    ],
+    "exit": 0,
+    "seconds": 16.829281218999995,
+    "output": "command-010.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/ditto.json",
+      "ps",
+      "--all"
+    ],
+    "exit": 0,
+    "seconds": 0.2162471369999821,
+    "output": "command-011.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/ditto.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "500"
+    ],
+    "exit": 0,
+    "seconds": 0.2163067129999945,
+    "output": "command-012.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023010-15156-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023010Z/ditto.json",
+      "down",
+      "--timeout",
+      "15"
+    ],
+    "exit": 0,
+    "seconds": 31.459187501999963,
+    "output": "command-013.txt"
+  }
+]

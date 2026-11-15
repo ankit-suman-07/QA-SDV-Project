@@ -1,0 +1,26 @@
+{
+  "vehicle-002": {
+    "schemaVersion": "1.0.0",
+    "eventId": "vehicle-002-4e3257f7b67246bfbf6ce1584000753a",
+    "vehicleId": "vehicle-002",
+    "sourceTimestamp": "2026-11-15T02:40:33.846008Z",
+    "health": "HEALTHY",
+    "faults": [],
+    "lidar": {
+      "distanceMeters": 35.0,
+      "sensorAvailable": true
+    }
+  },
+  "vehicle-001": {
+    "schemaVersion": "1.0.0",
+    "eventId": "vehicle-001-b5d8459c830141e99af35aba9ddac14c",
+    "vehicleId": "vehicle-001",
+    "sourceTimestamp": "2026-11-15T02:40:34.135829Z",
+    "health": "HEALTHY",
+    "faults": [],
+    "lidar": {
+      "distanceMeters": 35.0,
+      "sensorAvailable": true
+    }
+  }
+}

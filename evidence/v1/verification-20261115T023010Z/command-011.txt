@@ -1,0 +1,10 @@
+NAME                                               IMAGE                                         COMMAND                  SERVICE         CREATED         STATUS                   PORTS
+qa-v1-20261115023010-15156-ditto-connectivity-1    docker.io/eclipse/ditto-connectivity:3.8.4    "/usr/bin/tini -- sh…"   connectivity    3 minutes ago   Up 2 minutes (healthy)   8080/tcp
+qa-v1-20261115023010-15156-ditto-ditto-ui-1        docker.io/eclipse/ditto-ui:3.8.4              "/docker-entrypoint.…"   ditto-ui        3 minutes ago   Up 3 minutes             8080/tcp
+qa-v1-20261115023010-15156-ditto-gateway-1         docker.io/eclipse/ditto-gateway:3.8.4         "/usr/bin/tini -- sh…"   gateway         3 minutes ago   Up 2 minutes (healthy)   8080/tcp
+qa-v1-20261115023010-15156-ditto-mongodb-1         docker.io/mongo:7.0                           "docker-entrypoint.s…"   mongodb         3 minutes ago   Up 3 minutes             27017/tcp
+qa-v1-20261115023010-15156-ditto-nginx-1           docker.io/nginx:1.27-alpine                   "/docker-entrypoint.…"   nginx           3 minutes ago   Up 2 minutes             127.0.0.1:44589->80/tcp
+qa-v1-20261115023010-15156-ditto-policies-1        docker.io/eclipse/ditto-policies:3.8.4        "/usr/bin/tini -- sh…"   policies        3 minutes ago   Up 2 minutes (healthy)   8080/tcp
+qa-v1-20261115023010-15156-ditto-swagger-ui-1      docker.io/swaggerapi/swagger-ui:v5.9.1        "/docker-entrypoint.…"   swagger-ui      3 minutes ago   Up 2 minutes             80/tcp, 8080/tcp
+qa-v1-20261115023010-15156-ditto-things-1          docker.io/eclipse/ditto-things:3.8.4          "/usr/bin/tini -- sh…"   things          3 minutes ago   Up 2 minutes (healthy)   8080/tcp
+qa-v1-20261115023010-15156-ditto-things-search-1   docker.io/eclipse/ditto-things-search:3.8.4   "/usr/bin/tini -- sh…"   things-search   3 minutes ago   Up 2 minutes (healthy)   8080/tcp

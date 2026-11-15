@@ -1,0 +1,98 @@
+name: Phase V1 real two-vehicle acceptance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v1-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  observer-controls:
+    name: Offline acceptance assertion controls (no live services)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests -p test_v1_acceptance.py -v
+
+  live-two-vehicle:
+    name: Real two-vehicle core (Kanto and release remain separate)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 40
+    env:
+      # Configure legitimate credentials matching the pinned local Ditto sample's
+      # nginx.htpasswd, not a shared deployment. Missing configuration fails closed.
+      SDV_ACCEPTANCE_DITTO_USERNAME: ${{ secrets.V1_LOCAL_DITTO_USERNAME }}
+      SDV_ACCEPTANCE_DITTO_PASSWORD: ${{ secrets.V1_LOCAL_DITTO_PASSWORD }}
+      SDV_ACCEPTANCE_DITTO_SUBJECT: ${{ vars.V1_LOCAL_DITTO_SUBJECT }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+      - name: Inspect existing deployments
+        run: |
+          docker ps -a
+          docker compose ls
+      - name: Install application and observer dependencies
+        run: |
+          python -m pip install -r requirements-test.txt -r scripts/v1_acceptance/requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: Build and run Java 21 regression
+        working-directory: backend
+        run: bash ./mvnw --batch-mode --no-transfer-progress clean verify
+      - name: Run five real fault and recovery trials and failure probes
+        run: |
+          run_dir="evidence/v1/verification-$(date -u +%Y%m%dT%H%M%SZ)"
+          echo "V1_RUN_DIR=$run_dir" >> "$GITHUB_ENV"
+          timeout --signal=TERM --kill-after=90s 30m python -B -m scripts.v1_acceptance.run --output "$run_dir"
+      - name: Upload real acceptance evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v1-real-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.V1_RUN_DIR }}/
+            backend/target/surefire-reports/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Last-resort cleanup of this job's owned projects
+        if: always()
+        shell: bash
+        run: |
+          # Disposable runner only; select recorded ownership, never global prune.
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          run_dir = os.environ.get('V1_RUN_DIR')
+          for manifest in ([pathlib.Path(run_dir)/'manifest.json'] if run_dir else []):
+              if not manifest.exists():
+                  continue
+              data = json.loads(manifest.read_text())
+              if not data.get('project', '').startswith('qa-v1-'):
+                  continue
+              for kind in ('edge', 'ditto'):
+                  config = manifest.parent / (kind + '.json')
+                  if config.exists():
+                      subprocess.run(['docker', 'compose', '-p', data['project']+'-'+kind,
+                                      '-f', str(config), 'down', '--timeout', '15'], check=True)
+          PY

@@ -1,0 +1,6 @@
+ Container qa-v1-transport-20261115-mqtt-1 Stopping
+ Container qa-v1-transport-20261115-mqtt-1 Stopped
+ Container qa-v1-transport-20261115-mqtt-1 Removing
+ Container qa-v1-transport-20261115-mqtt-1 Removed
+ Network qa-v1-transport-20261115_default Removing
+ Network qa-v1-transport-20261115_default Removed

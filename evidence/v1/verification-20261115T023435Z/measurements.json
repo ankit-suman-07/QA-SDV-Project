@@ -1,0 +1,20 @@
+[
+  {
+    "operation": "trial-1-inject_scenario",
+    "startedMonotonic": 1033.597685268,
+    "boundaries": {},
+    "status": "FAIL"
+  },
+  {
+    "operation": "trial-1-clear_scenario",
+    "startedMonotonic": 1103.849563013,
+    "boundaries": {},
+    "status": "FAIL"
+  },
+  {
+    "operation": "trial-2-inject_scenario",
+    "startedMonotonic": 1173.91771034,
+    "boundaries": {},
+    "status": "FAIL"
+  }
+]

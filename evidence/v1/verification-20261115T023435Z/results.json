@@ -1,0 +1,52 @@
+{
+  "readiness": {
+    "status": "PASS",
+    "seconds": 35.54055521800001
+  },
+  "healthy": {
+    "status": "FAIL",
+    "errorType": "AssertionError",
+    "seconds": 50.04766053500009,
+    "reason": "see commands/process logs; no substitute used"
+  },
+  "fault-recovery-trials": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "freshness-null": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "invalid-ordering-restart": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "individual-write-recovery": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "fleet-write-recovery": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "mqtt-reconnect": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "provider-kuksa-recovery": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "dashboard": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "baseline-regression": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  },
+  "kanto-v1-09": {
+    "status": "BLOCKED",
+    "reason": "not reached"
+  }
+}

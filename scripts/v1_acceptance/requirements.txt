@@ -1,0 +1,3 @@
+# Additional observer dependencies; application dependencies remain in requirements-test.txt.
+PyYAML==6.0.3
+playwright==1.65.2

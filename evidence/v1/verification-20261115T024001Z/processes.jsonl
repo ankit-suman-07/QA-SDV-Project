@@ -1,0 +1,4 @@
+{"argv": ["/tmp/qa-v1-env/bin/python", "-B", "-m", "ditto.v1", "run"], "pid": 43855, "log": "ingress.txt"}
+{"argv": ["java", "-jar", "/tmp/qa-v1-acceptance/backend/target/backend-0.0.1-SNAPSHOT.jar"], "pid": 43856, "log": "backend.txt"}
+{"argv": ["/tmp/qa-v1-env/bin/python", "-B", "-m", "ditto.v1", "run"], "pid": 57151, "log": "ingress-2.txt"}
+{"argv": ["/tmp/qa-v1-env/bin/python", "-B", "-m", "ditto.v1", "run"], "pid": 58242, "log": "ingress-3.txt"}

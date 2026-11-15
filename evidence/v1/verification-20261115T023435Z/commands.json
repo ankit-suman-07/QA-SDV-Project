@@ -1,0 +1,190 @@
+[
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "seconds": 0.16677902100002484,
+    "output": "command-000.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "version"
+    ],
+    "exit": 0,
+    "seconds": 0.06561215700003231,
+    "output": "command-001.txt"
+  },
+  {
+    "argv": [
+      "java",
+      "-version"
+    ],
+    "exit": 0,
+    "seconds": 0.1154341020001084,
+    "output": "command-002.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/ditto.json",
+      "up",
+      "-d"
+    ],
+    "exit": 0,
+    "seconds": 3.4777110360000734,
+    "output": "command-003.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/edge.json",
+      "up",
+      "-d",
+      "--build"
+    ],
+    "exit": 0,
+    "seconds": 6.283302512999967,
+    "output": "command-004.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "image",
+      "ls",
+      "--digests",
+      "--no-trunc"
+    ],
+    "exit": 0,
+    "seconds": 0.1655639110000493,
+    "output": "command-005.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/edge.json",
+      "start",
+      "kuksa-001",
+      "kuksa-002",
+      "mqtt"
+    ],
+    "exit": 0,
+    "seconds": 0.16548833899992133,
+    "output": "command-006.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/edge.json",
+      "ps",
+      "--all"
+    ],
+    "exit": 0,
+    "seconds": 0.1653866490000837,
+    "output": "command-007.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/edge.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "500"
+    ],
+    "exit": 0,
+    "seconds": 0.1662607250000292,
+    "output": "command-008.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-edge",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/edge.json",
+      "down",
+      "--timeout",
+      "15"
+    ],
+    "exit": 0,
+    "seconds": 17.377516475999983,
+    "output": "command-009.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/ditto.json",
+      "ps",
+      "--all"
+    ],
+    "exit": 0,
+    "seconds": 0.21661949800000002,
+    "output": "command-010.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/ditto.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "500"
+    ],
+    "exit": 0,
+    "seconds": 0.21618102799993721,
+    "output": "command-011.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-v1-20261115023435-27324-ditto",
+      "-f",
+      "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T023435Z/ditto.json",
+      "down",
+      "--timeout",
+      "15"
+    ],
+    "exit": 0,
+    "seconds": 31.55259442800002,
+    "output": "command-012.txt"
+  }
+]

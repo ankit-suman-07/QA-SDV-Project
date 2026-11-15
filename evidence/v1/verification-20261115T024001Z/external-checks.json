@@ -1,0 +1,82 @@
+{
+  "capturedUtc": "2026-11-15T02:43:38.805033+00:00",
+  "checks": [
+    {
+      "name": "Java 21",
+      "command": "JAVA_HOME=<isolated Corretto21> bash backend/mvnw --batch-mode --no-transfer-progress clean verify",
+      "exit": 0,
+      "result": "208 tests; application source unchanged from f33e7cb",
+      "output": "java-21.txt"
+    },
+    {
+      "name": "Python initial",
+      "command": "python -m pytest -q -ra -m \"not integration\"",
+      "exit": 2,
+      "result": "three missing generated protobuf imports; retained",
+      "output": "python-initial-collection.txt"
+    },
+    {
+      "name": "Python sandbox",
+      "command": "PYTHONPATH=<generated> python -m pytest -q -ra -m \"not integration\"",
+      "exit": 130,
+      "result": "socket failures; interrupted after stalls; no pass claimed",
+      "output": "python-sandbox-interrupted.txt"
+    },
+    {
+      "name": "Python compatible host",
+      "command": "PYTHONPATH=<generated>:<repo> python -m pytest -q -ra -m \"not integration\"",
+      "exit": 0,
+      "result": "492 passed,385 subtests,2 skipped,9 deselected",
+      "output": "python-elevated.txt"
+    },
+    {
+      "name": "Frontend Node22",
+      "command": "npm test --prefix frontend",
+      "exit": 0,
+      "result": "7 tests passed",
+      "output": "frontend.txt"
+    },
+    {
+      "name": "Existing baseline",
+      "command": "COMPOSE_PROJECT_NAME=qa-v1-baseline-20261115 PUBLISH_INTERVAL_SECONDS=1.0 timeout 12m sh scripts/run-autonomous-mvp-demo.sh",
+      "exit": 0,
+      "result": "actual single-vehicle edge healthy/fault/recovery; stack later cleaned",
+      "output": "baseline.txt"
+    },
+    {
+      "name": "KUKSA",
+      "command": "DATABROKER_HOST=127.0.0.1 DATABROKER_PORT=55556 python -m pytest -q -ra -m integration vehicle-simulator/tests/test_kuksa_publication.py",
+      "exit": 0,
+      "result": "9 live signal tests passed",
+      "output": "kuksa-live.txt"
+    },
+    {
+      "name": "MQTT contaminated",
+      "command": "V1_MQTT_TEST_HOST=127.0.0.1 V1_MQTT_TEST_PORT=1883 python -m pytest -q -ra -m integration velocitas-app/app/tests/test_v1_publisher_integration.py",
+      "exit": 1,
+      "result": "1 failed,1 passed; active baseline publisher contaminated negative control",
+      "output": "mqtt-contaminated-attempt.txt"
+    },
+    {
+      "name": "MQTT isolated",
+      "command": "V1_MQTT_TEST_HOST=127.0.0.1 V1_MQTT_TEST_PORT=28884 python -m pytest -q -ra -m integration velocitas-app/app/tests/test_v1_publisher_integration.py",
+      "exit": 0,
+      "result": "2 passed; separate actual Mosquitto, no baseline publisher",
+      "output": "mqtt-isolated.txt"
+    },
+    {
+      "name": "SDK initial",
+      "command": "docker run <recorded app image> python3 -m pytest ...test_v1_publisher.py",
+      "exit": 1,
+      "result": "image had no pytest; retained",
+      "output": "sdk-without-pytest.txt"
+    },
+    {
+      "name": "SDK final",
+      "command": "docker run --rm <recorded app image> python3 -c \"install pytest==8.4.2; run test_v1_publisher.py\"",
+      "exit": 0,
+      "result": "11 passed;2 SDK Paho deprecation warnings; ephemeral test-only dependency",
+      "output": "sdk-publisher-final.txt"
+    }
+  ]
+}

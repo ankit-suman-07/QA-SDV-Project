@@ -1,0 +1,45 @@
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/test_uprotocol_transport.py ______________
+ImportError while importing test module '/tmp/qa-v1-acceptance/tests/test_uprotocol_transport.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../qa-v1-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_uprotocol_transport.py:3: in <module>
+    from uprotocol.transport import (
+uprotocol/transport.py:25: in <module>
+    import common_pb2
+E   ModuleNotFoundError: No module named 'common_pb2'
+_________ ERROR collecting uprotocol/tests/test_extended_transport.py __________
+ImportError while importing test module '/tmp/qa-v1-acceptance/uprotocol/tests/test_extended_transport.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../qa-v1-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+uprotocol/tests/test_extended_transport.py:5: in <module>
+    from uprotocol import transport
+uprotocol/transport.py:25: in <module>
+    import common_pb2
+E   ModuleNotFoundError: No module named 'common_pb2'
+______________ ERROR collecting uprotocol/tests/test_transport.py ______________
+ImportError while importing test module '/tmp/qa-v1-acceptance/uprotocol/tests/test_transport.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../qa-v1-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+uprotocol/tests/test_transport.py:12: in <module>
+    from uprotocol.transport import (
+uprotocol/transport.py:25: in <module>
+    import common_pb2
+E   ModuleNotFoundError: No module named 'common_pb2'
+=========================== short test summary info ============================
+SKIPPED [1] velocitas-app/app/tests/test_v1_publisher_integration.py:28: set V1_MQTT_TEST_HOST to run
+ERROR tests/test_uprotocol_transport.py
+ERROR uprotocol/tests/test_extended_transport.py
+ERROR uprotocol/tests/test_transport.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!!
+1 skipped, 9 deselected, 3 errors in 0.83s

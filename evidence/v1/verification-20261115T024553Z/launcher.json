@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/tmp/qa-v1-env/bin/python",
+    "-B",
+    "-m",
+    "scripts.v1_acceptance.run",
+    "--output",
+    "evidence/v1/verification-20261115T024553Z"
+  ],
+  "exit": 0,
+  "finishedUtc": "2026-11-15T02:50:13.635280+00:00"
+}

@@ -1,0 +1,1 @@
+400 BAD_REQUEST {"status":400,"error":"gateway:duplicate.header.field","message":"The message contains headers which include a duplicate header field: 'Accept-Encoding'","description":"A request must not contain multiple header fields with the same field name. For more information see RFC 7230 section 3.2.2.","href":"https://tools.ietf.org/rfc/rfc7230.txt"}

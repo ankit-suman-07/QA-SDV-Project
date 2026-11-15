@@ -1,0 +1,24 @@
+{
+  "startedUtc": "2026-11-15T02:30:10.802285+00:00",
+  "sha": "800b156560c7f086fd2625499733847e18bd6a3a",
+  "dirty": "?? scripts/v1_acceptance/README.md\n?? scripts/v1_acceptance/requirements.txt\n?? scripts/v1_acceptance/run.py",
+  "project": "qa-v1-20261115023010-15156",
+  "ports": {
+    "ditto": 44589,
+    "mqtt": 42631,
+    "kuksa001": 54731,
+    "kuksa002": 58457,
+    "provider001": 37785,
+    "provider002": 39437,
+    "api": 43407
+  },
+  "dittoRevision": "5dbb05e6294e5ac0103506102baff9eab755d180",
+  "clock": "one host time.monotonic observer; source UTC shares host kernel clock via containers; no cross-host clock accuracy bound",
+  "trials": 5,
+  "dependencies": "real providers/KUKSA/Velocitas/Mosquitto/ingress/Ditto/Java/dashboard; no mocks",
+  "pendingWordingAlignment": "separate docs PR; current main C1-C10 proposed status retained",
+  "notAcceptance": [
+    "Kanto is a separate required live gate",
+    "release/report/video/approvals are not automated here"
+  ]
+}
