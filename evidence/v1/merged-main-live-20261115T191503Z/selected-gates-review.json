@@ -1,0 +1,24 @@
+{
+  "result": "PASS",
+  "selectedGates": {
+    "readiness": {
+      "status": "PASS",
+      "seconds": 158.3450866710009
+    },
+    "healthy-individual-fleet-dashboard": {
+      "status": "PASS",
+      "seconds": 1.4406397530001414
+    },
+    "one-routed-fault-clear-isolation": {
+      "status": "PASS",
+      "seconds": 9.363787989999764
+    },
+    "persisted-watermark-restart": {
+      "status": "PASS",
+      "seconds": 15.135660021000149
+    }
+  },
+  "originalWrapperSummary": "FAIL due to counting preallocated unselected gates; raw summary and exit retained",
+  "correction": "evaluate named selected gates only; no service rerun or application changes",
+  "notFreshlyTested": "Other preallocated BLOCKED/not-reached gates were intentionally excluded; broader candidate campaign retained as historical evidence"
+}

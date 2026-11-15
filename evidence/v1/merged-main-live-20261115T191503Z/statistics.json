@@ -1,0 +1,110 @@
+{
+  "inject_scenario": {
+    "trials": 1,
+    "failures": 0,
+    "boundaries": {
+      "mqtt": {
+        "n": 1,
+        "medianSeconds": 3.262898987000881,
+        "rangeSeconds": [
+          3.262898987000881,
+          3.262898987000881
+        ]
+      },
+      "twin": {
+        "n": 1,
+        "medianSeconds": 3.381707278000249,
+        "rangeSeconds": [
+          3.381707278000249,
+          3.381707278000249
+        ]
+      },
+      "api": {
+        "n": 1,
+        "medianSeconds": 3.5338678669995716,
+        "rangeSeconds": [
+          3.5338678669995716,
+          3.5338678669995716
+        ]
+      },
+      "fleetApi": {
+        "n": 1,
+        "medianSeconds": 3.558644329999879,
+        "rangeSeconds": [
+          3.558644329999879,
+          3.558644329999879
+        ]
+      },
+      "fleetThing": {
+        "n": 1,
+        "medianSeconds": 5.189883494000242,
+        "rangeSeconds": [
+          5.189883494000242,
+          5.189883494000242
+        ]
+      },
+      "dashboard": {
+        "n": 1,
+        "medianSeconds": 4.937400824999713,
+        "rangeSeconds": [
+          4.937400824999713,
+          4.937400824999713
+        ]
+      }
+    }
+  },
+  "clear_scenario": {
+    "trials": 1,
+    "failures": 0,
+    "boundaries": {
+      "mqtt": {
+        "n": 1,
+        "medianSeconds": 1.9662849010001082,
+        "rangeSeconds": [
+          1.9662849010001082,
+          1.9662849010001082
+        ]
+      },
+      "twin": {
+        "n": 1,
+        "medianSeconds": 2.22611711799982,
+        "rangeSeconds": [
+          2.22611711799982,
+          2.22611711799982
+        ]
+      },
+      "api": {
+        "n": 1,
+        "medianSeconds": 2.2456404120002844,
+        "rangeSeconds": [
+          2.2456404120002844,
+          2.2456404120002844
+        ]
+      },
+      "fleetApi": {
+        "n": 1,
+        "medianSeconds": 2.2682914420001907,
+        "rangeSeconds": [
+          2.2682914420001907,
+          2.2682914420001907
+        ]
+      },
+      "fleetThing": {
+        "n": 1,
+        "medianSeconds": 3.8124785130003147,
+        "rangeSeconds": [
+          3.8124785130003147,
+          3.8124785130003147
+        ]
+      },
+      "dashboard": {
+        "n": 1,
+        "medianSeconds": 3.573612874999526,
+        "rangeSeconds": [
+          3.573612874999526,
+          3.573612874999526
+        ]
+      }
+    }
+  }
+}

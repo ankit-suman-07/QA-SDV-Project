@@ -1,0 +1,8 @@
+{
+  "label": "UNMERGED INTEGRATION CANDIDATE",
+  "result": "PASS",
+  "bothV1FeaturesAbsentBeforePublishers": true,
+  "noObserverBootstrap": true,
+  "originalNginxSha256": "bc54b2102aad9908a655a8bd315fe84966d4779752ccdaf64b303eab325b3661",
+  "actualImageSourceMatches": true
+}

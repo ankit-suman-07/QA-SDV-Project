@@ -1,0 +1,45 @@
+{
+  "missing": [
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/python-unit-final.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/backend.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/frontend-unit.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/kuksa-live-signals.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/mqtt-live-transport.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/edge-rendered-configuration.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/edge-image-identities.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/provider-restart-policy.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/edge-final-service-logs.log",
+      "trackedHistory": []
+    },
+    {
+      "path": "evidence/v1/verification-20261114T051226Z/tire-unit-boundary.log",
+      "trackedHistory": []
+    }
+  ],
+  "interpretation": "Historical raw-log links have no tracked history here. Matching JSON command metadata exists but is not replacement raw output. Current candidate essential raw artifacts are tracked; no historical log invented."
+}

@@ -1,0 +1,25 @@
+{
+  "label": "UNMERGED INTEGRATION CANDIDATE",
+  "result": "PASS",
+  "testedCandidate": "49f8b8d59eeef7245ba643f9f88f86709c44e99a",
+  "sourceSha": "d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "latestFixInputs": {
+    "ankit/fix/v1-ditto-feature-initialization": "cd89160ccdd1b65901d365e46431b1af73ea1efc",
+    "ankit/fix/v1-ditto-http-compatibility": "0a010eb30e81a63595638b88f81096dc561c5b28",
+    "ankit/fix/v1-graceful-app-shutdown": "39a58534abad25e11af3139435787874a2b19ed6"
+  },
+  "postTestChanges": "Evidence only; implementation/config/frontend/harness diff from tested head is empty",
+  "python": "541 passed,386 subtests,2 skips,9 integration deselections",
+  "java": "209 passed",
+  "frontend": "7 passed",
+  "live": "9 selected gates PASS;5 fault/5 clear trials",
+  "kanto": "3 actual d8c1f40 managed cycles PASS; exit0;154 healthy001 twin samples",
+  "evidence": "../release-candidate-live-20261115T183301Z/",
+  "notClaimed": [
+    "verified final main",
+    "remote LAN",
+    "automatic crash restart",
+    "full V1 acceptance",
+    "release"
+  ]
+}

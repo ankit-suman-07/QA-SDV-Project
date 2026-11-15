@@ -1,0 +1,94 @@
+[
+  {
+    "argv": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "6a6badc207e3cf43f6bba1d1c9584538d6450fed\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "version",
+      "--format",
+      "{{.Server.Version}}"
+    ],
+    "exit": 0,
+    "stdout": "29.9.3\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "version"
+    ],
+    "exit": 0,
+    "stdout": "Docker Compose version v5.7.1\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/jdk21/bin/java",
+      "-version"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.0.11 (build 21.0.13+11-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.0.11 (build 21.0.13+11-LTS, mixed mode, sharing)\n"
+  },
+  {
+    "argv": [
+      "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/node22/bin/node",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "v22.23.5\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "google-chrome",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Google Chrome 157.0.8103.50 \n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "timedatectl",
+      "show",
+      "-p",
+      "NTPSynchronized",
+      "-p",
+      "NTP"
+    ],
+    "exit": 0,
+    "stdout": "NTP=yes\nNTPSynchronized=yes\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "chronyc",
+      "tracking"
+    ],
+    "exit": 0,
+    "stdout": "Reference ID    : AE8ACCFB (174-138-204-251.cpe.distributel.net)\nStratum         : 2\nRef time (UTC)  : Sun Nov 15 15:24:12 2026\nSystem time     : 0.000506727 seconds slow of NTP time\nLast offset     : -0.000391783 seconds\nRMS offset      : 0.000306381 seconds\nFrequency       : 9.330 ppm slow\nResidual freq   : -0.012 ppm\nSkew            : 0.296 ppm\nRoot delay      : 0.016329231 seconds\nRoot dispersion : 0.000987843 seconds\nUpdate interval : 1025.3 seconds\nLeap status     : Normal\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit": 0,
+    "stdout": "qa-v1-shutdown-app-1794756028-4 Exited (0) 8 minutes ago\nqa-v1-shutdown-app-1794756027-3 Exited (0) 8 minutes ago\nqa-v1-shutdown-app-1794756024-2 Exited (0) 8 minutes ago\nqa-v1-shutdown-app-1794756020-1 Exited (0) 8 minutes ago\nqa-v1-shutdown-app-1794756015-0 Exited (0) 8 minutes ago\nqa-v1-shutdown-mqtt-1794756015 Exited (0) 8 minutes ago\nqa-v1-shutdown-app-0 Exited (1) 13 minutes ago\nqa-v1-shutdown-mqtt Exited (0) 13 minutes ago\nqa-v1-release-engineering-ditto-nginx-1 Exited (0) 3 minutes ago\nqa-v1-release-engineering-ditto-things-1 Exited (137) 2 minutes ago\nqa-v1-release-engineering-ditto-connectivity-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-things-search-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-gateway-1 Exited (143) 2 minutes ago\nqa-v1-release-engineering-ditto-swagger-ui-1 Exited (0) 2 minutes ago\nqa-v1-release-engineering-ditto-ditto-ui-1 Exited (0) 3 minutes ago\nqa-v1-release-engineering-ditto-mongodb-1 Exited (0) 2 minutes ago\nqa-v1-release-engineering-ditto-policies-1 Exited (137) 2 minutes ago\nqa-v1-kanto-prereq-ditto-nginx-1 Up About an hour\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up About an hour\nqa-v1-kanto-prereq-edge-app-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-app-002-1 Exited (1) 8 hours ago\nqa-v1-kanto-prereq-edge-provider-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up About an hour\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up About an hour\nqa-v1-kanto-prereq-ditto-policies-1 Up About an hour (healthy)\n",
+    "stderr": ""
+  }
+]

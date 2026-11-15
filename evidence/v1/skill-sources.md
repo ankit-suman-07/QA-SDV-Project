@@ -114,3 +114,41 @@ These are candidate pre-prepared skills from the [Superpowers repository](https:
   technique files referenced by systematic debugging. Their usage is not claimed.
 - Human affected-owner review remains pending. Java, browser and controlled HTTP
   checks verify components; no live fleet/MQTT acceptance is claimed.
+
+
+## Ankit remediation and readiness — November 15, 2026
+
+Actual work: F03 #44, F04 #45, shutdown #46 and unmerged combined verification.
+Applied repository TDD, systematic-debugging and verification-before-completion
+instructions from main6a965bb. Red/green failures, actual runtime investigations,
+corrected contrary observations and independent verification are linked in
+[readiness traceability](../../docs/findings/v1-release-readiness.md). Human review
+remains pending; no teammate approval or historical invocation evidence is inferred.
+
+[Current upstream investigation](release-readiness-20261115/skill-provenance-investigation.json)
+resolves reported Superpowers v6.4.2 tag object668b16d to commit
+8ca22dba9a94f28898bbce59f2537ff4d87c747d. TDD and verification copies match that
+reference exactly. The inherited debugging copy has two safer environment-secret
+example lines ([diff](release-readiness-20261115/systematic-debugging-provenance.diff));
+its actual repository hash is recorded, not falsely called an unchanged original.
+[MIT license](release-readiness-20261115/superpowers-v6.4.2-LICENSE.txt) retained.
+Current reference comparison does not establish E1/E2 historical installed bytes,
+exact invocation version or human acceptance. Original author records above remain.
+Missing writing-good-tests/debugging support files are not claimed. V1-06 remains
+qualified pending owner/rubric review; V2 customized-skill evaluation is not claimed.
+
+
+Final resumed verification includes the additional d8c1f40 stalled-join regression:
+red reproduced an interpreter hang, green returned a nonzero incomplete-cleanup
+error within budget. Final combined Python541/Java209/frontend7 and nine real gates
+passed; final-source Kanto three cycles passed. [Current exact sources and evidence](../../docs/findings/v1-release-readiness.md)
+retain the earlier checkpoints without relabeling. Human skill/rubric review and
+historical invocation provenance remain pending; no new approval is inferred.
+
+
+## PR47 post-merge review — November 15, 2026
+
+Ankit used the repository verification-before-completion.md skill for fresh main
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe` verification and PR47 evidence checks.
+No production behavior was changed; no new TDD claim. Human review and historical
+provenance limitations remain open. See the merged-main evidence README and tooling.

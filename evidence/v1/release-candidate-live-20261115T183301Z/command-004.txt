@@ -1,0 +1,357 @@
+ Image qa-v1-20261115183301-256348-app Building
+ Image qa-v1-20261115183301-256348-app Building
+ Image qa-v1-20261115183301-256348-provider Building
+ Image qa-v1-20261115183301-256348-provider Building
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.44kB done
+#1 DONE 0.0s
+
+#2 [app-001 internal] load build definition from Dockerfile
+#2 transferring dockerfile: 942B done
+#2 DONE 0.0s
+
+#3 [provider-002 internal] load build definition from Dockerfile
+#3 transferring dockerfile: 262B done
+#3 DONE 0.0s
+
+#4 [provider-001 internal] load metadata for docker.io/library/python:3.10-slim
+#4 DONE 1.0s
+
+#5 [app-002] resolve image config for docker-image://docker.io/docker/dockerfile:1.2
+#5 DONE 1.0s
+
+#6 [provider-001 internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [provider-001 internal] load build context
+#7 transferring context: 24.04kB done
+#7 DONE 0.0s
+
+#8 [app-001] docker-image://docker.io/docker/dockerfile:1.2@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
+#8 resolve docker.io/docker/dockerfile:1.2@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc 0.1s done
+#8 CACHED
+
+#9 [provider-002 1/5] FROM docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d
+#9 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.1s done
+#9 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.1s done
+#9 DONE 0.1s
+
+#10 [provider-002 3/5] COPY requirements.txt .
+#10 CACHED
+
+#11 [provider-002 4/5] RUN pip install --no-cache-dir -r requirements.txt
+#11 CACHED
+
+#12 [provider-002 2/5] WORKDIR /app
+#12 CACHED
+
+#13 [provider-002 5/5] COPY src/ ./src/
+#13 CACHED
+
+#14 [app-002 internal] load .dockerignore
+#14 transferring context: 2B done
+#14 DONE 0.0s
+
+#15 [app-002 internal] load build definition from Dockerfile
+#15 transferring dockerfile: 91B done
+#15 DONE 0.0s
+
+#16 [app-001 internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.1s
+
+#17 [app-001 internal] load build definition from Dockerfile
+#17 transferring dockerfile: 91B done
+#17 DONE 0.1s
+
+#18 [provider-002] exporting to image
+#18 exporting layers done
+#18 exporting manifest sha256:924685d4cba80cb8e447938b92832723327fecbd1cf0c012d3c7bee021011d04 0.3s done
+#18 exporting config sha256:d2065f887430aec7c6ab8b47c5b8e8b1f0dfa23d7159524a31deeb03f60ef3ad
+#18 exporting config sha256:d2065f887430aec7c6ab8b47c5b8e8b1f0dfa23d7159524a31deeb03f60ef3ad 0.0s done
+#18 exporting attestation manifest sha256:ae3ab5b20f648b531cab97e034d2bab355693701b16827526f79106094961536 0.0s done
+#18 exporting manifest list sha256:7bf3aaedbc5e67daa2ea1b3da75154c3414d50f39d61f9ff4d284a34f6c8361b
+#18 exporting manifest list sha256:7bf3aaedbc5e67daa2ea1b3da75154c3414d50f39d61f9ff4d284a34f6c8361b 0.0s done
+#18 naming to docker.io/library/qa-v1-20261115183301-256348-provider:latest done
+#18 unpacking to docker.io/library/qa-v1-20261115183301-256348-provider:latest 0.0s done
+#18 DONE 0.5s
+
+#19 [provider-001] exporting to image
+#19 exporting layers done
+#19 exporting manifest sha256:0e54578341f35e13017f9e33c63055d9be709df074d1fa380c5b6184d19c8492 0.0s done
+#19 exporting config sha256:530f6c076623962c4caae314573e4083574e78328b52b660e9b5dcb6502c85fc 0.3s done
+#19 exporting attestation manifest sha256:3d1c80537d7f52ec264a04b87c7c395930f05876c3b8bd09c74911bf059439d6 0.0s done
+#19 exporting manifest list sha256:e7553823890c8368662795f8535b88f62e1c62b5bf97541ae66a53332dd35531 0.0s done
+#19 naming to docker.io/library/qa-v1-20261115183301-256348-provider:latest done
+#19 unpacking to docker.io/library/qa-v1-20261115183301-256348-provider:latest 0.0s done
+#19 DONE 0.4s
+
+#20 [app-001 internal] load metadata for ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
+#20 ...
+
+#21 [provider-001] resolving provenance for metadata file
+#21 DONE 0.0s
+
+#22 [provider-002] resolving provenance for metadata file
+#22 DONE 0.0s
+
+#20 [app-001 internal] load metadata for ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
+#20 DONE 0.9s
+
+#23 [app-002  1/10] FROM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774
+#23 resolve ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774 0.0s done
+#23 DONE 0.0s
+
+#24 [app-002 internal] load build context
+#24 transferring context: 32.62kB done
+#24 DONE 0.0s
+
+#25 [app-001 internal] load build context
+#25 transferring context: 82.94kB done
+#25 DONE 0.0s
+
+#26 [app-002  2/10] COPY ./.velocitas.json /workspace/.velocitas.json
+#26 CACHED
+
+#27 [app-001  3/10] COPY ./.velocitas-lock.json     /workspace/.velocitas-lock.json
+#27 CACHED
+
+#28 [app-002  4/10] COPY ./app /workspace/app
+#28 DONE 0.1s
+
+#29 [app-001  5/10] RUN pip3 install --no-cache-dir     -r /workspace/app/requirements.txt
+#29 1.903 Collecting cmd2==1.5.0 (from -r /workspace/app/requirements.txt (line 1))
+#29 2.297   Downloading cmd2-1.5.0-py3-none-any.whl.metadata (22 kB)
+#29 2.406 Collecting jsonpath-ng==1.8.0 (from -r /workspace/app/requirements.txt (line 2))
+#29 2.917   Downloading jsonpath_ng-1.8.0-py3-none-any.whl.metadata (18 kB)
+#29 3.030 Collecting Pygments==2.20.0 (from -r /workspace/app/requirements.txt (line 3))
+#29 3.131   Downloading pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+#29 3.247 Collecting velocitas-sdk==0.15.7 (from -r /workspace/app/requirements.txt (line 4))
+#29 3.423   Downloading velocitas_sdk-0.15.7-py3-none-any.whl.metadata (8.4 kB)
+#29 4.123 Collecting websockets==16.1 (from -r /workspace/app/requirements.txt (line 5))
+#29 4.243   Downloading websockets-16.1-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.8 kB)
+#29 4.458 Collecting attrs>=16.3.0 (from cmd2==1.5.0->-r /workspace/app/requirements.txt (line 1))
+#29 4.549   Downloading attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+#29 4.662 Collecting colorama>=0.3.7 (from cmd2==1.5.0->-r /workspace/app/requirements.txt (line 1))
+#29 4.755   Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+#29 4.862 Collecting pyperclip>=1.6 (from cmd2==1.5.0->-r /workspace/app/requirements.txt (line 1))
+#29 5.163   Downloading pyperclip-1.11.0-py3-none-any.whl.metadata (2.4 kB)
+#29 5.293 Collecting wcwidth>=0.1.7 (from cmd2==1.5.0->-r /workspace/app/requirements.txt (line 1))
+#29 5.368   Downloading wcwidth-0.9.4-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (23 kB)
+#29 7.184 Collecting grpcio==1.64.1 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 7.315   Downloading grpcio-1.64.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.3 kB)
+#29 8.008 Collecting protobuf==5.29.5 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 8.150   Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl.metadata (592 bytes)
+#29 8.247 Collecting cloudevents==1.11.0 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 8.440   Downloading cloudevents-1.11.0-py3-none-any.whl.metadata (6.9 kB)
+#29 10.21 Collecting aiohttp==3.10.11 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 10.49   Downloading aiohttp-3.10.11-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.7 kB)
+#29 10.60 Collecting paho-mqtt==2.1.0 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 10.69   Downloading paho_mqtt-2.1.0-py3-none-any.whl.metadata (23 kB)
+#29 10.91 Collecting opentelemetry-distro==0.46b0 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 11.00   Downloading opentelemetry_distro-0.46b0-py3-none-any.whl.metadata (1.4 kB)
+#29 11.12 Collecting opentelemetry-instrumentation-logging==0.46b0 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 11.21   Downloading opentelemetry_instrumentation_logging-0.46b0-py3-none-any.whl.metadata (1.7 kB)
+#29 11.43 Collecting opentelemetry-sdk==1.25.0 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 11.62   Downloading opentelemetry_sdk-1.25.0-py3-none-any.whl.metadata (1.4 kB)
+#29 11.83 Collecting opentelemetry-api==1.25.0 (from velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 11.92   Downloading opentelemetry_api-1.25.0-py3-none-any.whl.metadata (1.4 kB)
+#29 12.24 Collecting aiohappyeyeballs>=2.3.0 (from aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 12.33   Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+#29 12.44 Collecting aiosignal>=1.1.2 (from aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 12.55   Downloading aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+#29 12.91 Collecting frozenlist>=1.1.1 (from aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 13.04   Downloading frozenlist-1.8.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)
+#29 13.93 Collecting multidict<7.0,>=4.5 (from aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 14.07   Downloading multidict-6.9.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+#29 14.92 Collecting yarl<2.0,>=1.12.0 (from aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 14.99   Downloading yarl-1.25.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (111 kB)
+#29 15.31 Collecting async-timeout<6.0,>=4.0 (from aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 15.42   Downloading async_timeout-5.0.1-py3-none-any.whl.metadata (5.1 kB)
+#29 15.72 Collecting deprecation<3.0,>=2.0 (from cloudevents==1.11.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 15.81   Downloading deprecation-2.1.0-py2.py3-none-any.whl.metadata (4.6 kB)
+#29 15.93 Collecting deprecated>=1.2.6 (from opentelemetry-api==1.25.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 16.02   Downloading deprecated-1.3.1-py2.py3-none-any.whl.metadata (5.9 kB)
+#29 16.16 Collecting importlib-metadata<=7.1,>=6.0 (from opentelemetry-api==1.25.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 16.22   Downloading importlib_metadata-7.1.0-py3-none-any.whl.metadata (4.7 kB)
+#29 16.34 Collecting opentelemetry-instrumentation==0.46b0 (from opentelemetry-distro==0.46b0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 16.74   Downloading opentelemetry_instrumentation-0.46b0-py3-none-any.whl.metadata (6.1 kB)
+#29 16.87 Collecting opentelemetry-semantic-conventions==0.46b0 (from opentelemetry-sdk==1.25.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 16.94   Downloading opentelemetry_semantic_conventions-0.46b0-py3-none-any.whl.metadata (2.3 kB)
+#29 17.07 Collecting typing-extensions>=3.7.4 (from opentelemetry-sdk==1.25.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 17.35   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#29 17.36 Requirement already satisfied: setuptools>=16.0 in /usr/local/lib/python3.10/dist-packages (from opentelemetry-instrumentation==0.46b0->opentelemetry-distro==0.46b0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4)) (80.9.0)
+#29 18.37 Collecting wrapt<2.0.0,>=1.0.0 (from opentelemetry-instrumentation==0.46b0->opentelemetry-distro==0.46b0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 18.48   Downloading wrapt-1.17.3-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (6.4 kB)
+#29 18.60 Collecting packaging (from deprecation<3.0,>=2.0->cloudevents==1.11.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 18.68   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#29 18.80 Collecting zipp>=0.5 (from importlib-metadata<=7.1,>=6.0->opentelemetry-api==1.25.0->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 18.89   Downloading zipp-4.1.2-py3-none-any.whl.metadata (3.6 kB)
+#29 19.00 Collecting idna>=2.0 (from yarl<2.0,>=1.12.0->aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 19.09   Downloading idna-3.20-py3-none-any.whl.metadata (7.2 kB)
+#29 19.42 Collecting propcache>=0.2.1 (from yarl<2.0,>=1.12.0->aiohttp==3.10.11->velocitas-sdk==0.15.7->-r /workspace/app/requirements.txt (line 4))
+#29 19.60   Downloading propcache-0.5.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (25 kB)
+#29 19.81 Downloading cmd2-1.5.0-py3-none-any.whl (133 kB)
+#29 20.22 Downloading jsonpath_ng-1.8.0-py3-none-any.whl (67 kB)
+#29 20.42 Downloading pygments-2.20.0-py3-none-any.whl (1.2 MB)
+#29 22.57    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 727.2 kB/s  0:00:02
+#29 22.88 Downloading velocitas_sdk-0.15.7-py3-none-any.whl (63 kB)
+#29 23.09 Downloading websockets-16.1-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (186 kB)
+#29 23.39 Downloading aiohttp-3.10.11-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.2 MB)
+#29 25.91    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 529.6 kB/s  0:00:02
+#29 26.05 Downloading cloudevents-1.11.0-py3-none-any.whl (55 kB)
+#29 26.36 Downloading grpcio-1.64.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.6 MB)
+#29 32.49    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 935.4 kB/s  0:00:06
+#29 32.61 Downloading opentelemetry_api-1.25.0-py3-none-any.whl (59 kB)
+#29 32.71 Downloading opentelemetry_distro-0.46b0-py3-none-any.whl (3.3 kB)
+#29 32.82 Downloading opentelemetry_sdk-1.25.0-py3-none-any.whl (107 kB)
+#29 32.92 Downloading opentelemetry_instrumentation-0.46b0-py3-none-any.whl (29 kB)
+#29 33.03 Downloading opentelemetry_instrumentation_logging-0.46b0-py3-none-any.whl (12 kB)
+#29 33.13 Downloading opentelemetry_semantic_conventions-0.46b0-py3-none-any.whl (130 kB)
+#29 33.24 Downloading paho_mqtt-2.1.0-py3-none-any.whl (67 kB)
+#29 33.53 Downloading protobuf-5.29.5-cp38-abi3-manylinux2014_x86_64.whl (319 kB)
+#29 34.09 Downloading async_timeout-5.0.1-py3-none-any.whl (6.2 kB)
+#29 34.25 Downloading deprecation-2.1.0-py2.py3-none-any.whl (11 kB)
+#29 34.35 Downloading importlib_metadata-7.1.0-py3-none-any.whl (24 kB)
+#29 34.45 Downloading multidict-6.9.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (303 kB)
+#29 34.86 Downloading wrapt-1.17.3-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (81 kB)
+#29 34.92 Downloading yarl-1.25.1-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (118 kB)
+#29 35.13 Downloading aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+#29 35.27 Downloading aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+#29 35.37 Downloading attrs-26.1.0-py3-none-any.whl (67 kB)
+#29 35.47 Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+#29 35.58 Downloading deprecated-1.3.1-py2.py3-none-any.whl (11 kB)
+#29 35.78 Downloading frozenlist-1.8.0-cp310-cp310-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (219 kB)
+#29 36.10 Downloading idna-3.20-py3-none-any.whl (69 kB)
+#29 36.19 Downloading propcache-0.5.4-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (224 kB)
+#29 36.40 Downloading pyperclip-1.11.0-py3-none-any.whl (11 kB)
+#29 36.50 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#29 36.60 Downloading wcwidth-0.9.4-cp310-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (785 kB)
+#29 37.20    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 785.9/785.9 kB 1.1 MB/s  0:00:00
+#29 37.32 Downloading zipp-4.1.2-py3-none-any.whl (10 kB)
+#29 37.52 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#29 37.73 Installing collected packages: pyperclip, jsonpath-ng, zipp, wrapt, websockets, wcwidth, typing-extensions, Pygments, protobuf, propcache, paho-mqtt, packaging, idna, grpcio, frozenlist, colorama, attrs, async-timeout, aiohappyeyeballs, multidict, importlib-metadata, deprecation, deprecated, cmd2, aiosignal, yarl, opentelemetry-api, cloudevents, opentelemetry-semantic-conventions, opentelemetry-instrumentation, aiohttp, opentelemetry-sdk, opentelemetry-instrumentation-logging, opentelemetry-distro, velocitas-sdk
+#29 42.01
+#29 42.02 Successfully installed Pygments-2.20.0 aiohappyeyeballs-2.7.1 aiohttp-3.10.11 aiosignal-1.4.0 async-timeout-5.0.1 attrs-26.1.0 cloudevents-1.11.0 cmd2-1.5.0 colorama-0.4.6 deprecated-1.3.1 deprecation-2.1.0 frozenlist-1.8.0 grpcio-1.64.1 idna-3.20 importlib-metadata-7.1.0 jsonpath-ng-1.8.0 multidict-6.9.1 opentelemetry-api-1.25.0 opentelemetry-distro-0.46b0 opentelemetry-instrumentation-0.46b0 opentelemetry-instrumentation-logging-0.46b0 opentelemetry-sdk-1.25.0 opentelemetry-semantic-conventions-0.46b0 packaging-26.3 paho-mqtt-2.1.0 propcache-0.5.4 protobuf-5.29.5 pyperclip-1.11.0 typing-extensions-4.16.0 velocitas-sdk-0.15.7 wcwidth-0.9.4 websockets-16.1 wrapt-1.17.3 yarl-1.25.1 zipp-4.1.2
+#29 42.02 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#29 42.59
+#29 42.59 [notice] A new release of pip is available: 25.3 -> 26.3
+#29 42.59 [notice] To update, run: python3.10 -m pip install --upgrade pip
+#29 DONE 43.7s
+
+#30 [app-001  6/10] RUN pip3 install     --no-cache-dir     --no-deps     kuksa_client==0.5.1
+#30 1.133 Collecting kuksa_client==0.5.1
+#30 1.630   Downloading kuksa_client-0.5.1-py3-none-any.whl.metadata (4.0 kB)
+#30 1.698 Downloading kuksa_client-0.5.1-py3-none-any.whl (82 kB)
+#30 1.746 Installing collected packages: kuksa_client
+#30 1.894 Successfully installed kuksa_client-0.5.1
+#30 1.894 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#30 2.118
+#30 2.118 [notice] A new release of pip is available: 25.3 -> 26.3
+#30 2.118 [notice] To update, run: python3.10 -m pip install --upgrade pip
+#30 DONE 2.3s
+
+#31 [app-002  7/10] RUN pip3 install     --no-cache-dir     --force-reinstall     --no-deps     grpcio==1.68.0
+#31 3.809 Collecting grpcio==1.68.0
+#31 4.076   Downloading grpcio-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.9 kB)
+#31 4.281 Downloading grpcio-1.68.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.9 MB)
+#31 14.83    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.9/5.9 MB 609.6 kB/s  0:00:10
+#31 14.84 Installing collected packages: grpcio
+#31 14.84   Attempting uninstall: grpcio
+#31 14.84     Found existing installation: grpcio 1.64.1
+#31 14.86     Uninstalling grpcio-1.64.1:
+#31 14.93       Successfully uninstalled grpcio-1.64.1
+#31 15.22 Successfully installed grpcio-1.68.0
+#31 15.22 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#31 15.69
+#31 15.69 [notice] A new release of pip is available: 25.3 -> 26.3
+#31 15.69 [notice] To update, run: python3.10 -m pip install --upgrade pip
+#31 DONE 16.0s
+
+#32 [app-001  8/10] WORKDIR /workspace
+#32 DONE 0.1s
+
+#33 [app-001  9/10] RUN velocitas init
+#33 1.250 Initializing Velocitas packages ...
+#33 5.696 ... Downloading package: 'devenv-runtimes:v4.1.0'
+#33 11.97 ... Downloading package: 'devenv-github-workflows:v7.0.0'
+#33 16.16 ... Downloading package: 'devenv-github-templates:v1.0.5'
+#33 20.21 ... Downloading package: 'devenv-devcontainer-setup:v3.0.0'
+#33 22.11 Running 'install-deps'...... > Running post init hook for 'runtime-local'
+#33 32.02  done
+#33 32.02 Running 'install-deps'...... > Running post init hook for 'runtime-kanto'
+#33 38.94 ... > Running post init hook for 'deployment-kanto'
+#33 38.94  done
+#33 38.94 Running 'install-deps'... done
+#33 46.95 Running 'install-deps'...... > Running post init hook for 'vehicle-signal-interface'
+#33 59.40  done
+#33 59.40 Running 'download-vspec'... done
+#33 61.62 Running 'generate-model'... done
+#33 DONE 69.8s
+
+#34 [app-001 10/10] WORKDIR /workspace/app
+#34 DONE 0.4s
+
+#35 [app-002] exporting to image
+#35 exporting layers
+#35 exporting layers 4.0s done
+#35 exporting manifest sha256:4ec6fdfc332877b093ed736cb0e62dc7569991c578bf8db2c28e8f8426da544d 0.0s done
+#35 exporting config sha256:e9efc3eab4b7992175312d51c812dbb41ae92ecbf725ed198206347dad7a48fc 0.1s done
+#35 exporting attestation manifest sha256:e37287fd18109cd2f47d32dee7f0a51788019184d6d3abb7c07a9559409987bc
+#35 exporting attestation manifest sha256:e37287fd18109cd2f47d32dee7f0a51788019184d6d3abb7c07a9559409987bc 0.0s done
+#35 exporting manifest list sha256:44b62fa6356333d5e99d4958e71c0d687c1f86178adebdebf14aaff5a92f8524 0.0s done
+#35 naming to docker.io/library/qa-v1-20261115183301-256348-app:latest done
+#35 unpacking to docker.io/library/qa-v1-20261115183301-256348-app:latest
+#35 unpacking to docker.io/library/qa-v1-20261115183301-256348-app:latest 3.9s done
+#35 DONE 8.1s
+
+#36 [app-001] exporting to image
+#36 exporting layers 4.0s done
+#36 exporting manifest sha256:6251115d260aca5d76d53a02e996a9a7076e30f62757ddfaae83efc61cf700d9 0.0s done
+#36 exporting config sha256:ce54bc665855f1f3af0319da5a116542f434604a24a961423997aff4bc1ec577 0.1s done
+#36 exporting attestation manifest sha256:80116eae9ba5cb9c4a0fde1a3452acffbaf791758f28961011720295ba21a039 0.0s done
+#36 exporting manifest list sha256:6cb727203664d73fef43446c53cedce7801bb2d59b54109ea14dfbe345dc1fcb 0.0s done
+#36 naming to docker.io/library/qa-v1-20261115183301-256348-app:latest done
+#36 unpacking to docker.io/library/qa-v1-20261115183301-256348-app:latest 3.8s done
+#36 DONE 8.1s
+
+#37 [app-002] resolving provenance for metadata file
+#37 DONE 0.1s
+
+#38 [app-001] resolving provenance for metadata file
+#38 DONE 0.0s
+ Image qa-v1-20261115183301-256348-app Built
+ Image qa-v1-20261115183301-256348-app Built
+ Image qa-v1-20261115183301-256348-provider Built
+ Image qa-v1-20261115183301-256348-provider Built
+ Network qa-sdv-v1_default Creating
+ Network qa-sdv-v1_default Created
+ Container qa-v1-20261115183301-256348-edge-kuksa-002-1 Creating
+ Container qa-v1-20261115183301-256348-edge-mqtt-1 Creating
+ Container qa-v1-20261115183301-256348-edge-kuksa-001-1 Creating
+ Container qa-v1-20261115183301-256348-edge-kuksa-001-1 Created
+ Container qa-v1-20261115183301-256348-edge-mqtt-1 Created
+ Container qa-v1-20261115183301-256348-edge-kuksa-002-1 Created
+ Container qa-v1-20261115183301-256348-edge-provider-001-1 Creating
+ Container qa-v1-20261115183301-256348-edge-provider-002-1 Creating
+ Container qa-v1-20261115183301-256348-edge-provider-002-1 Created
+ Container qa-v1-20261115183301-256348-edge-provider-001-1 Created
+ Container qa-v1-20261115183301-256348-edge-app-002-1 Creating
+ Container qa-v1-20261115183301-256348-edge-app-001-1 Creating
+ Container qa-v1-20261115183301-256348-edge-app-001-1 Created
+ Container qa-v1-20261115183301-256348-edge-app-002-1 Created
+ Container qa-v1-20261115183301-256348-edge-mqtt-1 Starting
+ Container qa-v1-20261115183301-256348-edge-kuksa-002-1 Starting
+ Container qa-v1-20261115183301-256348-edge-kuksa-001-1 Starting
+ Container qa-v1-20261115183301-256348-edge-mqtt-1 Started
+ Container qa-v1-20261115183301-256348-edge-kuksa-002-1 Started
+ Container qa-v1-20261115183301-256348-edge-provider-002-1 Starting
+ Container qa-v1-20261115183301-256348-edge-kuksa-001-1 Started
+ Container qa-v1-20261115183301-256348-edge-provider-001-1 Starting
+ Container qa-v1-20261115183301-256348-edge-provider-002-1 Started
+ Container qa-v1-20261115183301-256348-edge-app-002-1 Starting
+ Container qa-v1-20261115183301-256348-edge-provider-001-1 Started
+ Container qa-v1-20261115183301-256348-edge-app-001-1 Starting
+ Container qa-v1-20261115183301-256348-edge-app-002-1 Started
+ Container qa-v1-20261115183301-256348-edge-app-001-1 Started

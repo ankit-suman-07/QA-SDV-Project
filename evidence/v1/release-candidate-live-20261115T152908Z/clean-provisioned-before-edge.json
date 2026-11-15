@@ -1,0 +1,16 @@
+{
+  "vehicle-001": {
+    "thingId": "sdv:vehicle-001",
+    "policyId": "sdv:vehicle-001-policy",
+    "attributes": {
+      "vehicleId": "vehicle-001"
+    }
+  },
+  "vehicle-002": {
+    "thingId": "sdv:vehicle-002",
+    "policyId": "sdv:vehicle-002-policy",
+    "attributes": {
+      "vehicleId": "vehicle-002"
+    }
+  }
+}

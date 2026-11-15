@@ -1,0 +1,2 @@
+2026-11-15 14:18:04,249 WARNING event_rejected code=DUPLICATE_EVENT topic='sdv/vehicle-002/health' vehicle='vehicle-002' event='vehicle-002-01aa9f1822cb42379978ed7b9997e7e9'
+2026-11-15 14:18:06,324 INFO event_persisted topic='sdv/vehicle-002/health' vehicle='vehicle-002' event='vehicle-002-01aa9f1822cb42379978ed7b9997e7e9-acceptance-15728848910452'

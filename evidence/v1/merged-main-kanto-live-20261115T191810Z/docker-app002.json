@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "docker",
+    "inspect",
+    "qa-v1-kanto-prereq-edge-app-002-1",
+    "--format",
+    "{{.State.Status}}"
+  ],
+  "request": {
+    "utc": "2026-11-15T19:18:23.386404+00:00",
+    "monotonicNs": 15745961233342
+  },
+  "returned": {
+    "utc": "2026-11-15T19:18:23.407376+00:00",
+    "monotonicNs": 15745982215148
+  },
+  "exit": 0,
+  "stdout": "exited\n",
+  "stderr": ""
+}

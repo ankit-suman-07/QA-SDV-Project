@@ -114,6 +114,15 @@ hashes identify these secret-free artifacts. Do not upload older raw service log
 without applying the same review/redaction.
 
 
+## First-event initialization correction — November 15, 2026
+
+The sole ingress now creates absent V1 features conditionally from validated real
+observations. The acceptance launcher no longer manually bootstraps telemetry;
+clean provisioned Things start without V1 health/source state. Existing features,
+legacy data and persisted watermarks are preserved. See the F03 evidence directory.
+Header compatibility is a separate independent change; historical nginx preparation
+is not resolved by initialization alone.
+
 ## HTTP compatibility correction — November 15, 2026
 
 The Ditto reader and fleet writer now explicitly advertise one `Accept-Encoding:
@@ -123,11 +132,48 @@ the duplicate fields. Compression decoding, timeouts, authentication and TLS rem
 unchanged. The acceptance launcher now mounts upstream nginx unchanged. The earlier
 prepared-deployment normalization below/above is historical. Feature initialization
 is a separate independent fix and its historical bootstrap is not closed by this PR.
-## First-event initialization correction — November 15, 2026
 
-The sole ingress now creates absent V1 features conditionally from validated real
-observations. The acceptance launcher no longer manually bootstraps telemetry;
-clean provisioned Things start without V1 health/source state. Existing features,
-legacy data and persisted watermarks are preserved. See the F03 evidence directory.
-Header compatibility is a separate independent change; historical nginx preparation
-is not resolved by initialization alone.
+
+## Clean-candidate reproduction and release handoff — November 15, 2026
+
+[Readiness and exact commits](../../docs/findings/v1-release-readiness.md) records
+independent draft fixes and their unmerged combined candidate. All runtime/tools
+are persistent under `$HOME/.local/share/qa-sdv-v1/`. Initialize only absent Things/
+policies with authorized provisioning credentials; start the sole ingress without
+telemetry seeding. The candidate uses original upstream nginx, with single-field
+Accept-Encoding handled by the actual Java clients. Maintain separate production
+principal/TLS approval from local-sample test authentication.
+
+After building Java21 backend and installing requirements-test.txt plus this folder's
+requirements.txt into the persistent Python3.12 environment, run the recorded
+`evidence/v1/release-candidate-20261115/run_candidate.py` from its pinned candidate
+checkout with Java21/Node22 on PATH. It uses the restored pinned Ditto source,
+creates a new isolated stack/database, requires V1 absent before publisher startup,
+and never resets shared resources. It obtains documented sample credentials in
+memory, not CLI arguments. Actual Chrome is /usr/bin/google-chrome. New output
+folders are dated under root evidence/v1; retain all failed runs and cleanup exits.
+
+Do not rerun old create-only Kanto observers against retained names. A new final-main
+image, descriptor name and reviewed privilege commands are needed for another trial.
+No automatic merge/tag/release/report/video action is part of this procedure.
+
+
+Final resumed d8c1f40 verification is recorded in
+[evidence/v1/release-candidate-d8c1f40-20261115](../../evidence/v1/release-candidate-d8c1f40-20261115/README.md).
+It supersedes the temporary pending checkpoint; all9 selected live gates pass.
+Use exact tested49f8b8d or verify the final-main delta before reproduction. No
+additional deployment change was made after the final bounded-shutdown fix.
+
+
+
+## Post-merge main verification — November 15, 2026
+
+PRs #44–#46 are merged. [Fresh merged-main verification](../../evidence/v1/merged-main-20261115/README.md) tests exact
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe`: Python541 +386 subtests, Java209,
+frontend7/config checks, focused real clean initialization and packaged Spring
+individual/fleet HTTP through upstream nginx, one fault/clear, watermark restart
+and three Kanto managed cycles PASS (all exits0;174 healthy001 twin samples).
+Original live-wrapper summary FAIL/exit1 is retained and qualified as a gate-count
+instrumentation error; selected-gate independent review passes. Historical candidate
+results remain candidate evidence. PR47 targets main; temporary PR48 remains unmerged.
+Human decisions/provenance/report-video gates stay open; no full acceptance/tag claim.

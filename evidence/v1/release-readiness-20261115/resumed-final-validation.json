@@ -1,0 +1,54 @@
+{
+  "at": "2026-11-15T18:48:59.672946+00:00",
+  "relativeLinks": 177,
+  "newMissing": [],
+  "historicalMissing": [
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/python-unit-final.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/backend.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/frontend-unit.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/kuksa-live-signals.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/mqtt-live-transport.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/edge-rendered-configuration.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/edge-image-identities.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/provider-restart-policy.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/edge-final-service-logs.log"
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "target": "../../evidence/v1/verification-20261114T051226Z/tire-unit-boundary.log"
+    }
+  ],
+  "bashBlocksParsed": 4,
+  "artifactHashesVerified": 204,
+  "changedFilesSecretScanned": 398,
+  "markdown": "Markdown-it14.1.0 PASS",
+  "mermaid": "Three architecture blocks previously parsed in actual Chrome/Mermaid11.4.1; diagrams unchanged",
+  "implementationDeltaAfterTest": "none",
+  "scope": "engineering candidate; human release gates pending"
+}

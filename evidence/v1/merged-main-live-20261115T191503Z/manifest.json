@@ -1,0 +1,24 @@
+{
+  "startedUtc": "2026-11-15T19:15:03.122483+00:00",
+  "sha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+  "dirty": "?? evidence/v1/merged-main-20261115/\n?? evidence/v1/merged-main-live-20261115T191503Z/",
+  "project": "qa-v1-20261115191503-326857",
+  "ports": {
+    "ditto": 41487,
+    "mqtt": 46019,
+    "kuksa001": 46489,
+    "kuksa002": 39339,
+    "provider001": 51757,
+    "provider002": 52233,
+    "api": 54387
+  },
+  "dittoRevision": "5dbb05e6294e5ac0103506102baff9eab755d180",
+  "clock": "one host time.monotonic observer; source UTC shares host kernel clock via containers; no cross-host clock accuracy bound",
+  "trials": 1,
+  "dependencies": "real providers/KUKSA/Velocitas/Mosquitto/ingress/Ditto/Java/dashboard; no mocks",
+  "pendingWordingAlignment": "separate docs PR; current main C1-C10 proposed status retained",
+  "notAcceptance": [
+    "Kanto is a separate required live gate",
+    "release/report/video/approvals are not automated here"
+  ]
+}

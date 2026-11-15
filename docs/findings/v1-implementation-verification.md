@@ -1,5 +1,39 @@
 # Phase V1 implementation verification
 
+## Resumed final verification — November 15, 2026
+
+[Current readiness](v1-release-readiness.md) supersedes earlier pending stop checkpoints below.
+Final candidate49f8b8d includes d8c1f40: Python541 +386 subtests,Java209,frontend7,
+nine selected clean real-service gates and three final actual Kanto managed cycles
+PASS. Two Python skips/nine integration deselections retained. Candidate remains
+UNMERGED; final-main/human approvals/release and report-video gates remain pending.
+No remote-LAN/automatic-crash-restart/full-V1 claim. Historical results unchanged.
+
+
+**Stop checkpoint after d8c1f40:** earlier combined PASS is for candidate6a6badc,
+before the final bounded-cleanup-join correction. Targeted app checks pass; final
+combined verification and latest shutdown-head CI remain pending. See the current
+release-readiness handoff; no prior result is relabelled as a final-main pass.
+
+
+## Latest follow-up — November 15, 2026: unmerged engineering candidate
+
+The [dated release-readiness assessment](v1-release-readiness.md) and
+[candidate evidence](../../evidence/v1/release-candidate-20261115/README.md)
+supersede earlier pending/blocked statements where explicitly identified. Merged
+PR #43 passes same-device V1-09. Independent draft #44/#45/#46 fix clean feature
+initialization, real HTTP compatibility and shutdown; exact-head CI and a combined
+unmerged clean deployment passed. Python540 +386 subtests, Java209, frontend7;
+two Python skips/nine integration deselections retained. Five actual fault/clear
+trials reached real MQTT/twins/API/fleet/dashboard, with negative/freshness/recovery
+checks. Three affected actual Kanto cycles now exit0. No remote-LAN/crash automatic
+restart, full V1 acceptance, verified-main release or matched MVP speedup claimed.
+Historical findings, prepared-deployment workarounds, failures and original
+attribution below remain intact. Human approvals, final merged-main checks,
+provenance qualifications and release/submission gates remain open. Report/video
+creation/recording/submission are excluded and pending.
+
+
 **Overall verdict: DEFECTS FOUND.** Component verification passed and real edge routing was exercised, but automatic provider recovery failed and the existing tire-pressure unit boundary remains inconsistent. Full live Ditto acceptance and the required Kanto pilot are blocked. **V1 is not ready to tag; a verified integrated baseline for V2 has not been established.** These conclusions concern technical acceptance; video, report, contribution statements and owner approvals are separate gates.
 
 ## Assessed revision and scope
@@ -319,3 +353,16 @@ then listed was first-attempt `14143631616` (readiness BLOCKED, no configured se
 The replacement final-SHA workflow is required; no successful live CI result is
 claimed by these local runs. Existing standard CI and baseline pipeline at `2118300`
 passed. Final PR checks/artifact IDs remain the source for newer CI status.
+
+
+## Post-merge main verification — November 15, 2026
+
+PRs #44–#46 are merged. [Fresh merged-main verification](../../evidence/v1/merged-main-20261115/README.md) tests exact
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe`: Python541 +386 subtests, Java209,
+frontend7/config checks, focused real clean initialization and packaged Spring
+individual/fleet HTTP through upstream nginx, one fault/clear, watermark restart
+and three Kanto managed cycles PASS (all exits0;174 healthy001 twin samples).
+Original live-wrapper summary FAIL/exit1 is retained and qualified as a gate-count
+instrumentation error; selected-gate independent review passes. Historical candidate
+results remain candidate evidence. PR47 targets main; temporary PR48 remains unmerged.
+Human decisions/provenance/report-video gates stay open; no full acceptance/tag claim.

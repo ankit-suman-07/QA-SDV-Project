@@ -1,0 +1,43 @@
+{
+  "parsers": {
+    "markdownIt": "14.1.0",
+    "mermaid": "11.4.1"
+  },
+  "checks": [
+    {
+      "file": "evidence/README.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 0
+    },
+    {
+      "file": "docs/findings/v1-release-readiness.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 0
+    },
+    {
+      "file": "docs/findings/v1-implementation-verification.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 0
+    },
+    {
+      "file": "docs/findings/mvp-to-v1-comparison.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 0
+    },
+    {
+      "file": "evidence/v1/skill-sources.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 0
+    },
+    {
+      "file": "scripts/v1_acceptance/README.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 0
+    },
+    {
+      "file": "docs/09-architecture-diagrams.md",
+      "markdownParsed": true,
+      "mermaidBlocksFound": 3
+    }
+  ]
+}

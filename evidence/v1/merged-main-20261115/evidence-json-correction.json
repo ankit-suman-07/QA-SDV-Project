@@ -1,0 +1,9 @@
+{
+  "failedHead": "a053ff3c7ab0d30a95b24d25f0f245d2d0b5e031",
+  "ci": "https://github.com/ankit-suman-07/QA-SDV-Project/actions/runs/43752339406",
+  "failure": "Configuration validation: harness-source.json invalid escape after extra raw-text sanitizer pass",
+  "affected": "evidence snapshot only; no runtime application/config implementation change",
+  "invalidSha256": "158632e91c929b4fef795301fd91fbeb544c0fffe443c02e2cabfaf19341219a",
+  "restoredSha256": "bec896a9c1f6c79c0c07443ca26dc07b1f8147a2f19e46fc224644899d1317a5",
+  "restoration": "Reconstructed source JSON from exact tested main; byte hash equals original pre-redaction harness manifest. Sources contain credential variable names only, no credential values. Invalid sanitized bytes retained as .txt; no source/event/exit changed."
+}

@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "timedatectl",
+    "show",
+    "-p",
+    "NTPSynchronized",
+    "-p",
+    "NTP"
+  ],
+  "request": {
+    "utc": "2026-11-15T19:18:11.417162+00:00",
+    "monotonicNs": 15733991989305
+  },
+  "returned": {
+    "utc": "2026-11-15T19:18:11.641273+00:00",
+    "monotonicNs": 15734216111847
+  },
+  "exit": 0,
+  "stdout": "NTP=yes\nNTPSynchronized=yes\n",
+  "stderr": ""
+}

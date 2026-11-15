@@ -1,0 +1,36 @@
+{
+  "investigatedAt": "2026-11-15T15:30:34.913080+00:00",
+  "tagObject": "668b16d4d8d4d603fd257567684fbbffccbf2022",
+  "resolvedCommit": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+  "comparisons": [
+    {
+      "skill": "test-driven-development",
+      "upstreamCommit": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+      "upstreamBlob": "46838cc9e893c06259e3bdad0fc2425b36242f15",
+      "upstreamSha256": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+      "repositorySha256": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+      "exactMatch": true,
+      "diffLineCount": 0
+    },
+    {
+      "skill": "systematic-debugging",
+      "upstreamCommit": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+      "upstreamBlob": "095d194ac041502905f15b01d22d294fb94db8b2",
+      "upstreamSha256": "808fc5717aa88ad65efff312b11c186294d3e6ee301afb584e2f86599b137787",
+      "repositorySha256": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202",
+      "exactMatch": false,
+      "diffLineCount": 16
+    },
+    {
+      "skill": "verification-before-completion",
+      "upstreamCommit": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+      "upstreamBlob": "7d45333cc4a49c57a80df6c1fe2fa777a207afbc",
+      "upstreamSha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+      "repositorySha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+      "exactMatch": true,
+      "diffLineCount": 0
+    }
+  ],
+  "licenseSha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+  "limitation": "Current tag resolution and file comparison only; does not prove historical E1/E2 installed bytes, invocation or exact upstream revision. Original usage records preserved."
+}

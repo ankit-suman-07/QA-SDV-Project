@@ -1,0 +1,42 @@
+[
+  {
+    "reference": "eclipse-mosquitto:2",
+    "id": "sha256:75d6662dee52c947dc9dd9c29f1d8d7ffef78ddaf38001caa09755681e8bbc98",
+    "repoDigests": [
+      "eclipse-mosquitto@sha256:75d6662dee52c947dc9dd9c29f1d8d7ffef78ddaf38001caa09755681e8bbc98"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "revision": null
+  },
+  {
+    "reference": "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+    "id": "sha256:9ace2824719ba7c05929f0af4827d9b25fa5ca7b2e0d58d0acff95885c649d6d",
+    "repoDigests": [
+      "ghcr.io/eclipse-kuksa/kuksa-databroker@sha256:9ace2824719ba7c05929f0af4827d9b25fa5ca7b2e0d58d0acff95885c649d6d"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "revision": "70ea23a50a0efe62cf10a9be06faeed75845c5fa"
+  },
+  {
+    "reference": "qa-v1-20261115152908-133209-app",
+    "id": "sha256:6138ba30194505e8a9e31d4377a86ab136a3f6f977438438d6b47e94890d5393",
+    "repoDigests": [
+      "qa-v1-20261115152908-133209-app@sha256:6138ba30194505e8a9e31d4377a86ab136a3f6f977438438d6b47e94890d5393"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "revision": null
+  },
+  {
+    "reference": "qa-v1-20261115152908-133209-provider",
+    "id": "sha256:a474cd4b18924dfcda41301513345b075b9f96795266ad2880e3b48e7d935b55",
+    "repoDigests": [
+      "qa-v1-20261115152908-133209-provider@sha256:a474cd4b18924dfcda41301513345b075b9f96795266ad2880e3b48e7d935b55"
+    ],
+    "os": "linux",
+    "architecture": "amd64",
+    "revision": null
+  }
+]

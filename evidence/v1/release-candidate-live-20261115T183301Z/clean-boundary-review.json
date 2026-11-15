@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "testedCandidate": "49f8b8d59eeef7245ba643f9f88f86709c44e99a",
+  "includesD8c1f40": true,
+  "featuresAbsentBeforePublishers": true,
+  "noObserverBootstrap": true,
+  "originalNginxSha256": "bc54b2102aad9908a655a8bd315fe84966d4779752ccdaf64b303eab325b3661",
+  "actualImageSourcesMatch": true,
+  "kantoFinalSourceEvidence": "evidence/v1/shutdown-bounded-kanto-live-20261115T182944Z/independent-review.json",
+  "scope": "UNMERGED INTEGRATION CANDIDATE; not verified main/full V1"
+}

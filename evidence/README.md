@@ -1,5 +1,38 @@
 # SDV project evidence
 
+## Resumed final verification — November 15, 2026
+
+[Current readiness](../docs/findings/v1-release-readiness.md) supersedes earlier pending stop checkpoints below.
+Final candidate49f8b8d includes d8c1f40: Python541 +386 subtests,Java209,frontend7,
+nine selected clean real-service gates and three final actual Kanto managed cycles
+PASS. Two Python skips/nine integration deselections retained. Candidate remains
+UNMERGED; final-main/human approvals/release and report-video gates remain pending.
+No remote-LAN/automatic-crash-restart/full-V1 claim. Historical results unchanged.
+
+
+**Final stop checkpoint:** d8c1f40 adds bounded handling for a stalled cleanup join.
+Targeted app checks pass; final combined verification after this delta is pending.
+The dated readiness handoff identifies included commits and prior tested revisions.
+Earlier full candidate and Kanto results below predate this final delta.
+
+
+## Current engineering checkpoint — November 15, 2026
+
+[Release-readiness assessment](../docs/findings/v1-release-readiness.md) supersedes
+outdated blocker statements in the historical matrix below. PR #43 is merged;
+same-device V1-09 managed restart passed. Draft fixes #44/#45/#46 close F03/F04/
+shutdown at their recorded boundaries; all eight CI checks pass at each exact head.
+[UNMERGED INTEGRATION CANDIDATE](v1/release-candidate-20261115/README.md) passed
+clean initialization without telemetry bootstrap, original-nginx HTTP compatibility,
+five routed fault/clear trials through real twins/API/fleet/dashboard, aging,
+negative/restart/denied-write checks and affected MQTT reconnect. Changed lifecycle
+also passed three actual Kanto cycles with exit0. These are not merged-main or
+full-V1 acceptance claims. Approvals/provenance qualifications, final merged-SHA
+checks, release decision and report/video deliverables remain pending. Report/video
+creation/recording/submission were excluded from this work. Historical results below
+are retained with their original dates and limitations.
+
+
 Use this index to connect each Phase V1 acceptance criterion to implementation and observed results. Criteria follow [scope and acceptance](../docs/08-project-scope-and-acceptance.md). Add the PR or commit, verification result and demo timestamp where applicable.
 
 Status clarification — November 14, 2026 UTC: component merges do not establish complete live acceptance. See the [MVP → Phase V1 comparison](../docs/findings/mvp-to-v1-comparison.md) for the assessed main SHA, evidence boundaries, recalculated timings and unresolved provenance.
@@ -30,3 +63,16 @@ remediation, integration, Kanto and release work. Lead names above preserve comp
 contribution history. The prepared-deployment results do not close unmodified setup
 failures, #38/#39, V1-09, approvals or submission gates. Original findings/evidence
 remain preserved. [Latest dated verification](../docs/findings/v1-implementation-verification.md#follow-up--2026-11-15-utc-integrated-acceptance-on-an-isolated-prepared-deployment).
+
+
+## Post-merge main verification — November 15, 2026
+
+PRs #44–#46 are merged. [Fresh merged-main verification](v1/merged-main-20261115/README.md) tests exact
+`4afbbd8c11425a9e0e1701fea66b7ed13731abfe`: Python541 +386 subtests, Java209,
+frontend7/config checks, focused real clean initialization and packaged Spring
+individual/fleet HTTP through upstream nginx, one fault/clear, watermark restart
+and three Kanto managed cycles PASS (all exits0;174 healthy001 twin samples).
+Original live-wrapper summary FAIL/exit1 is retained and qualified as a gate-count
+instrumentation error; selected-gate independent review passes. Historical candidate
+results remain candidate evidence. PR47 targets main; temporary PR48 remains unmerged.
+Human decisions/provenance/report-video gates stay open; no full acceptance/tag claim.

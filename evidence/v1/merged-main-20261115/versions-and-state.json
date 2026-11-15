@@ -1,0 +1,72 @@
+{
+  "workloads": {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit": 0,
+    "stdout": "qa-v1-shutdown-app-1794758088-4 Exited (0) 3 hours ago\nqa-v1-shutdown-app-1794758086-3 Exited (0) 3 hours ago\nqa-v1-shutdown-app-1794758084-2 Exited (0) 3 hours ago\nqa-v1-shutdown-app-1794758081-1 Exited (0) 3 hours ago\nqa-v1-shutdown-app-1794758074-0 Exited (0) 3 hours ago\nqa-v1-shutdown-mqtt-1794758074 Exited (0) 3 hours ago\nqa-v1-shutdown-app-1794756028-4 Exited (0) 4 hours ago\nqa-v1-shutdown-app-1794756027-3 Exited (0) 4 hours ago\nqa-v1-shutdown-app-1794756024-2 Exited (0) 4 hours ago\nqa-v1-shutdown-app-1794756020-1 Exited (0) 4 hours ago\nqa-v1-shutdown-app-1794756015-0 Exited (0) 4 hours ago\nqa-v1-shutdown-mqtt-1794756015 Exited (0) 4 hours ago\nqa-v1-shutdown-app-0 Exited (1) 4 hours ago\nqa-v1-shutdown-mqtt Exited (0) 4 hours ago\nqa-v1-release-engineering-ditto-nginx-1 Exited (0) 3 hours ago\nqa-v1-release-engineering-ditto-things-1 Exited (143) 3 hours ago\nqa-v1-release-engineering-ditto-connectivity-1 Exited (143) 3 hours ago\nqa-v1-release-engineering-ditto-things-search-1 Exited (143) 3 hours ago\nqa-v1-release-engineering-ditto-gateway-1 Exited (143) 3 hours ago\nqa-v1-release-engineering-ditto-swagger-ui-1 Exited (0) 3 hours ago\nqa-v1-release-engineering-ditto-ditto-ui-1 Exited (0) 3 hours ago\nqa-v1-release-engineering-ditto-mongodb-1 Exited (0) 3 hours ago\nqa-v1-release-engineering-ditto-policies-1 Exited (143) 3 hours ago\nqa-v1-kanto-prereq-ditto-nginx-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up 5 hours\nqa-v1-kanto-prereq-edge-app-001-1 Up 5 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 5 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 5 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 5 hours\nqa-v1-kanto-prereq-edge-app-002-1 Exited (1) 12 hours ago\nqa-v1-kanto-prereq-edge-provider-002-1 Up 5 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up 5 hours (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up 5 hours\nqa-v1-kanto-prereq-ditto-policies-1 Up 5 hours (healthy)\n",
+    "stderr": ""
+  },
+  "networks": {
+    "argv": [
+      "docker",
+      "network",
+      "ls",
+      "--format",
+      "{{.Name}}"
+    ],
+    "exit": 0,
+    "stdout": "bridge\ndocker_default\nhost\nnone\nqa-v1-kanto-prereq-ditto_default\nqa-v1-kanto-prereq-edge_default\nqa-v1-release-engineering-ditto_default\n",
+    "stderr": ""
+  },
+  "clock": {
+    "argv": [
+      "timedatectl",
+      "show",
+      "-p",
+      "NTPSynchronized",
+      "-p",
+      "NTP"
+    ],
+    "exit": 0,
+    "stdout": "NTP=yes\nNTPSynchronized=yes\n",
+    "stderr": ""
+  },
+  "java": {
+    "argv": [
+      "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/jdk21/bin/java",
+      "-version"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Corretto-21.0.13.0.11 (build 21.0.13+11-LTS)\nOpenJDK 64-Bit Server VM Corretto-21.0.13.0.11 (build 21.0.13+11-LTS, mixed mode, sharing)\n"
+  },
+  "node": {
+    "argv": [
+      "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/node22/bin/node",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "v22.23.5\n",
+    "stderr": ""
+  },
+  "python": {
+    "argv": [
+      "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Python 3.12.16\n",
+    "stderr": ""
+  },
+  "at": "2026-11-15T19:19:13.616747+00:00",
+  "sourceHashes": {
+    "velocitas-app/app/src/main.py": "374ea9021cf82b8ce5ae8bd4cb5850e621b52a16c4ce8c129ff47cc19e8dd651",
+    "velocitas-app/app/src/app_lifecycle.py": "92bb5a86b4a657a37a458a0025ee8cd367dc938920405aeac4af8bd385314ea1",
+    "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/ditto-source/deployment/docker/nginx.conf": "bc54b2102aad9908a655a8bd315fe84966d4779752ccdaf64b303eab325b3661"
+  }
+}
