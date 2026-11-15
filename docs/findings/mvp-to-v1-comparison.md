@@ -1,5 +1,23 @@
 # MVP → Phase V1 progress comparison
 
+## Latest follow-up — November 15, 2026: unmerged engineering candidate
+
+The [dated release-readiness assessment](v1-release-readiness.md) and
+[candidate evidence](../../evidence/v1/release-candidate-20261115/README.md)
+supersede earlier pending/blocked statements where explicitly identified. Merged
+PR #43 passes same-device V1-09. Independent draft #44/#45/#46 fix clean feature
+initialization, real HTTP compatibility and shutdown; exact-head CI and a combined
+unmerged clean deployment passed. Python540 +386 subtests, Java209, frontend7;
+two Python skips/nine integration deselections retained. Five actual fault/clear
+trials reached real MQTT/twins/API/fleet/dashboard, with negative/freshness/recovery
+checks. Three affected actual Kanto cycles now exit0. No remote-LAN/crash automatic
+restart, full V1 acceptance, verified-main release or matched MVP speedup claimed.
+Historical findings, prepared-deployment workarounds, failures and original
+attribution below remain intact. Human approvals, final merged-main checks,
+provenance qualifications and release/submission gates remain open. Report/video
+creation/recording/submission are excluded and pending.
+
+
 ## Purpose and assessment boundary
 
 Assessed **November 14, 2026 UTC / November 13, 2026 America/Toronto**, against fetched main **`3561c00cce1a96d18b5b97e1f8d9948e673643bb`**, also the local HEAD. This compares recorded single-vehicle MVP evidence with implemented Phase V1 components and their verification. It does **not** certify complete Phase V1 acceptance.

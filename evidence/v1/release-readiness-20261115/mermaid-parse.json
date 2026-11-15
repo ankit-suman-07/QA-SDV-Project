@@ -1,0 +1,21 @@
+{
+  "parser": "Mermaid11.4.1 in actual Chrome DOM",
+  "toolingNote": "Initial Node-only Mermaid parse lacked DOMPurify browser context; browser parse used instead. No diagram correction or validation relaxation.",
+  "blocks": [
+    {
+      "file": "docs/09-architecture-diagrams.md",
+      "index": 0,
+      "parsed": true
+    },
+    {
+      "file": "docs/09-architecture-diagrams.md",
+      "index": 1,
+      "parsed": true
+    },
+    {
+      "file": "docs/09-architecture-diagrams.md",
+      "index": 2,
+      "parsed": true
+    }
+  ]
+}

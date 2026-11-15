@@ -131,3 +131,27 @@ the duplicate fields. Compression decoding, timeouts, authentication and TLS rem
 unchanged. The acceptance launcher now mounts upstream nginx unchanged. The earlier
 prepared-deployment normalization below/above is historical. Feature initialization
 is a separate independent fix and its historical bootstrap is not closed by this PR.
+
+
+## Clean-candidate reproduction and release handoff — November 15, 2026
+
+[Readiness and exact commits](../../docs/findings/v1-release-readiness.md) records
+independent draft fixes and their unmerged combined candidate. All runtime/tools
+are persistent under `$HOME/.local/share/qa-sdv-v1/`. Initialize only absent Things/
+policies with authorized provisioning credentials; start the sole ingress without
+telemetry seeding. The candidate uses original upstream nginx, with single-field
+Accept-Encoding handled by the actual Java clients. Maintain separate production
+principal/TLS approval from local-sample test authentication.
+
+After building Java21 backend and installing requirements-test.txt plus this folder's
+requirements.txt into the persistent Python3.12 environment, run the recorded
+`evidence/v1/release-candidate-20261115/run_candidate.py` from its pinned candidate
+checkout with Java21/Node22 on PATH. It uses the restored pinned Ditto source,
+creates a new isolated stack/database, requires V1 absent before publisher startup,
+and never resets shared resources. It obtains documented sample credentials in
+memory, not CLI arguments. Actual Chrome is /usr/bin/google-chrome. New output
+folders are dated under root evidence/v1; retain all failed runs and cleanup exits.
+
+Do not rerun old create-only Kanto observers against retained names. A new final-main
+image, descriptor name and reviewed privilege commands are needed for another trial.
+No automatic merge/tag/release/report/video action is part of this procedure.
