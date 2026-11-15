@@ -1,0 +1,16 @@
+services:
+  broker:
+    image: ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0
+    command: ["--insecure", "--vss", "/config/vss.json"]
+    volumes:
+      - ../../../vehicle-simulator/config/vss-with-autonomous-sensors.json:/config/vss.json:ro
+    ports: ["127.0.0.1:57558:55555"]
+  provider:
+    image: qa-pressure-units:fixed
+    depends_on: [broker]
+    ports: ["127.0.0.1:29093:8090"]
+    environment:
+      DATABROKER_HOST: broker
+      DATABROKER_PORT: "55555"
+      SIMULATED_VEHICLE_ID: vehicle-001
+      PUBLISH_INTERVAL_SECONDS: "0.2"

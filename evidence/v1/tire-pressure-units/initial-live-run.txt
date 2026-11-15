@@ -1,0 +1,39 @@
+[uProtocol Publisher] VehicleStatusUpdated eventId=ee932b29-d936-42d7-af11-277f45272025 bytes=245
+[uProtocol Receiver] VehicleStatusUpdated eventId=ee932b29-d936-42d7-af11-277f45272025 receptionTimestamp=2026-11-14T06:14:00.915362+00:00 battery=80.0
+[
+  {
+    "phase": "healthy",
+    "kpa": 220,
+    "psi": 31.908302300647698,
+    "sourceTimestamp": "2026-11-14 06:13:52.711267+00:00"
+  },
+  {
+    "phase": "fault",
+    "kpa": 165,
+    "psi": 23.931226725485775,
+    "protobufPsi": 23.931226725485775,
+    "sourceTimestamp": "2026-11-14 06:14:00.828865+00:00",
+    "mapped": {
+      "faultId": null,
+      "code": "TIRE_PRESSURE_LOW_FRONT_LEFT",
+      "description": "Tire pressure below safe threshold (frontLeft)",
+      "severity": "CRITICAL",
+      "status": "CLEARED",
+      "affectedSignal": "tirePressurePsi.frontLeft",
+      "observedValue": 23.931226725485775,
+      "unit": "psi",
+      "threshold": 24,
+      "sourceTimestamp": null,
+      "detectedTimestamp": null,
+      "lastUpdatedTimestamp": null,
+      "clearedTimestamp": null,
+      "correlationId": null,
+      "source": "activeFaults"
+    }
+  },
+  {
+    "phase": "clear",
+    "kpa": 207,
+    "psi": 30.02281171015488
+  }
+]

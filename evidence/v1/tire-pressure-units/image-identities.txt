@@ -1,0 +1,2 @@
+sha256:a562e4aab152dad3357894f3b9e0c9b6612c759ebee58015eaebbf6dd4820e65 ["qa-pressure-units@sha256:a562e4aab152dad3357894f3b9e0c9b6612c759ebee58015eaebbf6dd4820e65"]
+sha256:9ace2824719ba7c05929f0af4827d9b25fa5ca7b2e0d58d0acff95885c649d6d ["ghcr.io/eclipse-kuksa/kuksa-databroker@sha256:9ace2824719ba7c05929f0af4827d9b25fa5ca7b2e0d58d0acff95885c649d6d"]

@@ -1,0 +1,52 @@
+......FFF.....                                                           [100%]
+=================================== FAILURES ===================================
+_______ test_legacy_boundary_converts_kpa_to_psi_once[165-23.931208726] ________
+
+kpa = 165, psi = 23.931208726
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+        from ditto.pressure_units import kpa_to_psi
+>       assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
+E       assert 23.931226725485775 == 23.931208726 ± 1.0e-08
+E
+E         comparison failed
+E         Obtained: 23.931226725485775
+E         Expected: 23.931208726 ± 1.0e-08
+
+tests/test_tire_pressure_units.py:38: AssertionError
+_______ test_legacy_boundary_converts_kpa_to_psi_once[193-27.992262328] ________
+
+kpa = 193, psi = 27.992262328
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+        from ditto.pressure_units import kpa_to_psi
+>       assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
+E       assert 27.992283381931845 == 27.992262328 ± 1.0e-08
+E
+E         comparison failed
+E         Obtained: 27.992283381931845
+E         Expected: 27.992262328 ± 1.0e-08
+
+tests/test_tire_pressure_units.py:38: AssertionError
+_______ test_legacy_boundary_converts_kpa_to_psi_once[221-32.053315931] ________
+
+kpa = 221, psi = 32.053315931
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+        from ditto.pressure_units import kpa_to_psi
+>       assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
+E       assert 32.05334003837792 == 32.053315931 ± 1.0e-08
+E
+E         comparison failed
+E         Obtained: 32.05334003837792
+E         Expected: 32.053315931 ± 1.0e-08
+
+tests/test_tire_pressure_units.py:38: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[165-23.931208726]
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[193-27.992262328]
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[221-32.053315931]
+3 failed, 11 passed in 0.13s

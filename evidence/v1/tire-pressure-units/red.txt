@@ -1,0 +1,173 @@
+FFFFFFFFFFFFF.                                                           [100%]
+=================================== FAILURES ===================================
+_______ test_provider_converts_intended_psi_to_declared_uint16_kpa[0-0] ________
+
+psi = 0, kpa = 0
+
+    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
+    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
+        app = provider()
+        state = initial_state()
+        state['tire_pressure'] = psi
+>       values = app.publication_values(state)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
+
+tests/test_tire_pressure_units.py:27: AttributeError
+______ test_provider_converts_intended_psi_to_declared_uint16_kpa[24-165] ______
+
+psi = 24, kpa = 165
+
+    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
+    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
+        app = provider()
+        state = initial_state()
+        state['tire_pressure'] = psi
+>       values = app.publication_values(state)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
+
+tests/test_tire_pressure_units.py:27: AttributeError
+______ test_provider_converts_intended_psi_to_declared_uint16_kpa[28-193] ______
+
+psi = 28, kpa = 193
+
+    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
+    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
+        app = provider()
+        state = initial_state()
+        state['tire_pressure'] = psi
+>       values = app.publication_values(state)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
+
+tests/test_tire_pressure_units.py:27: AttributeError
+______ test_provider_converts_intended_psi_to_declared_uint16_kpa[32-221] ______
+
+psi = 32, kpa = 221
+
+    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
+    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
+        app = provider()
+        state = initial_state()
+        state['tire_pressure'] = psi
+>       values = app.publication_values(state)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
+
+tests/test_tire_pressure_units.py:27: AttributeError
+______ test_provider_converts_intended_psi_to_declared_uint16_kpa[34-234] ______
+
+psi = 34, kpa = 234
+
+    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
+    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
+        app = provider()
+        state = initial_state()
+        state['tire_pressure'] = psi
+>       values = app.publication_values(state)
+                 ^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
+
+tests/test_tire_pressure_units.py:27: AttributeError
+______________ test_legacy_boundary_converts_kpa_to_psi_once[0-0] ______________
+
+kpa = 0, psi = 0
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:37: ModuleNotFoundError
+_______ test_legacy_boundary_converts_kpa_to_psi_once[165-23.931208726] ________
+
+kpa = 165, psi = 23.931208726
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:37: ModuleNotFoundError
+_______ test_legacy_boundary_converts_kpa_to_psi_once[193-27.992262328] ________
+
+kpa = 193, psi = 27.992262328
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:37: ModuleNotFoundError
+_______ test_legacy_boundary_converts_kpa_to_psi_once[221-32.053315931] ________
+
+kpa = 221, psi = 32.053315931
+
+    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
+    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:37: ModuleNotFoundError
+___________ test_runtime_bridge_uses_kpa_conversion_before_protobuf ____________
+
+    def test_runtime_bridge_uses_kpa_conversion_before_protobuf():
+        # The bridge has a live top-level loop; inspect its runtime call expression
+        # rather than importing it and contacting shared services.
+        tree = ast.parse((ROOT/'ditto/scripts/interim-kuksa-to-ditto-bridge.py').read_text())
+        calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call)
+                 and isinstance(n.func, ast.Name) and n.func.id=='publish_vehicle_status']
+        value = next(k.value for k in calls[0].keywords if k.arg=='tire_pressure_psi')
+>       assert ast.unparse(value) == 'kpa_to_psi(tire_fl)'
+E       AssertionError: assert 'float(tire_fl)' == 'kpa_to_psi(tire_fl)'
+E
+E         - kpa_to_psi(tire_fl)
+E         + float(tire_fl)
+
+tests/test_tire_pressure_units.py:48: AssertionError
+_ test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24-CRITICAL-24] _
+
+psi = 24, severity = 'CRITICAL', threshold = 24
+
+    @pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
+    def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:53: ModuleNotFoundError
+_ test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24.01-WARNING-28] _
+
+psi = 24.01, severity = 'WARNING', threshold = 28
+
+    @pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
+    def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:53: ModuleNotFoundError
+_ test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[28-WARNING-28] _
+
+psi = 28, severity = 'WARNING', threshold = 28
+
+    @pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
+    def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
+>       from ditto.pressure_units import kpa_to_psi
+E       ModuleNotFoundError: No module named 'ditto.pressure_units'
+
+tests/test_tire_pressure_units.py:53: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[0-0]
+FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[24-165]
+FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[28-193]
+FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[32-221]
+FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[34-234]
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[0-0]
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[165-23.931208726]
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[193-27.992262328]
+FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[221-32.053315931]
+FAILED tests/test_tire_pressure_units.py::test_runtime_bridge_uses_kpa_conversion_before_protobuf
+FAILED tests/test_tire_pressure_units.py::test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24-CRITICAL-24]
+FAILED tests/test_tire_pressure_units.py::test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24.01-WARNING-28]
+FAILED tests/test_tire_pressure_units.py::test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[28-WARNING-28]
+13 failed, 1 passed in 0.14s

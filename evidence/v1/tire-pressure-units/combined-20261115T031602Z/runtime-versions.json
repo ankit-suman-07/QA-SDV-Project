@@ -1,0 +1,12 @@
+{
+  "qa-pr39-99064-provider": {
+    "exit": 0,
+    "output": "{\"python\": \"3.10.22 (main, Oct  6 2026, 02:05:33) [GCC 14.2.0]\", \"packages\": {\"kuksa-client\": \"0.5.1\", \"grpcio\": \"1.82.1\", \"protobuf\": \"5.29.6\"}}\n",
+    "stderr": ""
+  },
+  "qa-v1verify-app:20261114": {
+    "exit": 0,
+    "output": "{\"python\": \"3.10.12 (main, Nov  4 2025, 08:48:33) [GCC 11.4.0]\", \"packages\": {\"kuksa-client\": \"0.5.1\", \"grpcio\": \"1.68.0\", \"protobuf\": \"5.29.5\", \"paho-mqtt\": \"2.1.0\"}}\n",
+    "stderr": ""
+  }
+}

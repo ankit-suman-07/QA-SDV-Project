@@ -1,0 +1,567 @@
+[
+  {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--format",
+      "{{.Names}} {{.Image}} {{.Status}}"
+    ],
+    "exit": 0,
+    "seconds": 0.04173337200018068,
+    "output": "runtime-command-00.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "build",
+      "-t",
+      "qa-pr39-99064-provider",
+      "vehicle-simulator"
+    ],
+    "exit": 0,
+    "seconds": 2.2636119849998977,
+    "output": "runtime-command-01.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--format",
+      "json"
+    ],
+    "exit": 0,
+    "seconds": 0.13729842200018538,
+    "output": "runtime-command-02.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "up",
+      "-d",
+      "--no-build"
+    ],
+    "exit": 0,
+    "seconds": 3.025664660000075,
+    "output": "runtime-command-03.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "ps",
+      "--all",
+      "-q",
+      "provider-002"
+    ],
+    "exit": 0,
+    "seconds": 0.07929040400040321,
+    "output": "runtime-command-04.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "seconds": 0.019047232000048098,
+    "output": "runtime-command-05.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{.RestartCount}}"
+    ],
+    "exit": 0,
+    "seconds": 0.019586622000133502,
+    "output": "runtime-command-06.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "kill",
+      "-s",
+      "SIGKILL",
+      "kuksa-002"
+    ],
+    "exit": 0,
+    "seconds": 0.5790095060001477,
+    "output": "runtime-command-07.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "start",
+      "kuksa-002"
+    ],
+    "exit": 0,
+    "seconds": 0.6005408089999946,
+    "output": "runtime-command-08.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "ps",
+      "--all",
+      "-q",
+      "provider-002"
+    ],
+    "exit": 0,
+    "seconds": 0.08233586300002571,
+    "output": "runtime-command-09.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "seconds": 0.019986607000191725,
+    "output": "runtime-command-10.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{.RestartCount}}"
+    ],
+    "exit": 0,
+    "seconds": 0.020571254000060435,
+    "output": "runtime-command-11.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "ps",
+      "--all",
+      "-q",
+      "provider-001"
+    ],
+    "exit": 0,
+    "seconds": 0.13758631099972263,
+    "output": "runtime-command-12.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "d9f6c3ce2ffa01ea31eb521568e024da4a90d1412720b92bba30d7d6a8dbfa98",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "seconds": 0.032784100999833754,
+    "output": "runtime-command-13.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "d9f6c3ce2ffa01ea31eb521568e024da4a90d1412720b92bba30d7d6a8dbfa98",
+      "--format",
+      "{{.RestartCount}}"
+    ],
+    "exit": 0,
+    "seconds": 0.033935445999759395,
+    "output": "runtime-command-14.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "kill",
+      "-s",
+      "SIGKILL",
+      "kuksa-001"
+    ],
+    "exit": 0,
+    "seconds": 0.6123726669998177,
+    "output": "runtime-command-15.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "start",
+      "kuksa-001"
+    ],
+    "exit": 0,
+    "seconds": 0.9149124460000166,
+    "output": "runtime-command-16.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "ps",
+      "--all",
+      "-q",
+      "provider-001"
+    ],
+    "exit": 0,
+    "seconds": 0.13634141800002908,
+    "output": "runtime-command-17.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "d9f6c3ce2ffa01ea31eb521568e024da4a90d1412720b92bba30d7d6a8dbfa98",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "seconds": 0.034714334000000235,
+    "output": "runtime-command-18.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "d9f6c3ce2ffa01ea31eb521568e024da4a90d1412720b92bba30d7d6a8dbfa98",
+      "--format",
+      "{{.RestartCount}}"
+    ],
+    "exit": 0,
+    "seconds": 0.03393727200000285,
+    "output": "runtime-command-19.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "stop",
+      "kuksa-002"
+    ],
+    "exit": 0,
+    "seconds": 0.8681224250003652,
+    "output": "runtime-command-20.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "restart",
+      "provider-002"
+    ],
+    "exit": 0,
+    "seconds": 1.4296968869998636,
+    "output": "runtime-command-21.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "ps",
+      "--all",
+      "-q",
+      "provider-002"
+    ],
+    "exit": 0,
+    "seconds": 0.13917330200001743,
+    "output": "runtime-command-22.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "seconds": 0.03399698700013687,
+    "output": "runtime-command-23.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{.RestartCount}}"
+    ],
+    "exit": 0,
+    "seconds": 0.03358177700010856,
+    "output": "runtime-command-24.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "start",
+      "kuksa-002"
+    ],
+    "exit": 0,
+    "seconds": 0.9233592699997644,
+    "output": "runtime-command-25.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "stop",
+      "-t",
+      "30",
+      "provider-002"
+    ],
+    "exit": 0,
+    "seconds": 0.8043138710004314,
+    "output": "runtime-command-26.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "ps",
+      "--all",
+      "-q",
+      "provider-002"
+    ],
+    "exit": 0,
+    "seconds": 0.14061190699976578,
+    "output": "runtime-command-27.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{json .State}}"
+    ],
+    "exit": 0,
+    "seconds": 0.03265944300028423,
+    "output": "runtime-command-28.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "00e9a3f00ae141ed92745c66e20d124a90d5be1092e8d30acf4ac0e177027d51",
+      "--format",
+      "{{.RestartCount}}"
+    ],
+    "exit": 0,
+    "seconds": 0.031572632000006706,
+    "output": "runtime-command-29.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "250"
+    ],
+    "exit": 0,
+    "seconds": 0.1702559220002513,
+    "output": "runtime-command-30.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-edge",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/edge.json",
+      "down",
+      "--timeout",
+      "30"
+    ],
+    "exit": 0,
+    "seconds": 2.250499335999848,
+    "output": "runtime-command-31.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-known",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/known.json",
+      "up",
+      "-d"
+    ],
+    "exit": 0,
+    "seconds": 2.545275500000116,
+    "output": "runtime-command-32.txt"
+  },
+  {
+    "argv": [
+      "/tmp/qa-v1-env/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "-m",
+      "integration",
+      "vehicle-simulator/tests/test_kuksa_publication.py"
+    ],
+    "exit": 0,
+    "seconds": 0.48213240799987034,
+    "output": "runtime-command-33.txt"
+  },
+  {
+    "argv": [
+      "/tmp/qa-v1-env/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-ra",
+      "-m",
+      "integration",
+      "velocitas-app/app/tests/test_v1_publisher_integration.py"
+    ],
+    "exit": 0,
+    "seconds": 3.769925234999846,
+    "output": "runtime-command-34.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "image",
+      "inspect",
+      "qa-pr39-99064-provider",
+      "qa-v1verify-app:20261114",
+      "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+      "eclipse-mosquitto:2",
+      "--format",
+      "{{.Id}} {{json .RepoDigests}}"
+    ],
+    "exit": 0,
+    "seconds": 0.13601518699988446,
+    "output": "runtime-command-35.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-known",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/known.json",
+      "logs",
+      "--no-color",
+      "--tail",
+      "300"
+    ],
+    "exit": 0,
+    "seconds": 0.07996747500010315,
+    "output": "runtime-command-36.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-p",
+      "qa-pr39-99064-known",
+      "-f",
+      "/tmp/qa-pr39-combined/evidence/v1/tire-pressure-units/combined-20261115T031602Z/known.json",
+      "down",
+      "--timeout",
+      "30"
+    ],
+    "exit": 0,
+    "seconds": 1.6621854469999562,
+    "output": "runtime-command-37.txt"
+  },
+  {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit": 0,
+    "seconds": 0.020257111999853805,
+    "output": "runtime-command-38.txt"
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "recordedAt": "2026-11-14T06:19:57.490097+00:00",
+  "owner": "Ankit",
+  "branch": "ankit/fix/v1-tire-pressure-units",
+  "independentBaseline": "f33e7cbbb4968fec28d2d5acf4f10df246fa9fba",
+  "assessedImplementationRevision": "4f4a19a4b08df16ec5f05ff020792b9052dd71f9",
+  "primaryCheckoutInitiallyClean": true,
+  "originMainAtStart": "f33e7cbbb4968fec28d2d5acf4f10df246fa9fba",
+  "unitRuntime": "CPython3.12.16; pinned existing provider/test environment; separate Velocitas SDK0.15.7 target",
+  "pythonCommandsEnvironment": {
+    "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+  },
+  "testResults": {
+    "fullPythonPassed": 502,
+    "subtestsPassed": 385,
+    "skippedBrokerModules": 1,
+    "deselectedIntegrationTests": 9,
+    "sdkCallbackDeprecationWarnings": 2
+  },
+  "finalCommands": "final-commands.json",
+  "liveCommands": "live-commands.json",
+  "liveResult": "live-result.json",
+  "implementationSha256": {
+    "ditto/pressure_units.py": "41b41dcd8f40b5e72983c90f89e9655f31eddc013c546feca899cca5f47a5b34",
+    "ditto/scripts/interim-kuksa-to-ditto-bridge.py": "f578e0fc31a7bd4550830d4920cc4c3288c2f927fc07aed44e25c1c46a8ae489",
+    "tests/test_fault_mapper.py": "313b3127555ecf69c3538ef0134a556496b7594ca3db807895b80f92cca2a2d0",
+    "tests/test_tire_pressure_units.py": "e951d64774f557b1a7c42bb1820f24513d256b10699b8860586c5f263dc625e2",
+    "vehicle-simulator/src/main.py": "9e780bdf0940070d349ff8083c92f2944a1a1882409d3315c32f7b046e03b0bb",
+    "vehicle-simulator/src/signal_generator.py": "3ce4658690e0a58796338863a96b256038458d80c5eb19dedb2faa4cf7332641",
+    "vehicle-simulator/tests/test_kuksa_publication.py": "c103811a70ef00729471146befbbdd9ce4f441a21c45ce081a4e1cce43ceb759"
+  },
+  "cleanup": {
+    "allOwnedServicesStopped": true,
+    "ownedScenariosCleared": true,
+    "volumesDeleted": false,
+    "sharedTwinsUsed": false,
+    "unrelatedServicesStopped": false
+  },
+  "acceptanceLimits": "No full real Ditto/API/fleet/dashboard/Kanto acceptance; raw .txt artifacts tracked normally, no credentials stored."
+}

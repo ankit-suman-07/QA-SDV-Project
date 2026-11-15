@@ -1,0 +1,58 @@
+[
+  {
+    "name": "focused provider/generator/pressure/mapper/bridge and fault-detail tests",
+    "command": "python -m pytest -q -ra vehicle-simulator/tests/test_provider_main.py vehicle-simulator/tests/test_signal_generator.py tests/test_tire_pressure_units.py tests/test_fault_mapper.py tests/test_fault_details.py",
+    "exit": 0,
+    "result": "69 passed",
+    "output": "focused-tests.txt"
+  },
+  {
+    "name": "combined unit negative control",
+    "command": "python -m pytest -q vehicle-simulator/tests/test_provider_main.py -k recovery_publishes",
+    "exit": 1,
+    "result": "4 failed as intended on raw main loop before helper-call integration; both vehicle IDs and status4/14",
+    "output": "combined-regression-red.txt"
+  },
+  {
+    "name": "full Python",
+    "command": "PYTHONPATH=<generated protobuf>:<repo> python -m pytest -q -ra -m \"not integration\"",
+    "exit": 0,
+    "result": "509 passed,386 subtests,2 explicit skips,9 deselected",
+    "output": "full-python.txt"
+  },
+  {
+    "name": "Java21",
+    "command": "JAVA_HOME=<isolated Corretto21> bash ./mvnw --batch-mode --no-transfer-progress verify (backend cwd)",
+    "exit": 0,
+    "result": "208 passed",
+    "output": "java21-tests.txt"
+  },
+  {
+    "name": "Node22 frontend",
+    "command": "npm test --prefix frontend",
+    "exit": 0,
+    "result": "7 passed",
+    "output": "frontend-tests.txt"
+  },
+  {
+    "name": "real combined runtime",
+    "command": "PYTHONPATH=<generated>:<repo> python runtime_check.py",
+    "exit": 0,
+    "result": "both actual edges recover without provider restart, active scenario retained, absent-broker startup and SIGTERM0; known32psi->221kPa; live signal9 and isolated MQTT2; conversion/protobuf/mapper in-process",
+    "output": "runtime-results.json"
+  },
+  {
+    "name": "native SDK",
+    "command": "docker run --rm <recorded SDK app image> ... pytest==8.4.2; pytest test_v1_publisher.py",
+    "exit": 0,
+    "result": "11 passed,2 existing Paho deprecation warnings; disposable test-only pytest dependency",
+    "output": "sdk-native-tests.txt"
+  },
+  {
+    "name": "existing single-vehicle baseline",
+    "command": "COMPOSE_PROJECT_NAME=qa-pr39-baseline-20261115 PUBLISH_INTERVAL_SECONDS=1.0 timeout 12m sh scripts/run-autonomous-mvp-demo.sh",
+    "exit": 0,
+    "result": "healthy/fault/recovery pass; finally-owned cleanup0",
+    "output": "baseline-results.json"
+  }
+]

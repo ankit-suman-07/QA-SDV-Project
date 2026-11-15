@@ -106,6 +106,8 @@ Velocitas must own classification from observations. The simulator's current pre
 
 LiDAR is metres. Existing speed metadata is km/h. Tire pressure has a known baseline defect: VSS says kPa while legacy bridge fields say psi. Emmanuel owns VSS/provider units and conversions; Bayan owns bridge/mapper agreement. Keep the published VSS kPa definition and convert explicitly at the legacy psi boundary after affected-owner review; do not change thresholds or units silently. Tire-pressure repair is assigned, not implemented here.
 
+**2026-11-14 correction proposed for review:** Ankit implements the focused unit repair under the current project-owner instruction. Generator state remains psi for physical compatibility; publication rounds psi × 6.894757293168 into the existing VSS uint16 kPa path. The legacy bridge divides kPa by the same factor before `tire_pressure_psi`; the psi mapper/thresholds do not convert again. Whole-kPa quantization is explicit. C3/C4 LiDAR fields and health thresholds are unchanged. See [investigation and verification](../evidence/v1/tire-pressure-units/README.md). This dated clarification preserves the preparation record and does not claim affected-owner approval or full live acceptance.
+
 ## C5 — Time and availability
 
 Inject a UTC clock into backend evaluation and tests. Never replace source time with polling, receipt or publication time. Configure `staleAfterSeconds=5`, `unavailableAfterSeconds=30` and a maximum future clock tolerance of 1 second; require `0 < stale < unavailable`. The 30-second cutoff is a **new proposed default** needing review, not an existing approved measurement. Five seconds is the requested baseline and remains configurable.

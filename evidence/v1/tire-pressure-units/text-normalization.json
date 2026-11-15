@@ -1,0 +1,35 @@
+{
+  "operation": "Strip trailing spaces/tabs and excess final blank lines from newly recorded .txt artifacts only; no result/content changes; original blobs remain in earlier checkpoint commits.",
+  "files": [
+    {
+      "file": "merge-preview.txt",
+      "originalSha256": "025eb0c5feef31a5f559e91694db7ae31f7d6624f63874f09a042898909db9be",
+      "normalizedSha256": "64d0aa1bba548f4bbdc9f857e2fcac4dd4b956b10700f8a8cf6542c976a8fe4e"
+    },
+    {
+      "file": "live-run.txt",
+      "originalSha256": "2b7a0e7f9807d30c80eb3b4203cd68b6b37b5a0048a71f0e39a321f7d70a25f9",
+      "normalizedSha256": "fc3919715f024d8740bebcfd697c2080c88a5a06489d54489092cb3d5ae96e50"
+    },
+    {
+      "file": "initial-live-run.txt",
+      "originalSha256": "0381f7a809b261e64779625365c0d8b697ea7eff3aff6198ef4efdcc497e08df",
+      "normalizedSha256": "d744e3f6029812cda5e374eeaf2114661a47f18492f6d838bef3c1012239f4dd"
+    },
+    {
+      "file": "sandbox-focused-attempt.txt",
+      "originalSha256": "a5ccb644f32acbce493a6ef716e41b1b3164cfeb5f526e70ae8fe5ee17fedb26",
+      "normalizedSha256": "c548af9008fd95507cdc87f1e083cbd39ee3d6c1c35f5250012e5b2736fc1318"
+    },
+    {
+      "file": "first-green-attempt.txt",
+      "originalSha256": "e75d3f995a2bb1ceac4537290acfe4564a828a90a71da8b871616a8baa130d6c",
+      "normalizedSha256": "30bab23049cecbd04ba6f89aee6127eef6af3b89bd7d41e4aacdf33eb6f87171"
+    },
+    {
+      "file": "red.txt",
+      "originalSha256": "03d1a486e1239f489bbf72982aa8774a0c8dfc94d916132479fb8c2e8c6ab8e9",
+      "normalizedSha256": "e4c1fb89467222ee9e3f9008fff4ab62741667fd662ae207a46eed19040539af"
+    }
+  ]
+}

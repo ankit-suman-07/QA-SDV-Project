@@ -1,0 +1,1 @@
+{"exit": 0, "image": "qa-v1verify-app:20261114", "boundary": "native SDK unit tests; pytest installed only in disposable container; no live transport claim"}

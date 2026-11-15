@@ -92,7 +92,8 @@ def test_tire_pressure_is_published_and_in_range():
     value = read_signal(TIRE_PRESSURE_PATH)
 
     assert value is not None
-    assert 0 <= value <= 34
+    # Published VSS path is integer kPa, not the generator's internal psi.
+    assert 0 <= value <= round(34 * 6.894757293168)
 
 
 def test_coolant_pressure_is_published_and_in_range():

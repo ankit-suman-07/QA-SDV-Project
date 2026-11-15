@@ -139,6 +139,18 @@ def format_signal_value(key, value):
     return f"{key}={value:.1f}"
 
 
+def publication_values(state):
+    """Generator tire state is psi; VSS Tire.Pressure is uint16 kPa.
+
+    Quantize once at the source boundary, never mutate/reconvert simulator state.
+    """
+    values = {path: Datapoint(state[key]) for key, path in SIGNAL_PATHS.items()}
+    values[SIGNAL_PATHS["tire_pressure"]] = Datapoint(
+        round(state["tire_pressure"] * 6.894757293168)
+    )
+    return values
+
+
 def publish_loop(controller, stop):
     """Keep scenario state across transient outages; publish only fresh observations.
 
@@ -175,11 +187,7 @@ def publish_loop(controller, stop):
                     )
 
                     client.set_current_values(
-                        {
-                            path: Datapoint(observation[key])
-                            for key, path
-                            in SIGNAL_PATHS.items()
-                        },
+                        publication_values(observation),
                         timeout=2.0,
                     )
                     state = observation

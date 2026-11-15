@@ -1,0 +1,56 @@
+
+> test
+> node --test --experimental-test-isolation=none tests/*.test.js
+
+TAP version 13
+# Subtest: fleet client uses v1 paths and encodes a selected identity
+ok 1 - fleet client uses v1 paths and encodes a selected identity
+  ---
+  duration_ms: 1.652391
+  type: 'test'
+  ...
+# Subtest: scenario timeout preserves correlated UNKNOWN error and never retries POST
+ok 2 - scenario timeout preserves correlated UNKNOWN error and never retries POST
+  ---
+  duration_ms: 0.614749
+  type: 'test'
+  ...
+# Subtest: fleet loading and errors are distinct from selected vehicle availability
+ok 3 - fleet loading and errors are distinct from selected vehicle availability
+  ---
+  duration_ms: 0.593098
+  type: 'test'
+  ...
+# Subtest: an old selection or error cannot overwrite a newer selection
+ok 4 - an old selection or error cannot overwrite a newer selection
+  ---
+  duration_ms: 0.238441
+  type: 'test'
+  ...
+# Subtest: newer polls win and failed reads preserve labelled last known state
+ok 5 - newer polls win and failed reads preserve labelled last known state
+  ---
+  duration_ms: 0.232923
+  type: 'test'
+  ...
+# Subtest: dispatch acknowledgement does not change observed health; no automatic POST retry
+ok 6 - dispatch acknowledgement does not change observed health; no automatic POST retry
+  ---
+  duration_ms: 0.422893
+  type: 'test'
+  ...
+# Subtest: switching during an action hides old acknowledgement without allowing duplicate submission
+ok 7 - switching during an action hides old acknowledgement without allowing duplicate submission
+  ---
+  duration_ms: 0.224263
+  type: 'test'
+  ...
+1..7
+# tests 7
+# suites 0
+# pass 7
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 27.049168
