@@ -1,0 +1,10 @@
+2026-11-15 13:37:26,451 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-3e9ccf8e589540ba9efad23393e7c5b2'
+2026-11-15 13:37:28,485 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-8245c0d10ec64ecca42a73a61aefa140'
+2026-11-15 13:37:30,377 INFO event_persisted topic='sdv/vehicle-002/health' vehicle='vehicle-002' event='vehicle-002-22f13d267dfe433696cf7d9d97f14a0c'
+2026-11-15 13:37:30,539 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-05239fa9b05a443994e69ad7d2666855'
+2026-11-15 13:37:33,995 WARNING event_rejected code=MALFORMED_JSON topic='sdv/vehicle-002/health' vehicle=None event=None
+2026-11-15 13:37:35,027 WARNING event_rejected code=UNKNOWN_VEHICLE topic='sdv/vehicle-999/health' vehicle='vehicle-999' event='unknown'
+2026-11-15 13:37:36,072 WARNING event_rejected code=TOPIC_MISMATCH topic='sdv/vehicle-001/health' vehicle='vehicle-002' event='vehicle-002-22f13d267dfe433696cf7d9d97f14a0c'
+2026-11-15 13:37:37,106 WARNING event_rejected code=DUPLICATE_EVENT topic='sdv/vehicle-002/health' vehicle='vehicle-002' event='vehicle-002-22f13d267dfe433696cf7d9d97f14a0c'
+2026-11-15 13:37:38,141 WARNING event_rejected code=OUT_OF_ORDER topic='sdv/vehicle-002/health' vehicle='vehicle-002' event='equal-13296568958199'
+2026-11-15 13:37:39,173 WARNING event_rejected code=OUT_OF_ORDER topic='sdv/vehicle-002/health' vehicle='vehicle-002' event='late-13296568967278'

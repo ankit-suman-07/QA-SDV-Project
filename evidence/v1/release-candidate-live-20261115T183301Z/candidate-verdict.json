@@ -1,0 +1,17 @@
+{
+  "label": "UNMERGED INTEGRATION CANDIDATE",
+  "result": "PASS",
+  "selectedGates": [
+    "readiness",
+    "healthy",
+    "fault-recovery-trials",
+    "freshness-null",
+    "invalid-ordering-restart",
+    "individual-write-recovery",
+    "fleet-write-recovery",
+    "mqtt-reconnect",
+    "dashboard"
+  ],
+  "reusedEvidence": "explicitly identified in results.json",
+  "noReleaseClaim": true
+}

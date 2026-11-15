@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "chronyc",
+    "tracking"
+  ],
+  "request": {
+    "utc": "2026-11-15T18:29:45.504899+00:00",
+    "monotonicNs": 12828079730166
+  },
+  "returned": {
+    "utc": "2026-11-15T18:29:45.661422+00:00",
+    "monotonicNs": 12828236270574
+  },
+  "exit": 0,
+  "stdout": "Reference ID    : 953813A3 (archer.fsck.ca)\nStratum         : 3\nRef time (UTC)  : Sun Nov 15 18:28:44 2026\nSystem time     : 0.000952121 seconds slow of NTP time\nLast offset     : -0.000119946 seconds\nRMS offset      : 0.188992798 seconds\nFrequency       : 8.407 ppm slow\nResidual freq   : -6.075 ppm\nSkew            : 10.672 ppm\nRoot delay      : 0.017344303 seconds\nRoot dispersion : 0.004226511 seconds\nUpdate interval : 64.5 seconds\nLeap status     : Normal\n",
+  "stderr": ""
+}

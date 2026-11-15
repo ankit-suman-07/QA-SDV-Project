@@ -1,0 +1,50 @@
+{
+  "readiness": {
+    "status": "PASS",
+    "seconds": 184.40365421800016
+  },
+  "healthy": {
+    "status": "PASS",
+    "seconds": 0.7524387739995291
+  },
+  "fault-recovery-trials": {
+    "status": "PASS",
+    "seconds": 50.23376762500084
+  },
+  "freshness-null": {
+    "status": "PASS",
+    "seconds": 33.213004097999146
+  },
+  "invalid-ordering-restart": {
+    "status": "PASS",
+    "seconds": 14.85747046600045
+  },
+  "individual-write-recovery": {
+    "status": "PASS",
+    "seconds": 25.91508699699989
+  },
+  "fleet-write-recovery": {
+    "status": "PASS",
+    "seconds": 12.327831529000832
+  },
+  "mqtt-reconnect": {
+    "status": "PASS",
+    "seconds": 7.322194412001409
+  },
+  "provider-kuksa-recovery": {
+    "status": "REUSED",
+    "reason": "Unaffected provider implementation: merged #38/#39 real recovery evidence and exact fix-head CI; avoid another provider outage here."
+  },
+  "dashboard": {
+    "status": "PASS",
+    "seconds": 9.208613744000104
+  },
+  "baseline-regression": {
+    "status": "REUSED",
+    "reason": "Existing baseline workflow at exact PR heads; no legacy implementation change except app lifecycle, independently live-tested."
+  },
+  "kanto-v1-09": {
+    "status": "REUSED",
+    "reason": "Merged #43 original pass plus affected lifecycle three-cycle actual Kanto verification in shutdown-kanto-live-20261115T152137Z."
+  }
+}

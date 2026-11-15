@@ -1,0 +1,145 @@
+[
+  {
+    "operation": "healthy",
+    "startedMonotonic": 13208.942038441,
+    "boundaries": {
+      "fleetApi": 0.11999672499950975,
+      "fleetThing": 0.1483160699990549,
+      "dashboard": 0.15251249100037967,
+      "mqtt": 0.17328492799970263,
+      "twin": 0.40422154199950455,
+      "api": 0.43345987599968794
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-1-inject_scenario",
+    "startedMonotonic": 13209.631422507,
+    "boundaries": {
+      "mqtt": 3.578338129000258,
+      "twin": 3.8003631819992734,
+      "api": 3.8217292799999996,
+      "fleetApi": 3.8443667230003484,
+      "fleetThing": 5.211016540999481,
+      "dashboard": 5.470677936000357
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-1-clear_scenario",
+    "startedMonotonic": 13215.259972304,
+    "boundaries": {
+      "mqtt": 2.0434703219998482,
+      "twin": 2.26243543199962,
+      "api": 2.2836303469994164,
+      "fleetApi": 2.304946297999777,
+      "fleetThing": 3.579941295000026,
+      "dashboard": 3.848401806999391
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-2-inject_scenario",
+    "startedMonotonic": 13219.257171885,
+    "boundaries": {
+      "mqtt": 4.187076292000711,
+      "twin": 4.395100810999793,
+      "api": 4.4113111550013855,
+      "fleetApi": 4.427489859001071,
+      "fleetThing": 5.644008041001143,
+      "dashboard": 5.886147380000693
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-2-clear_scenario",
+    "startedMonotonic": 13225.272369086,
+    "boundaries": {
+      "mqtt": 2.265270130999852,
+      "fleetApi": 2.3312192979992687,
+      "twin": 2.558473860999584,
+      "api": 2.577173509000204,
+      "fleetThing": 3.5349469729990233,
+      "dashboard": 3.9987120169989794
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-3-inject_scenario",
+    "startedMonotonic": 13229.440782361,
+    "boundaries": {
+      "mqtt": 4.239476270999148,
+      "twin": 4.479774594999981,
+      "api": 4.495246479000343,
+      "fleetApi": 4.510803503000716,
+      "fleetThing": 5.416255317000832,
+      "dashboard": 5.854661589000898
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-3-clear_scenario",
+    "startedMonotonic": 13235.433365409,
+    "boundaries": {
+      "mqtt": 2.3417164820002654,
+      "twin": 2.4044904759994097,
+      "api": 2.41802097999971,
+      "fleetApi": 2.4304714879999665,
+      "fleetThing": 3.3397075119992223,
+      "dashboard": 4.00545264900029
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-4-inject_scenario",
+    "startedMonotonic": 13239.568591671,
+    "boundaries": {
+      "mqtt": 4.346813307998673,
+      "twin": 4.589326730998437,
+      "api": 4.603287751999233,
+      "fleetApi": 4.618184891000055,
+      "fleetThing": 5.312102948999382,
+      "dashboard": 5.958448461999069
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-4-clear_scenario",
+    "startedMonotonic": 13245.669497881,
+    "boundaries": {
+      "mqtt": 2.3401400370003103,
+      "twin": 2.5237324720001197,
+      "api": 2.534955404000357,
+      "fleetApi": 2.5467512660015927,
+      "fleetThing": 3.1973572540009627,
+      "dashboard": 3.881979443000091
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-5-inject_scenario",
+    "startedMonotonic": 13249.720484124,
+    "boundaries": {
+      "mqtt": 4.432026600999961,
+      "fleetApi": 4.500118787000247,
+      "twin": 4.7032842690005054,
+      "api": 4.716727537999759,
+      "fleetThing": 4.976807113000177,
+      "dashboard": 5.85982116500054
+    },
+    "status": "PASS"
+  },
+  {
+    "operation": "trial-5-clear_scenario",
+    "startedMonotonic": 13255.724656225,
+    "boundaries": {
+      "mqtt": 2.520835208999415,
+      "twin": 2.5689662959994166,
+      "api": 2.5827768039998773,
+      "fleetApi": 2.597427742999571,
+      "fleetThing": 3.0616673069998797,
+      "dashboard": 3.980134805000489
+    },
+    "status": "PASS"
+  }
+]
