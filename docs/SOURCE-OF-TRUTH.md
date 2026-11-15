@@ -1,5 +1,18 @@
 # SDV project source of truth
 
+## Remaining Phase V1 ownership — November 14, 2026
+
+Ankit owns all remaining Phase V1 remediation, integration, verification, fleet CI,
+Kanto validation (B5 / V1-09), report/video and release work. Bayan and Emmanuel's
+component contributions and original task IDs remain historical attribution, not
+assignments of remaining work. Phase V2 ownership is unchanged. The sole fleet
+aggregator and fleet-twin materializer are in Spring Boot under Ankit (A5).
+V1-09 remains required and separately tracked; a blocked Linux/LAN pilot does not
+constitute acceptance. Release still requires all applicable criteria and reviews.
+This ownership update does not approve proposed interfaces, freshness defaults,
+measurement budgets, authentication subjects or other unresolved decisions.
+
+
 Use this file as the entry point for SDV project chats. Read the relevant sources before proposing code, tests or architecture. The team's approved Git revisions are authoritative. Use matching copies in ChatGPT Project sources.
 
 | Source to access | Read it for |

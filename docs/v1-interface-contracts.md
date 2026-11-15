@@ -1,5 +1,18 @@
 # V1 interface contracts
 
+## Remaining Phase V1 ownership — November 14, 2026
+
+Ankit owns all remaining Phase V1 remediation, integration, verification, fleet CI,
+Kanto validation (B5 / V1-09), report/video and release work. Bayan and Emmanuel's
+component contributions and original task IDs remain historical attribution, not
+assignments of remaining work. Phase V2 ownership is unchanged. The sole fleet
+aggregator and fleet-twin materializer are in Spring Boot under Ankit (A5).
+V1-09 remains required and separately tracked; a blocked Linux/LAN pilot does not
+constitute acceptance. Release still requires all applicable criteria and reviews.
+This ownership update does not approve proposed interfaces, freshness defaults,
+measurement budgets, authentication subjects or other unresolved decisions.
+
+
 Version: **1.0.0 — proposed for affected-owner review**, November 11, 2026.
 
 This is the development baseline requested by the project owner, not a claim that the running platform implements it. Ankit coordinates approval; Bayan and Emmanuel review affected boundaries before merge. The [source-of-truth entry point](SOURCE-OF-TRUTH.md), [scope](08-project-scope-and-acceptance.md), [task distribution](10-detailed-task-distribution.md), and [November 11 audit](findings/2026-11-11-repository-audit.md) remain the context. The formerly planned `docs/interface-contracts.md` is absent; this document fills that role for V1. Root README and previous-term contracts do not override this phase's agreed interfaces.

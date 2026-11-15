@@ -1,5 +1,18 @@
 # SDV fleet enhancement — Detailed task distribution
 
+## Remaining Phase V1 ownership — November 14, 2026
+
+Ankit owns all remaining Phase V1 remediation, integration, verification, fleet CI,
+Kanto validation (B5 / V1-09), report/video and release work. Bayan and Emmanuel's
+component contributions and original task IDs remain historical attribution, not
+assignments of remaining work. Phase V2 ownership is unchanged. The sole fleet
+aggregator and fleet-twin materializer are in Spring Boot under Ankit (A5).
+V1-09 remains required and separately tracked; a blocked Linux/LAN pilot does not
+constitute acceptance. Release still requires all applicable criteria and reviews.
+This ownership update does not approve proposed interfaces, freshness defaults,
+measurement budgets, authentication subjects or other unresolved decisions.
+
+
 Phase V1 is due **November 16, 2026** and covers approximately 60% of remaining effort with two synthetic vehicles. Phase V2 is due **December 5, 2026** and covers the remaining 40%, including three CARLA vehicles with front LiDAR. Task IDs below map to acceptance criteria in [08-project-scope-and-acceptance.md](08-project-scope-and-acceptance.md). For tasks moved earlier, use the phase assignments in this document. Runtime flows are in [09-architecture-diagrams.md](09-architecture-diagrams.md).
 
 
@@ -40,7 +53,7 @@ No networked uProtocol or V2 CARLA work is a V1 dependency. Production files are
 | B3 · Phase V1 twin consistency and aggregation handoff | Verify both individual twins with replayed events and hand their schemas/read examples to Ankit. Ankit owns aggregation under A5; do not build a second aggregator. | Individual twin isolation/freshness/ordering checks pass independently; Ankit can consume their fixtures and read contract. Supports V1-02, V1-04 and V1-08. |
 | B6 · Phase V2 fleet extension | Provision the third individual twin, add fault history and handle duplicate and out-of-order events. Hand the third twin to Ankit for extension of the single Spring Boot aggregator. | Three individual twins and fleet counts agree. Duplicate and late events preserve newer state. Supports V2-03. |
 | B4 · Phase V2 diagnostics integration | With Ankit, select one real uProtocol exchange and one supported OpenSOVD operation. Document addressing, request/result mapping and correlation. Capture runtime evidence for each. | Both agreed operations execute against their selected implementations. Record exact operations, failure handling and any adapter limitations. Covers V2-06. |
-| B5 · Phase V1 Kanto pilot | Launch and restart the vehicle-002 Velocitas app with Kanto on Bayan’s Linux device. Connect it to KUKSA and Mosquitto using the main host’s LAN address. | A fresh event reaches the correct Ditto twin after restart. Save Kanto and twin evidence. |
+| B5 · Phase V1 Kanto pilot | Launch and restart the vehicle-002 Velocitas app with Kanto on an Ankit-managed Linux device. Connect it to KUKSA and Mosquitto using the main host’s LAN address. | A fresh event reaches the correct Ditto twin after restart. Save Kanto and twin evidence. |
 | B7 · Phase V2 Kanto validation | Repeat deployment and restart verification with the CARLA-backed fleet. | A fresh post-restart event reaches the selected CARLA vehicle twin. Covers V2-05. |
 
 ## Emmanuel — Simulation, LiDAR and Velocitas
@@ -56,7 +69,7 @@ No networked uProtocol or V2 CARLA work is a V1 dependency. Production files are
 ## Real integration order and reviews
 
 1. **Phase V1 contracts first.** Ankit coordinates. Emmanuel supplies publisher and simulator examples. Bayan supplies twin IDs and a representative read response. Agree the command, event and state fields before connecting services.
-2. **Phase V1 build independently.** Emmanuel uses capture, Bayan uses fixture replay and Ankit uses HTTP mocks; no member waits for a teammate service. Component PRs are reviewed against the same contract. Then substitute real endpoints and run the live fault/clear scenario before recording. Bayan can validate the Kanto pilot in parallel. Preserve the core two-vehicle demo if the Linux or LAN setup blocks the pilot.
+2. **Phase V1 build independently.** Emmanuel uses capture, Bayan uses fixture replay and Ankit uses HTTP mocks; no member waits for a teammate service. Component PRs are reviewed against the same contract. Then substitute real endpoints and run the live fault/clear scenario before recording. Ankit also owns the separately tracked Kanto pilot. Preserve the core two-vehicle demo if the Linux or LAN setup blocks the pilot.
 3. **Phase V2 validate the runtime early.** Emmanuel verifies CARLA and LiDAR acquisition. Bayan reuses the Phase V1 Kanto deployment and identifies supported diagnostic operations. Ankit freezes backend contracts once those interfaces are clear.
 4. **Phase V2 integrate telemetry before actions.** Prove three-vehicle telemetry and fleet views, then verify targeted diagnostic outcomes and Kanto restart. Run measurement trials after the integrated workflow is repeatable.
 5. **Review at handoffs.** Bayan reviews Emmanuel’s event contract, Ankit reviews Bayan’s twin/diagnostic interface, and Emmanuel reviews Ankit’s scenario targeting. Each owner verifies their component. Ankit coordinates cross-system acceptance.
@@ -150,7 +163,7 @@ Each card uses only the merged contract package, the owner’s own code and list
 
 ### B1 — MQTT ingress validation and ordered ingestion
 
-- **Owner:** Bayan
+- **Owner:** Ankit (remaining Phase V1 work; original contributor: Bayan)
 - **Objective:** MQTT ingress validation and ordered ingestion
 - **Files/components likely involved:** New MQTT ingress module under ditto/; contract tests; local configuration
 - **Inputs required:** C3 topics/schema/negative cases and C4 classification; own broker only
@@ -165,7 +178,7 @@ Each card uses only the merged contract package, the owner’s own code and list
 
 ### B2 — Two individually isolated Ditto twins and atomic feature updates
 
-- **Owner:** Bayan
+- **Owner:** Ankit (remaining Phase V1 work; original contributor: Bayan)
 - **Objective:** Two individually isolated Ditto twins and atomic feature updates
 - **Files/components likely involved:** ditto/config; MQTT writer/HTTP adapter; twin tests and provisioning instructions
 - **Inputs required:** C6 Thing IDs/property paths and event/twin fixtures; own local Ditto or mock feature writer
@@ -180,7 +193,7 @@ Each card uses only the merged contract package, the owner’s own code and list
 
 ### B3 — Individual-twin consistency and aggregation handoff, without duplicate aggregation
 
-- **Owner:** Bayan
+- **Owner:** Ankit (remaining Phase V1 work; original contributor: Bayan)
 - **Objective:** Individual-twin consistency and aggregation handoff, without duplicate aggregation
 - **Files/components likely involved:** ditto/scripts/verify-vehicle-state.py; twin verifier tests; ditto legacy bridge/context caller; docs handoff
 - **Inputs required:** Twin fixtures, controllable clock, C3/C5 ordering/freshness and audit defect examples
@@ -195,7 +208,7 @@ Each card uses only the merged contract package, the owner’s own code and list
 
 ### B5 — Kanto vehicle-002 Linux pilot and fresh post-restart event evidence
 
-- **Owner:** Bayan
+- **Owner:** Ankit (remaining Phase V1 work; original contributor: Bayan)
 - **Objective:** Kanto vehicle-002 Linux pilot and fresh post-restart event evidence
 - **Files/components likely involved:** velocitas-app/kanto descriptor/deploy script and static tests; local endpoint configuration
 - **Inputs required:** C2 endpoint mapping, app image/config, own Linux/Kanto host; no teammate service needed for preparation
@@ -210,7 +223,7 @@ Each card uses only the merged contract package, the owner’s own code and list
 
 ### E1 — Two independent providers, brokers and Velocitas v1 publications
 
-- **Owner:** Emmanuel
+- **Owner:** Ankit (remaining Phase V1 work; original contributor: Emmanuel)
 - **Objective:** Two independent providers, brokers and Velocitas v1 publications
 - **Files/components likely involved:** vehicle-simulator/docker-compose.yml; src/config/tests; velocitas-app/app/src, manifest/config/tests
 - **Inputs required:** C2 mappings, C3 envelope, preserved C4 thresholds and capture oracle
@@ -225,7 +238,7 @@ Each card uses only the merged contract package, the owner’s own code and list
 
 ### E2 — Deterministic vehicle-002 LiDAR obstruction and recovery
 
-- **Owner:** Emmanuel
+- **Owner:** Ankit (remaining Phase V1 work; original contributor: Emmanuel)
 - **Objective:** Deterministic vehicle-002 LiDAR obstruction and recovery
 - **Files/components likely involved:** vehicle-simulator scenario_controller/control_server/signal_generator and tests; Velocitas health tests
 - **Inputs required:** C8 existing provider routes, scenario fixtures, controlled source clock/seed and capture oracle

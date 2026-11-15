@@ -1,5 +1,18 @@
 # Independent V1 development
 
+## Remaining Phase V1 ownership — November 14, 2026
+
+Ankit owns all remaining Phase V1 remediation, integration, verification, fleet CI,
+Kanto validation (B5 / V1-09), report/video and release work. Bayan and Emmanuel's
+component contributions and original task IDs remain historical attribution, not
+assignments of remaining work. Phase V2 ownership is unchanged. The sole fleet
+aggregator and fleet-twin materializer are in Spring Boot under Ankit (A5).
+V1-09 remains required and separately tracked; a blocked Linux/LAN pilot does not
+constitute acceptance. Release still requires all applicable criteria and reviews.
+This ownership update does not approve proposed interfaces, freshness defaults,
+measurement budgets, authentication subjects or other unresolved decisions.
+
+
 Use [contract 1.0.0](v1-interface-contracts.md) and the [task distribution](10-detailed-task-distribution.md). The contracts are proposed for affected-owner review; this package does not implement the V1 platform. The November 16, 2026 V1 deadline and December 5, 2026 V2 deadline remain unchanged.
 
 ## Start from one shared baseline
