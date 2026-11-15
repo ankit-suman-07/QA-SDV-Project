@@ -1,0 +1,113 @@
+..FF..                                                                   [100%]
+=================================== FAILURES ===================================
+___ test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[1] ____
+
+provider_main = <module 'provider_main' from '/tmp/qa-v1-provider/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd10e110fb0>
+failures = 1
+
+    @pytest.mark.parametrize("failures", [1, 4])
+    def test_provider_reconnects_with_bounded_backoff_and_preserves_scenario(
+        provider_main, monkeypatch, failures,
+    ):
+        """Removing retry/retaining failed state would lose the active scenario or stop publication."""
+        from kuksa_client.grpc import VSSClientError
+        controller = provider_main.create_scenario_controller()
+        controller.execute(vehicle_id="vehicle-002", action="INJECT_SCENARIO",
+                           scenario="LIDAR_OBSTRUCTION", action_id="a", trace_id="t")
+        stop = Stop(stop_after=failures + 2)
+        clients = []
+        writes = []
+
+        class Client:
+            closed = False
+
+            def __enter__(self):
+                clients.append(self)
+                return self
+
+            def __exit__(self, *args):
+                self.closed = True
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs['timeout'] == 2.0
+                if len(clients) <= failures:
+                    raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
+                writes.append(values)
+
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        provider_main.publish_loop(controller, stop)
+        assert all(client.closed for client in clients)
+        assert len(clients) == failures + 1
+        assert stop.waits[:failures] == [min(2 ** n, 5) for n in range(failures)]
+        path = provider_main.SIGNAL_PATHS['lidar_distance_m']
+>       assert [write[path].value for write in writes] == [20.0, 10.0]
+E       assert [20.0, 8.0] == [20.0, 10.0]
+E
+E         At index 1 diff: 8.0 != 10.0
+E         Use -v to get more diff
+
+vehicle-simulator/tests/test_provider_main.py:103: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+[2026-11-14T01:07:02.861953] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=5.0 speed=59.8 battery=80.0 engine_temp=90.0 tire_pressure=32.0 coolant_pressure=199.8 lidar_distance_m=20.0 lidar_step=1.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+[2026-11-14T01:07:02.861997] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=5.0 speed=60.5 battery=80.1 engine_temp=90.3 tire_pressure=31.9 coolant_pressure=200.0 lidar_distance_m=8.0 lidar_step=2.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=false
+___ test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[4] ____
+
+provider_main = <module 'provider_main' from '/tmp/qa-v1-provider/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd10c6f2c30>
+failures = 4
+
+    @pytest.mark.parametrize("failures", [1, 4])
+    def test_provider_reconnects_with_bounded_backoff_and_preserves_scenario(
+        provider_main, monkeypatch, failures,
+    ):
+        """Removing retry/retaining failed state would lose the active scenario or stop publication."""
+        from kuksa_client.grpc import VSSClientError
+        controller = provider_main.create_scenario_controller()
+        controller.execute(vehicle_id="vehicle-002", action="INJECT_SCENARIO",
+                           scenario="LIDAR_OBSTRUCTION", action_id="a", trace_id="t")
+        stop = Stop(stop_after=failures + 2)
+        clients = []
+        writes = []
+
+        class Client:
+            closed = False
+
+            def __enter__(self):
+                clients.append(self)
+                return self
+
+            def __exit__(self, *args):
+                self.closed = True
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs['timeout'] == 2.0
+                if len(clients) <= failures:
+                    raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
+                writes.append(values)
+
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        provider_main.publish_loop(controller, stop)
+        assert all(client.closed for client in clients)
+        assert len(clients) == failures + 1
+        assert stop.waits[:failures] == [min(2 ** n, 5) for n in range(failures)]
+        path = provider_main.SIGNAL_PATHS['lidar_distance_m']
+>       assert [write[path].value for write in writes] == [20.0, 10.0]
+E       assert [20.0, 8.0] == [20.0, 10.0]
+E
+E         At index 1 diff: 8.0 != 10.0
+E         Use -v to get more diff
+
+vehicle-simulator/tests/test_provider_main.py:103: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 2.0s
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 4.0s
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 5.0s
+[2026-11-14T01:07:02.876370] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=5.0 speed=60.4 battery=80.0 engine_temp=89.6 tire_pressure=32.1 coolant_pressure=200.3 lidar_distance_m=20.0 lidar_step=1.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+[2026-11-14T01:07:02.876412] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=5.0 speed=59.8 battery=80.4 engine_temp=89.9 tire_pressure=32.2 coolant_pressure=200.9 lidar_distance_m=8.0 lidar_step=2.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=false
+=========================== short test summary info ============================
+FAILED vehicle-simulator/tests/test_provider_main.py::test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[1]
+FAILED vehicle-simulator/tests/test_provider_main.py::test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[4]
+2 failed, 4 passed in 0.12s

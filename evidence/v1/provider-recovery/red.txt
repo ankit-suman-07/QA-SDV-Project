@@ -1,0 +1,142 @@
+..FFFF                                                                   [100%]
+=================================== FAILURES ===================================
+___ test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[1] ____
+
+provider_main = <module 'provider_main' from '/tmp/qa-v1-provider/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd052a38f50>
+failures = 1
+
+    @pytest.mark.parametrize("failures", [1, 4])
+    def test_provider_reconnects_with_bounded_backoff_and_preserves_scenario(
+        provider_main, monkeypatch, failures,
+    ):
+        """Removing retry/retaining failed state would lose the active scenario or stop publication."""
+        from kuksa_client.grpc import VSSClientError
+        controller = provider_main.create_scenario_controller()
+        controller.execute(vehicle_id="vehicle-002", action="INJECT_SCENARIO",
+                           scenario="LIDAR_OBSTRUCTION", action_id="a", trace_id="t")
+        stop = Stop(stop_after=failures + 2)
+        clients = []
+        writes = []
+
+        class Client:
+            closed = False
+
+            def __enter__(self):
+                clients.append(self)
+                return self
+
+            def __exit__(self, *args):
+                self.closed = True
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs['timeout'] == 2.0
+                if len(clients) <= failures:
+                    raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
+                writes.append(values)
+
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+>       provider_main.publish_loop(controller, stop)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'provider_main' has no attribute 'publish_loop'
+
+vehicle-simulator/tests/test_provider_main.py:98: AttributeError
+___ test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[4] ____
+
+provider_main = <module 'provider_main' from '/tmp/qa-v1-provider/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd050fdec00>
+failures = 4
+
+    @pytest.mark.parametrize("failures", [1, 4])
+    def test_provider_reconnects_with_bounded_backoff_and_preserves_scenario(
+        provider_main, monkeypatch, failures,
+    ):
+        """Removing retry/retaining failed state would lose the active scenario or stop publication."""
+        from kuksa_client.grpc import VSSClientError
+        controller = provider_main.create_scenario_controller()
+        controller.execute(vehicle_id="vehicle-002", action="INJECT_SCENARIO",
+                           scenario="LIDAR_OBSTRUCTION", action_id="a", trace_id="t")
+        stop = Stop(stop_after=failures + 2)
+        clients = []
+        writes = []
+
+        class Client:
+            closed = False
+
+            def __enter__(self):
+                clients.append(self)
+                return self
+
+            def __exit__(self, *args):
+                self.closed = True
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs['timeout'] == 2.0
+                if len(clients) <= failures:
+                    raise VSSClientError({'code': 14, 'reason': 'unavailable'}, [])
+                writes.append(values)
+
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+>       provider_main.publish_loop(controller, stop)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'provider_main' has no attribute 'publish_loop'
+
+vehicle-simulator/tests/test_provider_main.py:98: AttributeError
+___________ test_shutdown_interrupts_unavailable_dependency_backoff ____________
+
+provider_main = <module 'provider_main' from '/tmp/qa-v1-provider/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd050fdfd40>
+
+    def test_shutdown_interrupts_unavailable_dependency_backoff(provider_main, monkeypatch):
+        from kuksa_client.grpc import VSSClientError
+        closed = []
+
+        class Client:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                closed.append(True)
+
+            def set_current_values(self, *args, **kwargs):
+                raise VSSClientError({'code': 4, 'reason': 'deadline'}, [])
+
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        stop = Stop(stop_after=1)
+>       provider_main.publish_loop(provider_main.create_scenario_controller(), stop)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'provider_main' has no attribute 'publish_loop'
+
+vehicle-simulator/tests/test_provider_main.py:123: AttributeError
+________________ test_non_transient_client_error_is_not_retried ________________
+
+provider_main = <module 'provider_main' from '/tmp/qa-v1-provider/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fd050fde0f0>
+
+    def test_non_transient_client_error_is_not_retried(provider_main, monkeypatch):
+        from kuksa_client.grpc import VSSClientError
+
+        class Client:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                pass
+
+            def set_current_values(self, *args, **kwargs):
+                raise VSSClientError({'code': 7, 'reason': 'permission denied'}, [])
+
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        stop = Stop()
+        with pytest.raises(VSSClientError):
+>           provider_main.publish_loop(provider_main.create_scenario_controller(), stop)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'provider_main' has no attribute 'publish_loop'
+
+vehicle-simulator/tests/test_provider_main.py:144: AttributeError
+=========================== short test summary info ============================
+FAILED vehicle-simulator/tests/test_provider_main.py::test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[1]
+FAILED vehicle-simulator/tests/test_provider_main.py::test_provider_reconnects_with_bounded_backoff_and_preserves_scenario[4]
+FAILED vehicle-simulator/tests/test_provider_main.py::test_shutdown_interrupts_unavailable_dependency_backoff
+FAILED vehicle-simulator/tests/test_provider_main.py::test_non_transient_client_error_is_not_retried
+4 failed, 2 passed in 0.12s

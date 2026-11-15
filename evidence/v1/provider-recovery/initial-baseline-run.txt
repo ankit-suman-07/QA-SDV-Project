@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/qa-v1-provider/evidence/v1/provider-recovery/live_check.py", line 108, in <module>
+    assert not recovered and not status['State']['Running']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

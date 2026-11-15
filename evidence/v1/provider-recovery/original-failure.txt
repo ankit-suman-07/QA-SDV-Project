@@ -1,0 +1,2 @@
+[Control] vehicle=vehicle-001 listening on 0.0.0.0:8090
+{"baseline": "f33e7cbbb4968fec28d2d5acf4f10df246fa9fba", "reproduced": true, "observation": "UNAVAILABLE escapes main; process would exit without managed restart", "boundary": "MOCK SDK UNAVAILABLE; actual baseline provider main/controller/generator", "cleanup": ["client", "control shutdown", "control close"]}

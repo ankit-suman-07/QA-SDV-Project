@@ -1,0 +1,33 @@
+{
+  "baselineReproduction": true,
+  "results": [
+    {
+      "vehicle": "vehicle-002",
+      "automaticFreshRecovery": true,
+      "providerRunning": true,
+      "providerExitCode": 0,
+      "providerRestartCount": 0,
+      "otherVehicleAdvancedHealthy": true,
+      "restoredAt": "2026-11-14T06:10:21.844685+00:00",
+      "freshEvent": {
+        "receivedAt": "2026-11-14T06:10:24.705324+00:00",
+        "topic": "sdv/vehicle-002/health",
+        "qos": 1,
+        "retain": false,
+        "payload": {
+          "schemaVersion": "1.0.0",
+          "eventId": "vehicle-002-f19f755366a145ab90accd7427991adf",
+          "vehicleId": "vehicle-002",
+          "sourceTimestamp": "2026-11-14T06:10:24.069086Z",
+          "health": "HEALTHY",
+          "faults": [],
+          "lidar": {
+            "distanceMeters": 35.0,
+            "sensorAvailable": true
+          }
+        }
+      }
+    }
+  ],
+  "boundary": "Real providers/KUKSA/apps/MQTT; no Ditto/API/fleet acceptance"
+}
