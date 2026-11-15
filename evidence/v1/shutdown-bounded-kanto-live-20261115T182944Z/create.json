@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "sudo",
+    "-n",
+    "/opt/qa-sdv-v1-kanto/bin/kanto-cm",
+    "--host",
+    "/run/qa-sdv-v1-kanto/container-management.sock",
+    "--timeout",
+    "30",
+    "create",
+    "--file",
+    "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/app-shutdown/evidence/v1/shutdown-bounded-kanto-live-20261115T182944Z/descriptor.json"
+  ],
+  "request": {
+    "utc": "2026-11-15T18:30:09.051012+00:00",
+    "monotonicNs": 12851625864692
+  },
+  "returned": {
+    "utc": "2026-11-15T18:30:09.857057+00:00",
+    "monotonicNs": 12852431895931
+  },
+  "exit": 0,
+  "stdout": "78eaf169-585e-4e39-abee-abc478255321\n",
+  "stderr": ""
+}

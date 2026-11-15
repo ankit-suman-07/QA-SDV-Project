@@ -1,0 +1,35 @@
+{
+  "result": "PASS",
+  "sourceSha": "d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "cycles": [
+    {
+      "cycle": 1,
+      "exit": 0,
+      "sourceMarginSeconds": 1.761229,
+      "pid": 250802
+    },
+    {
+      "cycle": 2,
+      "exit": 0,
+      "sourceMarginSeconds": 1.600984,
+      "pid": 251345
+    },
+    {
+      "cycle": 3,
+      "exit": 0,
+      "sourceMarginSeconds": 1.446657,
+      "pid": 251913
+    }
+  ],
+  "finalExit": 0,
+  "twinSamples": 154,
+  "maxTwinGapSeconds": 0.335975,
+  "completedShutdownEntries": 4,
+  "oldPidsAbsent": true,
+  "scope": "same-device managed stop/start; no remote LAN or automatic crash restart claim",
+  "mqttCounts": {
+    "vehicle-001": 7,
+    "vehicle-002": 4
+  },
+  "maxSourceAgeSeconds": 1.920188
+}
