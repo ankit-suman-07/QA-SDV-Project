@@ -6,8 +6,9 @@ twin boundary for V1-03/04/08. Ankit A5 owns all fleet provisioning/counting/wri
 
 `v1_writer.py` implements authenticated whole-Thing reads and one atomic
 `PUT /api/2/things/{thingId}/features/v1` per accepted observation. Initial writes
-use `If-None-Match: *`; later writes preserve feature metadata and use the ETag
-from an authenticated feature GET in `If-Match`. A conflict invalidates the ingress
+use `If-None-Match: *`; later writes target only `/features/v1/properties`, preserving feature metadata
+and the existing properties-only authorization boundary. They use the ETag from
+an authenticated properties GET in `If-Match`. A conflict invalidates the ingress
 watermark cache and requires a fresh read before retry. Feature-level READ/WRITE
 permissions are required; production principal approval remains open.
 `v1.py` wires it to the B1 subscriber; no fake writer or generated healthy fallback

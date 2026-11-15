@@ -47,7 +47,7 @@ class FakeDitto:
             if method == 'GET':
                 if feature is None:
                     return response(404)
-                result = response(200, feature)
+                result = response(200, feature['properties'] if tail[-1] == 'properties' else feature)
                 result.headers = {'ETag': etag}
                 return result
             headers = kwargs['headers']
@@ -119,7 +119,7 @@ class WriterTests(unittest.TestCase):
             self.assertEqual(one, self.http.things['sdv:vehicle-001'])
         puts = [(url, kw) for method, url, kw in self.http.calls if method == 'PUT' and '/features/' in url]
         self.assertEqual(4, len(puts))
-        self.assertTrue(all(url.endswith('/features/v1') for url, _ in puts))
+        self.assertTrue(all((url.endswith('/features/v1') or url.endswith('/features/v1/properties')) for url, _ in puts))
         self.assertTrue(all('If-Match' in kw['headers'] or kw['headers'].get('If-None-Match') == '*' for _, kw in puts))
         for _, kw in puts:
             self.assertEqual(('ditto', 'secret'), kw['auth'])

@@ -8,16 +8,18 @@ Independent branch: `ankit/fix/v1-ditto-feature-initialization`, based on main o
 
 ## Actual correction
 
-Authenticate and validate the existing Thing, then GET the V1 feature. A failed
-Thing/feature read is not absence or permission to write. Only a real feature 404
+Authenticate and validate the existing Thing. For existing V1, GET its properties. A failed
+Thing/feature read is not absence or permission to write. Only a successful identified Thing read with V1 absent
 allows conditional feature PUT with `If-None-Match: *`. This endpoint cannot create
-a missing Thing. Later updates validate persisted identity/schema/watermark, preserve
-feature metadata and use the feature GET ETag with `If-Match`. Missing ETag or
+a missing Thing. Later properties-only updates validate persisted identity/schema/watermark, preserve
+feature metadata and use the properties GET ETag with `If-Match`. Missing ETag or
 concurrent 412 fails closed. No whole-Thing replacement or fabricated health.
 Uncertain/conflicting persistence invalidates the ingress cache, preserves MQTT
 pending semantics and reloads the stored watermark before retry/rejection.
 
-Feature-level READ/WRITE permission is required. This corrects persistence behavior,
+Feature-level READ/WRITE is required for creation; updates retain the existing
+properties-only permission boundary. A dedicated regression reproduces why
+replacing the whole existing feature would unnecessarily broaden that boundary. This corrects persistence behavior,
 not approval of production authentication subjects or the proposed shared contract.
 No application defaults, wire schema or Thing/vehicle identities were changed.
 
@@ -33,7 +35,7 @@ No application defaults, wire schema or Thing/vehicle identities were changed.
   for every GET and nested any PUT under properties; it did not model subresources.
   Updated that test substitute to model real feature paths and conditional headers;
   no poison-input validation/ACK assertion removed or relaxed.
-- [Final documented Python regression](python-regression-final.txt): **531 passed,
+- [Final documented Python regression](python-regression-final.txt): **532 passed,
   386 subtests, 2 explicit skips, 9 integration tests deselected**. SDK-native unit
   and externally configured publisher integration are the skips, not live passes.
 - [Real Ditto result](live.json): new uniquely named test-owned Things/policies in
@@ -60,3 +62,7 @@ Combined candidate, exact-head CI and release approval remain separate work.
 
 The acceptance launcher now starts the sole ingress without manual telemetry
 bootstrap. Its complete clean-start integrated execution is reserved for Part D.
+
+[Additional red regression](properties-boundary-red.txt) covers preserving the
+properties-only update authorization boundary. A further real-resource run confirms
+initial feature PUT and subsequent ETag-protected properties PUT both succeed.

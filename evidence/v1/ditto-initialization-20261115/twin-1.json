@@ -1,6 +1,6 @@
 {
-  "thingId": "qa_v1_init_20261115145557:vehicle-001",
-  "policyId": "qa_v1_init_20261115145557:vehicle-001-policy",
+  "thingId": "qa_v1_init_20261115152020:vehicle-001",
+  "policyId": "qa_v1_init_20261115152020:vehicle-001-policy",
   "attributes": {
     "vehicleId": "vehicle-001"
   },
@@ -14,14 +14,14 @@
       "properties": {
         "schemaVersion": "1.0.0",
         "vehicleId": "vehicle-001",
-        "sourceTimestamp": "2026-11-15T14:56:05.638785Z",
+        "sourceTimestamp": "2026-11-15T15:20:29.135472Z",
         "health": "HEALTHY",
         "faults": [],
         "lidar": {
           "distanceMeters": 35.0,
           "sensorAvailable": true
         },
-        "lastEventId": "vehicle-001-aad1b771f4954fb9a6dbe8e2ea1489a9"
+        "lastEventId": "vehicle-001-4af768dd9b0940a09a77868de611770d"
       }
     }
   }

@@ -42,13 +42,13 @@ class MemoryHTTP:
         tail = url.split('/api/2/things/')[1].split('/')[1:]
         if tail and method == 'GET':
             return SimpleNamespace(status_code=404 if feature is None else 200,
-                                   content=json.dumps(feature).encode(), headers={'ETag': etag})
+                                   content=json.dumps(feature.get('properties') if feature is not None and tail[-1]=='properties' else feature).encode(), headers={'ETag': etag})
         if method == 'PUT':
             headers = kwargs['headers']
             if ((headers.get('If-None-Match') == '*' and feature is not None) or
                     ('If-Match' in headers and headers['If-Match'] != etag)):
                 return SimpleNamespace(status_code=412)
-            self.things[identity]['features']['v1'] = json.loads(kwargs['data'])
+            self.things[identity]['features']['v1'] = ({'properties': json.loads(kwargs['data'])} if tail[-1]=='properties' else json.loads(kwargs['data']))
         return SimpleNamespace(status_code=200 if method == 'GET' else 204,
                                content=json.dumps(self.things[identity]).encode(), headers={})
 

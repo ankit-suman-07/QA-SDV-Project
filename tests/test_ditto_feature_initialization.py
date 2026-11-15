@@ -122,3 +122,16 @@ def test_missing_entity_tag_cannot_authorize_unconditional_update():
     writer._request = request
     with pytest.raises(DittoError): send(writer)
     assert http.things == before
+
+
+def test_existing_feature_updates_keep_properties_only_authorization_boundary():
+    http, writer = setup()
+    send(writer, 'vehicle-002-healthy')
+    original = writer._request
+    def request(method, url, **kw):
+        if method == 'PUT' and url.endswith('/features/v1'):
+            return response(403)  # existing principal may update properties, not definitions
+        return original(method, url, **kw)
+    writer._request = request
+    send(writer)
+    assert http.things['sdv:vehicle-002']['features']['v1']['properties']['health']=='CRITICAL'
