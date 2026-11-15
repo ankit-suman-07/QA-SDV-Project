@@ -114,6 +114,15 @@ hashes identify these secret-free artifacts. Do not upload older raw service log
 without applying the same review/redaction.
 
 
+## HTTP compatibility correction — November 15, 2026
+
+The Ditto reader and fleet writer now explicitly advertise one `Accept-Encoding:
+gzip, deflate` field. Spring 7.0.8's automatic compression otherwise supplies two
+values that the JDK emits separately; original nginx forwards them and Ditto rejects
+the duplicate fields. Compression decoding, timeouts, authentication and TLS remain
+unchanged. The acceptance launcher now mounts upstream nginx unchanged. The earlier
+prepared-deployment normalization below/above is historical. Feature initialization
+is a separate independent fix and its historical bootstrap is not closed by this PR.
 ## First-event initialization correction — November 15, 2026
 
 The sole ingress now creates absent V1 features conditionally from validated real

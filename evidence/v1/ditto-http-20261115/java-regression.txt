@@ -1,0 +1,410 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< com.ankit.sdv:backend >------------------------
+[INFO] Building backend 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.5.0:clean (default-clean) @ backend ---
+[INFO] Deleting /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ backend ---
+[INFO] Copying 2 resources from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.15.0:compile (default-compile) @ backend ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 61 source files with javac [debug parameters release 21] to target/classes
+[INFO] /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/src/main/java/com/ankit/sdv/backend/adapter/ditto/HttpVehicleTwinReader.java: Some input files use or override a deprecated API.
+[INFO] /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/src/main/java/com/ankit/sdv/backend/adapter/ditto/HttpVehicleTwinReader.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ backend ---
+[INFO] skip non existing resourceDirectory /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ backend ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 28 source files with javac [debug parameters release 21] to target/test-classes
+[INFO] /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/src/test/java/com/ankit/sdv/backend/config/ScenarioConfigurationTest.java: Some input files use or override a deprecated API.
+[INFO] /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/src/test/java/com/ankit/sdv/backend/config/ScenarioConfigurationTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ backend ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ankit.sdv.backend.BackendApplicationTests
+10:02:30.963 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ankit.sdv.backend.BackendApplicationTests]: BackendApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:02:31.143 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.BackendApplicationTests
+10:02:31.282 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ankit.sdv.backend.BackendApplicationTests]: BackendApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:02:31.286 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.BackendApplicationTests
+10:02:31.426 [main] INFO org.springframework.boot.devtools.restart.RestartApplicationListener -- Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:31.907-05:00  INFO 81604 --- [backend] [           main] c.a.sdv.backend.BackendApplicationTests  : Starting BackendApplicationTests using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:31.909-05:00  INFO 81604 --- [backend] [           main] c.a.sdv.backend.BackendApplicationTests  : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:36.416-05:00  INFO 81604 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T10:02:36.557-05:00  INFO 81604 --- [backend] [           main] c.a.sdv.backend.BackendApplicationTests  : Started BackendApplicationTests in 5.149 seconds (process running for 7.571)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/home/ankitsuman/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.10/byte-buddy-agent-1.18.10.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.518 s -- in com.ankit.sdv.backend.BackendApplicationTests
+[INFO] Running com.ankit.sdv.backend.adapter.ditto.HttpVehicleTwinReaderTest
+2026-11-15T10:02:38.438-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=TRANSPORT_UNAVAILABLE
+2026-11-15T10:02:38.567-05:00 ERROR 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=AUTH_CONFIGURATION status=401
+2026-11-15T10:02:38.579-05:00 ERROR 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=AUTH_CONFIGURATION status=403
+2026-11-15T10:02:38.606-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:38.615-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:38.631-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:38.650-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:38.664-05:00  WARN 81604 --- [backend] [           main] c.a.s.backend.service.V1VehicleService   : ditto_read_failed vehicle=vehicle-002 code=FUTURE_SOURCE_TIMESTAMP
+2026-11-15T10:02:38.678-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=RESPONSE_TOO_LARGE
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.489 s -- in com.ankit.sdv.backend.adapter.ditto.HttpVehicleTwinReaderTest
+[INFO] Running com.ankit.sdv.backend.adapter.simulator.HttpSimulatorControlAdapterTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.252 s -- in com.ankit.sdv.backend.adapter.simulator.HttpSimulatorControlAdapterTest
+[INFO] Running com.ankit.sdv.backend.config.DittoTransportHeadersTest
+2026-11-15T10:02:39.614-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.686 s -- in com.ankit.sdv.backend.config.DittoTransportHeadersTest
+[INFO] Running com.ankit.sdv.backend.config.FleetConfigurationTest
+2026-11-15T10:02:39.716-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.boot.context.properties.ConfigurationPropertiesBindException: Error creating bean with name 'sdv.v1.fleet-com.ankit.sdv.backend.config.FleetProperties': Could not bind properties to 'FleetProperties' : prefix=sdv.v1.fleet, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:39.766-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.boot.context.properties.ConfigurationPropertiesBindException: Error creating bean with name 'sdv.v1.fleet-com.ankit.sdv.backend.config.FleetProperties': Could not bind properties to 'FleetProperties' : prefix=sdv.v1.fleet, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:39.794-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.boot.context.properties.ConfigurationPropertiesBindException: Error creating bean with name 'sdv.v1.fleet-com.ankit.sdv.backend.config.FleetProperties': Could not bind properties to 'FleetProperties' : prefix=sdv.v1.fleet, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:39.821-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.boot.context.properties.ConfigurationPropertiesBindException: Error creating bean with name 'sdv.v1.fleet-com.ankit.sdv.backend.config.FleetProperties': Could not bind properties to 'FleetProperties' : prefix=sdv.v1.fleet, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:39.884-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'fleetMaterializer' defined in com.ankit.sdv.backend.config.FleetConfiguration: Failed to instantiate [com.ankit.sdv.backend.service.FleetMaterializer]: Factory method 'fleetMaterializer' threw exception with message: Live fleet writes require service authentication
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.271 s -- in com.ankit.sdv.backend.config.FleetConfigurationTest
+[INFO] Running com.ankit.sdv.backend.config.FleetSchedulingTest
+2026-11-15T10:02:40.046-05:00  INFO 81604 --- [backend] [           main] o.s.s.config.TaskSchedulerRouter         : No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2026-11-15T10:02:40.129-05:00  WARN 81604 --- [backend] [     virtual-82] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS status=503
+2026-11-15T10:02:40.137-05:00  WARN 81604 --- [backend] [     virtual-81] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T10:02:40.153-05:00  INFO 81604 --- [backend] [     virtual-88] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.249 s -- in com.ankit.sdv.backend.config.FleetSchedulingTest
+[INFO] Running com.ankit.sdv.backend.config.ScenarioConfigurationTest
+2026-11-15T10:02:40.252-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.boot.context.properties.ConfigurationPropertiesBindException: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.269-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.294-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.315-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.342-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.363-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.386-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.407-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.427-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'httpSimulatorControlAdapter' defined in com.ankit.sdv.backend.config.SimulatorControlConfiguration: Unsatisfied dependency expressed through method 'httpSimulatorControlAdapter' parameter 0: Error creating bean with name 'sdv.simulator-com.ankit.sdv.backend.config.SimulatorProperties': Could not bind properties to 'SimulatorProperties' : prefix=sdv.simulator, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:40.434-05:00  INFO 81604 --- [backend] [           main] b.a.s.DevelopmentSimulatorControlAdapter : Development simulator action: vehicleId=vehicle-003, action=INJECT_SCENARIO, scenario=COOLING_SYSTEM_FAILURE, actionId=dev-action, traceId=dev-action
+2026-11-15T10:02:40.471-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=refused-action code=PROVIDER_UNAVAILABLE
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.342 s -- in com.ankit.sdv.backend.config.ScenarioConfigurationTest
+[INFO] Running com.ankit.sdv.backend.config.V1DittoConfigurationTest
+2026-11-15T10:02:41.029-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.178-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.302-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.428-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.551-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.688-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.802-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:41.938-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:42.043-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:42.134-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:42.228-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:42.320-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:42.415-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+2026-11-15T10:02:42.515-05:00  WARN 81604 --- [backend] [           main] s.c.a.AnnotationConfigApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'fleetController' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/controller/FleetController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'fleetService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/FleetService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'v1VehicleService' defined in file [/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/classes/com/ankit/sdv/backend/service/V1VehicleService.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'httpVehicleTwinReader' defined in class path resource [com/ankit/sdv/backend/config/V1DittoConfiguration.class]: Unsatisfied dependency expressed through method 'httpVehicleTwinReader' parameter 0: Error creating bean with name 'sdv.v1.ditto-com.ankit.sdv.backend.config.V1DittoProperties': Could not bind properties to 'V1DittoProperties' : prefix=sdv.v1.ditto, ignoreInvalidFields=false, ignoreUnknownFields=true
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.299 s -- in com.ankit.sdv.backend.config.V1DittoConfigurationTest
+[INFO] Running com.ankit.sdv.backend.config.V1DittoTransportTest
+2026-11-15T10:02:42.965-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=TRANSPORT_UNAVAILABLE
+2026-11-15T10:02:42.970-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-001 code=TRANSPORT_UNAVAILABLE
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.113 s -- in com.ankit.sdv.backend.config.V1DittoTransportTest
+[INFO] Running com.ankit.sdv.backend.controller.DiagnosticActionControllerTest
+2026-11-15T10:02:42.985-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.DiagnosticActionControllerTest]: DiagnosticActionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:43.005-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.DiagnosticActionControllerTest
+2026-11-15T10:02:43.006-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.DiagnosticActionControllerTest]: DiagnosticActionControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:43.010-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.DiagnosticActionControllerTest
+2026-11-15T10:02:43.014-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:43.038-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.DiagnosticActionControllerTest : Starting DiagnosticActionControllerTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:43.038-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.DiagnosticActionControllerTest : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:43.270-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:43.270-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:43.271-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-15T10:02:43.280-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.DiagnosticActionControllerTest : Started DiagnosticActionControllerTest in 0.266 seconds (process running for 14.295)
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.599 s -- in com.ankit.sdv.backend.controller.DiagnosticActionControllerTest
+[INFO] Running com.ankit.sdv.backend.controller.FleetControllerTest
+2026-11-15T10:02:43.588-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.FleetControllerTest]: FleetControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:43.596-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.FleetControllerTest
+2026-11-15T10:02:43.597-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.FleetControllerTest]: FleetControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:43.600-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.FleetControllerTest
+2026-11-15T10:02:43.621-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:43.652-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.controller.FleetControllerTest   : Starting FleetControllerTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:43.653-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.controller.FleetControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:44.205-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:44.205-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:44.212-05:00  INFO 81604 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T10:02:44.224-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 19 ms
+2026-11-15T10:02:44.250-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.controller.FleetControllerTest   : Started FleetControllerTest in 0.629 seconds (process running for 15.265)
+2026-11-15T10:02:44.534-05:00  WARN 81604 --- [backend] [    virtual-156] c.a.s.backend.service.V1VehicleService   : ditto_read_failed vehicle=vehicle-002 code=FUTURE_SOURCE_TIMESTAMP
+2026-11-15T10:02:44.846-05:00  WARN 81604 --- [backend] [    virtual-179] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-001 code=HTTP_STATUS status=404
+2026-11-15T10:02:44.903-05:00  WARN 81604 --- [backend] [    virtual-183] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-001 code=HTTP_STATUS status=503
+2026-11-15T10:02:45.168-05:00  WARN 81604 --- [backend] [           main] c.a.sdv.backend.service.FleetService     : fleet_read_failed vehicle=vehicle-001 code=UNAVAILABLE
+2026-11-15T10:02:45.171-05:00  WARN 81604 --- [backend] [    virtual-187] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-001 code=TRANSPORT_UNAVAILABLE
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.598 s -- in com.ankit.sdv.backend.controller.FleetControllerTest
+[INFO] Running com.ankit.sdv.backend.controller.FleetMaterializationTest
+2026-11-15T10:02:45.191-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.FleetMaterializationTest]: FleetMaterializationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:45.199-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.FleetMaterializationTest
+2026-11-15T10:02:45.200-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.FleetMaterializationTest]: FleetMaterializationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:45.216-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.FleetMaterializationTest
+2026-11-15T10:02:45.223-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:45.277-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.FleetMaterializationTest       : Starting FleetMaterializationTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:45.277-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.FleetMaterializationTest       : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:46.084-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:46.084-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:46.090-05:00  INFO 81604 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T10:02:46.099-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 15 ms
+2026-11-15T10:02:46.124-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.FleetMaterializationTest       : Started FleetMaterializationTest in 0.9 seconds (process running for 17.138)
+2026-11-15T10:02:46.462-05:00  WARN 81604 --- [backend] [    virtual-198] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=TIMEOUT retry=NEXT_INTERVAL
+2026-11-15T10:02:46.487-05:00 ERROR 81604 --- [backend] [    virtual-217] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=401
+2026-11-15T10:02:46.488-05:00  WARN 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T10:02:46.626-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T10:02:46.643-05:00 ERROR 81604 --- [backend] [    virtual-242] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=403
+2026-11-15T10:02:46.644-05:00  WARN 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T10:02:46.737-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T10:02:46.790-05:00  WARN 81604 --- [backend] [    virtual-260] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS status=500
+2026-11-15T10:02:46.790-05:00  WARN 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T10:02:46.881-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T10:02:46.933-05:00  WARN 81604 --- [backend] [    virtual-278] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS status=503
+2026-11-15T10:02:46.933-05:00  WARN 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T10:02:47.028-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T10:02:47.079-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T10:02:47.176-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T10:02:47.273-05:00  INFO 81604 --- [backend] [           main] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.136 s -- in com.ankit.sdv.backend.controller.FleetMaterializationTest
+[INFO] Running com.ankit.sdv.backend.controller.ScenarioRoutingTest
+2026-11-15T10:02:47.328-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.ScenarioRoutingTest]: ScenarioRoutingTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:47.332-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.ScenarioRoutingTest
+2026-11-15T10:02:47.333-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.ScenarioRoutingTest]: ScenarioRoutingTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:47.334-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.ScenarioRoutingTest
+2026-11-15T10:02:47.339-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:47.358-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.controller.ScenarioRoutingTest   : Starting ScenarioRoutingTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:47.358-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.controller.ScenarioRoutingTest   : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:47.644-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:47.644-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:47.646-05:00  INFO 81604 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T10:02:47.649-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+2026-11-15T10:02:47.658-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.controller.ScenarioRoutingTest   : Started ScenarioRoutingTest in 0.319 seconds (process running for 18.673)
+2026-11-15T10:02:47.681-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=9fcb3aa8-02be-4f9b-a212-65ae61d648d7 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:47.743-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=37be028a-490f-4291-b291-4d605e080b94 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:47.802-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=1fbe3736-df13-457e-9e2c-64bac539c64c code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:47.856-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=611e968f-e850-44c3-909d-ec9916fa182e code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:47.911-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=ab3f5fc1-d6b4-40f1-9fbc-069f680b7bb2 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:47.965-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=87ff7b30-0d78-49c8-8c42-64c5cc99ae54 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.018-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=c75aa129-01a0-422a-8306-8c459b839919 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.070-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=2b91f505-60ad-4bf4-b5a2-8bc1378ed5d1 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.123-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=1657f47d-31a2-4629-95b6-2fa88f57d4b0 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.175-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=f5929b94-0eaa-499a-bf0b-15524f80dda1 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.228-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=be68fe40-ddd3-4276-85ec-791533cb46af code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.284-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=adfe05c5-de60-4181-8e00-834905c00ed1 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.336-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=319efbca-2914-4711-97ad-41f2fe98cfbb code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.642-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=749c71de-af9c-4410-bebb-db4a009a0d5f code=PROVIDER_REJECTED
+2026-11-15T10:02:48.709-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=9fa59b4b-b6b4-4235-9c54-30b3ac3bb3e3 code=PROVIDER_REJECTED
+2026-11-15T10:02:48.778-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=441d3ca8-6288-4def-873a-11074e19ef82 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.840-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=0b107e8f-0d2a-4e75-bab6-67760b426dc2 code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.902-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=c3a383d6-9115-4293-95cd-c5b6a3ead68f code=PROVIDER_BAD_RESPONSE
+2026-11-15T10:02:48.922-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=87212f82-81bd-4049-85ed-df176cc93ecc code=PROVIDER_UNAVAILABLE
+2026-11-15T10:02:49.476-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=9e84840d-8711-415d-89f4-2b941be77324 code=PROVIDER_TIMEOUT
+2026-11-15T10:02:49.995-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.s.HttpSimulatorControlAdapter  : provider_dispatch_failed vehicle=vehicle-002 actionId=98d136c7-3b0d-48dd-87b4-1e3fa1fe67fb code=PROVIDER_TIMEOUT
+[INFO] Tests run: 46, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.905 s -- in com.ankit.sdv.backend.controller.ScenarioRoutingTest
+[INFO] Running com.ankit.sdv.backend.controller.V1VehicleControllerTest
+2026-11-15T10:02:50.237-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.V1VehicleControllerTest
+2026-11-15T10:02:50.240-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.V1VehicleControllerTest
+2026-11-15T10:02:50.246-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:50.263-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.V1VehicleControllerTest        : Starting V1VehicleControllerTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:50.263-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.V1VehicleControllerTest        : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:50.483-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:50.483-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:50.485-05:00  INFO 81604 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T10:02:50.487-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2026-11-15T10:02:50.494-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.V1VehicleControllerTest        : Started V1VehicleControllerTest in 0.249 seconds (process running for 21.509)
+2026-11-15T10:02:50.541-05:00  WARN 81604 --- [backend] [           main] c.a.s.backend.service.V1VehicleService   : ditto_read_failed vehicle=vehicle-002 code=FUTURE_SOURCE_TIMESTAMP
+2026-11-15T10:02:51.082-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.131-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.179-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.228-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.281-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.330-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.380-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.430-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.478-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:51.767-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=201
+2026-11-15T10:02:51.860-05:00  WARN 81604 --- [backend] [HTTP-Dispatcher] com.sun.net.httpserver                   : sendResponseHeaders: rCode = 204: forcing contentLen = -1
+2026-11-15T10:02:51.861-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=204
+2026-11-15T10:02:51.913-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=301
+2026-11-15T10:02:52.008-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=400
+2026-11-15T10:02:52.103-05:00 ERROR 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=AUTH_CONFIGURATION status=401
+2026-11-15T10:02:52.195-05:00 ERROR 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=AUTH_CONFIGURATION status=403
+2026-11-15T10:02:52.288-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=404
+2026-11-15T10:02:52.381-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=408
+2026-11-15T10:02:52.473-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=429
+2026-11-15T10:02:52.564-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=500
+2026-11-15T10:02:52.656-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=502
+2026-11-15T10:02:52.747-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=503
+2026-11-15T10:02:52.882-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:52.976-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.069-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.163-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.256-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.349-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.441-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.535-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.628-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.721-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.814-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:53.908-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:54.001-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:54.093-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:54.185-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T10:02:54.279-05:00  WARN 81604 --- [backend] [           main] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+[INFO] Tests run: 53, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.094 s -- in com.ankit.sdv.backend.controller.V1VehicleControllerTest
+[INFO] Running com.ankit.sdv.backend.controller.VehicleHealthControllerTest
+2026-11-15T10:02:54.329-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.VehicleHealthControllerTest]: VehicleHealthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:54.333-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.VehicleHealthControllerTest
+2026-11-15T10:02:54.334-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.VehicleHealthControllerTest]: VehicleHealthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:54.336-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.VehicleHealthControllerTest
+2026-11-15T10:02:54.340-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:54.353-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.VehicleHealthControllerTest    : Starting VehicleHealthControllerTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:54.353-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.VehicleHealthControllerTest    : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:54.508-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:54.508-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:54.509-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-11-15T10:02:54.512-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.VehicleHealthControllerTest    : Started VehicleHealthControllerTest in 0.172 seconds (process running for 25.527)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.202 s -- in com.ankit.sdv.backend.controller.VehicleHealthControllerTest
+[INFO] Running com.ankit.sdv.backend.controller.VehicleStateControllerTest
+2026-11-15T10:02:54.532-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.VehicleStateControllerTest]: VehicleStateControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:54.535-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.VehicleStateControllerTest
+2026-11-15T10:02:54.536-05:00  INFO 81604 --- [backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.ankit.sdv.backend.controller.VehicleStateControllerTest]: VehicleStateControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-11-15T10:02:54.538-05:00  INFO 81604 --- [backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.ankit.sdv.backend.BackendApplication for test class com.ankit.sdv.backend.controller.VehicleStateControllerTest
+2026-11-15T10:02:54.541-05:00  INFO 81604 --- [backend] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T10:02:54.556-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.VehicleStateControllerTest     : Starting VehicleStateControllerTest using Java 21.0.13 with PID 81604 (started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend)
+2026-11-15T10:02:54.556-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.VehicleStateControllerTest     : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T10:02:54.693-05:00  INFO 81604 --- [backend] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-11-15T10:02:54.693-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-11-15T10:02:54.694-05:00  INFO 81604 --- [backend] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-11-15T10:02:54.698-05:00  INFO 81604 --- [backend] [           main] c.a.s.b.c.VehicleStateControllerTest     : Started VehicleStateControllerTest in 0.157 seconds (process running for 25.713)
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.190 s -- in com.ankit.sdv.backend.controller.VehicleStateControllerTest
+[INFO] Running com.ankit.sdv.backend.health.VehicleHealthEngineCorrelationTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.010 s -- in com.ankit.sdv.backend.health.VehicleHealthEngineCorrelationTest
+[INFO] Running com.ankit.sdv.backend.health.VehicleHealthEngineTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.ankit.sdv.backend.health.VehicleHealthEngineTest
+[INFO] Running com.ankit.sdv.backend.provider.InMemoryVehicleStateProviderTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.ankit.sdv.backend.provider.InMemoryVehicleStateProviderTest
+[INFO] Running com.ankit.sdv.backend.registry.VehicleRegistryTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.ankit.sdv.backend.registry.VehicleRegistryTest
+[INFO] Running com.ankit.sdv.backend.scheduler.VehiclePipelineSchedulerTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.050 s -- in com.ankit.sdv.backend.scheduler.VehiclePipelineSchedulerTest
+[INFO] Running com.ankit.sdv.backend.service.DefaultDiagnosticActionServiceTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in com.ankit.sdv.backend.service.DefaultDiagnosticActionServiceTest
+[INFO] Running com.ankit.sdv.backend.service.DefaultVehicleHealthServiceTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.ankit.sdv.backend.service.DefaultVehicleHealthServiceTest
+[INFO] Running com.ankit.sdv.backend.service.DiagnosticServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.050 s -- in com.ankit.sdv.backend.service.DiagnosticServiceTest
+[INFO] Running com.ankit.sdv.backend.service.DittoSynchronizationServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.ankit.sdv.backend.service.DittoSynchronizationServiceTest
+[INFO] Running com.ankit.sdv.backend.service.FleetServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.109 s -- in com.ankit.sdv.backend.service.FleetServiceTest
+[INFO] Running com.ankit.sdv.backend.service.UProtocolEventServiceTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.049 s -- in com.ankit.sdv.backend.service.UProtocolEventServiceTest
+[INFO] Running com.ankit.sdv.backend.service.VehicleIntegrationServiceTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.186 s -- in com.ankit.sdv.backend.service.VehicleIntegrationServiceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 209, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ backend ---
+[INFO] Building jar: /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/backend-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:4.1.0:repackage (repackage) @ backend ---
+[INFO] Replacing main artifact /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/backend-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/backend-0.0.1-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  30.614 s
+[INFO] Finished at: 2026-11-15T10:02:56-05:00
+[INFO] ------------------------------------------------------------------------

@@ -175,15 +175,8 @@ class Run:
                 service['image'] = service['image'].replace('${DITTO_VERSION:-latest}', '3.8.4')
         config['services']['nginx']['ports'] = [f'127.0.0.1:{self.ports["ditto"]}:80']
         config.pop('volumes', None)  # upstream unused host /var/log bind declaration
-        # Official nginx passes Spring's duplicate Accept-Encoding fields through;
-        # Ditto rejects them. Normalize this transport header in this isolated
-        # deployment; preserve the unmodified-stack failure as a release finding.
-        nginx=(deployment/'nginx.conf').read_text().replace('location /api {',
-            'location /api {\n      proxy_set_header Accept-Encoding "";')
-        (self.out/'nginx-acceptance.conf').write_text(nginx)
-        config['services']['nginx']['volumes'] = [
-            str(self.out/'nginx-acceptance.conf')+':/etc/nginx/nginx.conf:ro' if v.endswith(':/etc/nginx/nginx.conf:ro') else v
-            for v in config['services']['nginx']['volumes']]
+        # Use the upstream nginx configuration unchanged. The Ditto HTTP clients
+        # send a single Accept-Encoding field, so proxy normalization is unnecessary.
         self.write('ditto.json', config)
         env = dict(os.environ, V1_MQTT_PORT=str(self.ports['mqtt']), V1_KUKSA_001_PORT=str(self.ports['kuksa001']),
                    V1_KUKSA_002_PORT=str(self.ports['kuksa002']), V1_PROVIDER_001_PORT=str(self.ports['provider001']),
