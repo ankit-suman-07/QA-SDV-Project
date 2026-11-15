@@ -1,0 +1,15 @@
+{
+  "change": "Trailing whitespace only; outcomes/exits unchanged",
+  "files": [
+    {
+      "file": "image-build.txt",
+      "before": "8f695767b21d24dcc75edc8d169f9d9cd77b22fb10d51ecf86fe87bdb98ea2a5",
+      "after": "6b8a4cb1b23e11fb80dad4865f6cc8373756ae9be6b0c4e9f90bc353350056ab"
+    },
+    {
+      "file": "stalled-join-red.txt",
+      "before": "ffbbc954457c20182ae7bb3287fb281316788b6eee573c47b43f24e9e391cf8c",
+      "after": "526f79a3010ad5ea8c6dc62b0483515197ce5e9a6fe69d4ee230a7b4e5b93480"
+    }
+  ]
+}

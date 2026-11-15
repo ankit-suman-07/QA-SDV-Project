@@ -4,6 +4,7 @@ import logging
 import os
 import signal
 
+from app_lifecycle import NativeMqttLifecycle, bounded_thread_call, finish_inflight, run_until_stopped
 from health_logic import build_status_event
 from kuksa_client.grpc import VSSClient
 from kuksa_reconnect import reconnect
@@ -98,6 +99,7 @@ class AutonomousHealthApp(VehicleApp):
         self._kuksa_client = VSSClient(
             DATABROKER_HOST,
             DATABROKER_PORT,
+            ensure_startup_connection=False,
         )
         self._monitor_task = None
         self._kuksa_reconnect_needed = False
@@ -106,6 +108,8 @@ class AutonomousHealthApp(VehicleApp):
         self._v1_last_skip_logged = None
         # QoS 1 publisher for v1 events (the SDK's publish_event sends QoS 0).
         self._v1_mqtt = pub_client_of(self.pubsub_client)
+        self._mqtt_lifecycle = NativeMqttLifecycle(self.pubsub_client)
+        self._stopping_task = None
 
     async def on_start(self):
         logger.info(
@@ -114,9 +118,8 @@ class AutonomousHealthApp(VehicleApp):
             VEHICLE_ID,
         )
 
-        await asyncio.to_thread(
-            self._kuksa_client.connect
-        )
+        # Channel creation is nonblocking; disable the SDK's startup RPC.
+        self._kuksa_client.connect()
 
         self._monitor_task = asyncio.create_task(
             self.monitor_signals()
@@ -125,17 +128,14 @@ class AutonomousHealthApp(VehicleApp):
     def read_datapoints(self):
         """Current KUKSA datapoints (value + broker timestamp) by path."""
         return self._kuksa_client.get_current_values(
-            MONITORED_SIGNAL_PATHS
+            MONITORED_SIGNAL_PATHS, timeout=2.0
         )
 
     async def reconnect_kuksa_if_needed(self):
         if not self._kuksa_reconnect_needed:
             return
         try:
-            await asyncio.to_thread(
-                reconnect,
-                self._kuksa_client,
-            )
+            await finish_inflight(asyncio.to_thread(reconnect, self._kuksa_client))
             self._kuksa_reconnect_needed = False
             logger.info("Reconnected to KUKSA databroker")
         except Exception:
@@ -170,12 +170,12 @@ class AutonomousHealthApp(VehicleApp):
         if event is None:
             return
 
-        if not await deliver(
+        if not await finish_inflight(deliver(
             self._v1_gate,
             event,
             self._v1_mqtt,
             self._v1_topic,
-        ):
+        )):
             logger.warning(
                 "v1: publish not acknowledged; will retry eventId=%s",
                 event["eventId"],
@@ -196,9 +196,7 @@ class AutonomousHealthApp(VehicleApp):
             await self.reconnect_kuksa_if_needed()
 
             try:
-                datapoints = await asyncio.to_thread(
-                    self.read_datapoints
-                )
+                datapoints = await finish_inflight(asyncio.to_thread(self.read_datapoints))
             except Exception:
                 logger.exception(
                     "Failed to read KUKSA signals"
@@ -259,19 +257,51 @@ class AutonomousHealthApp(VehicleApp):
             )
 
 
+    async def run(self):
+        # This app has no SDK topic/data decorators. Keep the pinned SDK clients,
+        # but avoid its synchronous native init blocking the event loop on connect.
+        await self._mqtt_lifecycle.start()
+        await self.on_start()
+        await self._monitor_task
+
+    async def stop(self):
+        if self._stopping_task is None:
+            self._stopping_task = asyncio.create_task(self._stop_owned())
+        await asyncio.shield(self._stopping_task)
+
+    async def _stop_owned(self):
+        if self._monitor_task is not None:
+            self._monitor_task.cancel()
+            results = await asyncio.gather(self._monitor_task, return_exceptions=True)
+        else:
+            results = []
+        # Do not let failure of one close prevent the remaining owned resources
+        # from closing. Report failure after all close attempts, never force exit0.
+        results += await asyncio.gather(
+            self._mqtt_lifecycle.close(),
+            bounded_thread_call(self._kuksa_client.disconnect, 2.0),
+            asyncio.wait_for(super().stop(), 2.0),
+            return_exceptions=True,
+        )
+        errors = [result for result in results
+                  if isinstance(result, BaseException) and not isinstance(result, asyncio.CancelledError)]
+        if errors:
+            raise RuntimeError("application cleanup incomplete") from errors[0]
+        logger.info("Application shutdown completed")
+
+
 async def main():
-    logger.info(
-        "Launching Velocitas AutonomousHealthApp"
-    )
+    loop = asyncio.get_running_loop()
+    stop = asyncio.Event()
+    for sig in (signal.SIGTERM, signal.SIGINT):
+        loop.add_signal_handler(sig, stop.set)
+    try:
+        logger.info("Launching Velocitas AutonomousHealthApp")
+        await run_until_stopped(AutonomousHealthApp(vehicle), stop)
+    finally:
+        for sig in (signal.SIGTERM, signal.SIGINT):
+            loop.remove_signal_handler(sig)
 
-    app = AutonomousHealthApp(vehicle)
-    await app.run()
 
-
-LOOP = asyncio.get_event_loop()
-LOOP.add_signal_handler(
-    signal.SIGTERM,
-    LOOP.stop,
-)
-LOOP.run_until_complete(main())
-LOOP.close()
+if __name__ == "__main__":
+    asyncio.run(main())

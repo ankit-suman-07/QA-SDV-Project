@@ -1,0 +1,46 @@
+/usr/local/lib/python3.10/dist-packages/opentelemetry/instrumentation/dependencies.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import (
+2026-11-15 15:54:47,700 INFO [__main__] [main.py:299] [trace_id=c4fc698e27319027cded55bfe7e7cd70 span_id=98a553cf49a8d3b2 resource.service.name=src/main.py trace_sampled=True] - Launching Velocitas AutonomousHealthApp
+2026-11-15 15:54:47,753 INFO [__main__] [main.py:115] [trace_id=c4fc698e27319027cded55bfe7e7cd70 span_id=98a553cf49a8d3b2 resource.service.name=src/main.py trace_sampled=True] - Starting autonomous health monitoring for vehicle=vehicle-002
+2026-11-15 15:54:47,753 INFO [kuksa_client.grpc] [__init__.py:785] [trace_id=c4fc698e27319027cded55bfe7e7cd70 span_id=98a553cf49a8d3b2 resource.service.name=src/main.py trace_sampled=True] - No Root CA present, it will not be possible to use a secure connection!
+2026-11-15 15:54:47,753 INFO [kuksa_client.grpc] [__init__.py:1014] [trace_id=c4fc698e27319027cded55bfe7e7cd70 span_id=98a553cf49a8d3b2 resource.service.name=src/main.py trace_sampled=True] - Establishing insecure channel
+2026-11-15 15:54:47,814 ERROR [__main__] [main.py:201] [trace_id=c4fc698e27319027cded55bfe7e7cd70 span_id=98a553cf49a8d3b2 resource.service.name=src/main.py trace_sampled=True] - Failed to read KUKSA signals
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1289, in get
+    resp = self.client_stub_v1.Get(req, **rpc_kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1181, in __call__
+    return _end_unary_response_blocking(state, call, False, None)
+  File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+    raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+	status = StatusCode.UNAVAILABLE
+	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:55559: Failed to connect to remote host: connect: Connection refused (111)"
+	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T15:54:47.813834461+00:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:55559: Failed to connect to remote host: connect: Connection refused (111)"}"
+>
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/app/src/main.py", line 199, in monitor_signals
+    datapoints = await finish_inflight(asyncio.to_thread(self.read_datapoints))
+  File "/workspace/app/src/app_lifecycle.py", line 50, in finish_inflight
+    return await asyncio.shield(task)
+  File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/workspace/app/src/main.py", line 130, in read_datapoints
+    return self._kuksa_client.get_current_values(
+  File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+    return func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1046, in get_current_values
+    entries = self.get(
+  File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+    return func(self, *args, **kwargs)
+  File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1291, in get
+    raise VSSClientError.from_grpc_error(exc) from exc
+kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'failed to connect to all addresses; last error: UNKNOWN: ipv4:127.0.0.1:55559: Failed to connect to remote host: connect: Connection refused (111)'}, [])
+2026-11-15 15:54:48,063 INFO [__main__] [main.py:290] [trace_id=c4fc698e27319027cded55bfe7e7cd70 span_id=98a553cf49a8d3b2 resource.service.name=src/main.py trace_sampled=True] - Application shutdown completed
+Error in sys.excepthook:
+
+Original exception was:

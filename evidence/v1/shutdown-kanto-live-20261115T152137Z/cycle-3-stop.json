@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "sudo",
+    "-n",
+    "/opt/qa-sdv-v1-kanto/bin/kanto-cm",
+    "--host",
+    "/run/qa-sdv-v1-kanto/container-management.sock",
+    "--timeout",
+    "30",
+    "stop",
+    "--name",
+    "autonomoushealthapp-vehicle-002-shutdown-20261115"
+  ],
+  "request": {
+    "utc": "2026-11-15T15:22:21.364218+00:00",
+    "monotonicNs": 6990389789464
+  },
+  "returned": {
+    "utc": "2026-11-15T15:22:21.770137+00:00",
+    "monotonicNs": 6990795689739
+  },
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}

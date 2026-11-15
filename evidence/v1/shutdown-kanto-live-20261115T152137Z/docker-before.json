@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "docker",
+    "ps",
+    "-a",
+    "--format",
+    "{{.Names}} {{.Status}}"
+  ],
+  "request": {
+    "utc": "2026-11-15T15:21:51.241463+00:00",
+    "monotonicNs": 6960267023002
+  },
+  "returned": {
+    "utc": "2026-11-15T15:21:51.359306+00:00",
+    "monotonicNs": 6960384865894
+  },
+  "exit": 0,
+  "stdout": "qa-v1-shutdown-app-1794756028-4 Exited (0) About a minute ago\nqa-v1-shutdown-app-1794756027-3 Exited (0) About a minute ago\nqa-v1-shutdown-app-1794756024-2 Exited (0) About a minute ago\nqa-v1-shutdown-app-1794756020-1 Exited (0) About a minute ago\nqa-v1-shutdown-app-1794756015-0 Exited (0) About a minute ago\nqa-v1-shutdown-mqtt-1794756015 Exited (0) About a minute ago\nqa-v1-shutdown-app-0 Exited (1) 5 minutes ago\nqa-v1-shutdown-mqtt Exited (0) 5 minutes ago\nqa-v1-release-engineering-ditto-nginx-1 Up 19 minutes\nqa-v1-release-engineering-ditto-things-1 Up 19 minutes (healthy)\nqa-v1-release-engineering-ditto-connectivity-1 Up 19 minutes (healthy)\nqa-v1-release-engineering-ditto-things-search-1 Up 19 minutes (healthy)\nqa-v1-release-engineering-ditto-gateway-1 Up 19 minutes (healthy)\nqa-v1-release-engineering-ditto-swagger-ui-1 Up 19 minutes\nqa-v1-release-engineering-ditto-ditto-ui-1 Up 19 minutes\nqa-v1-release-engineering-ditto-mongodb-1 Up 19 minutes\nqa-v1-release-engineering-ditto-policies-1 Up 19 minutes (healthy)\nqa-v1-kanto-prereq-ditto-nginx-1 Up About an hour\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up About an hour\nqa-v1-kanto-prereq-edge-app-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-app-002-1 Exited (1) 8 hours ago\nqa-v1-kanto-prereq-edge-provider-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up About an hour (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up About an hour\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up About an hour\nqa-v1-kanto-prereq-ditto-policies-1 Up About an hour (healthy)\n",
+  "stderr": ""
+}

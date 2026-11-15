@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "cycles": [
+    {
+      "cycle": 1,
+      "sourceMarginSeconds": 2.384167,
+      "stoppedExit": 0,
+      "pid": 119955
+    },
+    {
+      "cycle": 2,
+      "sourceMarginSeconds": 1.866734,
+      "stoppedExit": 0,
+      "pid": 120503
+    },
+    {
+      "cycle": 3,
+      "sourceMarginSeconds": 1.352544,
+      "stoppedExit": 0,
+      "pid": 121097
+    }
+  ],
+  "finalExit": 0,
+  "twinSnapshots": 158,
+  "maxTwinGapSeconds": 0.35041,
+  "completedShutdownLogEntries": 4,
+  "scope": "three managed restarts; not crash auto-recovery, remote LAN or full V1"
+}
