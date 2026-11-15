@@ -24,6 +24,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 from scripts.v1_acceptance.assertions import IDS, fleet, preserved
+from scripts.v1_acceptance.evidence import sanitize_text
 
 ROOT = Path(__file__).resolve().parents[2]
 DITTO_REV = '5dbb05e6294e5ac0103506102baff9eab755d180'  # official 3.8.4
@@ -92,6 +93,7 @@ class Run:
                 code = p.returncode
             except subprocess.TimeoutExpired:
                 code = 124
+        log.write_text(sanitize_text(log.read_text(), *self.auth))
         row = {'argv': list(map(str, argv)), 'exit': code, 'seconds': time.monotonic()-start, 'output': log.name}
         self.commands.append(row); self.write('commands.json', self.commands)
         if check and code:
@@ -569,6 +571,9 @@ class Run:
             'resources':'docker stats samples during workload; no isolated process attribution or benchmark claim',
             'fleetComparison':'separate evaluations; counts checked on materialized and API summaries, generatedAt may differ',
             'mvpComparison':'not directly comparable; no speedup claimed'})
+        for path in self.out.rglob('*'):
+            if path.is_file() and path.suffix in ('.txt', '.conf'):
+                path.write_text(sanitize_text(path.read_text(), *self.auth))
         self.write('artifact-sha256.json',{str(p.relative_to(self.out)):hashlib.sha256(p.read_bytes()).hexdigest()
             for p in self.out.rglob('*') if p.is_file() and p.name!='artifact-sha256.json'})
 

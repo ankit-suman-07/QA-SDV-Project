@@ -47,3 +47,16 @@ class AcceptanceControls(unittest.TestCase):
         value['totalVehicles'] = 1
         with self.assertRaises(AssertionError):
             fleet(value)
+
+
+class EvidenceControls(unittest.TestCase):
+    def test_redacts_credentials_but_preserves_service_and_event_identity(self):
+        import base64
+        from scripts.v1_acceptance.evidence import sanitize_text
+        token = base64.b64encode(b'operator:private-value').decode()
+        raw = 'ditto event=vehicle-002-real-id  \nAuthorization: Basic ' + token + '\n'
+        result = sanitize_text(raw, 'operator', 'private-value')
+        self.assertNotIn(token, result)
+        self.assertNotIn('private-value', result)
+        self.assertIn('ditto event=vehicle-002-real-id\n', result)
+        self.assertIn('[REDACTED]', result)
