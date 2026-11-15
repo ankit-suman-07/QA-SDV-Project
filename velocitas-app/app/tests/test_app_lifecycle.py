@@ -130,3 +130,30 @@ def test_paho_loop_already_stopped_after_disconnect_is_complete():
         life=m.NativeMqttLifecycle(SDK())
         await life.start();await life.close()
     asyncio.run(case())
+
+
+def test_stalled_client_join_exits_nonzero_within_budget_instead_of_hanging_executor():
+    import subprocess
+    import textwrap
+    api()
+    source = textwrap.dedent('''
+        import asyncio, threading
+        from app_lifecycle import NativeMqttLifecycle
+        class Client:
+            def connect_async(self,*a):return 0
+            def loop_start(self):return 0
+            def is_connected(self):return True
+            def disconnect(self):return 0
+            def loop_stop(self):threading.Event().wait()
+        class SDK:
+            _hostname='localhost';_port=1883
+            _pub_client=Client();_sub_client=Client()
+        async def main():
+            life=NativeMqttLifecycle(SDK());await life.start();await life.close()
+        asyncio.run(main())
+    ''')
+    import os
+    env=dict(os.environ, PYTHONPATH=str(Path(__file__).resolve().parents[1]/'src'))
+    result=subprocess.run([sys.executable,'-c',source],env=env,capture_output=True,text=True,timeout=9)
+    assert result.returncode != 0
+    assert 'cleanup incomplete' in result.stderr

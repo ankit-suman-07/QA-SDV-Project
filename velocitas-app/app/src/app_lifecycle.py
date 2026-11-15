@@ -6,8 +6,41 @@ Paho's asynchronous connection lifecycle so SIGTERM also works during outages.
 import asyncio
 import contextlib
 import logging
+import threading
 
 LOG = logging.getLogger(__name__)
+
+
+async def bounded_thread_call(function, timeout):
+    """Bound cleanup joins without leaving an unkillable default-executor job.
+
+    A stalled third-party close is a failed shutdown, not success. Daemon helper
+    ownership lets that failure terminate the process nonzero within the budget;
+    asyncio.run must not wait forever on its default executor after a timeout.
+    """
+    finished = threading.Event()
+    outcome = []
+
+    def work():
+        try:
+            outcome.append((True, function()))
+        except BaseException as error:
+            outcome.append((False, error))
+        finally:
+            finished.set()
+
+    worker = threading.Thread(target=work, name="app-client-close", daemon=True)
+    worker.start()
+
+    async def wait():
+        while not finished.is_set():
+            await asyncio.sleep(0.01)
+
+    await asyncio.wait_for(wait(), timeout)
+    ok, result = outcome[0]
+    if not ok:
+        raise result
+    return result
 
 
 async def finish_inflight(awaitable, timeout=3.0):
@@ -85,7 +118,7 @@ class NativeMqttLifecycle:
                 errors.append(error)
         for client in self.started:
             try:
-                result = await asyncio.wait_for(asyncio.to_thread(client.loop_stop), 3.0)
+                result = await bounded_thread_call(client.loop_stop, 3.0)
                 # Paho2.1 returns INVAL only when its thread is already None
                 # (DISCONNECT may have finished it before loop_stop was called).
                 if result not in (0, 3):
