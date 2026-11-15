@@ -122,6 +122,7 @@ clean provisioned Things start without V1 health/source state. Existing features
 legacy data and persisted watermarks are preserved. See the F03 evidence directory.
 Header compatibility is a separate independent change; historical nginx preparation
 is not resolved by initialization alone.
+
 ## HTTP compatibility correction — November 15, 2026
 
 The Ditto reader and fleet writer now explicitly advertise one `Accept-Encoding:
@@ -162,3 +163,4 @@ Final resumed d8c1f40 verification is recorded in
 It supersedes the temporary pending checkpoint; all9 selected live gates pass.
 Use exact tested49f8b8d or verify the final-main delta before reproduction. No
 additional deployment change was made after the final bounded-shutdown fix.
+
