@@ -4,7 +4,7 @@ import logging
 import os
 import signal
 
-from app_lifecycle import NativeMqttLifecycle, finish_inflight, run_until_stopped
+from app_lifecycle import NativeMqttLifecycle, bounded_thread_call, finish_inflight, run_until_stopped
 from health_logic import build_status_event
 from kuksa_client.grpc import VSSClient
 from kuksa_reconnect import reconnect
@@ -279,7 +279,7 @@ class AutonomousHealthApp(VehicleApp):
         # from closing. Report failure after all close attempts, never force exit0.
         results += await asyncio.gather(
             self._mqtt_lifecycle.close(),
-            asyncio.to_thread(self._kuksa_client.disconnect),
+            bounded_thread_call(self._kuksa_client.disconnect, 2.0),
             asyncio.wait_for(super().stop(), 2.0),
             return_exceptions=True,
         )

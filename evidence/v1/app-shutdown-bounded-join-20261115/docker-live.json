@@ -1,0 +1,190 @@
+{
+  "result": "PASS",
+  "records": [
+    {
+      "mode": "polling-1",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:54:34.937693749Z",
+      "stopRequest": "2026-11-15T15:54:40.851158+00:00",
+      "stopDurationSeconds": 0.1734230900001421,
+      "oom": false,
+      "matchedEvents": [
+        {
+          "observedAt": "2026-11-15T15:54:40.786364+00:00",
+          "event": {
+            "schemaVersion": "1.0.0",
+            "eventId": "vehicle-002-9c1e5b34428d485ca1d7c011fbace870",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T15:54:38.864087Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            }
+          },
+          "twin": {
+            "thingId": "sdv:vehicle-002",
+            "policyId": "sdv:http-check-policy",
+            "attributes": {
+              "vehicleId": "vehicle-002"
+            },
+            "features": {
+              "v1": {
+                "properties": {
+                  "schemaVersion": "1.0.0",
+                  "vehicleId": "vehicle-002",
+                  "sourceTimestamp": "2026-11-15T15:54:38.864087Z",
+                  "health": "HEALTHY",
+                  "faults": [],
+                  "lidar": {
+                    "distanceMeters": 35.0,
+                    "sensorAvailable": true
+                  },
+                  "lastEventId": "vehicle-002-9c1e5b34428d485ca1d7c011fbace870"
+                }
+              }
+            }
+          },
+          "qos": 1,
+          "retain": false
+        }
+      ]
+    },
+    {
+      "mode": "polling-2",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:54:41.237798483Z",
+      "stopRequest": "2026-11-15T15:54:44.447613+00:00",
+      "stopDurationSeconds": 0.4183735599999636,
+      "oom": false,
+      "matchedEvents": [
+        {
+          "observedAt": "2026-11-15T15:54:44.416800+00:00",
+          "event": {
+            "schemaVersion": "1.0.0",
+            "eventId": "vehicle-002-05d88da6c199450d80efbbeb516a99e5",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T15:54:43.871324Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            }
+          },
+          "twin": {
+            "thingId": "sdv:vehicle-002",
+            "policyId": "sdv:http-check-policy",
+            "attributes": {
+              "vehicleId": "vehicle-002"
+            },
+            "features": {
+              "v1": {
+                "properties": {
+                  "schemaVersion": "1.0.0",
+                  "vehicleId": "vehicle-002",
+                  "sourceTimestamp": "2026-11-15T15:54:43.871324Z",
+                  "health": "HEALTHY",
+                  "faults": [],
+                  "lidar": {
+                    "distanceMeters": 35.0,
+                    "sensorAvailable": true
+                  },
+                  "lastEventId": "vehicle-002-05d88da6c199450d80efbbeb516a99e5"
+                }
+              }
+            }
+          },
+          "qos": 1,
+          "retain": false
+        }
+      ]
+    },
+    {
+      "mode": "startup-broker-absent",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:54:45.132874148Z",
+      "stopRequest": "2026-11-15T15:54:46.035353+00:00",
+      "stopDurationSeconds": 0.8524177700001019,
+      "oom": false,
+      "matchedEvents": []
+    },
+    {
+      "mode": "kuksa-absent",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:54:47.161952218Z",
+      "stopRequest": "2026-11-15T15:54:47.990481+00:00",
+      "stopDurationSeconds": 0.25998430000072403,
+      "oom": false,
+      "matchedEvents": []
+    },
+    {
+      "mode": "publication-broker-paused",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:54:48.584164188Z",
+      "stopRequest": "2026-11-15T15:55:01.294817+00:00",
+      "stopDurationSeconds": 0.2274474480000208,
+      "oom": false,
+      "matchedEvents": [
+        {
+          "observedAt": "2026-11-15T15:54:54.317052+00:00",
+          "event": {
+            "schemaVersion": "1.0.0",
+            "eventId": "vehicle-002-b001795ace7d44a38836a0274a8886f3",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T15:54:53.884680Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            }
+          },
+          "twin": {
+            "thingId": "sdv:vehicle-002",
+            "policyId": "sdv:http-check-policy",
+            "attributes": {
+              "vehicleId": "vehicle-002"
+            },
+            "features": {
+              "v1": {
+                "properties": {
+                  "schemaVersion": "1.0.0",
+                  "vehicleId": "vehicle-002",
+                  "sourceTimestamp": "2026-11-15T15:54:53.884680Z",
+                  "health": "HEALTHY",
+                  "faults": [],
+                  "lidar": {
+                    "distanceMeters": 35.0,
+                    "sensorAvailable": true
+                  },
+                  "lastEventId": "vehicle-002-b001795ace7d44a38836a0274a8886f3"
+                }
+              }
+            }
+          },
+          "qos": 1,
+          "retain": false
+        }
+      ]
+    }
+  ],
+  "observerFailures": [],
+  "resources": "Only new broker/app containers stopped; retained for inspection. Shared edge/ingress/twins unaffected. Isolated Ditto18090 updated by this sole test observer."
+}
