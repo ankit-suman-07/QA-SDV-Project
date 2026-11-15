@@ -8,7 +8,14 @@ auth=re.findall(r'(?:-u|--user)\s+[\'\"]?([A-Za-z0-9_-]+):([A-Za-z0-9_-]+)',s)[0
 os.environ.update(SDV_ACCEPTANCE_DITTO_USERNAME=auth[0],SDV_ACCEPTANCE_DITTO_PASSWORD=auth[1],SDV_ACCEPTANCE_DITTO_SUBJECT='nginx:'+auth[0])
 from scripts.v1_acceptance.run import Run
 out='evidence/v1/release-candidate-live-'+dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-run=Run(argparse.Namespace(output=out,ditto_source=str(R/'ditto-source'),trials=5,chrome='/usr/bin/google-chrome'))
+class CandidateRun(Run):
+ def compose(self, which, *args, **kw):
+  if which == 'edge' and args and args[0] == 'up':
+   before={v:self.writer.read_thing(v) for v in ('vehicle-001','vehicle-002')}
+   self.write('clean-provisioned-before-edge.json',before)
+   assert all('v1' not in t.get('features',{}) for t in before.values()), 'fresh database/resources required'
+  return super().compose(which,*args,**kw)
+run=CandidateRun(argparse.Namespace(output=out,ditto_source=str(R/'ditto-source'),trials=5,chrome='/usr/bin/google-chrome'))
 selected=[('healthy',run.healthy),('fault-recovery-trials',run.trials),('freshness-null',run.freshness),('invalid-ordering-restart',run.negatives),('individual-write-recovery',run.individual_failure),('fleet-write-recovery',run.fleet_failure),('mqtt-reconnect',run.reconnect),('dashboard',run.dashboard)]
 try:
  run.gate('readiness',run.configure)
