@@ -136,3 +136,11 @@ Current reference comparison does not establish E1/E2 historical installed bytes
 exact invocation version or human acceptance. Original author records above remain.
 Missing writing-good-tests/debugging support files are not claimed. V1-06 remains
 qualified pending owner/rubric review; V2 customized-skill evaluation is not claimed.
+
+
+Final resumed verification includes the additional d8c1f40 stalled-join regression:
+red reproduced an interpreter hang, green returned a nonzero incomplete-cleanup
+error within budget. Final combined Python541/Java209/frontend7 and nine real gates
+passed; final-source Kanto three cycles passed. [Current exact sources and evidence](../../docs/findings/v1-release-readiness.md)
+retain the earlier checkpoints without relabeling. Human skill/rubric review and
+historical invocation provenance remain pending; no new approval is inferred.

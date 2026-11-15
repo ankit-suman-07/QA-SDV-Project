@@ -1,3 +1,63 @@
+# Persistent Phase V1 handoff — resumed final engineering checkpoint
+
+This section supersedes the historical stop handoff retained below. No PR merge,
+approval, tag, release or report/video activity was performed.
+
+## Latest exact references
+
+- main — `6a965bbaf5966d096e18c57058cfdbee6185ee2e`
+- ankit/fix/v1-ditto-feature-initialization — `cd89160ccdd1b65901d365e46431b1af73ea1efc`
+- ankit/fix/v1-ditto-http-compatibility — `0a010eb30e81a63595638b88f81096dc561c5b28`
+- ankit/fix/v1-graceful-app-shutdown — `39a58534abad25e11af3139435787874a2b19ed6`
+- ankit/test/v1-release-candidate-20261115 — `57fd7d7b31bd6f3699767d7c40f3ab411833ddd4`
+- Source fix: d8c1f4048522da3e79a81e6ee5919017b941b00d.
+- Fix PRs: #44 initialization, #45 HTTP compatibility, #46 shutdown; all draft.
+- Documentation: #47, branch ankit/docs/v1-release-readiness; base is the temporary
+  candidate. Resolve current exact doc head from its PR; final reference copy is
+  also saved at $HOME/.local/share/qa-sdv-v1/HANDOFF.md after push.
+
+## Completed after resume
+
+- Full final candidate tested at49f8b8d:541 Python +386 subtests,209 Java,7 frontend,
+  both Compose checks;2 explicit skips/9 deselections. Nine selected real gates and
+  five fault/clear trials pass with clean first-event initialization and original
+  nginx. New evidence: evidence/v1/release-candidate-live-20261115T183301Z/.
+- Actual d8c1f40 Kanto:3 managed cycles PASS, every stop exit0, exact fresh source/
+  event/twin matches,154 final healthy001 twin samples; old PIDs absent. Evidence:
+  evidence/v1/shutdown-bounded-kanto-live-20261115T182944Z/.
+- Prior candidate6a6badc/source6ad9a4b results keep their original scope; no relabel.
+- Later candidate updates attach evidence only: production/config/harness/frontend
+  diff from tested49f8b8d is empty. No further enhancements started.
+
+## Next work — humans and final main
+
+1. Inspect latest exact PR heads/CI; no duplicate PRs. Latest fix-head snapshot is
+   resumed-final-checkpoint.json (all eight checks PASS for #44/#45/#46); new
+   documentation-head CI is inspected after its final push.
+2. Obtain actual team/affected-owner approvals and decide C1–C10, subjects/TLS,
+   freshness/timing/clock and B5 LAN wording. Current skill/reference qualifications
+   and ten absent historical raw logs are documented, not invented or approved.
+3. Suggested merge order44 →45 →46, then47. Fixes are independent/main-based.
+   Do NOT merge the candidate branch. Update later branches with reviewed main,
+   preserving both README follow-ups. No reset/rebase/force-push.
+4. After fix merges, merge origin/main into readiness worktree/branch, verify no
+   implementation diff against main, retarget existing PR47 to main. Then run the
+   documented final merged-SHA CI and clean-init/header/lifecycle smoke. Broader
+   repeats only for changed code, failures or unresolved concerns.
+5. No release tag is justified until human/final-main and V1-06/07 gates close.
+   Report/video creation/recording/submission remained excluded and pending.
+
+## Current service state
+
+Original edge/app-001/MQTT/KUKSA/providers/real Ditto/one ingress and dedicated
+Kanto daemon remain running. Docker app-002 and all pilot/test app containers are
+stopped. Final candidate projects/observers removed/stopped without volume deletion;
+Part B stack stopped with its database retained. Original policies/twins, MongoDB
+volumes, unrelated workloads and unused docker_default network preserved. Check
+final service inventory before any start/stop. Persistent worktrees/runtime remain.
+
+## Historical stop handoff — superseded where indicated
+
 # Persistent Phase V1 handoff — final stop checkpoint
 
 No merges, tags, releases, approvals or report/video work performed.

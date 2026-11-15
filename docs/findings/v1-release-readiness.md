@@ -1,6 +1,29 @@
 # Phase V1 engineering and release readiness — November 15, 2026
 
-## Stop checkpoint requested after d8c1f40
+## Resumed final result — d8c1f40 engineering verification PASS
+
+[Final combined verification](../../evidence/v1/release-candidate-d8c1f40-20261115/README.md)
+tested candidate `49f8b8d59eeef7245ba643f9f88f86709c44e99a`, including shutdown
+source `d8c1f4048522da3e79a81e6ee5919017b941b00d`. Python541 +386 subtests,
+Java209, frontend7 and both Compose checks PASS; two Python skips/nine integration
+deselections remain explicit. All nine selected clean real-service gates PASS,
+including five routed fault/clear trials, aging, negative/restart/denied-write
+recovery, affected MQTT reconnect and actual dashboard. No manual telemetry seed
+or nginx header workaround. [Actual final-source Kanto](../../evidence/v1/shutdown-bounded-kanto-live-20261115T182944Z/README.md)
+passes three managed cycles, all exits0, exact fresh source/event/twin matches and
+154 healthy001 twin samples. Original #43 evidence remains passed and preserved.
+
+This supersedes the **historical pending stop checkpoint** below. Later candidate
+commits only attach evidence; an empty implementation/config/frontend/harness diff
+from the tested head is recorded. [Latest refs/CI](../../evidence/v1/release-readiness-20261115/resumed-final-checkpoint.json).
+Shutdown head39a5853 includes final-source Kanto evidence. Draft documentation
+[PR #47](https://github.com/ankit-suman-07/QA-SDV-Project/pull/47) is explicitly
+stacked on the candidate. Human decisions and final merged-main checks remain
+pending; this is not verified main, full V1 acceptance, remote LAN, automatic crash
+restart or a release. No merges/tags/releases/approvals/report-video work occurred.
+
+
+## Historical stop checkpoint requested after d8c1f40
 
 Final combined verification is **PENDING** after the bounded-cleanup correction
 `d8c1f4048522da3e79a81e6ee5919017b941b00d`. It prevents a stalled client join from
@@ -33,10 +56,10 @@ SOURCE-OF-TRUTH. Historical teammate authorship is preserved.
 |---|---|---|---|
 | F03 safe feature initialization | `cd89160ccdd1b65901d365e46431b1af73ea1efc` | [#44](https://github.com/ankit-suman-07/QA-SDV-Project/pull/44) | [Red/green, real resources, restart](../../evidence/v1/ditto-initialization-20261115/README.md) |
 | F04 HTTP compatibility | `0a010eb30e81a63595638b88f81096dc561c5b28` | [#45](https://github.com/ankit-suman-07/QA-SDV-Project/pull/45) | [Actual Spring/JDK/nginx/real Ditto](../../evidence/v1/ditto-http-20261115/README.md) |
-| Graceful application shutdown | `9c899c823cc71c0431319c91d6bd79e06ad71564` | [#46](https://github.com/ankit-suman-07/QA-SDV-Project/pull/46) | [Five Docker cases/three Kanto cycles](../../evidence/v1/app-shutdown-20261115/README.md) |
+| Graceful application shutdown | `39a58534abad25e11af3139435787874a2b19ed6` | [#46](https://github.com/ankit-suman-07/QA-SDV-Project/pull/46) | [Five Docker cases/three Kanto cycles](../../evidence/v1/app-shutdown-20261115/README.md) |
 
 All three branches start independently from the same main baseline. At
-[exact-head inspection](../../evidence/v1/release-readiness-20261115/exact-head-pr-status.json),
+[latest exact-head inspection](../../evidence/v1/release-readiness-20261115/resumed-final-checkpoint.json),
 all eight checks passed on each fix head. No human approvals are inferred from CI.
 
 Temporary candidate branch: `ankit/test/v1-release-candidate-20261115`, persistent
@@ -85,11 +108,11 @@ entries replace the historical RuntimeError. No general reliability rate inferre
 | V1-02 | Clean initialization from real observations; invalid/unknown/mismatched/equal/late/duplicate invariance, watermark restart and denied-write recovery PASS | Production principal/policy approval; final main check |
 | V1-03 | Five backend-routed faults and five clears reach all six observed boundaries; 001 isolated | Human review; final main smoke |
 | V1-04 | Real twin/API source aging/null, bounded client reads and compatibility PASS | Approve current freshness/clock assumptions |
-| V1-05 | Candidate Python540 +386 subtests, Java209, frontend7 and Compose checks PASS; all fix-head CI eight checks PASS | Two Python skips/nine deselections explicit; final merged-head CI required |
+| V1-05 | Final candidate Python541 +386 subtests, Java209, frontend7 and Compose checks PASS; all fix-head CI eight checks PASS | Two Python skips/nine deselections explicit; final merged-head CI required |
 | V1-06 | Actual task/source/test traceability and upstream investigation recorded | Human review; historical installed/invocation provenance not inferred |
 | V1-07 | Reproduction, candidate evidence and engineering contribution record prepared | Reviewed final SHA/tag decision, report/video and submission remain pending/excluded |
 | V1-08 | Real individual twins, sole Spring fleet writer, materialized summary/API/dashboard agree through five trials; denial recovery PASS | Production writer permissions/approval; final main smoke |
-| V1-09 | [Merged #43 same-device managed restart PASS](../../evidence/v1/kanto-live-20261115T142159Z/README.md); [affected shutdown three-cycle recheck PASS](../../evidence/v1/shutdown-kanto-live-20261115T152137Z/independent-review.json) | Exact B5 LAN wording decision below; no remote LAN/crash-auto-restart claim |
+| V1-09 | [Merged #43 same-device managed restart PASS](../../evidence/v1/kanto-live-20261115T142159Z/README.md); [final-source shutdown three-cycle recheck PASS](../../evidence/v1/shutdown-bounded-kanto-live-20261115T182944Z/independent-review.json) | Exact B5 LAN wording decision below; no remote LAN/crash-auto-restart claim |
 
 [Candidate summary](../../evidence/v1/release-candidate-20261115/README.md),
 [live results](../../evidence/v1/release-candidate-live-20261115T152908Z/results.json),
@@ -139,6 +162,7 @@ confirm its implementation tree equals reviewed main, then retarget its existing
 from candidate to main. Example **future commands, not executed here**:
 
 ```bash
+cd "$HOME/.local/share/qa-sdv-v1/worktrees/release-readiness"
 git fetch origin
 git switch ankit/docs/v1-release-readiness
 git merge origin/main
@@ -165,6 +189,7 @@ export RUNTIME="$HOME/.local/share/qa-sdv-v1/runtime"
 export PATH="$RUNTIME/jdk21/bin:$RUNTIME/node22/bin:$PATH"
 export JAVA_HOME="$RUNTIME/jdk21"
 (cd backend && bash ./mvnw --batch-mode --no-transfer-progress clean verify)
+mkdir -p uprotocol/generated
 "$RUNTIME/venv-3.12/bin/python" -m grpc_tools.protoc -I uprotocol/proto --python_out=uprotocol/generated uprotocol/proto/common.proto uprotocol/proto/health_status.proto uprotocol/proto/vehicle_status.proto uprotocol/proto/vehicle_fault.proto uprotocol/proto/vehicle_diagnostic.proto
 "$RUNTIME/venv-3.12/bin/python" -B -m pytest -q -ra -p no:cacheprovider -m 'not integration'
 (cd frontend && npm test)
@@ -229,7 +254,7 @@ available. Human rubric/provenance disposition or original external artifacts
 remain necessary where those older records are required.
 
 
-## Final d8c1f40 inclusion and stop handoff
+## Historical d8c1f40 inclusion and stop handoff
 
 Both current candidate and this stacked readiness branch **include**
 `d8c1f4048522da3e79a81e6ee5919017b941b00d` through shutdown checkpoint5211375.

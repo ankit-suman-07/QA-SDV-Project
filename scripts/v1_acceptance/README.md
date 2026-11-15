@@ -155,3 +155,10 @@ folders are dated under root evidence/v1; retain all failed runs and cleanup exi
 Do not rerun old create-only Kanto observers against retained names. A new final-main
 image, descriptor name and reviewed privilege commands are needed for another trial.
 No automatic merge/tag/release/report/video action is part of this procedure.
+
+
+Final resumed d8c1f40 verification is recorded in
+[evidence/v1/release-candidate-d8c1f40-20261115](../../evidence/v1/release-candidate-d8c1f40-20261115/README.md).
+It supersedes the temporary pending checkpoint; all9 selected live gates pass.
+Use exact tested49f8b8d or verify the final-main delta before reproduction. No
+additional deployment change was made after the final bounded-shutdown fix.

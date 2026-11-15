@@ -1,5 +1,15 @@
 # SDV project evidence
 
+## Resumed final verification — November 15, 2026
+
+[Current readiness](../docs/findings/v1-release-readiness.md) supersedes earlier pending stop checkpoints below.
+Final candidate49f8b8d includes d8c1f40: Python541 +386 subtests,Java209,frontend7,
+nine selected clean real-service gates and three final actual Kanto managed cycles
+PASS. Two Python skips/nine integration deselections retained. Candidate remains
+UNMERGED; final-main/human approvals/release and report-video gates remain pending.
+No remote-LAN/automatic-crash-restart/full-V1 claim. Historical results unchanged.
+
+
 **Final stop checkpoint:** d8c1f40 adds bounded handling for a stalled cleanup join.
 Targeted app checks pass; final combined verification after this delta is pending.
 The dated readiness handoff identifies included commits and prior tested revisions.

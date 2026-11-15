@@ -1,5 +1,15 @@
 # MVP → Phase V1 progress comparison
 
+## Resumed final verification — November 15, 2026
+
+[Current readiness](v1-release-readiness.md) supersedes earlier pending stop checkpoints below.
+Final candidate49f8b8d includes d8c1f40: Python541 +386 subtests,Java209,frontend7,
+nine selected clean real-service gates and three final actual Kanto managed cycles
+PASS. Two Python skips/nine integration deselections retained. Candidate remains
+UNMERGED; final-main/human approvals/release and report-video gates remain pending.
+No remote-LAN/automatic-crash-restart/full-V1 claim. Historical results unchanged.
+
+
 **Stop checkpoint after d8c1f40:** earlier combined PASS is for candidate6a6badc,
 before the final bounded-cleanup-join correction. Targeted app checks pass; final
 combined verification and latest shutdown-head CI remain pending. See the current
