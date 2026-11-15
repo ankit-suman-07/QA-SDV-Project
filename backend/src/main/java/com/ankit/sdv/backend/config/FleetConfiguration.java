@@ -25,7 +25,9 @@ public class FleetConfiguration {
                 .followRedirects(HttpClient.Redirect.NEVER).build();
         var factory = new JdkClientHttpRequestFactory(http);
         factory.setReadTimeout(properties.writeTimeout());
-        var builder = RestClient.builder().requestFactory(factory);
+        var builder = RestClient.builder().requestFactory(factory)
+                // One field avoids Ditto rejecting Spring/JDK automatic gzip + deflate duplicates.
+                .defaultHeader("Accept-Encoding", "gzip, deflate");
         if (properties.authenticated()) builder.defaultHeaders(h -> h.setBasicAuth(properties.username(), properties.password()));
         return new FleetMaterializer(fleet, builder.build(), ditto.baseUrl(), properties.writeTimeout(), clock);
     }

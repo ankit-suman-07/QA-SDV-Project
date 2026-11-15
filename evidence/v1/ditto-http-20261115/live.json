@@ -1,0 +1,103 @@
+{
+  "result": "PASS",
+  "javaExit": 0,
+  "nginx": "official original config; NO Accept-Encoding normalization",
+  "nginxSha256": "bc54b2102aad9908a655a8bd315fe84966d4779752ccdaf64b303eab325b3661",
+  "dittoBase": "http://127.0.0.1:18090",
+  "preparedIndividualTwins": [
+    {
+      "thingId": "sdv:vehicle-001",
+      "policyId": "sdv:http-check-policy",
+      "attributes": {
+        "vehicleId": "vehicle-001"
+      },
+      "features": {
+        "v1": {
+          "properties": {
+            "schemaVersion": "1.0.0",
+            "vehicleId": "vehicle-001",
+            "sourceTimestamp": "2026-11-15T15:04:06.820513Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            },
+            "lastEventId": "vehicle-001-df8507ee78ee40f885d1a81e3d414d6c"
+          }
+        }
+      }
+    },
+    {
+      "thingId": "sdv:vehicle-002",
+      "policyId": "sdv:http-check-policy",
+      "attributes": {
+        "vehicleId": "vehicle-002"
+      },
+      "features": {
+        "v1": {
+          "properties": {
+            "schemaVersion": "1.0.0",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T14:22:25.713946Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            },
+            "lastEventId": "vehicle-002-88d5e09f279d4e06b08e7a726afca3db"
+          }
+        }
+      }
+    }
+  ],
+  "materializedFleet": {
+    "thingId": "sdv:fleet-v1",
+    "policyId": "sdv:http-check-policy",
+    "features": {
+      "summary": {
+        "properties": {
+          "generatedAt": "2026-11-15T15:04:12.046452292Z",
+          "totalVehicles": 2,
+          "availableVehicles": 0,
+          "staleVehicles": 1,
+          "unavailableVehicles": 1,
+          "healthyVehicles": 0,
+          "warningVehicles": 0,
+          "criticalVehicles": 0,
+          "vehicles": [
+            {
+              "vehicleId": "vehicle-001",
+              "thingId": "sdv:vehicle-001",
+              "healthStatus": "HEALTHY",
+              "availability": "STALE",
+              "activeFaults": [],
+              "lidar": {
+                "distanceMeters": 35.0,
+                "sensorAvailable": true
+              },
+              "sourceTimestamp": "2026-11-15T15:04:06.820513Z",
+              "lastEventId": "vehicle-001-df8507ee78ee40f885d1a81e3d414d6c"
+            },
+            {
+              "vehicleId": "vehicle-002",
+              "thingId": "sdv:vehicle-002",
+              "healthStatus": "HEALTHY",
+              "availability": "UNAVAILABLE",
+              "activeFaults": [],
+              "lidar": {
+                "distanceMeters": 35.0,
+                "sensorAvailable": true
+              },
+              "sourceTimestamp": "2026-11-15T14:22:25.713946Z",
+              "lastEventId": "vehicle-002-88d5e09f279d4e06b08e7a726afca3db"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "scope": "actual client read/write HTTP compatibility; copied real observations prepare this isolated existing-state test, not first-event initialization",
+  "services": "separate new qa-v1-release-engineering-ditto project; original workloads untouched"
+}

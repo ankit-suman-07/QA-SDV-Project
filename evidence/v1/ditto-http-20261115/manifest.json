@@ -1,0 +1,14 @@
+{
+  "baseline": "6a965bb",
+  "result": "PASS; UNMERGED HTTP FIX",
+  "hashes": {
+    "red.txt": "4f7d3a587c86627f11d05c808d48db848b1ad5255ccccbe7ddf91a908ed09eb8",
+    "java-regression.txt": "505ec12d7378219d602b0d3b10ea521a0e185b1e7c7f23a7450dfe286cc25419",
+    "DittoHeaderLiveProbe.java": "e9df93710644e6a4de45ba5de7ba228c2da41eb75a1f5380596095de4d960271",
+    "live_http.py": "3c3dbac102a17f39c8e8aa340ccd196fcaf591bca0a9be1309a4865d3a066e3e",
+    "actual-java.txt": "4131aee483ce3507470a0621a669128090f46f4014dfd87bcbd0d4b30ad6da31",
+    "live.json": "fcd46f17e22489f578861947c0c48c4126da0702c6f2e454b5690d89a64f41d2",
+    "acceptance-controls.txt": "4729102e59db75b5820273a0249979ca622611e03b653c221e4dadacd7a4b70d",
+    "README.md": "a125690b45a03ff91272d8bd67ee00d587df28bccfd1c23e1b7ca76f81682d12"
+  }
+}

@@ -1,0 +1,5 @@
+BASELINE_STATUS=400
+READ_OK=vehicle-001 event=vehicle-001-df8507ee78ee40f885d1a81e3d414d6c source=2026-11-15T15:04:06.820513Z
+READ_OK=vehicle-002 event=vehicle-002-88d5e09f279d4e06b08e7a726afca3db source=2026-11-15T14:22:25.713946Z
+10:04:12.251 [main] INFO com.ankit.sdv.backend.service.FleetMaterializer -- fleet_write_succeeded thing=sdv:fleet-v1
+FLEET_WRITE_OK=true
