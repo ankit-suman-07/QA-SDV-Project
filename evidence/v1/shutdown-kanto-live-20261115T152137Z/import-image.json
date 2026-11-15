@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "sudo",
+    "-n",
+    "ctr",
+    "--address",
+    "/run/containerd/containerd.sock",
+    "--namespace",
+    "qa-sdv-v1-kanto",
+    "images",
+    "import",
+    "--platform",
+    "linux/amd64",
+    "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/kanto-shutdown-6ad9a4bef847.tar"
+  ],
+  "request": {
+    "utc": "2026-11-15T15:21:38.577652+00:00",
+    "monotonicNs": 6947603199498
+  },
+  "returned": {
+    "utc": "2026-11-15T15:21:51.144666+00:00",
+    "monotonicNs": 6960170220620
+  },
+  "exit": 0,
+  "stdout": "docker.io/library/qa v1 shutdown app:sha\tsaved\t\napplication/vnd.oci.image.index.v1+json sha256:b9af11ca1761aa13e582af74885e3a780717987e5ed94568499fcc872fdcbd15\nImporting\telapsed: 12.4s\ttotal:   0.0 B\t(0.0 B/s)\t\n",
+  "stderr": ""
+}

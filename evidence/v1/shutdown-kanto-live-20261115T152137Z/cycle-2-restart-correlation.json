@@ -1,0 +1,81 @@
+{
+  "message": {
+    "wire": {
+      "tst": "2026-11-15T15:22:20.174097+0000",
+      "topic": "sdv/vehicle-002/health",
+      "qos": 1,
+      "retain": false,
+      "payloadlen": 242,
+      "mid": 9,
+      "payload": "{\"schemaVersion\":\"1.0.0\",\"eventId\":\"vehicle-002-0f6313238054471cb102f5c43a6aa4d3\",\"vehicleId\":\"vehicle-002\",\"sourceTimestamp\":\"2026-11-15T15:22:19.486120Z\",\"health\":\"HEALTHY\",\"faults\":[],\"lidar\":{\"distanceMeters\":35.0,\"sensorAvailable\":true}}"
+    },
+    "event": {
+      "schemaVersion": "1.0.0",
+      "eventId": "vehicle-002-0f6313238054471cb102f5c43a6aa4d3",
+      "vehicleId": "vehicle-002",
+      "sourceTimestamp": "2026-11-15T15:22:19.486120Z",
+      "health": "HEALTHY",
+      "faults": [],
+      "lidar": {
+        "distanceMeters": 35.0,
+        "sensorAvailable": true
+      }
+    },
+    "observedAt": "2026-11-15T15:22:20.174659+00:00",
+    "monotonicNs": 6989200223060
+  },
+  "twin": {
+    "utc": "2026-11-15T15:22:20.337615+00:00",
+    "monotonicNs": 6989363185795,
+    "things": {
+      "vehicle-001": {
+        "thingId": "sdv:vehicle-001",
+        "policyId": "sdv:vehicle-001-policy",
+        "attributes": {
+          "vehicleId": "vehicle-001"
+        },
+        "features": {
+          "v1": {
+            "properties": {
+              "schemaVersion": "1.0.0",
+              "vehicleId": "vehicle-001",
+              "sourceTimestamp": "2026-11-15T15:22:19.402461Z",
+              "health": "HEALTHY",
+              "faults": [],
+              "lidar": {
+                "distanceMeters": 35.0,
+                "sensorAvailable": true
+              },
+              "lastEventId": "vehicle-001-d22621ce3425490d85f2cc7313d5ba6b"
+            }
+          }
+        }
+      },
+      "vehicle-002": {
+        "thingId": "sdv:vehicle-002",
+        "policyId": "sdv:vehicle-002-policy",
+        "attributes": {
+          "vehicleId": "vehicle-002"
+        },
+        "features": {
+          "v1": {
+            "properties": {
+              "schemaVersion": "1.0.0",
+              "vehicleId": "vehicle-002",
+              "sourceTimestamp": "2026-11-15T15:22:19.486120Z",
+              "health": "HEALTHY",
+              "faults": [],
+              "lidar": {
+                "distanceMeters": 35.0,
+                "sensorAvailable": true
+              },
+              "lastEventId": "vehicle-002-0f6313238054471cb102f5c43a6aa4d3"
+            }
+          }
+        }
+      }
+    }
+  },
+  "comparison": "exact complete properties",
+  "boundary": "2026-11-15T15:22:17.619386+00:00"
+}

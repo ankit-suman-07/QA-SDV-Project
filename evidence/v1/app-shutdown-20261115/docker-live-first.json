@@ -1,0 +1,6 @@
+{
+  "result": "FAIL",
+  "records": [],
+  "observerFailures": [],
+  "resources": "Only new broker/app containers stopped; retained for inspection. Shared edge/ingress/twins unaffected. Isolated Ditto18090 updated by this sole test observer."
+}
