@@ -1,0 +1,18 @@
+{
+  "project": "qa-pr39-baseline-20261115",
+  "command": "timeout 12m sh scripts/run-autonomous-mvp-demo.sh",
+  "configuration": {
+    "PUBLISH_INTERVAL_SECONDS": "1.0",
+    "SIMULATED_VEHICLE_ID": "vehicle-001",
+    "ports": [
+      55556,
+      1883,
+      8090
+    ]
+  },
+  "results": {
+    "baselineExit": 0,
+    "baseline-services.txt": 0,
+    "baseline-cleanup.txt": 0
+  }
+}

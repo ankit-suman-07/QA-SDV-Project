@@ -1,0 +1,19 @@
+{
+  "utc": "2026-11-15T03:16:36.527819+00:00",
+  "project": "qa-pr39-99064",
+  "ports": {
+    "mqtt": 49585,
+    "kuksa001": 53241,
+    "kuksa002": 46281,
+    "provider001": 57875,
+    "provider002": 40431,
+    "knownKuksa": 40339,
+    "knownProvider": 41931,
+    "transportMqtt": 58819
+  },
+  "sha": "470240da0139866cc5384d26236a1bccba1f7c5c",
+  "dirty": " M vehicle-simulator/tests/test_provider_main.py\n?? evidence/v1/tire-pressure-units/combined-20261115T031602Z/\n",
+  "boundary": "Actual provider/KUKSA/apps/MQTT; separate deterministic-pressure fixture and in-process protobuf/mapper; no Ditto or gateway",
+  "deterministicFixture": "known provider overrides random.uniform with range midpoint; healthy generator pressure stays 32 psi; actual production main/publish_loop and real RPCs unchanged",
+  "clock": "source/observer UTC on same host kernel; no latency benchmark or clock-error bound"
+}

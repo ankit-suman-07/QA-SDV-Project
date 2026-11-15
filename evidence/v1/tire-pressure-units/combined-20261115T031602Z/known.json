@@ -1,0 +1,54 @@
+{
+  "services": {
+    "broker": {
+      "image": "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+      "command": [
+        "--insecure",
+        "--vss",
+        "/config/vss.json"
+      ],
+      "volumes": [
+        "/tmp/qa-pr39-combined/vehicle-simulator/config/vss-with-autonomous-sensors.json:/config/vss.json:ro"
+      ],
+      "ports": [
+        "127.0.0.1:40339:55555"
+      ]
+    },
+    "provider": {
+      "image": "qa-pr39-99064-provider",
+      "stop_grace_period": "30s",
+      "depends_on": [
+        "broker"
+      ],
+      "command": [
+        "python",
+        "-u",
+        "-c",
+        "import random,runpy,sys; random.uniform=lambda lo,hi:(lo+hi)/2; sys.path.insert(0,'/app/src'); runpy.run_path('/app/src/main.py',run_name='__main__')"
+      ],
+      "ports": [
+        "127.0.0.1:41931:8090"
+      ],
+      "environment": {
+        "DATABROKER_HOST": "broker",
+        "DATABROKER_PORT": "55555",
+        "SIMULATED_VEHICLE_ID": "vehicle-001",
+        "PUBLISH_INTERVAL_SECONDS": "0.2"
+      }
+    },
+    "mqtt": {
+      "image": "eclipse-mosquitto:2",
+      "command": [
+        "mosquitto",
+        "-c",
+        "/mosquitto/config/mosquitto.conf"
+      ],
+      "volumes": [
+        "/tmp/qa-pr39-combined/vehicle-simulator/config/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro"
+      ],
+      "ports": [
+        "127.0.0.1:58819:1883"
+      ]
+    }
+  }
+}

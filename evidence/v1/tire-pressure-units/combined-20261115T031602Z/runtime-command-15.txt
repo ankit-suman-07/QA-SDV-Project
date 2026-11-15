@@ -1,0 +1,2 @@
+ Container qa-pr39-99064-edge-kuksa-001-1 Killing
+ Container qa-pr39-99064-edge-kuksa-001-1 Killed

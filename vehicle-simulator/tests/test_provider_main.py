@@ -143,3 +143,44 @@ def test_non_transient_client_error_is_not_retried(provider_main, monkeypatch):
     with pytest.raises(VSSClientError):
         provider_main.publish_loop(provider_main.create_scenario_controller(), stop)
     assert stop.waits == []
+
+
+@pytest.mark.parametrize('vehicle', ['vehicle-001', 'vehicle-002'])
+@pytest.mark.parametrize('failure_code', [4, 14])
+def test_recovery_publishes_kpa_once_without_advancing_failed_psi_state(
+    provider_main, monkeypatch, vehicle, failure_code,
+):
+    """An inline raw write, state advance on failure or reconversion must fail."""
+    from kuksa_client.grpc import VSSClientError
+    monkeypatch.setattr(provider_main, 'SIMULATED_VEHICLE_ID', vehicle)
+    controller = provider_main.create_scenario_controller()
+    stop = Stop(stop_after=3)
+    inputs, writes, attempts, closed = [], [], [], []
+
+    def observation(state, **scenarios):
+        inputs.append(state['tire_pressure'])
+        return dict(state, tire_pressure=state['tire_pressure'] + 1)
+
+    class Client:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            closed.append(True)
+
+        def set_current_values(self, values, **kwargs):
+            assert kwargs == {'timeout': 2.0}
+            attempts.append(values)
+            if len(attempts) == 1:
+                raise VSSClientError({'code': failure_code, 'reason': 'transient'}, [])
+            writes.append(values[provider_main.SIGNAL_PATHS['tire_pressure']].value)
+
+    monkeypatch.setattr(provider_main, 'next_state', observation)
+    monkeypatch.setattr(provider_main, 'get_client', Client)
+    provider_main.publish_loop(controller, stop)
+    assert inputs == [32.0, 32.0, 33.0]
+    assert writes == [228, 234]  # 33/34 psi quantized once, not raw or re-converted
+    assert all(type(value) is int for value in writes)
+    assert closed == [True, True]
+    assert stop.waits == [1.0, provider_main.PUBLISH_INTERVAL_SECONDS,
+                          provider_main.PUBLISH_INTERVAL_SECONDS]

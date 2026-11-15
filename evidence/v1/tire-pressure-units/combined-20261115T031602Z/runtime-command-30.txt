@@ -1,0 +1,534 @@
+mqtt-1          | 1794712601: Info: running mosquitto as user: mosquitto.
+provider-001-1  | [Control] vehicle=vehicle-001 listening on 0.0.0.0:8090
+kuksa-002-1     | [2m2026-11-15T03:16:40.393327Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Init logging from RUST_LOG (environment variable not found)
+provider-001-1  | [2026-11-15T03:16:41.929044] vehicle=vehicle-001 mode=normal interval=0.5 speed=62.8 battery=80.2 engine_temp=89.6 tire_pressure=32.1 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [Control] vehicle=vehicle-002 listening on 0.0.0.0:8090
+kuksa-002-1     | [2m2026-11-15T03:16:40.393356Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Starting Kuksa Databroker 0.7.0
+provider-002-1  | [2026-11-15T03:16:41.724776] vehicle=vehicle-002 mode=normal interval=0.5 speed=64.9 battery=80.4 engine_temp=89.6 tire_pressure=32.1 coolant_pressure=199.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-002-1     | [2m2026-11-15T03:16:40.393362Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Using 16 threads with 16 cores available on the system
+provider-001-1  | [2026-11-15T03:16:42.436241] vehicle=vehicle-001 mode=normal interval=0.5 speed=64.1 battery=80.3 engine_temp=89.5 tire_pressure=32.1 coolant_pressure=200.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-002-1     | [2m2026-11-15T03:16:40.394487Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Populating metadata from file '/config/vss-with-autonomous-sensors.json'
+mqtt-1          | 1794712601: mosquitto version 2.1.2 starting
+mqtt-1          | 1794712601: Config loaded from /mosquitto/config/mosquitto.conf.
+mqtt-1          | 1794712601: Bridge support available.
+kuksa-001-1     | [2m2026-11-15T03:16:40.812069Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Init logging from RUST_LOG (environment variable not found)
+mqtt-1          | 1794712601: Persistence support available.
+kuksa-001-1     | [2m2026-11-15T03:16:40.812088Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Starting Kuksa Databroker 0.7.0
+mqtt-1          | 1794712601: TLS support available.
+kuksa-001-1     | [2m2026-11-15T03:16:40.812093Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Using 16 threads with 16 cores available on the system
+provider-001-1  | [2026-11-15T03:16:42.945304] vehicle=vehicle-001 mode=normal interval=0.5 speed=63.5 battery=80.4 engine_temp=89.5 tire_pressure=32.0 coolant_pressure=200.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:43.452400] vehicle=vehicle-001 mode=normal interval=0.5 speed=65.5 battery=80.2 engine_temp=89.4 tire_pressure=32.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:43.963224] vehicle=vehicle-001 mode=normal interval=0.5 speed=63.9 battery=80.6 engine_temp=89.6 tire_pressure=32.0 coolant_pressure=201.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:44.474848] vehicle=vehicle-001 mode=normal interval=0.5 speed=66.4 battery=80.6 engine_temp=89.6 tire_pressure=31.9 coolant_pressure=200.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:44.984241] vehicle=vehicle-001 mode=normal interval=0.5 speed=69.8 battery=80.9 engine_temp=89.7 tire_pressure=31.9 coolant_pressure=199.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:45.492905] vehicle=vehicle-001 mode=normal interval=0.5 speed=70.1 battery=81.6 engine_temp=90.1 tire_pressure=31.9 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | /usr/local/lib/python3.10/dist-packages/opentelemetry/instrumentation/dependencies.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+app-001-1       |   from pkg_resources import (
+app-001-1       | 2026-11-15 03:16:42,375 INFO [__main__] [main.py:263] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Launching Velocitas AutonomousHealthApp
+app-001-1       | 2026-11-15 03:16:42,380 INFO [__main__] [main.py:111] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Starting autonomous health monitoring for vehicle=vehicle-001
+app-001-1       | 2026-11-15 03:16:42,380 INFO [kuksa_client.grpc] [__init__.py:785] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - No Root CA present, it will not be possible to use a secure connection!
+provider-002-1  | [2026-11-15T03:16:42.232475] vehicle=vehicle-002 mode=normal interval=0.5 speed=65.9 battery=80.8 engine_temp=89.4 tire_pressure=32.1 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:16:42,380 INFO [kuksa_client.grpc] [__init__.py:1014] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Establishing insecure channel
+provider-001-1  | [2026-11-15T03:16:46.001735] vehicle=vehicle-001 mode=normal interval=0.5 speed=72.6 battery=82.1 engine_temp=90.2 tire_pressure=31.9 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:16:42.740623] vehicle=vehicle-002 mode=normal interval=0.5 speed=66.0 battery=81.4 engine_temp=89.2 tire_pressure=32.1 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:46.508285] vehicle=vehicle-001 mode=normal interval=0.5 speed=73.8 battery=82.8 engine_temp=90.6 tire_pressure=31.9 coolant_pressure=200.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-002-1     | [2m2026-11-15T03:16:40.417942Z[0m [33m WARN[0m [2mdatabroker[0m[2m:[0m Authorization is not enabled.
+kuksa-001-1     | [2m2026-11-15T03:16:40.812769Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Populating metadata from file '/config/vss-with-autonomous-sensors.json'
+mqtt-1          | 1794712601: TLS-PSK support available.
+kuksa-002-1     | [2m2026-11-15T03:16:40.418399Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Listening on 0.0.0.0:55555
+app-002-1       | 	status = StatusCode.UNAVAILABLE
+provider-001-1  | [2026-11-15T03:16:47.018873] vehicle=vehicle-001 mode=normal interval=0.5 speed=71.1 battery=83.1 engine_temp=90.6 tire_pressure=31.8 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+mqtt-1          | 1794712601: Websockets support available.
+app-002-1       | 	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.2:55555: Failed to connect to remote host: connect: Connection refused (111)"
+provider-001-1  | [2026-11-15T03:16:47.528209] vehicle=vehicle-001 mode=normal interval=0.5 speed=75.6 battery=83.0 engine_temp=90.3 tire_pressure=31.7 coolant_pressure=199.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+mqtt-1          | 1794712601: Opening ipv4 listen socket on port 1883.
+provider-001-1  | [2026-11-15T03:16:48.038934] vehicle=vehicle-001 mode=normal interval=0.5 speed=72.8 battery=83.0 engine_temp=90.7 tire_pressure=31.6 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+mqtt-1          | 1794712601: Opening ipv6 listen socket on port 1883.
+provider-001-1  | [2026-11-15T03:16:48.547487] vehicle=vehicle-001 mode=normal interval=0.5 speed=76.4 battery=83.4 engine_temp=90.6 tire_pressure=31.7 coolant_pressure=199.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:16:40.829142Z[0m [33m WARN[0m [2mdatabroker[0m[2m:[0m Authorization is not enabled.
+app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T03:16:59.616359923+00:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.2:55555: Failed to connect to remote host: connect: Connection refused (111)"}"
+provider-001-1  | [2026-11-15T03:16:49.055788] vehicle=vehicle-001 mode=normal interval=0.5 speed=77.7 battery=83.8 engine_temp=90.5 tire_pressure=31.7 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:16:40.829311Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Listening on 0.0.0.0:55555
+app-002-1       | >
+app-001-1       | 2026-11-15 03:16:42,389 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:42.389623+00:00", "healthStatus": "HEALTHY", "speed": 62.757301330566406, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       |
+provider-002-1  | [2026-11-15T03:16:43.248236] vehicle=vehicle-002 mode=normal interval=0.5 speed=63.0 battery=82.0 engine_temp=88.7 tire_pressure=32.1 coolant_pressure=200.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | The above exception was the direct cause of the following exception:
+provider-002-1  | [2026-11-15T03:16:43.755913] vehicle=vehicle-002 mode=normal interval=0.5 speed=63.1 battery=82.7 engine_temp=88.2 tire_pressure=32.1 coolant_pressure=199.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+mqtt-1          | 1794712601: mosquitto version 2.1.2 running
+app-002-1       |
+provider-002-1  | [2026-11-15T03:16:44.267111] vehicle=vehicle-002 mode=normal interval=0.5 speed=66.2 battery=82.6 engine_temp=87.9 tire_pressure=32.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:16:40.829331Z[0m [32m INFO[0m [2mdatabroker::broker[0m[2m:[0m Starting housekeeping task
+mqtt-1          | 1794712602: New connection from 172.18.0.1:48504 on port 1883.
+app-002-1       | Traceback (most recent call last):
+kuksa-002-1     | [2m2026-11-15T03:16:40.418410Z[0m [32m INFO[0m [2mdatabroker::broker[0m[2m:[0m Starting housekeeping task
+mqtt-1          | 1794712602: New client connected from 172.18.0.1:48504 as qa-pr39-99064-observer (p4, c1, k60).
+mqtt-1          | 1794712602: New connection from 172.18.0.7:59481 on port 1883.
+mqtt-1          | 1794712602: New client connected from 172.18.0.7:59481 as auto-9F7C3619-9BAD-997A-3E45-97508D988136 (p4, c1, k60).
+mqtt-1          | 1794712602: New connection from 172.18.0.7:43535 on port 1883.
+provider-001-1  | [2026-11-15T03:16:49.565807] vehicle=vehicle-001 mode=normal interval=0.5 speed=80.6 battery=83.7 engine_temp=90.0 tire_pressure=31.6 coolant_pressure=199.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
+provider-001-1  | [2026-11-15T03:16:50.075414] vehicle=vehicle-001 mode=normal interval=0.5 speed=79.6 battery=83.7 engine_temp=89.8 tire_pressure=31.7 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |     datapoints = await asyncio.to_thread(
+provider-001-1  | [2026-11-15T03:16:50.585931] vehicle=vehicle-001 mode=normal interval=0.5 speed=78.0 battery=84.2 engine_temp=90.2 tire_pressure=31.7 coolant_pressure=199.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:51.097377] vehicle=vehicle-001 mode=normal interval=0.5 speed=78.1 battery=84.4 engine_temp=90.1 tire_pressure=31.6 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+mqtt-1          | 1794712602: New client connected from 172.18.0.7:43535 as auto-E02327EF-C41F-12B9-7AF2-993B5F4AFB55 (p4, c1, k60).
+provider-001-1  | [2026-11-15T03:16:51.605212] vehicle=vehicle-001 mode=normal interval=0.5 speed=79.8 battery=84.4 engine_temp=90.0 tire_pressure=31.7 coolant_pressure=200.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:52.113483] vehicle=vehicle-001 mode=normal interval=0.5 speed=83.4 battery=85.0 engine_temp=89.8 tire_pressure=31.6 coolant_pressure=200.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:16:40.829358Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m TLS is not enabled
+app-001-1       | 2026-11-15 03:16:44,394 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:44.394502+00:00", "healthStatus": "HEALTHY", "speed": 63.92552947998047, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+kuksa-001-1     | [2m2026-11-15T03:16:40.829368Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Authorization is not enabled.
+app-001-1       | 2026-11-15 03:16:44,395 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-cc3ab8ff300142098f098a469f128f5e health=HEALTHY sourceTimestamp=2026-11-15T03:16:43.961971Z
+kuksa-001-1     | [2m2026-11-15T03:17:21.617578Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Init logging from RUST_LOG (environment variable not found)
+provider-001-1  | [2026-11-15T03:16:52.621352] vehicle=vehicle-001 mode=normal interval=0.5 speed=84.0 battery=85.4 engine_temp=89.4 tire_pressure=31.5 coolant_pressure=199.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:17:21.617632Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Starting Kuksa Databroker 0.7.0
+provider-001-1  | [2026-11-15T03:16:53.129657] vehicle=vehicle-001 mode=normal interval=0.5 speed=82.8 battery=85.8 engine_temp=89.8 tire_pressure=31.6 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:17:21.617642Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Using 16 threads with 16 cores available on the system
+provider-001-1  | [2026-11-15T03:16:53.642498] vehicle=vehicle-001 mode=normal interval=0.5 speed=83.8 battery=86.0 engine_temp=89.8 tire_pressure=31.6 coolant_pressure=199.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |   File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+kuksa-001-1     | [2m2026-11-15T03:17:21.619246Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Populating metadata from file '/config/vss-with-autonomous-sensors.json'
+app-001-1       | 2026-11-15 03:16:46,399 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:46.399329+00:00", "healthStatus": "HEALTHY", "speed": 72.62691497802734, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       |     return await loop.run_in_executor(None, func_call)
+kuksa-002-1     | [2m2026-11-15T03:16:40.418445Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m TLS is not enabled
+provider-002-1  | [2026-11-15T03:16:44.778277] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=70.3 battery=82.9 engine_temp=88.2 tire_pressure=31.9 coolant_pressure=199.7 lidar_distance_m=20.0 lidar_step=1.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+mqtt-1          | 1794712602: New connection from 172.18.0.8:33985 on port 1883.
+provider-002-1  | [2026-11-15T03:16:45.287196] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=74.6 battery=83.1 engine_temp=88.4 tire_pressure=32.0 coolant_pressure=200.0 lidar_distance_m=8.0 lidar_step=2.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=false
+mqtt-1          | 1794712602: New client connected from 172.18.0.8:33985 as auto-6227562A-A7C6-D64B-31BD-F2D5DF44448F (p4, c1, k60).
+app-001-1       | 2026-11-15 03:16:46,441 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-6540f059e433449a82170a86d6abf42e health=HEALTHY sourceTimestamp=2026-11-15T03:16:46.000963Z
+mqtt-1          | 1794712602: New connection from 172.18.0.8:43727 on port 1883.
+provider-002-1  | [2026-11-15T03:16:45.793802] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=60.4 battery=83.1 engine_temp=88.7 tire_pressure=32.0 coolant_pressure=200.8 lidar_distance_m=3.0 lidar_step=3.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=true
+mqtt-1          | 1794712602: New client connected from 172.18.0.8:43727 as auto-24D6290E-0A3B-B22A-4DBE-1FD39EA75B95 (p4, c1, k60).
+provider-002-1  | [2026-11-15T03:16:46.301651] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=47.5 battery=83.4 engine_temp=89.1 tire_pressure=32.1 coolant_pressure=200.9 lidar_distance_m=3.0 lidar_step=3.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=true
+mqtt-1          | 1794712665: Client qa-pr39-99064-observer [172.18.0.1:48504] disconnected.
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 2.0s
+kuksa-002-1     | [2m2026-11-15T03:16:40.418452Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Authorization is not enabled.
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 4.0s
+kuksa-002-1     | [2m2026-11-15T03:16:59.746221Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Init logging from RUST_LOG (environment variable not found)
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 5.0s
+app-002-1       |   File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+kuksa-002-1     | [2m2026-11-15T03:16:59.746247Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Starting Kuksa Databroker 0.7.0
+app-001-1       | 2026-11-15 03:16:48,445 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:48.444922+00:00", "healthStatus": "HEALTHY", "speed": 72.7738265991211, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       |     result = self.fn(*self.args, **self.kwargs)
+kuksa-002-1     | [2m2026-11-15T03:16:59.746253Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Using 16 threads with 16 cores available on the system
+provider-002-1  | [2026-11-15T03:17:03.989464] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=38.1 battery=83.7 engine_temp=89.3 tire_pressure=32.0 coolant_pressure=201.8 lidar_distance_m=3.0 lidar_step=3.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=true
+provider-001-1  | [2026-11-15T03:16:54.156754] vehicle=vehicle-001 mode=normal interval=0.5 speed=87.5 battery=86.0 engine_temp=90.3 tire_pressure=31.7 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-002-1     | [2m2026-11-15T03:16:59.746943Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Populating metadata from file '/config/vss-with-autonomous-sensors.json'
+provider-002-1  | [2026-11-15T03:17:04.496396] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=28.6 battery=83.6 engine_temp=88.9 tire_pressure=32.0 coolant_pressure=201.0 lidar_distance_m=3.0 lidar_step=3.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=true
+provider-001-1  | [2026-11-15T03:16:54.669163] vehicle=vehicle-001 mode=normal interval=0.5 speed=88.5 battery=85.9 engine_temp=90.6 tire_pressure=31.6 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-002-1     | [2m2026-11-15T03:16:59.760229Z[0m [33m WARN[0m [2mdatabroker[0m[2m:[0m Authorization is not enabled.
+provider-002-1  | [2026-11-15T03:17:05.005060] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=20.4 battery=83.4 engine_temp=88.5 tire_pressure=32.0 coolant_pressure=201.8 lidar_distance_m=3.0 lidar_step=3.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=true
+kuksa-002-1     | [2m2026-11-15T03:16:59.760339Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Listening on 0.0.0.0:55555
+app-002-1       |   File "/workspace/app/src/main.py", line 127, in read_datapoints
+kuksa-002-1     | [2m2026-11-15T03:16:59.760346Z[0m [32m INFO[0m [2mdatabroker::broker[0m[2m:[0m Starting housekeeping task
+app-002-1       |     return self._kuksa_client.get_current_values(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1046, in get_current_values
+app-002-1       |     entries = self.get(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+provider-001-1  | [2026-11-15T03:16:55.181962] vehicle=vehicle-001 mode=normal interval=0.5 speed=86.6 battery=85.9 engine_temp=91.0 tire_pressure=31.7 coolant_pressure=200.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |     return func(self, *args, **kwargs)
+provider-002-1  | [2026-11-15T03:17:05.512258] vehicle=vehicle-002 mode=LIDAR_OBSTRUCTION interval=0.5 speed=8.5 battery=83.7 engine_temp=88.9 tire_pressure=32.1 coolant_pressure=201.0 lidar_distance_m=3.0 lidar_step=3.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=true
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1291, in get
+kuksa-002-1     | [2m2026-11-15T03:16:59.760363Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m TLS is not enabled
+kuksa-001-1     | [2m2026-11-15T03:17:21.643326Z[0m [33m WARN[0m [2mdatabroker[0m[2m:[0m Authorization is not enabled.
+app-002-1       |     raise VSSClientError.from_grpc_error(exc) from exc
+provider-002-1  | [2026-11-15T03:17:06.024716] vehicle=vehicle-002 mode=normal interval=0.5 speed=6.8 battery=84.1 engine_temp=88.7 tire_pressure=32.0 coolant_pressure=201.9 lidar_distance_m=8.0 lidar_step=2.0 lidar_sensor_healthy=true obstacle_warning=true autonomous_braking=false
+app-001-1       | 2026-11-15 03:16:48,486 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-720783ba31d146d399027e3fc7cd05f9 health=HEALTHY sourceTimestamp=2026-11-15T03:16:48.037840Z
+provider-001-1  | [2026-11-15T03:16:55.696154] vehicle=vehicle-001 mode=normal interval=0.5 speed=88.0 battery=86.2 engine_temp=90.9 tire_pressure=31.8 coolant_pressure=201.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:06.537791] vehicle=vehicle-002 mode=normal interval=0.5 speed=10.5 battery=84.1 engine_temp=88.3 tire_pressure=31.9 coolant_pressure=201.4 lidar_distance_m=20.0 lidar_step=1.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:16:50,490 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:50.490772+00:00", "healthStatus": "HEALTHY", "speed": 79.6241683959961, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.2:55555: Failed to connect to remote host: connect: Connection refused (111)'}, [])
+kuksa-002-1     | [2m2026-11-15T03:16:59.760367Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Authorization is not enabled.
+provider-001-1  | [2026-11-15T03:16:56.205349] vehicle=vehicle-001 mode=normal interval=0.5 speed=87.5 battery=86.1 engine_temp=91.4 tire_pressure=31.7 coolant_pressure=200.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:01,659 INFO [kuksa_client.grpc] [__init__.py:785] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - No Root CA present, it will not be possible to use a secure connection!
+kuksa-002-1     | [2m2026-11-15T03:17:29.247173Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m received SIGTERM
+app-001-1       | 2026-11-15 03:16:50,532 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-ab4d5fc482b64ea5a853751494ac62a1 health=HEALTHY sourceTimestamp=2026-11-15T03:16:50.074464Z
+app-002-1       | 2026-11-15 03:17:01,659 INFO [kuksa_client.grpc] [__init__.py:1014] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Establishing insecure channel
+kuksa-002-1     | [2m2026-11-15T03:17:29.247204Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Shutting down
+kuksa-001-1     | [2m2026-11-15T03:17:21.643490Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Listening on 0.0.0.0:55555
+app-002-1       | 2026-11-15 03:17:01,664 INFO [__main__] [main.py:140] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Reconnected to KUKSA databroker
+kuksa-002-1     | [2m2026-11-15T03:17:37.469984Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Init logging from RUST_LOG (environment variable not found)
+provider-001-1  | [2026-11-15T03:16:56.717639] vehicle=vehicle-001 mode=normal interval=0.5 speed=92.3 battery=86.7 engine_temp=91.3 tire_pressure=31.6 coolant_pressure=199.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:07.050925] vehicle=vehicle-002 mode=normal interval=0.5 speed=8.4 battery=84.0 engine_temp=88.4 tire_pressure=31.9 coolant_pressure=202.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-002-1     | [2m2026-11-15T03:17:37.470014Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Starting Kuksa Databroker 0.7.0
+provider-002-1  | [2026-11-15T03:17:07.564764] vehicle=vehicle-002 mode=normal interval=0.5 speed=7.7 battery=83.9 engine_temp=87.9 tire_pressure=31.9 coolant_pressure=201.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:17:21.643500Z[0m [32m INFO[0m [2mdatabroker::broker[0m[2m:[0m Starting housekeeping task
+provider-002-1  | [2026-11-15T03:17:08.076148] vehicle=vehicle-002 mode=normal interval=0.5 speed=5.5 battery=84.1 engine_temp=87.7 tire_pressure=31.9 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+kuksa-001-1     | [2m2026-11-15T03:17:21.643526Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m TLS is not enabled
+kuksa-002-1     | [2m2026-11-15T03:17:37.470022Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Using 16 threads with 16 cores available on the system
+kuksa-001-1     | [2m2026-11-15T03:17:21.643532Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Authorization is not enabled.
+kuksa-002-1     | [2m2026-11-15T03:17:37.471107Z[0m [32m INFO[0m [2mdatabroker[0m[2m:[0m Populating metadata from file '/config/vss-with-autonomous-sensors.json'
+kuksa-002-1     | [2m2026-11-15T03:17:37.493460Z[0m [33m WARN[0m [2mdatabroker[0m[2m:[0m Authorization is not enabled.
+app-001-1       | 2026-11-15 03:16:52,535 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:52.535798+00:00", "healthStatus": "HEALTHY", "speed": 83.38257598876953, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+kuksa-002-1     | [2m2026-11-15T03:17:37.493574Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Listening on 0.0.0.0:55555
+app-001-1       | 2026-11-15 03:16:52,577 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-aee39392d7bf417ea8d09ecc674ecc38 health=HEALTHY sourceTimestamp=2026-11-15T03:16:52.112148Z
+kuksa-002-1     | [2m2026-11-15T03:17:37.493585Z[0m [32m INFO[0m [2mdatabroker::broker[0m[2m:[0m Starting housekeeping task
+app-001-1       | 2026-11-15 03:16:54,583 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:54.583048+00:00", "healthStatus": "HEALTHY", "speed": 87.54817962646484, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+kuksa-002-1     | [2m2026-11-15T03:17:37.493629Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m TLS is not enabled
+app-001-1       | 2026-11-15 03:16:54,625 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-02b4ea27e83947ecaef220f9bcb39795 health=HEALTHY sourceTimestamp=2026-11-15T03:16:54.154427Z
+kuksa-002-1     | [2m2026-11-15T03:17:37.493635Z[0m [32m INFO[0m [2mdatabroker::grpc::server[0m[2m:[0m Authorization is not enabled.
+app-001-1       | 2026-11-15 03:16:56,630 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:56.630298+00:00", "healthStatus": "HEALTHY", "speed": 87.49906921386719, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | 2026-11-15 03:17:01,668 ERROR [__main__] [main.py:246] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Failed to evaluate autonomous signals
+app-001-1       | 2026-11-15 03:16:56,672 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-fdbdf234966748f4b1961d4b57c21ea3 health=HEALTHY sourceTimestamp=2026-11-15T03:16:56.204025Z
+app-002-1       | Traceback (most recent call last):
+provider-002-1  | [2026-11-15T03:17:08.587845] vehicle=vehicle-002 mode=normal interval=0.5 speed=3.6 battery=84.1 engine_temp=88.0 tire_pressure=32.0 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |   File "/workspace/app/src/main.py", line 211, in monitor_signals
+provider-002-1  | [2026-11-15T03:17:09.099528] vehicle=vehicle-002 mode=normal interval=0.5 speed=1.1 battery=84.1 engine_temp=88.5 tire_pressure=31.9 coolant_pressure=201.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:09.612038] vehicle=vehicle-002 mode=normal interval=0.5 speed=5.1 battery=84.3 engine_temp=88.9 tire_pressure=31.9 coolant_pressure=202.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:10.126752] vehicle=vehicle-002 mode=normal interval=0.5 speed=3.5 battery=84.8 engine_temp=89.3 tire_pressure=32.0 coolant_pressure=201.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:10.639235] vehicle=vehicle-002 mode=normal interval=0.5 speed=1.9 battery=85.0 engine_temp=89.4 tire_pressure=32.0 coolant_pressure=202.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:11.152244] vehicle=vehicle-002 mode=normal interval=0.5 speed=2.2 battery=85.1 engine_temp=89.0 tire_pressure=32.0 coolant_pressure=201.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:11.664691] vehicle=vehicle-002 mode=normal interval=0.5 speed=0.1 battery=85.7 engine_temp=89.4 tire_pressure=32.0 coolant_pressure=201.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:12.178454] vehicle=vehicle-002 mode=normal interval=0.5 speed=3.1 battery=86.3 engine_temp=89.8 tire_pressure=32.1 coolant_pressure=200.8 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:16:58,678 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:16:58.677825+00:00", "healthStatus": "HEALTHY", "speed": 99.55738067626953, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:12.691773] vehicle=vehicle-002 mode=normal interval=0.5 speed=3.8 battery=86.7 engine_temp=89.3 tire_pressure=32.1 coolant_pressure=200.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:16:58,720 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-1904f3930cf64abf9a9002faefd55f00 health=HEALTHY sourceTimestamp=2026-11-15T03:16:58.254092Z
+provider-002-1  | [2026-11-15T03:17:13.205848] vehicle=vehicle-002 mode=normal interval=0.5 speed=2.4 battery=86.7 engine_temp=89.6 tire_pressure=32.1 coolant_pressure=201.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:00,726 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:00.726004+00:00", "healthStatus": "HEALTHY", "speed": 103.34461975097656, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-001-1       | 2026-11-15 03:17:00,767 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-92682ab9346a41ef9ca47613944f9d54 health=HEALTHY sourceTimestamp=2026-11-15T03:17:00.302052Z
+provider-002-1  | [2026-11-15T03:17:13.719642] vehicle=vehicle-002 mode=normal interval=0.5 speed=3.3 battery=86.6 engine_temp=89.7 tire_pressure=32.1 coolant_pressure=200.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:02,772 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:02.771823+00:00", "healthStatus": "HEALTHY", "speed": 112.57478332519531, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:14.232629] vehicle=vehicle-002 mode=normal interval=0.5 speed=4.1 battery=86.9 engine_temp=90.1 tire_pressure=32.1 coolant_pressure=199.8 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:14.745936] vehicle=vehicle-002 mode=normal interval=0.5 speed=8.3 battery=87.0 engine_temp=90.5 tire_pressure=32.1 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:15.260776] vehicle=vehicle-002 mode=normal interval=0.5 speed=9.6 battery=87.2 engine_temp=90.7 tire_pressure=32.1 coolant_pressure=200.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:15.775413] vehicle=vehicle-002 mode=normal interval=0.5 speed=12.4 battery=87.7 engine_temp=91.0 tire_pressure=32.1 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:16.288244] vehicle=vehicle-002 mode=normal interval=0.5 speed=10.6 battery=87.7 engine_temp=90.9 tire_pressure=32.1 coolant_pressure=200.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:16.801794] vehicle=vehicle-002 mode=normal interval=0.5 speed=12.1 battery=87.5 engine_temp=90.7 tire_pressure=32.1 coolant_pressure=200.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |     signals = {
+provider-002-1  | [2026-11-15T03:17:17.315597] vehicle=vehicle-002 mode=normal interval=0.5 speed=12.3 battery=88.1 engine_temp=90.9 tire_pressure=32.2 coolant_pressure=201.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:17.829171] vehicle=vehicle-002 mode=normal interval=0.5 speed=12.8 battery=88.1 engine_temp=90.7 tire_pressure=32.2 coolant_pressure=201.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:57.230583] vehicle=vehicle-001 mode=normal interval=0.5 speed=95.7 battery=86.9 engine_temp=91.5 tire_pressure=31.7 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:18.342136] vehicle=vehicle-002 mode=normal interval=0.5 speed=13.5 battery=88.6 engine_temp=91.0 tire_pressure=32.1 coolant_pressure=202.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:57.743708] vehicle=vehicle-001 mode=normal interval=0.5 speed=95.1 battery=87.3 engine_temp=91.5 tire_pressure=31.8 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:18.854885] vehicle=vehicle-002 mode=normal interval=0.5 speed=14.1 battery=88.7 engine_temp=90.5 tire_pressure=32.1 coolant_pressure=202.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:58.255972] vehicle=vehicle-001 mode=normal interval=0.5 speed=99.6 battery=87.4 engine_temp=91.3 tire_pressure=31.8 coolant_pressure=201.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:02,813 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-7d8a9fe7d56c4dfa9bed3322d4bb7100 health=HEALTHY sourceTimestamp=2026-11-15T03:17:02.340935Z
+app-001-1       | 2026-11-15 03:17:04,817 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:04.816915+00:00", "healthStatus": "HEALTHY", "speed": 116.67391967773438, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-001-1       | 2026-11-15 03:17:04,858 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-bad269d3ac194067964bf70e8a64e524 health=HEALTHY sourceTimestamp=2026-11-15T03:17:04.374234Z
+app-001-1       | 2026-11-15 03:17:06,864 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:06.863927+00:00", "healthStatus": "HEALTHY", "speed": 120.0, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-001-1       | 2026-11-15 03:17:06,906 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-f7a4ea5e71c141bbae87cb1e5c9e992c health=HEALTHY sourceTimestamp=2026-11-15T03:17:06.410443Z
+app-001-1       | 2026-11-15 03:17:28,611 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:28.611474+00:00", "healthStatus": "HEALTHY", "speed": 117.9262924194336, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       |   File "/workspace/app/src/main.py", line 212, in <dictcomp>
+app-001-1       | 2026-11-15 03:17:28,654 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-aab3b8cd863843c9a29cfb0e1929301c health=HEALTHY sourceTimestamp=2026-11-15T03:17:28.538789Z
+app-002-1       |     signal_path: datapoints[signal_path].value
+app-001-1       | 2026-11-15 03:17:30,660 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:30.660539+00:00", "healthStatus": "HEALTHY", "speed": 113.74279022216797, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | AttributeError: 'NoneType' object has no attribute 'value'
+provider-002-1  | [2026-11-15T03:17:19.368405] vehicle=vehicle-002 mode=normal interval=0.5 speed=11.3 battery=88.8 engine_temp=91.0 tire_pressure=32.1 coolant_pressure=203.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:19.881247] vehicle=vehicle-002 mode=normal interval=0.5 speed=9.4 battery=89.5 engine_temp=91.0 tire_pressure=32.0 coolant_pressure=204.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:30,703 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-a5be4483bf124048ba1efec7a58fc649 health=HEALTHY sourceTimestamp=2026-11-15T03:17:30.584408Z
+provider-002-1  | [2026-11-15T03:17:20.393956] vehicle=vehicle-002 mode=normal interval=0.5 speed=8.2 battery=89.9 engine_temp=91.4 tire_pressure=31.9 coolant_pressure=204.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:32,709 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:32.708966+00:00", "healthStatus": "HEALTHY", "speed": 115.66764831542969, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:20.906515] vehicle=vehicle-002 mode=normal interval=0.5 speed=6.1 battery=90.3 engine_temp=91.1 tire_pressure=31.9 coolant_pressure=204.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:01,668 WARNING [__main__] [main.py:163] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: not publishing (incomplete): LiDAR value or timestamp missing in KUKSA
+provider-002-1  | [2026-11-15T03:17:21.419314] vehicle=vehicle-002 mode=normal interval=0.5 speed=10.0 battery=90.1 engine_temp=91.0 tire_pressure=31.8 coolant_pressure=204.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:03,671 ERROR [__main__] [main.py:246] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Failed to evaluate autonomous signals
+app-001-1       | 2026-11-15 03:17:32,751 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-6a14378871854b6bba248af44a592f3f health=HEALTHY sourceTimestamp=2026-11-15T03:17:32.632675Z
+app-002-1       | Traceback (most recent call last):
+provider-002-1  | [2026-11-15T03:17:21.932598] vehicle=vehicle-002 mode=normal interval=0.5 speed=14.4 battery=90.3 engine_temp=91.3 tire_pressure=31.9 coolant_pressure=204.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:34,757 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:34.756902+00:00", "healthStatus": "HEALTHY", "speed": 120.0, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:22.445016] vehicle=vehicle-002 mode=normal interval=0.5 speed=11.9 battery=90.9 engine_temp=91.7 tire_pressure=31.9 coolant_pressure=205.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:34,798 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-71baf87f3dd34ede88f8eb3b48873f04 health=HEALTHY sourceTimestamp=2026-11-15T03:17:34.684810Z
+provider-002-1  | [2026-11-15T03:17:22.957923] vehicle=vehicle-002 mode=normal interval=0.5 speed=14.4 battery=91.3 engine_temp=91.4 tire_pressure=32.0 coolant_pressure=206.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:36,803 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:36.802989+00:00", "healthStatus": "HEALTHY", "speed": 120.0, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:23.470904] vehicle=vehicle-002 mode=normal interval=0.5 speed=11.9 battery=91.7 engine_temp=91.2 tire_pressure=32.0 coolant_pressure=206.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:36,845 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-9e4ef4612ce64066856bea84ccad676e health=HEALTHY sourceTimestamp=2026-11-15T03:17:36.736193Z
+provider-002-1  | [2026-11-15T03:17:23.984193] vehicle=vehicle-002 mode=normal interval=0.5 speed=16.0 battery=92.1 engine_temp=91.4 tire_pressure=32.0 coolant_pressure=206.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:38,851 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:38.851299+00:00", "healthStatus": "HEALTHY", "speed": 120.0, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:24.497682] vehicle=vehicle-002 mode=normal interval=0.5 speed=18.5 battery=92.4 engine_temp=91.7 tire_pressure=31.9 coolant_pressure=205.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:38,893 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-8dade9f04af143f08056522448d01df7 health=HEALTHY sourceTimestamp=2026-11-15T03:17:38.789909Z
+provider-002-1  | [2026-11-15T03:17:25.012102] vehicle=vehicle-002 mode=normal interval=0.5 speed=21.2 battery=92.9 engine_temp=92.2 tire_pressure=31.9 coolant_pressure=205.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:40,899 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:40.898876+00:00", "healthStatus": "HEALTHY", "speed": 120.0, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:25.526426] vehicle=vehicle-002 mode=normal interval=0.5 speed=18.4 battery=93.0 engine_temp=92.2 tire_pressure=32.0 coolant_pressure=205.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:40,941 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-e41da02e6820468f9552313ec64fca44 health=HEALTHY sourceTimestamp=2026-11-15T03:17:40.840792Z
+provider-002-1  | [2026-11-15T03:17:26.040486] vehicle=vehicle-002 mode=normal interval=0.5 speed=23.2 battery=93.5 engine_temp=92.6 tire_pressure=32.0 coolant_pressure=205.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:42,948 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:42.947932+00:00", "healthStatus": "HEALTHY", "speed": 117.92622375488281, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-002-1  | [2026-11-15T03:17:26.553404] vehicle=vehicle-002 mode=normal interval=0.5 speed=21.8 battery=93.8 engine_temp=92.1 tire_pressure=32.0 coolant_pressure=204.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-001-1       | 2026-11-15 03:17:42,990 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-d079a2da88d4434ab59b47e8bb149395 health=HEALTHY sourceTimestamp=2026-11-15T03:17:42.889645Z
+provider-002-1  | [2026-11-15T03:17:27.066588] vehicle=vehicle-002 mode=normal interval=0.5 speed=19.6 battery=94.2 engine_temp=92.0 tire_pressure=32.0 coolant_pressure=204.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       |   File "/workspace/app/src/main.py", line 211, in monitor_signals
+provider-001-1  | [2026-11-15T03:16:58.768175] vehicle=vehicle-001 mode=normal interval=0.5 speed=97.4 battery=87.4 engine_temp=91.0 tire_pressure=31.7 coolant_pressure=201.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:59.283166] vehicle=vehicle-001 mode=normal interval=0.5 speed=98.5 battery=87.6 engine_temp=91.5 tire_pressure=31.7 coolant_pressure=202.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:16:59.791934] vehicle=vehicle-001 mode=normal interval=0.5 speed=102.3 battery=87.9 engine_temp=91.1 tire_pressure=31.6 coolant_pressure=201.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:27.579102] vehicle=vehicle-002 mode=normal interval=0.5 speed=23.6 battery=94.4 engine_temp=91.5 tire_pressure=32.0 coolant_pressure=203.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:28.091686] vehicle=vehicle-002 mode=normal interval=0.5 speed=22.1 battery=94.9 engine_temp=91.5 tire_pressure=32.1 coolant_pressure=204.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:28.604320] vehicle=vehicle-002 mode=normal interval=0.5 speed=22.9 battery=94.9 engine_temp=91.3 tire_pressure=32.1 coolant_pressure=203.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:29.114935] vehicle=vehicle-002 mode=normal interval=0.5 speed=23.6 battery=95.0 engine_temp=90.8 tire_pressure=32.1 coolant_pressure=202.8 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+provider-002-1  | [Control] vehicle=vehicle-002 listening on 0.0.0.0:8090
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+app-002-1       |     signals = {
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 2.0s
+app-001-1       | 2026-11-15 03:17:44,996 INFO [__main__] [main.py:240] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-001", "timestamp": "2026-11-15T03:17:44.996045+00:00", "healthStatus": "HEALTHY", "speed": 120.0, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       |   File "/workspace/app/src/main.py", line 212, in <dictcomp>
+provider-002-1  | [KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 4.0s
+app-001-1       | 2026-11-15 03:17:45,039 INFO [__main__] [main.py:185] [trace_id=b3e3fc5b7c9d63c3563e19784e6e6cbd span_id=fb43d00a896813d5 resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-001/health eventId=vehicle-001-a8d16ac82dfb4832b73eb25dc43d498d health=HEALTHY sourceTimestamp=2026-11-15T03:17:44.938946Z
+app-002-1       |     signal_path: datapoints[signal_path].value
+app-002-1       | AttributeError: 'NoneType' object has no attribute 'value'
+app-002-1       | 2026-11-15 03:17:05,675 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:05.675306+00:00", "healthStatus": "EMERGENCY_BRAKING", "speed": 8.532506942749023, "lidarDistanceMeters": 3.0, "lidarSensorHealthy": true, "obstacleWarning": true, "autonomousBraking": true}
+app-002-1       | 2026-11-15 03:17:05,717 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-fd3e8cece08b4e8c83b0b910835edaf9 health=CRITICAL sourceTimestamp=2026-11-15T03:17:05.511254Z
+app-002-1       | 2026-11-15 03:17:07,722 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:07.722083+00:00", "healthStatus": "HEALTHY", "speed": 7.700591564178467, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | 2026-11-15 03:17:07,764 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-125983e217d9403eb0166aa0bdd95d08 health=HEALTHY sourceTimestamp=2026-11-15T03:17:07.562589Z
+provider-002-1  | [2026-11-15T03:17:43.088034] vehicle=vehicle-002 mode=normal interval=0.5 speed=61.3 battery=79.9 engine_temp=89.8 tire_pressure=31.9 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:00.304332] vehicle=vehicle-001 mode=normal interval=0.5 speed=103.3 battery=87.8 engine_temp=91.1 tire_pressure=31.6 coolant_pressure=202.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-002-1  | [2026-11-15T03:17:43.600570] vehicle=vehicle-002 mode=normal interval=0.5 speed=60.5 battery=79.8 engine_temp=90.1 tire_pressure=32.0 coolant_pressure=200.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:00.811669] vehicle=vehicle-001 mode=normal interval=0.5 speed=108.2 battery=88.0 engine_temp=91.2 tire_pressure=31.6 coolant_pressure=202.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:01.325012] vehicle=vehicle-001 mode=normal interval=0.5 speed=107.2 battery=88.3 engine_temp=91.3 tire_pressure=31.6 coolant_pressure=201.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:01.833582] vehicle=vehicle-001 mode=normal interval=0.5 speed=107.6 battery=88.6 engine_temp=91.2 tire_pressure=31.7 coolant_pressure=201.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:02.341942] vehicle=vehicle-001 mode=normal interval=0.5 speed=112.6 battery=88.5 engine_temp=91.5 tire_pressure=31.7 coolant_pressure=201.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:02.850138] vehicle=vehicle-001 mode=normal interval=0.5 speed=111.1 battery=88.7 engine_temp=91.7 tire_pressure=31.6 coolant_pressure=201.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:03.358273] vehicle=vehicle-001 mode=normal interval=0.5 speed=115.7 battery=88.6 engine_temp=91.4 tire_pressure=31.6 coolant_pressure=201.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:03.865957] vehicle=vehicle-001 mode=normal interval=0.5 speed=116.3 battery=88.8 engine_temp=91.3 tire_pressure=31.6 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:04.375249] vehicle=vehicle-001 mode=normal interval=0.5 speed=116.7 battery=89.0 engine_temp=91.6 tire_pressure=31.6 coolant_pressure=200.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:04.883958] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=89.5 engine_temp=92.0 tire_pressure=31.7 coolant_pressure=200.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:05.391509] vehicle=vehicle-001 mode=normal interval=0.5 speed=118.7 battery=90.0 engine_temp=91.8 tire_pressure=31.8 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:09,771 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:09.771598+00:00", "healthStatus": "HEALTHY", "speed": 5.137259006500244, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:05.899716] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.1 battery=90.0 engine_temp=91.8 tire_pressure=31.7 coolant_pressure=201.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:06.412365] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=90.6 engine_temp=91.8 tire_pressure=31.7 coolant_pressure=200.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:06.924786] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=90.7 engine_temp=91.6 tire_pressure=31.6 coolant_pressure=201.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:07.437800] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=90.9 engine_temp=91.1 tire_pressure=31.6 coolant_pressure=200.8 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:07.947959] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.6 battery=91.3 engine_temp=90.8 tire_pressure=31.6 coolant_pressure=201.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [KUKSA] vehicle=vehicle-001 temporarily unavailable; retry in 1.0s
+provider-001-1  | [KUKSA] vehicle=vehicle-001 temporarily unavailable; retry in 2.0s
+provider-001-1  | [KUKSA] vehicle=vehicle-001 temporarily unavailable; retry in 4.0s
+provider-001-1  | [KUKSA] vehicle=vehicle-001 temporarily unavailable; retry in 5.0s
+provider-001-1  | [2026-11-15T03:17:26.486790] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=91.4 engine_temp=90.9 tire_pressure=31.6 coolant_pressure=201.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:27.001137] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.5 battery=91.2 engine_temp=90.6 tire_pressure=31.5 coolant_pressure=201.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:27.515295] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=91.7 engine_temp=91.0 tire_pressure=31.4 coolant_pressure=202.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:28.027668] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=92.3 engine_temp=90.7 tire_pressure=31.3 coolant_pressure=202.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:28.540833] vehicle=vehicle-001 mode=normal interval=0.5 speed=117.9 battery=92.2 engine_temp=91.0 tire_pressure=31.3 coolant_pressure=201.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:29.050968] vehicle=vehicle-001 mode=normal interval=0.5 speed=117.1 battery=92.2 engine_temp=90.8 tire_pressure=31.3 coolant_pressure=200.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:29.563282] vehicle=vehicle-001 mode=normal interval=0.5 speed=116.7 battery=92.9 engine_temp=90.7 tire_pressure=31.3 coolant_pressure=201.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:09,813 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-32b50cc798ce454eb7bf5119dd28c9af health=HEALTHY sourceTimestamp=2026-11-15T03:17:09.610235Z
+provider-001-1  | [2026-11-15T03:17:30.074025] vehicle=vehicle-001 mode=normal interval=0.5 speed=115.3 battery=93.3 engine_temp=90.5 tire_pressure=31.3 coolant_pressure=201.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:11,819 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:11.819008+00:00", "healthStatus": "HEALTHY", "speed": 0.10589864104986191, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:30.586129] vehicle=vehicle-001 mode=normal interval=0.5 speed=113.7 battery=93.5 engine_temp=90.8 tire_pressure=31.4 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:11,861 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-17cb6287bbe74d07afd1994e90716170 health=HEALTHY sourceTimestamp=2026-11-15T03:17:11.662640Z
+provider-001-1  | [2026-11-15T03:17:31.098629] vehicle=vehicle-001 mode=normal interval=0.5 speed=114.3 battery=93.7 engine_temp=90.4 tire_pressure=31.4 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:31.610556] vehicle=vehicle-001 mode=normal interval=0.5 speed=116.2 battery=94.1 engine_temp=90.4 tire_pressure=31.4 coolant_pressure=201.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:32.122942] vehicle=vehicle-001 mode=normal interval=0.5 speed=118.5 battery=94.4 engine_temp=90.0 tire_pressure=31.4 coolant_pressure=201.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:32.634664] vehicle=vehicle-001 mode=normal interval=0.5 speed=115.7 battery=94.5 engine_temp=89.8 tire_pressure=31.4 coolant_pressure=200.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:33.147747] vehicle=vehicle-001 mode=normal interval=0.5 speed=116.1 battery=94.4 engine_temp=89.7 tire_pressure=31.4 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:33.660455] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.6 battery=94.3 engine_temp=90.1 tire_pressure=31.5 coolant_pressure=200.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:34.173814] vehicle=vehicle-001 mode=normal interval=0.5 speed=118.6 battery=94.5 engine_temp=89.6 tire_pressure=31.5 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:34.686947] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=94.5 engine_temp=90.0 tire_pressure=31.6 coolant_pressure=201.5 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:13,867 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:13.866950+00:00", "healthStatus": "HEALTHY", "speed": 3.272670030593872, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:35.199184] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=95.0 engine_temp=90.3 tire_pressure=31.6 coolant_pressure=200.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:13,909 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-3694e633b7c04b43be3991e081137ce8 health=HEALTHY sourceTimestamp=2026-11-15T03:17:13.717616Z
+provider-001-1  | [2026-11-15T03:17:35.711485] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=95.5 engine_temp=90.6 tire_pressure=31.7 coolant_pressure=200.6 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:15,916 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:15.915685+00:00", "healthStatus": "HEALTHY", "speed": 12.41773509979248, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:36.225412] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=95.7 engine_temp=90.3 tire_pressure=31.7 coolant_pressure=199.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:15,959 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-5959656472b24f29a3b2fb9cd647fc01 health=HEALTHY sourceTimestamp=2026-11-15T03:17:15.773034Z
+provider-001-1  | [2026-11-15T03:17:36.738153] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=95.6 engine_temp=90.0 tire_pressure=31.7 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:17,965 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:17.965441+00:00", "healthStatus": "HEALTHY", "speed": 12.832015037536621, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:37.251528] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=96.2 engine_temp=90.1 tire_pressure=31.7 coolant_pressure=199.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:18,008 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-926c9baf1414410ca7bffcd5eb2eff21 health=HEALTHY sourceTimestamp=2026-11-15T03:17:17.827278Z
+provider-001-1  | [2026-11-15T03:17:37.765876] vehicle=vehicle-001 mode=normal interval=0.5 speed=117.5 battery=96.9 engine_temp=90.1 tire_pressure=31.6 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:38.278966] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=97.2 engine_temp=90.1 tire_pressure=31.7 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:20,014 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:20.013866+00:00", "healthStatus": "HEALTHY", "speed": 9.370064735412598, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:38.792066] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=97.1 engine_temp=89.6 tire_pressure=31.8 coolant_pressure=200.2 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:20,055 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-433fa565ee2349c282f602c93488c09c health=HEALTHY sourceTimestamp=2026-11-15T03:17:19.879304Z
+provider-001-1  | [2026-11-15T03:17:39.305409] vehicle=vehicle-001 mode=normal interval=0.5 speed=118.3 battery=97.7 engine_temp=89.7 tire_pressure=31.8 coolant_pressure=200.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:22,061 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:22.061771+00:00", "healthStatus": "HEALTHY", "speed": 14.433003425598145, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:39.818421] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=97.8 engine_temp=90.1 tire_pressure=31.8 coolant_pressure=201.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:22,104 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-7cb570cd412b4dc9ad5d3a9f41ee3ae2 health=HEALTHY sourceTimestamp=2026-11-15T03:17:21.930651Z
+provider-001-1  | [2026-11-15T03:17:40.330386] vehicle=vehicle-001 mode=normal interval=0.5 speed=118.2 battery=97.8 engine_temp=90.0 tire_pressure=31.9 coolant_pressure=201.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:24,109 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:24.109352+00:00", "healthStatus": "HEALTHY", "speed": 15.973450660705566, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+provider-001-1  | [2026-11-15T03:17:40.842832] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=98.1 engine_temp=90.1 tire_pressure=32.0 coolant_pressure=202.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:24,151 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-7c4dde53e6ed44ed80b5ebe0c06eec59 health=HEALTHY sourceTimestamp=2026-11-15T03:17:23.982096Z
+provider-001-1  | [2026-11-15T03:17:41.355235] vehicle=vehicle-001 mode=normal interval=0.5 speed=117.1 battery=98.2 engine_temp=90.0 tire_pressure=32.0 coolant_pressure=202.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:41.867323] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.9 battery=98.6 engine_temp=90.3 tire_pressure=32.1 coolant_pressure=201.9 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:42.379707] vehicle=vehicle-001 mode=normal interval=0.5 speed=117.2 battery=98.9 engine_temp=90.7 tire_pressure=32.0 coolant_pressure=201.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:42.891682] vehicle=vehicle-001 mode=normal interval=0.5 speed=117.9 battery=98.8 engine_temp=90.7 tire_pressure=32.0 coolant_pressure=202.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:43.403267] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.3 battery=99.3 engine_temp=91.1 tire_pressure=31.9 coolant_pressure=201.3 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:43.916515] vehicle=vehicle-001 mode=normal interval=0.5 speed=119.2 battery=99.6 engine_temp=90.6 tire_pressure=32.0 coolant_pressure=201.1 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:44.427951] vehicle=vehicle-001 mode=normal interval=0.5 speed=116.9 battery=99.8 engine_temp=90.2 tire_pressure=31.9 coolant_pressure=201.7 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+provider-001-1  | [2026-11-15T03:17:44.940909] vehicle=vehicle-001 mode=normal interval=0.5 speed=120.0 battery=100.0 engine_temp=90.3 tire_pressure=32.0 coolant_pressure=201.4 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+app-002-1       | 2026-11-15 03:17:26,158 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:26.158090+00:00", "healthStatus": "HEALTHY", "speed": 23.207578659057617, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | 2026-11-15 03:17:26,201 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-6672b43df3ee4a938048f72db50a9f28 health=HEALTHY sourceTimestamp=2026-11-15T03:17:26.038299Z
+app-002-1       | 2026-11-15 03:17:28,207 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:28.207682+00:00", "healthStatus": "HEALTHY", "speed": 22.093544006347656, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | 2026-11-15 03:17:28,250 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-7ee48c8084d14545bc77105052c26b24 health=HEALTHY sourceTimestamp=2026-11-15T03:17:28.089394Z
+app-002-1       | 2026-11-15 03:17:31,297 ERROR [__main__] [main.py:203] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Failed to read KUKSA signals
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1289, in get
+app-002-1       |     resp = self.client_stub_v1.Get(req, **rpc_kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1181, in __call__
+app-002-1       |     return _end_unary_response_blocking(state, call, False, None)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+app-002-1       |     raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+app-002-1       | grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+app-002-1       | 	status = StatusCode.UNAVAILABLE
+app-002-1       | 	details = "failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.2:55555: Failed to connect to remote host: connect: Connection refused (111)"
+app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T03:17:31.296446413+00:00", grpc_status:14, grpc_message:"failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.2:55555: Failed to connect to remote host: connect: Connection refused (111)"}"
+app-002-1       | >
+app-002-1       |
+app-002-1       | The above exception was the direct cause of the following exception:
+app-002-1       |
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
+app-002-1       |     datapoints = await asyncio.to_thread(
+app-002-1       |   File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+app-002-1       |     return await loop.run_in_executor(None, func_call)
+app-002-1       |   File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+app-002-1       |     result = self.fn(*self.args, **self.kwargs)
+app-002-1       |   File "/workspace/app/src/main.py", line 127, in read_datapoints
+app-002-1       |     return self._kuksa_client.get_current_values(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1046, in get_current_values
+app-002-1       |     entries = self.get(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1291, in get
+app-002-1       |     raise VSSClientError.from_grpc_error(exc) from exc
+app-002-1       | kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'failed to connect to all addresses; last error: UNKNOWN: ipv4:172.18.0.2:55555: Failed to connect to remote host: connect: Connection refused (111)'}, [])
+app-002-1       | 2026-11-15 03:17:33,301 INFO [kuksa_client.grpc] [__init__.py:785] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - No Root CA present, it will not be possible to use a secure connection!
+app-002-1       | 2026-11-15 03:17:33,301 INFO [kuksa_client.grpc] [__init__.py:1014] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Establishing insecure channel
+app-002-1       | 2026-11-15 03:17:35,062 ERROR [__main__] [main.py:142] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - KUKSA reconnect failed; retrying next poll
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1505, in get_server_info
+app-002-1       |     resp = self.client_stub_v1.GetServerInfo(req, **rpc_kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1181, in __call__
+app-002-1       |     return _end_unary_response_blocking(state, call, False, None)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+app-002-1       |     raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+app-002-1       | grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+app-002-1       | 	status = StatusCode.UNAVAILABLE
+app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=A name=kuksa-002 is_balancer=0: Domain name not found"
+app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T03:17:35.062081604+00:00", grpc_status:14, grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=A name=kuksa-002 is_balancer=0: Domain name not found"}"
+app-002-1       | >
+app-002-1       |
+app-002-1       | The above exception was the direct cause of the following exception:
+app-002-1       |
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/workspace/app/src/main.py", line 135, in reconnect_kuksa_if_needed
+app-002-1       |     await asyncio.to_thread(
+app-002-1       |   File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+app-002-1       |     return await loop.run_in_executor(None, func_call)
+app-002-1       |   File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+app-002-1       |     result = self.fn(*self.args, **self.kwargs)
+app-002-1       |   File "/workspace/app/src/kuksa_reconnect.py", line 17, in reconnect
+app-002-1       |     client.connect()
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1022, in connect
+app-002-1       |     logger.debug("Connected to server: %s", self.get_server_info())
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1512, in get_server_info
+app-002-1       |     raise VSSClientError.from_grpc_error(exc) from exc
+app-002-1       | kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=A name=kuksa-002 is_balancer=0: Domain name not found'}, [])
+app-002-1       | 2026-11-15 03:17:35,064 ERROR [__main__] [main.py:203] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Failed to read KUKSA signals
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1289, in get
+app-002-1       |     resp = self.client_stub_v1.Get(req, **rpc_kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1181, in __call__
+app-002-1       |     return _end_unary_response_blocking(state, call, False, None)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+app-002-1       |     raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+app-002-1       | grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+app-002-1       | 	status = StatusCode.UNAVAILABLE
+app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=A name=kuksa-002 is_balancer=0: Domain name not found"
+app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T03:17:35.064185524+00:00", grpc_status:14, grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=A name=kuksa-002 is_balancer=0: Domain name not found"}"
+app-002-1       | >
+app-002-1       |
+app-002-1       | The above exception was the direct cause of the following exception:
+app-002-1       |
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
+app-002-1       |     datapoints = await asyncio.to_thread(
+app-002-1       |   File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+app-002-1       |     return await loop.run_in_executor(None, func_call)
+app-002-1       |   File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+app-002-1       |     result = self.fn(*self.args, **self.kwargs)
+app-002-1       |   File "/workspace/app/src/main.py", line 127, in read_datapoints
+app-002-1       |     return self._kuksa_client.get_current_values(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1046, in get_current_values
+app-002-1       |     entries = self.get(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1291, in get
+app-002-1       |     raise VSSClientError.from_grpc_error(exc) from exc
+app-002-1       | kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=A name=kuksa-002 is_balancer=0: Domain name not found'}, [])
+app-002-1       | 2026-11-15 03:17:37,066 INFO [kuksa_client.grpc] [__init__.py:785] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - No Root CA present, it will not be possible to use a secure connection!
+app-002-1       | 2026-11-15 03:17:37,066 INFO [kuksa_client.grpc] [__init__.py:1014] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Establishing insecure channel
+app-002-1       | 2026-11-15 03:17:39,530 ERROR [__main__] [main.py:142] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - KUKSA reconnect failed; retrying next poll
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1505, in get_server_info
+app-002-1       |     resp = self.client_stub_v1.GetServerInfo(req, **rpc_kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1181, in __call__
+app-002-1       |     return _end_unary_response_blocking(state, call, False, None)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+app-002-1       |     raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+app-002-1       | grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+app-002-1       | 	status = StatusCode.UNAVAILABLE
+app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"
+app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T03:17:39.529796306+00:00", grpc_status:14, grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"}"
+app-002-1       | >
+app-002-1       |
+app-002-1       | The above exception was the direct cause of the following exception:
+app-002-1       |
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/workspace/app/src/main.py", line 135, in reconnect_kuksa_if_needed
+app-002-1       |     await asyncio.to_thread(
+app-002-1       |   File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+app-002-1       |     return await loop.run_in_executor(None, func_call)
+app-002-1       |   File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+app-002-1       |     result = self.fn(*self.args, **self.kwargs)
+app-002-1       |   File "/workspace/app/src/kuksa_reconnect.py", line 17, in reconnect
+app-002-1       |     client.connect()
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1022, in connect
+app-002-1       |     logger.debug("Connected to server: %s", self.get_server_info())
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1512, in get_server_info
+app-002-1       |     raise VSSClientError.from_grpc_error(exc) from exc
+app-002-1       | kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found'}, [])
+app-002-1       | 2026-11-15 03:17:39,531 ERROR [__main__] [main.py:203] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Failed to read KUKSA signals
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1289, in get
+app-002-1       |     resp = self.client_stub_v1.Get(req, **rpc_kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1181, in __call__
+app-002-1       |     return _end_unary_response_blocking(state, call, False, None)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/grpc/_channel.py", line 1006, in _end_unary_response_blocking
+app-002-1       |     raise _InactiveRpcError(state)  # pytype: disable=not-instantiable
+app-002-1       | grpc._channel._InactiveRpcError: <_InactiveRpcError of RPC that terminated with:
+app-002-1       | 	status = StatusCode.UNAVAILABLE
+app-002-1       | 	details = "DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"
+app-002-1       | 	debug_error_string = "UNKNOWN:Error received from peer  {created_time:"2026-11-15T03:17:39.531322773+00:00", grpc_status:14, grpc_message:"DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found"}"
+app-002-1       | >
+app-002-1       |
+app-002-1       | The above exception was the direct cause of the following exception:
+app-002-1       |
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/workspace/app/src/main.py", line 199, in monitor_signals
+app-002-1       |     datapoints = await asyncio.to_thread(
+app-002-1       |   File "/usr/lib/python3.10/asyncio/threads.py", line 25, in to_thread
+app-002-1       |     return await loop.run_in_executor(None, func_call)
+app-002-1       |   File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+app-002-1       |     result = self.fn(*self.args, **self.kwargs)
+app-002-1       |   File "/workspace/app/src/main.py", line 127, in read_datapoints
+app-002-1       |     return self._kuksa_client.get_current_values(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1046, in get_current_values
+app-002-1       |     entries = self.get(
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 983, in wrapper
+app-002-1       |     return func(self, *args, **kwargs)
+app-002-1       |   File "/usr/local/lib/python3.10/dist-packages/kuksa_client/grpc/__init__.py", line 1291, in get
+app-002-1       |     raise VSSClientError.from_grpc_error(exc) from exc
+app-002-1       | kuksa_client.grpc.VSSClientError: ({'code': 14, 'reason': 'unavailable', 'message': 'DNS resolution failed for kuksa-002:55555: C-ares status is not ARES_SUCCESS qtype=AAAA name=kuksa-002 is_balancer=0: Domain name not found'}, [])
+app-002-1       | 2026-11-15 03:17:41,533 INFO [kuksa_client.grpc] [__init__.py:785] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - No Root CA present, it will not be possible to use a secure connection!
+app-002-1       | 2026-11-15 03:17:41,533 INFO [kuksa_client.grpc] [__init__.py:1014] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Establishing insecure channel
+app-002-1       | 2026-11-15 03:17:41,538 INFO [__main__] [main.py:140] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Reconnected to KUKSA databroker
+app-002-1       | 2026-11-15 03:17:41,542 ERROR [__main__] [main.py:246] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Failed to evaluate autonomous signals
+app-002-1       | Traceback (most recent call last):
+app-002-1       |   File "/workspace/app/src/main.py", line 211, in monitor_signals
+app-002-1       |     signals = {
+app-002-1       |   File "/workspace/app/src/main.py", line 212, in <dictcomp>
+app-002-1       |     signal_path: datapoints[signal_path].value
+app-002-1       | AttributeError: 'NoneType' object has no attribute 'value'
+app-002-1       | 2026-11-15 03:17:41,543 WARNING [__main__] [main.py:163] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: not publishing (incomplete): LiDAR value or timestamp missing in KUKSA
+app-002-1       | 2026-11-15 03:17:43,547 INFO [__main__] [main.py:240] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - Published autonomous status: {"vehicleId": "vehicle-002", "timestamp": "2026-11-15T03:17:43.547565+00:00", "healthStatus": "HEALTHY", "speed": 61.32737350463867, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+app-002-1       | 2026-11-15 03:17:43,589 INFO [__main__] [main.py:185] [trace_id=e2c1e04693c630fbbafcf00cbfed12eb span_id=880509c1f2bbc1af resource.service.name=src/main.py trace_sampled=True] - v1: published topic=sdv/vehicle-002/health eventId=vehicle-002-3e9c113511d647b7831babc1f44cb712 health=HEALTHY sourceTimestamp=2026-11-15T03:17:43.085983Z

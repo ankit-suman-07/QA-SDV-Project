@@ -1,0 +1,250 @@
+{
+  "networks": {
+    "default": {
+      "name": "qa-sdv-v1_default",
+      "ipam": {}
+    }
+  },
+  "services": {
+    "app-001": {
+      "restart": "unless-stopped",
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "DATABROKER_HOST": "kuksa-001",
+        "DATABROKER_PORT": "55555",
+        "SDV_MQTT_ADDRESS": "mqtt://mqtt:1883",
+        "SDV_VEHICLEDATABROKER_ADDRESS": "grpc://kuksa-001:55555",
+        "SIMULATED_VEHICLE_ID": "vehicle-001"
+      },
+      "image": "qa-v1verify-app:20261114",
+      "networks": {
+        "default": null
+      },
+      "depends_on": {
+        "kuksa-001": {
+          "condition": "service_started",
+          "required": true
+        },
+        "mqtt": {
+          "condition": "service_started",
+          "required": true
+        },
+        "provider-001": {
+          "condition": "service_started",
+          "required": true
+        }
+      }
+    },
+    "app-002": {
+      "restart": "unless-stopped",
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "DATABROKER_HOST": "kuksa-002",
+        "DATABROKER_PORT": "55555",
+        "SDV_MQTT_ADDRESS": "mqtt://mqtt:1883",
+        "SDV_VEHICLEDATABROKER_ADDRESS": "grpc://kuksa-002:55555",
+        "SIMULATED_VEHICLE_ID": "vehicle-002"
+      },
+      "image": "qa-v1verify-app:20261114",
+      "networks": {
+        "default": null
+      },
+      "depends_on": {
+        "kuksa-002": {
+          "condition": "service_started",
+          "required": true
+        },
+        "mqtt": {
+          "condition": "service_started",
+          "required": true
+        },
+        "provider-002": {
+          "condition": "service_started",
+          "required": true
+        }
+      }
+    },
+    "kuksa-001": {
+      "command": [
+        "--insecure",
+        "--vss",
+        "/config/vss-with-autonomous-sensors.json"
+      ],
+      "entrypoint": null,
+      "image": "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/tmp/qa-pr39-combined/vehicle-simulator/config/vss-with-autonomous-sensors.json",
+          "target": "/config/vss-with-autonomous-sensors.json",
+          "read_only": true,
+          "bind": {}
+        }
+      ],
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 55555,
+          "published": "53241",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ]
+    },
+    "kuksa-002": {
+      "command": [
+        "--insecure",
+        "--vss",
+        "/config/vss-with-autonomous-sensors.json"
+      ],
+      "entrypoint": null,
+      "image": "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/tmp/qa-pr39-combined/vehicle-simulator/config/vss-with-autonomous-sensors.json",
+          "target": "/config/vss-with-autonomous-sensors.json",
+          "read_only": true,
+          "bind": {}
+        }
+      ],
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 55555,
+          "published": "46281",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ]
+    },
+    "mqtt": {
+      "command": [
+        "mosquitto",
+        "-c",
+        "/mosquitto/config/mosquitto.conf"
+      ],
+      "entrypoint": null,
+      "image": "eclipse-mosquitto:2",
+      "networks": {
+        "default": null
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "/tmp/qa-pr39-combined/vehicle-simulator/config/mosquitto.conf",
+          "target": "/mosquitto/config/mosquitto.conf",
+          "read_only": true,
+          "bind": {}
+        }
+      ],
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 1883,
+          "published": "49585",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ]
+    },
+    "provider-001": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "DATABROKER_HOST": "kuksa-001",
+        "DATABROKER_PORT": "55555",
+        "INJECT_FAULT": "0",
+        "PUBLISH_INTERVAL_SECONDS": "0.5",
+        "SIMULATED_VEHICLE_ID": "vehicle-001",
+        "SIMULATOR_CONTROL_HOST": "0.0.0.0",
+        "SIMULATOR_CONTROL_PORT": "8090"
+      },
+      "image": "qa-pr39-99064-provider",
+      "networks": {
+        "default": null
+      },
+      "stop_grace_period": "30s",
+      "depends_on": {
+        "kuksa-001": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8090,
+          "published": "57875",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ]
+    },
+    "provider-002": {
+      "command": null,
+      "entrypoint": null,
+      "environment": {
+        "DATABROKER_HOST": "kuksa-002",
+        "DATABROKER_PORT": "55555",
+        "INJECT_FAULT": "0",
+        "PUBLISH_INTERVAL_SECONDS": "0.5",
+        "SIMULATED_VEHICLE_ID": "vehicle-002",
+        "SIMULATOR_CONTROL_HOST": "0.0.0.0",
+        "SIMULATOR_CONTROL_PORT": "8090"
+      },
+      "image": "qa-pr39-99064-provider",
+      "networks": {
+        "default": null
+      },
+      "stop_grace_period": "30s",
+      "depends_on": {
+        "kuksa-002": {
+          "condition": "service_started",
+          "required": true
+        }
+      },
+      "ports": [
+        {
+          "mode": "ingress",
+          "target": 8090,
+          "published": "40431",
+          "protocol": "tcp",
+          "host_ip": "127.0.0.1"
+        }
+      ]
+    }
+  },
+  "x-app": {
+    "build": {
+      "context": "../velocitas-app",
+      "dockerfile": "app/Dockerfile"
+    },
+    "image": "qa-sdv-autonomous-health-app:local",
+    "restart": "unless-stopped"
+  },
+  "x-kuksa": {
+    "command": [
+      "--insecure",
+      "--vss",
+      "/config/vss-with-autonomous-sensors.json"
+    ],
+    "image": "ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0",
+    "volumes": [
+      "./config/vss-with-autonomous-sensors.json:/config/vss-with-autonomous-sensors.json:ro"
+    ]
+  },
+  "x-provider": {
+    "build": ".",
+    "image": "qa-sdv-provider:local",
+    "stop_grace_period": "30s"
+  }
+}

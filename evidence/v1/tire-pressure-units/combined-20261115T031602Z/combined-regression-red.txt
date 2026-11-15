@@ -1,0 +1,216 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_ test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[4-vehicle-001] _
+
+provider_main = <module 'provider_main' from '/tmp/qa-pr39-combined/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa43c88b080>
+vehicle = 'vehicle-001', failure_code = 4
+
+    @pytest.mark.parametrize('vehicle', ['vehicle-001', 'vehicle-002'])
+    @pytest.mark.parametrize('failure_code', [4, 14])
+    def test_recovery_publishes_kpa_once_without_advancing_failed_psi_state(
+        provider_main, monkeypatch, vehicle, failure_code,
+    ):
+        """An inline raw write, state advance on failure or reconversion must fail."""
+        from kuksa_client.grpc import VSSClientError
+        monkeypatch.setattr(provider_main, 'SIMULATED_VEHICLE_ID', vehicle)
+        controller = provider_main.create_scenario_controller()
+        stop = Stop(stop_after=3)
+        inputs, writes, attempts, closed = [], [], [], []
+
+        def observation(state, **scenarios):
+            inputs.append(state['tire_pressure'])
+            return dict(state, tire_pressure=state['tire_pressure'] + 1)
+
+        class Client:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                closed.append(True)
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs == {'timeout': 2.0}
+                attempts.append(values)
+                if len(attempts) == 1:
+                    raise VSSClientError({'code': failure_code, 'reason': 'transient'}, [])
+                writes.append(values[provider_main.SIGNAL_PATHS['tire_pressure']].value)
+
+        monkeypatch.setattr(provider_main, 'next_state', observation)
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        provider_main.publish_loop(controller, stop)
+        assert inputs == [32.0, 32.0, 33.0]
+>       assert writes == [228, 234]  # 33/34 psi quantized once, not raw or re-converted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [33.0, 34.0] == [228, 234]
+E
+E         At index 0 diff: 33.0 != 228
+E         Use -v to get more diff
+
+vehicle-simulator/tests/test_provider_main.py:182: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[KUKSA] vehicle=vehicle-001 temporarily unavailable; retry in 1.0s
+[2026-11-14T22:11:48.408883] vehicle=vehicle-001 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=33.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+[2026-11-14T22:11:48.408939] vehicle=vehicle-001 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=34.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+_ test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[4-vehicle-002] _
+
+provider_main = <module 'provider_main' from '/tmp/qa-pr39-combined/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa43c88b1d0>
+vehicle = 'vehicle-002', failure_code = 4
+
+    @pytest.mark.parametrize('vehicle', ['vehicle-001', 'vehicle-002'])
+    @pytest.mark.parametrize('failure_code', [4, 14])
+    def test_recovery_publishes_kpa_once_without_advancing_failed_psi_state(
+        provider_main, monkeypatch, vehicle, failure_code,
+    ):
+        """An inline raw write, state advance on failure or reconversion must fail."""
+        from kuksa_client.grpc import VSSClientError
+        monkeypatch.setattr(provider_main, 'SIMULATED_VEHICLE_ID', vehicle)
+        controller = provider_main.create_scenario_controller()
+        stop = Stop(stop_after=3)
+        inputs, writes, attempts, closed = [], [], [], []
+
+        def observation(state, **scenarios):
+            inputs.append(state['tire_pressure'])
+            return dict(state, tire_pressure=state['tire_pressure'] + 1)
+
+        class Client:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                closed.append(True)
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs == {'timeout': 2.0}
+                attempts.append(values)
+                if len(attempts) == 1:
+                    raise VSSClientError({'code': failure_code, 'reason': 'transient'}, [])
+                writes.append(values[provider_main.SIGNAL_PATHS['tire_pressure']].value)
+
+        monkeypatch.setattr(provider_main, 'next_state', observation)
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        provider_main.publish_loop(controller, stop)
+        assert inputs == [32.0, 32.0, 33.0]
+>       assert writes == [228, 234]  # 33/34 psi quantized once, not raw or re-converted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [33.0, 34.0] == [228, 234]
+E
+E         At index 0 diff: 33.0 != 228
+E         Use -v to get more diff
+
+vehicle-simulator/tests/test_provider_main.py:182: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+[2026-11-14T22:11:48.437116] vehicle=vehicle-002 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=33.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+[2026-11-14T22:11:48.437175] vehicle=vehicle-002 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=34.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+_ test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[14-vehicle-001] _
+
+provider_main = <module 'provider_main' from '/tmp/qa-pr39-combined/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa43ada8c50>
+vehicle = 'vehicle-001', failure_code = 14
+
+    @pytest.mark.parametrize('vehicle', ['vehicle-001', 'vehicle-002'])
+    @pytest.mark.parametrize('failure_code', [4, 14])
+    def test_recovery_publishes_kpa_once_without_advancing_failed_psi_state(
+        provider_main, monkeypatch, vehicle, failure_code,
+    ):
+        """An inline raw write, state advance on failure or reconversion must fail."""
+        from kuksa_client.grpc import VSSClientError
+        monkeypatch.setattr(provider_main, 'SIMULATED_VEHICLE_ID', vehicle)
+        controller = provider_main.create_scenario_controller()
+        stop = Stop(stop_after=3)
+        inputs, writes, attempts, closed = [], [], [], []
+
+        def observation(state, **scenarios):
+            inputs.append(state['tire_pressure'])
+            return dict(state, tire_pressure=state['tire_pressure'] + 1)
+
+        class Client:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                closed.append(True)
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs == {'timeout': 2.0}
+                attempts.append(values)
+                if len(attempts) == 1:
+                    raise VSSClientError({'code': failure_code, 'reason': 'transient'}, [])
+                writes.append(values[provider_main.SIGNAL_PATHS['tire_pressure']].value)
+
+        monkeypatch.setattr(provider_main, 'next_state', observation)
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        provider_main.publish_loop(controller, stop)
+        assert inputs == [32.0, 32.0, 33.0]
+>       assert writes == [228, 234]  # 33/34 psi quantized once, not raw or re-converted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [33.0, 34.0] == [228, 234]
+E
+E         At index 0 diff: 33.0 != 228
+E         Use -v to get more diff
+
+vehicle-simulator/tests/test_provider_main.py:182: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[KUKSA] vehicle=vehicle-001 temporarily unavailable; retry in 1.0s
+[2026-11-14T22:11:48.444224] vehicle=vehicle-001 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=33.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+[2026-11-14T22:11:48.444276] vehicle=vehicle-001 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=34.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+_ test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[14-vehicle-002] _
+
+provider_main = <module 'provider_main' from '/tmp/qa-pr39-combined/vehicle-simulator/tests/../src/main.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fa43ada9160>
+vehicle = 'vehicle-002', failure_code = 14
+
+    @pytest.mark.parametrize('vehicle', ['vehicle-001', 'vehicle-002'])
+    @pytest.mark.parametrize('failure_code', [4, 14])
+    def test_recovery_publishes_kpa_once_without_advancing_failed_psi_state(
+        provider_main, monkeypatch, vehicle, failure_code,
+    ):
+        """An inline raw write, state advance on failure or reconversion must fail."""
+        from kuksa_client.grpc import VSSClientError
+        monkeypatch.setattr(provider_main, 'SIMULATED_VEHICLE_ID', vehicle)
+        controller = provider_main.create_scenario_controller()
+        stop = Stop(stop_after=3)
+        inputs, writes, attempts, closed = [], [], [], []
+
+        def observation(state, **scenarios):
+            inputs.append(state['tire_pressure'])
+            return dict(state, tire_pressure=state['tire_pressure'] + 1)
+
+        class Client:
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                closed.append(True)
+
+            def set_current_values(self, values, **kwargs):
+                assert kwargs == {'timeout': 2.0}
+                attempts.append(values)
+                if len(attempts) == 1:
+                    raise VSSClientError({'code': failure_code, 'reason': 'transient'}, [])
+                writes.append(values[provider_main.SIGNAL_PATHS['tire_pressure']].value)
+
+        monkeypatch.setattr(provider_main, 'next_state', observation)
+        monkeypatch.setattr(provider_main, 'get_client', Client)
+        provider_main.publish_loop(controller, stop)
+        assert inputs == [32.0, 32.0, 33.0]
+>       assert writes == [228, 234]  # 33/34 psi quantized once, not raw or re-converted
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert [33.0, 34.0] == [228, 234]
+E
+E         At index 0 diff: 33.0 != 228
+E         Use -v to get more diff
+
+vehicle-simulator/tests/test_provider_main.py:182: AssertionError
+----------------------------- Captured stdout call -----------------------------
+[KUKSA] vehicle=vehicle-002 temporarily unavailable; retry in 1.0s
+[2026-11-14T22:11:48.451146] vehicle=vehicle-002 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=33.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+[2026-11-14T22:11:48.451207] vehicle=vehicle-002 mode=normal interval=5.0 speed=60.0 battery=80.0 engine_temp=90.0 tire_pressure=34.0 coolant_pressure=200.0 lidar_distance_m=35.0 lidar_step=0.0 lidar_sensor_healthy=true obstacle_warning=false autonomous_braking=false
+=========================== short test summary info ============================
+FAILED vehicle-simulator/tests/test_provider_main.py::test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[4-vehicle-001]
+FAILED vehicle-simulator/tests/test_provider_main.py::test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[4-vehicle-002]
+FAILED vehicle-simulator/tests/test_provider_main.py::test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[14-vehicle-001]
+FAILED vehicle-simulator/tests/test_provider_main.py::test_recovery_publishes_kpa_once_without_advancing_failed_psi_state[14-vehicle-002]
+4 failed, 6 deselected in 0.19s

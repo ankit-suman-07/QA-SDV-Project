@@ -1,0 +1,54 @@
+[
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.yml",
+      "config",
+      "--quiet"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "compose",
+      "-f",
+      "vehicle-simulator/docker-compose.v1.yml",
+      "config",
+      "--quiet"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "argv": [
+      "git",
+      "diff",
+      "origin/main",
+      "--check"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "vssPressureMetadata": {
+      "datatype": "uint16",
+      "description": "Tire pressure in kilo-Pascal.",
+      "type": "sensor",
+      "unit": "kPa"
+    },
+    "result": "matches actual known221kPa uint16 readback from32psi fixture"
+  }
+]

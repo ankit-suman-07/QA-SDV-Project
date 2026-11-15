@@ -1,0 +1,139 @@
+[
+  {
+    "healthyBoth": true,
+    "pressureBoth": {
+      "vehicle-001": {
+        "kpa": 220,
+        "sourceTimestamp": "2026-11-15 03:16:43.960329+00:00"
+      },
+      "vehicle-002": {
+        "kpa": 221,
+        "sourceTimestamp": "2026-11-15 03:16:44.264428+00:00"
+      }
+    }
+  },
+  {
+    "vehicle": "vehicle-002",
+    "outageSecondsAtLeast": 12,
+    "returnedUtc": "2026-11-15T03:16:59.755028+00:00",
+    "freshEvent": {
+      "receiptUtc": "2026-11-15T03:17:05.717262+00:00",
+      "topic": "sdv/vehicle-002/health",
+      "qos": 1,
+      "retain": false,
+      "event": {
+        "schemaVersion": "1.0.0",
+        "eventId": "vehicle-002-fd3e8cece08b4e8c83b0b910835edaf9",
+        "vehicleId": "vehicle-002",
+        "sourceTimestamp": "2026-11-15T03:17:05.511254Z",
+        "health": "CRITICAL",
+        "faults": [
+          "LIDAR_OBSTRUCTION"
+        ],
+        "lidar": {
+          "distanceMeters": 3.0,
+          "sensorAvailable": true
+        }
+      }
+    },
+    "otherAdvancedHealthy": true,
+    "providerBefore": {
+      "running": true,
+      "exitCode": 0,
+      "startedAt": "2026-11-15T03:16:41.194206802Z",
+      "restartCount": 0
+    },
+    "providerAfter": {
+      "running": true,
+      "exitCode": 0,
+      "startedAt": "2026-11-15T03:16:41.194206802Z",
+      "restartCount": 0
+    },
+    "pressureAfter": {
+      "kpa": 221,
+      "sourceTimestamp": "2026-11-15 03:17:05.510086+00:00"
+    }
+  },
+  {
+    "vehicle": "vehicle-001",
+    "outageSecondsAtLeast": 12,
+    "returnedUtc": "2026-11-15T03:17:21.626710+00:00",
+    "freshEvent": {
+      "receiptUtc": "2026-11-15T03:17:28.654304+00:00",
+      "topic": "sdv/vehicle-001/health",
+      "qos": 1,
+      "retain": false,
+      "event": {
+        "schemaVersion": "1.0.0",
+        "eventId": "vehicle-001-aab3b8cd863843c9a29cfb0e1929301c",
+        "vehicleId": "vehicle-001",
+        "sourceTimestamp": "2026-11-15T03:17:28.538789Z",
+        "health": "HEALTHY",
+        "faults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        }
+      }
+    },
+    "otherAdvancedHealthy": true,
+    "providerBefore": {
+      "running": true,
+      "exitCode": 0,
+      "startedAt": "2026-11-15T03:16:41.478574329Z",
+      "restartCount": 0
+    },
+    "providerAfter": {
+      "running": true,
+      "exitCode": 0,
+      "startedAt": "2026-11-15T03:16:41.478574329Z",
+      "restartCount": 0
+    },
+    "pressureAfter": {
+      "kpa": 216,
+      "sourceTimestamp": "2026-11-15 03:17:28.536259+00:00"
+    }
+  },
+  {
+    "initialBrokerAbsentRecovered": true,
+    "controlledSigtermExit": 0
+  },
+  {
+    "knownGeneratorPsi": 32,
+    "actualKuksa": {
+      "kpa": 221,
+      "sourceTimestamp": "2026-11-15 03:17:50.456263+00:00"
+    },
+    "fixture": "midpoint random changes; actual production publication/recovery code"
+  },
+  {
+    "actualLowKuksa": {
+      "kpa": 165,
+      "sourceTimestamp": "2026-11-15 03:18:03.204228+00:00"
+    },
+    "legacyPsi": 23.931226725485775,
+    "protobufPsi": 23.931226725485775,
+    "mapped": {
+      "faultId": null,
+      "code": "TIRE_PRESSURE_LOW_FRONT_LEFT",
+      "description": "Tire pressure below safe threshold (frontLeft)",
+      "severity": "CRITICAL",
+      "status": "ACTIVE",
+      "affectedSignal": "tirePressurePsi.frontLeft",
+      "observedValue": 23.931226725485775,
+      "unit": "psi",
+      "threshold": 24,
+      "sourceTimestamp": null,
+      "detectedTimestamp": null,
+      "lastUpdatedTimestamp": null,
+      "clearedTimestamp": null,
+      "correlationId": null,
+      "source": "activeFaults"
+    },
+    "diagnosticContext": "explicit fixture; conversion/protobuf/mapper in-process, not a live legacy HTTP loop/gateway"
+  },
+  {
+    "clearRestoredKnown207kpa": true,
+    "generatorPsiAfterClear": 30
+  }
+]

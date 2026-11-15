@@ -44,3 +44,72 @@ Branch is independent of provider recovery but overlaps in provider main. Rebase
 A three-tree preview against the common baseline confirms **content conflicts in `vehicle-simulator/src/main.py`**. [Preview](merge-preview.txt) contains both branches’ source, not an accepted resolution. Recommended order: recovery first, then rebase pressure on updated main and use `publication_values(observation)` inside the recovered loop with `timeout=2.0`. Keep the helper definition and both sets of tests. This is an integration conflict, not a functional dependency; the pressure branch remains independently based on main.
 
 Captured text artifacts have trailing whitespace/excess final blank lines normalized for the branch-to-main whitespace check. [Normalization record](text-normalization.json) preserves before/after hashes; original checkpoint blobs remain in Git history. Test outcomes/content are unchanged.
+
+## Combined follow-up — 2026-11-15 UTC (after PR #38 merged)
+
+PR #38 was confirmed MERGED as `ed5016c7b96f32191eb1b1b3a6737895b63a1063`,
+with provider-recovery head `e6be510`. PR #39 remained on its existing branch
+`ankit/fix/v1-tire-pressure-units`, original head `d6b770c`. Both inspected heads
+had passing CI and no submitted reviews. Those are prior-head observations,
+not fresh combined verification. [Captured PR metadata](combined-20261115T031602Z/input-pr38.json)
+and [PR #39 metadata](combined-20261115T031602Z/input-pr39.json) preserve the inspected SHAs/status.
+
+Main was merged into this branch without rebasing or force-pushing. Merge commit
+**`470240d`** has parents `d6b770c` and `ed5016c`. Only
+`vehicle-simulator/src/main.py` conflicted. Its resolution preserves the complete
+recovery loop, transient status4/14 handling, fresh client/channel lifecycle,
+nonblocking startup, per-RPC deadline, capped interruptible backoff, signal handlers
+and control-server cleanup. PR #39's `publication_values` helper remains unchanged.
+The recovery loop now calls `publication_values(observation)` with `timeout=2.0`,
+then commits `state = observation` only after successful publication. There is
+one main/loop, one initialization, no old inline loop, no stale state reference,
+no unused time import and no active conflict marker. Both previous regression and
+evidence sets were preserved; unrelated interfaces and requirements are unchanged.
+
+The new coupling regression covers both vehicle IDs and both transient error codes.
+It first failed four cases with raw psi writes; combined conversion passes, proving
+that failed observations do not advance the internal psi state, reconnection does
+not convert it twice and successful values are uint16 kPa. A follow-up commit adds
+these four cases and this fresh evidence, separately from the merge itself.
+[AST/source/history checks](combined-20261115T031602Z/combined-review.json) verify that main's lifecycle
+is identical, the recovery AST changes only its publication argument, and the helper
+is identical to original PR #39. The earlier entries above remain historical.
+
+### Fresh verification (combined implementation)
+
+| Check | Result / boundary |
+| --- | --- |
+| [Focused suite](combined-20261115T031602Z/focused-tests.txt) | **69 passed**: recovery/deadline/backoff/permanent errors, generator, publication units, legacy bridge wiring/conversion, mapper thresholds and fault details. [Red control](combined-20261115T031602Z/combined-regression-red.txt): four intended raw-write failures before integration. |
+| [Full Python3.12](combined-20261115T031602Z/full-python.txt) | **509 passed +386 subtests**, two explicit SDK/transport skips, nine integration tests deselected. These two host skip boundaries were exercised separately below; no skip counted as a pass. |
+| [Actual runtime](combined-20261115T031602Z/runtime-results.json) / [MQTT](combined-20261115T031602Z/runtime-mqtt.jsonl) | **PASS**: both real providers/KUKSA/Velocitas apps/Mosquitto. Each broker killed for at least12s and restored; fresh post-return source/event observed with provider start time unchanged and restartCount0. The other vehicle continued HEALTHY. Vehicle-002 retained active obstruction through reconnect, then cleared. |
+| Startup/shutdown | **PASS**: provider started with its broker absent remained alive, recovered when it returned, then controlled SIGTERM exited0. RPC deadlines and interruptible backoff also verified by unit tests. |
+| Known pressure fixture | **PASS**: with test-only random changes fixed at range midpoints, the production provider/recovery loop published known32psi as **221kPa** to actual KUKSA. VSS declaration remains uint16/kPa. Cooling lowered pressure; clear returned to known30psi/**207kPa** (the existing generator clamps to its healthy minimum). This fixture is explicitly controlled, not a claim about random workload values. |
+| Live signal/transport | **9 actual KUKSA signal tests passed**; **2 actual MQTT transport tests passed** on a separate broker with no app publications contaminating the negative control. Exact commands/outputs in [runtime command record](combined-20261115T031602Z/runtime-commands.json). |
+| Downstream boundary | Actual low KUKSA pressure converted once with the unchanged kPa→psi helper, then serialized/read through real protobuf and mapped in-process. Psi values, CRITICAL24psi threshold and quantization agree;28psi warning boundary is covered by unit tests. Active diagnostic context is an explicit fixture. **Full legacy bridge HTTP/real Ditto/OpenSOVD gateway remain unverified**, not substituted with a live claim. |
+| [Native SDK](combined-20261115T031602Z/sdk-native-tests.txt) | **11 passed**, two existing SDK Paho deprecation warnings; pytest added only to a disposable SDK test container. |
+| [Java21](combined-20261115T031602Z/java21-tests.txt) / [frontend Node22](combined-20261115T031602Z/frontend-tests.txt) | **208 /7 tests passed**. |
+| [Unchanged baseline](combined-20261115T031602Z/baseline-results.json) | **PASS/exit0**: actual single-vehicle healthy→braking→healthy workflow; owned-project cleanup exit0. |
+| [Configuration/static checks](combined-20261115T031602Z/configuration-and-static-checks.json) | Both Compose definitions valid, syntax/conflict-marker checks clean, VSS uint16/kPa declaration confirmed, git diff --check passed. |
+
+[Manifest and source hashes](combined-20261115T031602Z/combined-review.json),
+[runtime manifest](combined-20261115T031602Z/runtime-manifest.json),
+[commands/exits](combined-20261115T031602Z/runtime-commands.json),
+[versions](combined-20261115T031602Z/runtime-versions.json),
+[reproducible runtime harness](combined-20261115T031602Z/runtime_check.py) and
+[reviewed artifact hashes](combined-20261115T031602Z/artifact-sha256.json) identify the fresh run.
+Production code was tested at merge `470240d`; the working tree also contained the
+four new regression cases and fresh evidence. No historical run was relabelled as
+combined verification. The runtime harness adapts the existing recovery/pressure
+harnesses into a new directory instead of overwriting their results.
+
+Only unique test projects were used, with loopback ports and no credentials, shared
+twins or policies. All owned scenarios cleared, induced broker outages restored,
+services stopped; no unrelated service or volume removed. Text outputs have only
+trailing whitespace normalized before tracking. The original artifact index remains
+an immutable index for original `d6b770c` evidence (including its then-current README);
+the follow-up hash index covers this appended README and new artifacts. Original
+source text remains in Git history.
+
+Ready for human review subject to new-head CI and required reviewer approval.
+No PR merge/approval was performed by this work. No new contract decision was
+needed, and pending contract/fleet/Kanto/release gates are not closed by this repair.

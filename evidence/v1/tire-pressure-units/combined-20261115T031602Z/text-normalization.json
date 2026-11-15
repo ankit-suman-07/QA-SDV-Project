@@ -1,0 +1,22 @@
+{
+  "baseline-cleanup.txt": {
+    "before": "46374f46d4d9fa93663eabedb43d61b484c0a48c21b40dce7631adc37e2ab26f",
+    "after": "b629923d9cd7f94d3b5d71ff4327df4c7cc60801087c217e1263e48d8f82017e"
+  },
+  "java21-tests.txt": {
+    "before": "300634530ab6229340d234ccbd5f75a936d1d40d44f05e23b9b326d4b9b72cad",
+    "after": "3e18c61221fe3ac79e79f9354428d8dd87ebf8b364aae0d3c916def8f7b823ce"
+  },
+  "runtime-output.txt": {
+    "before": "1e387ae1af7a25851513e054ae84fdd610421c81bb5bb0e8871a7bf8178789bb",
+    "after": "789ca7c6f6630561348d0a9292872bb6d0d965ebdab1c38a565efecccf5c090c"
+  },
+  "combined-regression-red.txt": {
+    "before": "c6d02e5401bda5d70ef0b44032936963026db851383697475c88ac7e987f097c",
+    "after": "0177accec460e54a5c32130c3131111a4e1a66d1539b8cbda75d689855e8c3bf"
+  },
+  "baseline-output.txt": {
+    "before": "dac5a2b6b0c8f4ef4c8ef18ea7c6efb8817dc0d99563ab7f640039602ffd00c0",
+    "after": "07bd547507d37977469abc2ee6215d1942e9206522f8311ae1ea0de79e6a24e9"
+  }
+}
