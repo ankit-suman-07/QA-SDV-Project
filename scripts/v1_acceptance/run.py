@@ -173,6 +173,15 @@ class Run:
                 service['image'] = service['image'].replace('${DITTO_VERSION:-latest}', '3.8.4')
         config['services']['nginx']['ports'] = [f'127.0.0.1:{self.ports["ditto"]}:80']
         config.pop('volumes', None)  # upstream unused host /var/log bind declaration
+        # Official nginx passes Spring's duplicate Accept-Encoding fields through;
+        # Ditto rejects them. Normalize this transport header in this isolated
+        # deployment; preserve the unmodified-stack failure as a release finding.
+        nginx=(deployment/'nginx.conf').read_text().replace('location /api {',
+            'location /api {\n      proxy_set_header Accept-Encoding "";')
+        (self.out/'nginx-acceptance.conf').write_text(nginx)
+        config['services']['nginx']['volumes'] = [
+            str(self.out/'nginx-acceptance.conf')+':/etc/nginx/nginx.conf:ro' if v.endswith(':/etc/nginx/nginx.conf:ro') else v
+            for v in config['services']['nginx']['volumes']]
         self.write('ditto.json', config)
         env = dict(os.environ, V1_MQTT_PORT=str(self.ports['mqtt']), V1_KUKSA_001_PORT=str(self.ports['kuksa001']),
                    V1_KUKSA_002_PORT=str(self.ports['kuksa002']), V1_PROVIDER_001_PORT=str(self.ports['provider001']),
@@ -212,6 +221,19 @@ class Run:
             SDV_MQTT_CLIENT_ID=self.project+'-ingress')
         self.owned.append('edge'); self.compose('edge','up','-d','--build', timeout=900)
         self.start_capture()
+        # The existing provision CLI creates Things without a v1 feature, while
+        # properties-only PUT cannot create that feature. Bootstrap once from a
+        # real captured provider observation before the sole ingress writer starts.
+        def initial_events():
+            with self.lock:
+                found={e['vehicleId']:e for e,t in self.events.values()}
+            return found if set(found)==set(IDS) else None
+        initial=self.wait(initial_events,90)
+        for vehicle,event in initial.items():
+            assert 'v1' not in self.thing(vehicle).get('features',{}), 'fresh namespace required'
+            props=copy.deepcopy(event);props['lastEventId']=props.pop('eventId')
+            self.http(self.ditto,'/api/2/things/sdv:'+vehicle+'/features/v1',{'properties':props},'PUT',True)
+        self.write('bootstrap-real-observations.json', initial)
         self.ingress = self.spawn([sys.executable,'-B','-m','ditto.v1','run'], 'ingress', self.ingress_env)
         env = dict(os.environ, SERVER_PORT=str(self.ports['api']), SDV_V1_DITTO_BASE_URL=self.ditto,
             SDV_V1_DITTO_USERNAME=self.auth[0], SDV_V1_DITTO_PASSWORD=self.auth[1], SDV_V1_DITTO_MODE='live',
@@ -237,7 +259,7 @@ class Run:
         handler = functools.partial(SimpleHTTPRequestHandler, directory=str(ROOT/'frontend'))
         self.web = ThreadingHTTPServer(('127.0.0.1',3000),handler)
         threading.Thread(target=self.web.serve_forever, daemon=True).start()
-        self.page.goto('http://127.0.0.1:3000')
+        self.page.goto('http://localhost:3000')
         self.page.select_option('#vehicle-select','vehicle-002')
 
     def start_capture(self):
@@ -286,6 +308,11 @@ class Run:
     def isolation(self):
         one=self.view('vehicle-001')
         assert one['healthStatus']=='HEALTHY' and one['activeFaults']==[], 'vehicle-001 changed'
+        thing=self.thing('vehicle-001')
+        with self.lock:
+            event=self.events.get(one['lastEventId'])
+        assert event is not None, 'vehicle-001 event absent from actual MQTT capture'
+        preserved(event[0],thing,one)
         self.append('isolation.jsonl', {'monotonic':time.monotonic(),'view':one})
 
     def boundary(self, health, label, started=None):
@@ -347,11 +374,15 @@ class Run:
         for trial in range(self.args.trials):
             # Each operation is retained independently even when it times out.
             for action,health in [('INJECT_SCENARIO','CRITICAL'),('CLEAR_SCENARIO','HEALTHY')]:
-                started=self.action(action)
+                label=f'trial-{trial+1}-{action.lower()}'
+                count=len(self.samples)
                 try:
-                    self.boundary(health,f'trial-{trial+1}-{action.lower()}',started)
-                except AssertionError:
-                    pass
+                    started=self.action(action)
+                    self.boundary(health,label,started)
+                except Exception as error:
+                    if len(self.samples)==count:
+                        self.samples.append({'operation':label,'status':'FAIL','boundaries':{},'errorType':type(error).__name__})
+                        self.write('measurements.json',self.samples)
         assert all(s['status']=='PASS' for s in self.samples if s['operation'].startswith('trial-'))
 
     def freshness(self):
@@ -457,9 +488,10 @@ class Run:
         before={}
         def denied():
             before.update(self.thing('fleet-v1')['features']['summary']['properties'])
+            ids={v:self.view(v)['lastEventId'] for v in IDS}
             self.stop.wait(6)
             assert self.thing('fleet-v1')['features']['summary']['properties']==before
-            assert all(self.view(v)['lastEventId'] for v in IDS)
+            assert all(self.view(v)['lastEventId'] != ids[v] for v in IDS)
             self.summary();self.isolation();self.snapshot('fleet-write-denied')
         self.revoke('fleet-v1','thing:/features/summary/properties',denied)
         self.wait(lambda:self.thing('fleet-v1')['features']['summary']['properties']['generatedAt']!=before['generatedAt'])
@@ -492,6 +524,8 @@ class Run:
 
     def cleanup(self):
         self.stop.set()
+        if hasattr(self, 'resource_thread'):
+            self.resource_thread.join(timeout=20)
         # Restore any test-induced outages before clearing, even after interruption.
         if 'edge' in self.owned:
             self.compose('edge','start','kuksa-001','kuksa-002','mqtt',check=False,timeout=45)
@@ -527,6 +561,14 @@ class Run:
                 stats[name]['boundaries'][boundary]={'n':len(values),'medianSeconds':statistics.median(values) if values else None,
                     'rangeSeconds':[min(values),max(values)] if values else None}
         self.write('statistics.json',stats)
+        self.write('measurement-limitations.json', {
+            'method':'command-to-observed completion including scenario progression, HTTP/poll/browser work; not pure transport latency',
+            'mqttContext':'events may omit actionId/traceId; temporal association on isolated stack is not causal command correlation',
+            'sourceClocks':'shared host kernel UTC assumed; no clock error bound; source-to-twin samples are upper polling observations',
+            'updateSuccess':'trial boundary observations only, not every MQTT event delivery or persistence success rate',
+            'resources':'docker stats samples during workload; no isolated process attribution or benchmark claim',
+            'fleetComparison':'separate evaluations; counts checked on materialized and API summaries, generatedAt may differ',
+            'mvpComparison':'not directly comparable; no speedup claimed'})
         self.write('artifact-sha256.json',{str(p.relative_to(self.out)):hashlib.sha256(p.read_bytes()).hexdigest()
             for p in self.out.rglob('*') if p.is_file() and p.name!='artifact-sha256.json'})
 

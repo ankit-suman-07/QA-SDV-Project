@@ -74,3 +74,35 @@ without importing those commits or approving proposed defaults. Kanto/V1-09, aff
 owner approvals, original-skill provenance, report/video/contributions and release
 tag are separate release prerequisites. Provider F01 and tire-unit F02 remain open
 on main until their fix PRs merge and regressions pass.
+
+CI prerequisite: configure Actions secrets `V1_LOCAL_DITTO_USERNAME` and
+`V1_LOCAL_DITTO_PASSWORD` from the pinned local sample's existing authentication,
+and variable `V1_LOCAL_DITTO_SUBJECT` with its nginx subject. No production/shared
+endpoint or credentials are needed. Missing values produce a BLOCKED readiness
+artifact and a failed job; there is no skip or mock substitution. The pre-existing
+single-vehicle pipeline workflow remains unchanged and required. Artifacts use the
+exact Actions run/attempt identifier and 30-day retention; attach durable copies
+before that retention expires.
+
+## Explicit local deployment preparation and open defects
+
+The unmodified official stack run found two further release blockers, retained in
+`verification-20261115T023435Z`: the existing individual provisioning CLI creates no
+`v1` feature (Ditto properties-only PUT returns 404), and the packaged Spring client
+sends duplicate `Accept-Encoding` fields (Ditto returns
+`gateway:duplicate.header.field`, HTTP 400). Direct Java HTTP clients do not
+reproduce the second error; the packaged Spring client does.
+
+To make subsequent boundaries testable without changing application code, this
+isolated deployment explicitly normalizes `Accept-Encoding` at nginx and bootstraps
+the initial individual feature from the **first real MQTT observation** for each
+vehicle, before starting ingress. `bootstrap-real-observations.json` retains those
+source/event IDs. These seed writes are provisioning, not ingress success evidence;
+subsequent real observations and all fault/recovery transitions must traverse the
+actual ingress. No observation or healthy value is invented, and no concurrent
+writer is introduced. This prepared configuration does not demonstrate that the
+unmodified provisioning workflow or unmodified proxy stack works. Release needs
+approved production provisioning and proxy/client compatibility remediation with
+regressions, in addition to the two already open fix PRs and Kanto. The compatibility
+preparation is part of the recorded configuration, not a silently accepted contract
+change or a resolution of those defects.

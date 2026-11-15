@@ -63,14 +63,16 @@ jobs:
         run: bash ./mvnw --batch-mode --no-transfer-progress clean verify
       - name: Run five real fault and recovery trials and failure probes
         run: |
-          timeout --signal=TERM --kill-after=90s 30m python -B -m scripts.v1_acceptance.run
+          run_dir="evidence/v1/verification-$(date -u +%Y%m%dT%H%M%SZ)"
+          echo "V1_RUN_DIR=$run_dir" >> "$GITHUB_ENV"
+          timeout --signal=TERM --kill-after=90s 30m python -B -m scripts.v1_acceptance.run --output "$run_dir"
       - name: Upload real acceptance evidence even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: v1-real-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            evidence/v1/verification-*/
+            ${{ env.V1_RUN_DIR }}/
             backend/target/surefire-reports/
           retention-days: 30
           if-no-files-found: error
@@ -80,8 +82,11 @@ jobs:
         run: |
           # Disposable runner only; select recorded ownership, never global prune.
           python - <<'PY'
-          import json, pathlib, subprocess
-          for manifest in pathlib.Path('evidence/v1').glob('verification-*/manifest.json'):
+          import json, os, pathlib, subprocess
+          run_dir = os.environ.get('V1_RUN_DIR')
+          for manifest in ([pathlib.Path(run_dir)/'manifest.json'] if run_dir else []):
+              if not manifest.exists():
+                  continue
               data = json.loads(manifest.read_text())
               if not data.get('project', '').startswith('qa-v1-'):
                   continue
