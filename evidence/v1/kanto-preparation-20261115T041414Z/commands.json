@@ -1,0 +1,120 @@
+{
+  "baseline": "755916e0efea1f5dab58b7f5b71c8db63e41c129",
+  "dirty": true,
+  "verification": "STATIC/MOCK ONLY; no deployment",
+  "commands": [
+    {
+      "command": [
+        "/tmp/qa-v1-env/bin/python",
+        "--version"
+      ],
+      "startedUtc": "2026-11-15T04:18:26.362142+00:00",
+      "exit": 0,
+      "log": "00.log"
+    },
+    {
+      "command": [
+        "/tmp/qa-v1-env/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "velocitas-app/app/tests"
+      ],
+      "startedUtc": "2026-11-15T04:18:26.366190+00:00",
+      "exit": 0,
+      "log": "01.log"
+    },
+    {
+      "command": [
+        "/tmp/qa-v1-env/bin/python",
+        "velocitas-app/kanto/prepare_v1_pilot.py",
+        "--mode",
+        "validate"
+      ],
+      "startedUtc": "2026-11-15T04:18:27.116144+00:00",
+      "exit": 0,
+      "log": "02.log"
+    },
+    {
+      "command": [
+        "/tmp/qa-v1-env/bin/python",
+        "velocitas-app/kanto/prepare_v1_pilot.py",
+        "--mode",
+        "render"
+      ],
+      "startedUtc": "2026-11-15T04:18:27.183489+00:00",
+      "exit": 0,
+      "log": "03.log"
+    },
+    {
+      "command": [
+        "/tmp/qa-v1-env/bin/python",
+        "velocitas-app/kanto/prepare_v1_pilot.py"
+      ],
+      "startedUtc": "2026-11-15T04:18:27.250369+00:00",
+      "exit": 0,
+      "log": "04.log"
+    },
+    {
+      "command": [
+        "/tmp/qa-v1-env/bin/python",
+        "velocitas-app/kanto/prepare_v1_pilot.py",
+        "--check-cli"
+      ],
+      "startedUtc": "2026-11-15T04:18:27.319463+00:00",
+      "exit": 1,
+      "log": "05.log"
+    },
+    {
+      "command": [
+        "timeout",
+        "120s",
+        "env",
+        "PYTHONPATH=/tmp/pr39-combined-proto",
+        "/tmp/qa-v1-env/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "-ra",
+        "-p",
+        "no:cacheprovider",
+        "-m",
+        "not integration"
+      ],
+      "exit": 0,
+      "log": "python-regression.log",
+      "note": "Summary transcribed from fresh tool output; generated protobuf modules outside worktree."
+    }
+  ],
+  "sandboxAttempt": {
+    "command": [
+      "/tmp/qa-v1-env/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "velocitas-app/app/tests"
+    ],
+    "result": "Interrupted after 121.79s: 195 passed, 1 skipped; blocked selector in restricted sandbox. Complete run with local socket permission passed (01.log)."
+  },
+  "staticChecks": {
+    "relativeLinks": 14,
+    "brokenLinks": 0,
+    "bashSyntaxBlocks": 9,
+    "descriptorJson": "valid",
+    "mergeAncestry38Through41": "passed",
+    "diffCheck": "passed",
+    "runtimeCommandsExecuted": false
+  },
+  "testFirst": {
+    "newHandoffRegressionBeforeChange": "1 failed: KeyError publisher_handoff; 148 deselected",
+    "pilotSuiteAfterChange": "149 passed"
+  },
+  "sourceFilesSha256": {
+    "velocitas-app/kanto/prepare_v1_pilot.py": "3bf5e84de5d7e07bc3e9c2e71c2bc9f370ba3f5b8efe38b34e3669369d693c78",
+    "velocitas-app/app/tests/test_kanto_pilot.py": "d984856030d8dc39e43f62dc6bb9a4296a1e321d422f2c794972d8b7cbb7b8d9"
+  }
+}

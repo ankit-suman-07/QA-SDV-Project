@@ -31,10 +31,21 @@ def preparation_plan(descriptor, cli_support='NOT_CHECKED'):
         'descriptor': descriptor,
         'lifecycle': [{'operation': operation, 'container_name': name, 'execute': False}
                       for operation in ('inspect', 'create-if-absent', 'start', 'stop', 'start', 'inspect')],
+        'publisher_handoff': {
+            'vehicle_id': 'vehicle-002', 'docker_service': 'app-002', 'kanto_container': name,
+            'before_kanto_start': [
+                'Record whether Docker app-002 was running.',
+                'Stop only Docker app-002 and verify it is stopped.',
+                'Verify no other vehicle-002 publisher or fixture replay is active.'],
+            'before_docker_restore': [
+                'Stop the pilot Kanto container and verify it is stopped.',
+                'Restore Docker app-002 only if it was running before the pilot.'],
+            'execution_permitted': False},
         'blockers': [
             'Actual Linux Kanto version, create options and effective descriptor settings need review.',
             'Existing container names must be inspected; replacement is not permitted by this tool.',
-            'Emmanuel V1 image, target architecture, registry access and LAN endpoints need verification.',
+            'Ankit must verify the V1 image revision, target architecture, registry access and endpoints.',
+            'Exclusive vehicle-002 publisher ownership and cleanup/restoration must be verified.',
             'Real post-restart MQTT and matching Ditto evidence are pending.']}
 
 

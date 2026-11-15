@@ -1,5 +1,23 @@
 # B5 V1 Kanto pilot preparation: vehicle-002
 
+## Current preparation: 2026-11-15 UTC
+
+Ankit owns all remaining Phase V1 work, including B5/V1-09. Follow the
+[current status and gated Linux runbook](../../evidence/v1/kanto-validation-status.md)
+for the merged-main baseline, prerequisites, exclusive Docker/Kanto publisher
+handoff, capture commands and restoration. No live Kanto pilot has been run.
+The current app implements the V1 publisher; an immutable, accessible image and
+effective Kanto configuration still require verification. The two-edge Compose
+deployment exposes MQTT on **18883** by default, whereas the historical example
+below uses illustrative port 1883. Render the actual reviewed endpoints.
+
+The remainder records the original preparation baseline and its historical
+results; its original contributor assignments, missing-implementation statements
+and old PR references are not assertions about current main. Preserve that
+history; use the current SOURCE-OF-TRUTH for remaining ownership and approval status.
+
+## Original preparation record
+
 Baseline: `8b3143aaa1631ee81b18042e6fb1aa34d50484dc` on
 `bayan/config/v1-kanto-pilot`. This work follows
 [contract v1.0.0 C2-C5/C9-C10](../../docs/v1-interface-contracts.md),
