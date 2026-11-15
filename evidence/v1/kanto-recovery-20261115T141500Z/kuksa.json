@@ -1,0 +1,30 @@
+[
+  {
+    "port": 55556,
+    "observedAt": "2026-11-15T14:14:18.745327+00:00",
+    "values": {
+      "Vehicle.Automation.Lidar.Front.NearestObstacleDistance": {
+        "value": 35.0,
+        "timestamp": "2026-11-15 14:14:14.307207+00:00"
+      },
+      "Vehicle.Automation.Lidar.Front.IsHealthy": {
+        "value": true,
+        "timestamp": "2026-11-15 14:14:14.308006+00:00"
+      }
+    }
+  },
+  {
+    "port": 55557,
+    "observedAt": "2026-11-15T14:14:18.750747+00:00",
+    "values": {
+      "Vehicle.Automation.Lidar.Front.NearestObstacleDistance": {
+        "value": 35.0,
+        "timestamp": "2026-11-15 14:14:14.484734+00:00"
+      },
+      "Vehicle.Automation.Lidar.Front.IsHealthy": {
+        "value": true,
+        "timestamp": "2026-11-15 14:14:14.485582+00:00"
+      }
+    }
+  }
+]

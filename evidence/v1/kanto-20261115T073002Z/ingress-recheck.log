@@ -1,0 +1,5 @@
+2026-11-15 02:32:19,528 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-e1268b12d9c74a659df9f425aa4ec5b8'
+2026-11-15 02:32:23,529 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-a1fe334bfb4b4f71b6af03346b0b1566'
+2026-11-15 02:32:29,543 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-90182f0af9494e2fa5b5096bd78fb4d8'
+2026-11-15 02:32:33,553 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-7f39750e030b485d9e64f51d20b8a821'
+2026-11-15 02:32:39,568 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-c14eb294efba4d2a8f6259b8daa5e410'

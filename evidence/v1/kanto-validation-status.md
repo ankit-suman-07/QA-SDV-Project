@@ -1,5 +1,271 @@
 # Phase V1 Kanto validation preparation
 
+## Live managed restart — 2026-11-15 14:22 UTC
+
+**V1-09 PASS for the requested same-device Linux managed stop/start pilot.**
+[Live evidence and remaining gaps](kanto-live-20261115T142159Z/README.md) and
+[independent review](kanto-live-20261115T142159Z/independent-review.json) supersede
+the earlier blocked checkpoints below. Operator-assisted execution used normal
+sudo in their own terminal; no credentials or security settings were changed.
+
+Actual Kanto create, launch, stop and start succeeded with the verified imported
+image/index. Effective environment/network/restart settings match the descriptor.
+Kanto restarted at `2026-11-15T14:22:24.216247116Z`; fresh event
+`vehicle-002-88d5e09f279d4e06b08e7a726afca3db` has original source
+`2026-11-15T14:22:25.713946Z`, newer than runtime restart, start request and prior
+source. Exact full event properties match real Ditto. Seven MQTT observations
+passed identity/schema/QoS/retain/freshness checks; 109 twin snapshots kept
+vehicle-001 HEALTHY/fault-free with advancing source, max sampling gap 0.381037 s.
+
+**Remaining gap:** both Kanto stops report application exit_code=1. Retained app
+logs reproduce `RuntimeError: Event loop stopped before Future completed.` at
+main.py:276, consistent with SIGTERM calling LOOP.stop under run_until_complete.
+Managed stop/start/propagation passed; clean shutdown is not established or fixed.
+Same-device loopback does not verify remote-LAN wording, crash automatic restart,
+other V1 criteria, release readiness or required human review. No full V1 claim.
+
+Recovery targeted checks: 153 passed; actual observer assertions independently
+reviewed. PR #43 remains draft/open, ready for evidence review, not merged.
+Final-head CI is inspected after push. Both Kanto and Docker app-002 are stopped;
+Kanto descriptor/container retained. Dedicated daemon, providers/KUKSA, MQTT,
+app-001, real Ditto and exactly one recovered ingress remain running. Observer
+exited/removed. MongoDB volumes, historical evidence and docker_default preserved.
+
+
+## Persistent recovery checkpoint — 2026-11-15 14:14 UTC
+
+**V1-09 BLOCKED on privileged lifecycle execution; live pilot not run.**
+[Durable recovery evidence](kanto-recovery-20261115T141500Z/README.md) records
+Python 3.12.16/dependency restoration, both authenticated twin HTTP 200 reads,
+synchronized clock, healthy real KUKSA, three fresh vehicle-001 MQTT events and
+an exact event/property match at real Ditto. No ingress existed; exactly one was
+restored with persistent process identity/log. Existing Things/policies preserved.
+Vehicle-002's twin remains historical; Docker app-002 stays stopped.
+
+Dedicated daemon is active and installed CLI help passes. Unit inspection confirms
+HOME/XDG_CONFIG_HOME correction, disabled automatic deployment and disabled remote
+Things integration. `sudo -n true` requires authentication; unprivileged CLI socket
+access times out. No create/start/stop was attempted, no runtime started_at was
+obtained, and no post-restart event or continuous restart isolation is claimed.
+Operator-reported imported image/index still requires privileged verification.
+The [runbook](../../velocitas-app/kanto/LINUX-RUNTIME.md) now uses persistent paths
+and records the environment correction. Old temporary paths below are historical.
+
+Targeted checks: **153 passed**; renderer/installed CLI help passed. All eight checks
+on starting PR head `f7d5f4f56c9441f578408b529c7201302ed1c166` succeeded.
+Updated-head CI is inspected separately after push. PR #43 stays draft/open and
+incomplete for live acceptance. Full V1 acceptance, remote-LAN validation, release,
+review and automatic crash restart are not established by recovered prerequisites.
+Services left: edge/real Ditto, one ingress, dedicated Kanto daemon; Docker app-002
+stopped. No faults/outages/full harness or destructive cleanup. MongoDB volumes,
+historical evidence and unused docker_default network preserved.
+
+
+## Live pilot continuation — 2026-11-15T07:30:02Z
+
+**V1-09: BLOCKED awaiting operator authentication; not executed.** Recovered the
+existing PR #43 branch at `5f60f195cc1f73e00c9fb0e4075692f2f0e74b77` without
+touching other worktrees. `git ls-tree HEAD` confirms this status, `V1-PILOT.md`
+and `LINUX-RUNTIME.md` are Git blobs on the pushed PR branch, not merely files in
+`/tmp`. They are intentionally not merged into the original main checkout.
+PR #43 remains open/draft; seven checks were successful at inspection and the
+real two-vehicle core job was still in progress. No green check proves V1-09.
+
+Fresh [continuation manifest](kanto-20261115T073002Z/manifest.json),
+[ownership checks](kanto-20261115T073002Z/ownership.json),
+[vehicle-001 MQTT](kanto-20261115T073002Z/mqtt-vehicle-001.jsonl), and
+[KUKSA readings](kanto-20261115T073002Z/kuksa-readings.json) retain this attempt.
+Both upstream sensors remain healthy; app-001 and Ditto services are running;
+the recorded ingress PID/start identity still matches and its log shows newer
+vehicle-001 persisted events. Docker app-002 is exited, Kanto paths/socket/unit
+remain absent, and NTP reports synchronized. Local image/archive hashes still
+match the preceding evidence. No GHCR retry, credential-file read, fault, outage,
+shared reset, or publisher handoff was performed. Authenticated direct twin/API
+readback and continuous restart isolation assertions remain pending with the live
+pilot; previous successful backend checks are historical, not repeated here.
+
+The stopped Docker app-002 has exit code 1. Its retained prior shutdown log
+ends with `RuntimeError: Event loop stopped before Future completed.` at
+`velocitas-app/app/src/main.py:276`. Those lines are from the earlier baseline
+shutdown, not a newly executed Kanto trial. The inactive publisher does not
+conflict with Kanto, but clean application shutdown is not established; preserve
+and assess the exit/logs if it recurs during the real Kanto stop. No unrelated
+shutdown fix is included in this continuation.
+
+`sudo -n true` again returned exit 1, `sudo: a password is required`. Exact
+reviewed installation/import/isolated-daemon commands were presented for the
+operator's own terminal; only dependent privileged steps are paused. They match
+the administrator section of the committed Linux runbook. Do not provide a
+password in chat, pipe passwords, grant broad socket permissions, or alter shared
+containerd/Docker settings. Existing namespace/paths must be inspected before
+creation; stop on conflicts. After the operator reports success, inspect the
+dedicated daemon, namespace image identity and Kanto's real runtime resolution
+before creating/starting app-002. Privileged lifecycle/read-status commands may
+also require the operator's terminal; do not assume sudo authentication there
+authorizes another terminal.
+
+Pinned official Kanto v1.0.0 source uses containerd client **1.6.28**, while this
+host runs containerd **2.4.2**. This is not an established incompatibility or a
+compatibility pass: daemon/API and actual application lifecycle checks are still
+required. The pinned CLI emits JSON `state.started_at`; the runbook now explicitly
+requires the post-restart source to be newer than that actual runtime start as
+well as the request boundary and previous source. A command timestamp alone is
+insufficient. Preserve initial/restarted container JSON and all failed attempts.
+
+Targeted pilot preparation tests: **149 passed**; CLI help/config rendering also
+passed. Full Python/Java suites were not rerun because application code did not
+change. No current run claims Kanto launch, twin propagation or backend readback.
+No disruptions were introduced; prerequisites remain running, Docker app-002
+remains stopped. Do not start it while Kanto may be active. Next step is the
+operator administrator gate, followed by bounded capture and the actual pilot;
+V1-09 and PR #43's intended live evidence remain incomplete.
+
+## Runtime prerequisite follow-up — 2026-11-15, after PR #42
+
+Baseline: `92f3fc14a15ae7bd1aa6663bdedccb99a6c69446`, the confirmed merge
+of [PR #42](https://github.com/ankit-suman-07/QA-SDV-Project/pull/42).
+Main was fetched and fast-forward checked; the clean original checkout and all
+other worktrees were preserved. New isolated worktree `/tmp/qa-kanto-live`, branch
+`ankit/test/v1-kanto-live-validation`; no existing task branch/PR was found.
+Everything in this follow-up uses this Linux device, as instructed. No remote
+host, Kanto app launch/restart, outage, fault trial or full pilot was used.
+Ankit retains V1-09; **V1-09 is NOT complete**.
+
+The current prerequisite status supersedes the older table below, whose evidence
+is retained unchanged. Sources/skills were reread: SOURCE-OF-TRUTH, scope, task
+distribution, C10, original pilot guide, verification findings and PR #41's
+`verification-20261115T024553Z` record. Repository systematic-debugging and
+verification skills informed the investigation; no applicable AGENTS.md or
+additional supporting skill files were found. No production behavior changed.
+
+| Prerequisite | Status | Observed result |
+|---|---|---|
+| Linux/Docker | READY | Fedora 44 x86_64; Docker and containerd active; initial Docker inventory empty. Existing containerd configuration and unrelated workloads were not changed. |
+| Kanto binaries / flags | READY | Official x86_64 Kanto 1.0.0 archive checksum matched; CLI/API 1.0.0, build `c23e90e`. CLI and daemon unpacked under `/tmp/qa-v1-runtime/kanto-1.0.0/container-management`. `create --file`, `get/start/stop --name`, `list`, `--host`, and daemon flags inspected. No daemon started. |
+| Kanto daemon and runtime compatibility | BLOCKED | Root-owned `/run/containerd/containerd.sock` denies this user; `sudo -n true` requires a password. No Kanto socket/service exists. Need secure operator sudo authentication, isolated daemon setup and compatibility checks against containerd 2.4.2. Do not replace Docker/containerd or change socket permissions globally. |
+| MQTT capture tooling | READY | Cached official linux/amd64 Mosquitto client 2.1.2/libmosquitto 2.1.0 executes through Docker with explicit client entrypoint; successful real `%j` captures include receipt, topic, QoS and retain. No native system package was installed. |
+| GHCR pull | BLOCKED | Exact old/current-main tags both denied with existing GitHub credential (HTTP 403 `DENIED`); anonymous token request 401. Package API explicitly requires `read:packages`. Authentication/authorization failure is confirmed; image absence is **not** established. No token printed, saved or new login performed. |
+| Local source image / export alternative | READY | Built current main with revision label, linux/amd64; exact image/export hashes below. No credentials required. |
+| Kanto image availability | BLOCKED | Export exists, but import into isolated containerd namespace and Kanto cache/resolution remain unverified because root/runtime access is blocked. A Docker image does not establish Kanto availability. |
+| Real KUKSA and networking | READY | Both local providers return fresh real readings through host ports 55556/55557: healthy LiDAR 35 m, tire pressure 221/220 kPa at the captured instants. Container apps use service DNS; Kanto descriptor uses host networking and loopback host ports. No outage/recovery trial repeated. |
+| Real MQTT | READY | Host 127.0.0.1:18883, healthy source-derived QoS 1 non-retained observations captured. Baseline-only Docker app-002 was briefly run and then stopped in `finally`; it is not Kanto evidence. |
+| Clock | READY | `NTPSynchronized=yes`, NTP enabled, chronyd stratum 3, leap Normal. Initial observed system offset 0.000415507 s fast; raw tracking output retained. All containers share this host kernel clock; recheck before pilot. This is not a guaranteed bound on clock error. |
+| Real Ditto / individual access | READY | New test-owned official Ditto 3.8.4 stack at 127.0.0.1:18080, authenticated HTTP 200 using the repository-documented official local-sample credential; both intended Things read successfully. No shared resources were reset. |
+| Individual ingress / write subject | READY | One ingress with client ID `qa-v1-kanto-prereq-ingress` runs on this host; `nginx:ditto` has checked READ/WRITE policies. A newer real vehicle-001 event was persisted after ingress startup. No second individual writer is running. |
+| Backend/fleet configuration | READY | Java 21 backend read smoke verified exactly two registered identities and a fresh healthy vehicle-001 event/source matching real Ditto, with the legitimate local subject. Owned backend stopped afterward. Absent test-owned fleet Thing/policy provisioned; fleet writer deliberately disabled and **not live-verified**. Only Spring Boot may materialize fleet; production subject separation/approvals remain open. |
+| Exclusive app-002 handoff | READY | Docker app-002 stopped; Kanto daemon/app absent; no fixture replay. New Compose overlay profiles out app-002 and leaves app-001 active. Recheck process/container ownership before every Kanto start. |
+
+### Durable observations and local state
+
+[Manifest and command exits](kanto-prerequisites-20261115T070500Z/manifest.json),
+[KUKSA readings](kanto-prerequisites-20261115T070500Z/kuksa-readings.json),
+[MQTT baseline](kanto-prerequisites-20261115T070500Z/mqtt-baseline.jsonl),
+[Ditto access](kanto-prerequisites-20261115T070500Z/ditto-access.json),
+[writer/policy configuration](kanto-prerequisites-20261115T070500Z/writer-configuration.json),
+[001 exact prepared twin](kanto-prerequisites-20261115T070500Z/vehicle-001-prepared-twin.json),
+[002 exact prepared twin](kanto-prerequisites-20261115T070500Z/vehicle-002-prepared-twin.json),
+[001 newer ingress snapshot](kanto-prerequisites-20261115T070500Z/vehicle-001-live-ingress-twin.json).
+These are fresh **prerequisite/baseline** observations, not post-Kanto-start data.
+The initial access record correctly shows absent features before preparation.
+The [actual backend read](kanto-prerequisites-20261115T070500Z/backend-real-read.json)
+used Java 21 and the documented per-vehicle health endpoint. An initial observer
+mistook the vehicle-list object for health rows; that failed probe and its cleanup
+are retained separately, not attributed to a production defect or hidden.
+
+Official Ditto source is existing checkout `/tmp/qa-v1-ditto-source`, revision
+`5dbb05e6294e5ac0103506102baff9eab755d180` (3.8.4). Unique Compose projects:
+`qa-v1-kanto-prereq-edge` and `qa-v1-kanto-prereq-ditto`. Rendered local configs
+are `/tmp/qa-v1-runtime/edge.json` and `/tmp/qa-v1-runtime/ditto.json`.
+The isolated nginx config retains PR #41's explicit Accept-Encoding normalization.
+As in its recorded preparation, absent individual `v1` features were initialized
+from actual MQTT observations with their exact event/source identity, only before
+starting ingress. Conditional create writes never replaced an existing feature.
+These are deployment workarounds, not fixes or approval of provisioning gaps.
+
+The verified app image is
+`docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446`:
+
+- Docker image/index identity: `sha256:efad7228ebf00f092d43ec7242e2d60bdd56866d2f94f0afc3c8c5af9e6ac4a6`.
+- OCI revision label: `92f3fc14a15ae7bd1aa6663bdedccb99a6c69446`; linux/amd64.
+- Export `/tmp/qa-v1-runtime/kanto-app-92f3fc1.tar`, SHA-256
+  `e38c7eb081dda149535b62d4a7767f9b36b8dc19aa5f0a595e58e54d3fa66403`.
+- Official Kanto archive SHA-256:
+  `3d28098008e27621624f28adb880d1e3ed93654c29fb5919bcfca21c439d593a`.
+
+The initial Compose `--build` rebuilt app-001 without OCI labels and moved the
+tag; this was detected and the verified exported tag restored. Running app-001's
+different image/index identity is recorded in the manifest; its rootfs layers
+match the verified build. It was not restarted for metadata alone. The new overlay
+clears inherited app builds to prevent recurrence. Rebuild only providers through
+Compose; build/export the app explicitly with revision labels.
+
+The binary/image archives remain local prerequisites, not Git artifacts. If lost,
+redownload the official checksum-verified archive and rebuild/export from the
+recorded source; record any changed image identity rather than reusing old hashes.
+The raw capture, snapshots, command outputs and build log are tracked durably.
+Trailing whitespace in captured build/Maven logs was normalized for Git checks;
+the manifest names the affected logs. Results, identities and values are preserved,
+and artifact hashes cover the reviewed tracked files.
+
+### Exact continuation commands and configuration
+
+Use the new [Linux runtime runbook](../../velocitas-app/kanto/LINUX-RUNTIME.md)
+for the administrator gate, namespace import, daemon readiness, launch/restart,
+timed captures and cleanup. Its commands are **prepared, not executed**, except
+the explicitly recorded prerequisite commands. The
+[same-device config](../../velocitas-app/kanto/pilot-config.local-linux.json)
+uses `remote_lan=false`, MQTT 127.0.0.1:18883 and KUKSA 127.0.0.1:55557.
+The [Compose overlay](../../velocitas-app/kanto/compose.prerequisites.yml)
+binds all edge ports to loopback and disables Docker app-002 by default.
+
+Credentials remain out of tracked configuration. Python reader/ingress variables
+are `SDV_DITTO_BASE_URL`, `SDV_DITTO_USERNAME`, `SDV_DITTO_PASSWORD`;
+backend reads use **`SDV_V1_DITTO_BASE_URL`, `SDV_V1_DITTO_USERNAME`,
+`SDV_V1_DITTO_PASSWORD`**, and fleet writes additionally use
+`SDV_V1_FLEET_USERNAME`, `SDV_V1_FLEET_PASSWORD`, `SDV_V1_FLEET_ENABLED`.
+These are different namespaces; the old Python-only environment instructions
+below do not configure Java. No credentials are added to command lines or files.
+The isolated sample subject is not approval of production authentication design.
+Load the new [secret-free backend configuration](../../velocitas-app/kanto/backend.local-linux.env.example)
+before any backend start: it explicitly restricts vehicle IDs to 001/002 (the
+application's broader default includes 003), binds loopback port 18081 and maps
+provider ports correctly. No application default or interface was silently changed.
+
+Services intentionally left for continuation: both providers/KUKSA instances,
+MQTT, app-001, real Ditto, and one ingress. Docker app-002 is stopped; backend,
+fleet writer and Kanto are absent. Ingress PID is recorded in
+`/tmp/qa-v1-runtime/ingress.pid`; live output is `/tmp/qa-v1-runtime/ingress.log`.
+Inspect PID command/start identity before any stop; do not trust a stale PID.
+Immutable evidence contains a snapshot of the live log, not a growing tracked file.
+No faults or outages require restoration. To tear down preparation, stop this
+owned ingress and only these two named projects without volume deletion, as the
+runbook specifies. Do not perform unrestricted Compose up during Kanto use.
+
+**Next session cannot yet run the actual pilot.** An operator must authenticate
+sudo securely on this Linux device, install/start the isolated Kanto daemon,
+verify containerd compatibility and import/resolve the recorded image. Do not send
+a password/token in chat or loosen shared runtime permissions. Once those gates
+pass, use the recorded observer-boundary and exact MQTT→Ditto correlation checks;
+retain all failures and vehicle-001 intermediate states. Static results and green
+CI do not complete V1-09. No contract, release requirement or approval is waived.
+
+Fresh verification: the available complete Python suite passed **516 tests and
+386 subtests**, with two explicit skips (live publisher integration unset;
+native Velocitas SDK absent) and nine integration tests deselected. No live fault,
+outage or Kanto tests were substituted. New static CI checks exercise default
+app-002 exclusion, opt-in two-vehicle identities, loopback-only port mappings,
+cleared inherited app builds and failure when the verified image variable is
+unset. Actual local CLI help checks and config rendering passed; daemon list
+still fails as expected. Markdown links, runbook Bash syntax, JSON, and
+`git diff --check` passed. See
+[static results](kanto-prerequisites-20261115T070500Z/static-results.json) and
+[Python log](kanto-prerequisites-20261115T070500Z/python-regression.log).
+Java 21 `clean verify` also passed **208 tests**; the bounded real backend read
+smoke passed and its owned process was stopped. Java/frontend application code
+was unchanged; frontend checks were not rerun for these configuration changes.
+
+## Historical PR #42 preparation record (preserved)
+
 Prepared 2026-11-15 UTC by Ankit. **PREPARATION COMPLETE; LIVE V1-09 BLOCKED.**
 No Kanto installation, container lifecycle operation, live pilot, twin write or
 release consolidation was performed. Static checks and Docker metadata inspection

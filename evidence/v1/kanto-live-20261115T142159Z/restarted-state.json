@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "sudo",
+    "-n",
+    "/opt/qa-sdv-v1-kanto/bin/kanto-cm",
+    "--host",
+    "/run/qa-sdv-v1-kanto/container-management.sock",
+    "--timeout",
+    "30",
+    "get",
+    "--name",
+    "autonomoushealthapp-vehicle-002"
+  ],
+  "request": {
+    "utc": "2026-11-15T14:22:24.266657+00:00",
+    "monotonicNs": 3393292201734
+  },
+  "returned": {
+    "utc": "2026-11-15T14:22:24.416198+00:00",
+    "monotonicNs": 3393441759884
+  },
+  "exit": 0,
+  "stdout": "{\n   \"container_id\": \"fd03dc2f-6e2c-48ec-8435-be801da106a3\",\n   \"container_name\": \"autonomoushealthapp-vehicle-002\",\n   \"image\": {\n      \"name\": \"docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446\"\n   },\n   \"domain_name\": \"autonomoushealthapp-vehicle-002-domain\",\n   \"host_name\": \"fedora\",\n   \"resolv_conf_path\": \"/var/lib/qa-sdv-v1-kanto/containers/fd03dc2f-6e2c-48ec-8435-be801da106a3/resolv.conf\",\n   \"hosts_path\": \"/var/lib/qa-sdv-v1-kanto/containers/fd03dc2f-6e2c-48ec-8435-be801da106a3/hosts\",\n   \"hostname_path\": \"/var/lib/qa-sdv-v1-kanto/containers/fd03dc2f-6e2c-48ec-8435-be801da106a3/hostname\",\n   \"mount_points\": null,\n   \"hooks\": null,\n   \"config\": {\n      \"env\": [\n         \"SDV_MIDDLEWARE_TYPE=native\",\n         \"SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557\",\n         \"SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883\",\n         \"DATABROKER_HOST=127.0.0.1\",\n         \"DATABROKER_PORT=55557\",\n         \"SIMULATED_VEHICLE_ID=vehicle-002\",\n         \"AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0\"\n      ]\n   },\n   \"host_config\": {\n      \"devices\": null,\n      \"network_mode\": \"host\",\n      \"privileged\": false,\n      \"restart_policy\": {\n         \"maximum_retry_count\": 0,\n         \"retry_timeout\": 0,\n         \"type\": \"unless-stopped\"\n      },\n      \"runtime\": \"io.containerd.runc.v2\",\n      \"extra_hosts\": null,\n      \"extra_capabilities\": null,\n      \"port_mappings\": null,\n      \"log_config\": {\n         \"driver_config\": {\n            \"type\": \"json-file\",\n            \"max_files\": 2,\n            \"max_size\": \"100M\"\n         },\n         \"mode_config\": {\n            \"mode\": \"blocking\"\n         }\n      },\n      \"resources\": null\n   },\n   \"io_config\": {\n      \"attach_stderr\": false,\n      \"attach_stdin\": false,\n      \"attach_stdout\": false,\n      \"open_stdin\": false,\n      \"stdin_once\": false,\n      \"tty\": false\n   },\n   \"network_settings\": {\n      \"networks\": {\n         \"host\": {\n            \"id\": \"669652c529139e6981d6f57a3b860cc4ac0b4fda2d8690de2082d2b20f3be0bc\",\n            \"gateway\": \"\",\n            \"ip_address\": \"\",\n            \"mac_address\": \"\",\n            \"network_id\": \"4068d2f6c7bd44801a72a10dedb57182b32b7d8e1060d249328f2deec2690b68\"\n         }\n      },\n      \"sandbox_id\": \"de0af1f7df14e84068563809680356b5e7d9fa41a6f41539a8771b4610047a20\",\n      \"sandbox_key\": \"/run/qa-sdv-v1-kanto/netns/default\",\n      \"network_controller_id\": \"cca0296bcefb9329f6cd43057bf4006666f04a6a2049ddf8a1463aeb59536c50\"\n   },\n   \"state\": {\n      \"pid\": 37250,\n      \"started_at\": \"2026-11-15T14:22:24.216247116Z\",\n      \"error\": \"\",\n      \"exit_code\": 0,\n      \"finished_at\": \"2026-11-15T14:22:22.598211812Z\",\n      \"exited\": false,\n      \"dead\": false,\n      \"restarting\": false,\n      \"paused\": false,\n      \"running\": true,\n      \"oomKilled\": false,\n      \"status\": 2\n   },\n   \"created\": \"2026-11-15T14:22:14.524176329Z\",\n   \"restart_count\": 0,\n   \"manually_stopped\": false,\n   \"started_successfully_before\": false\n}\n",
+  "stderr": ""
+}

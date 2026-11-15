@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "scope": "same-device managed stop/start pilot only; no full V1 acceptance, remote LAN or crash auto-restart claim",
+  "eventId": "vehicle-002-88d5e09f279d4e06b08e7a726afca3db",
+  "sourceTimestamp": "2026-11-15T14:22:25.713946Z",
+  "runtimeStartedAt": "2026-11-15T14:22:24.216247+00:00",
+  "request": {
+    "utc": "2026-11-15T14:22:23.959401+00:00",
+    "monotonicNs": 3392984971891
+  },
+  "previousSourceTimestamp": "2026-11-15T14:22:20.700757Z",
+  "mqttMessages": 7,
+  "twinSnapshots": 104
+}

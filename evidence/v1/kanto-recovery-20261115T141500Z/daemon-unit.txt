@@ -1,0 +1,4 @@
+ActiveState=active
+SubState=running
+ExecStart={ path=/opt/qa-sdv-v1-kanto/bin/container-management ; argv[]=/opt/qa-sdv-v1-kanto/bin/container-management --ccl-ap /run/containerd/containerd.sock --ccl-default-ns qa-sdv-v1-kanto --grpc-serv-ap /run/qa-sdv-v1-kanto/container-management.sock --cm-home-dir /var/lib/qa-sdv-v1-kanto --cm-exec-root-dir /run/qa-sdv-v1-kanto --ccl-home-dir /var/lib/qa-sdv-v1-kanto --ccl-exec-root-dir /run/qa-sdv-v1-kanto --deployment-home-dir /var/lib/qa-sdv-v1-kanto --deployment-enable=false --things-home-dir /var/lib/qa-sdv-v1-kanto --net-home-dir /var/lib/qa-sdv-v1-kanto --net-exec-root-dir /run/qa-sdv-v1-kanto --net-type host --net-tbr-disable --things-enable=false --log-file /var/log/qa-sdv-v1-kanto/container-management.log ; ignore_errors=no ; start_time=[Sun 2026-11-15 08:48:38 EST] ; stop_time=[n/a] ; pid=13436 ; code=(null) ; status=0/0 }
+Environment=HOME=/var/lib/qa-sdv-v1-kanto XDG_CONFIG_HOME=/var/lib/qa-sdv-v1-kanto/config

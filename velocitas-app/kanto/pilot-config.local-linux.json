@@ -1,0 +1,16 @@
+{
+  "vehicle_id": "vehicle-002",
+  "container_name": "autonomoushealthapp-vehicle-002",
+  "image": "docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446",
+  "remote_lan": false,
+  "kuksa_host": "127.0.0.1",
+  "kuksa_port": 55557,
+  "mqtt_host": "127.0.0.1",
+  "mqtt_port": 18883,
+  "poll_interval_seconds": 2.0,
+  "restart_policy": {
+    "type": "unless-stopped",
+    "maximum_retry_count": 0,
+    "retry_timeout": 0
+  }
+}

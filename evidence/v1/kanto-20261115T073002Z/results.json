@@ -1,0 +1,13 @@
+{
+  "V1-09": "BLOCKED",
+  "reason": "Operator sudo authentication pending; no Kanto daemon or pilot started",
+  "freshStaticTests": "149 passed",
+  "mqttBaseline": "3 fresh healthy vehicle-001 QoS1 non-retained observations; not restart isolation proof",
+  "mqttCaptureExit": 0,
+  "linksChecked": 37,
+  "bashSyntaxBlocks": 25,
+  "cleanup": "No new disruption or publisher introduced; app-001/ingress/prerequisites left running, Docker app-002 stopped",
+  "priorDockerShutdown": "Exit 1, event loop stopped before Future completed; not a current Kanto result",
+  "privilegedDependentSteps": "paused awaiting operator own-terminal commands",
+  "fullSuitesRerun": false
+}

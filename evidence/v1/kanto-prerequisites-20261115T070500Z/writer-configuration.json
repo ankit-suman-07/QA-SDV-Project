@@ -1,0 +1,30 @@
+{
+  "baseUrl": "http://127.0.0.1:18080",
+  "subject": "nginx:ditto",
+  "policyChecks": [
+    {
+      "vehicleId": "vehicle-001",
+      "subject": "nginx:ditto",
+      "readWritePolicyVerified": true
+    },
+    {
+      "vehicleId": "vehicle-002",
+      "subject": "nginx:ditto",
+      "readWritePolicyVerified": true
+    }
+  ],
+  "ingressClientId": "qa-v1-kanto-prereq-ingress",
+  "ingressPid": 167242,
+  "ingressRunning": true,
+  "backendReaderCredentialSource": "same legitimate isolated local sample; SDV_V1_DITTO_USERNAME/PASSWORD",
+  "fleetWriterCredentialSource": "same legitimate isolated local sample; SDV_V1_FLEET_USERNAME/PASSWORD",
+  "fleetThing": "sdv:fleet-v1",
+  "fleetPolicy": "sdv:fleet-v1-policy",
+  "fleetProvisioning": "created absent resources only",
+  "fleetWriterRunning": false,
+  "backendRunning": false,
+  "productionSubjectSeparationApproval": "OPEN; local sample reuse does not approve production identities",
+  "backendReadLiveVerified": true,
+  "backendSmokeStopped": true,
+  "backendConfiguration": "velocitas-app/kanto/backend.local-linux.env.example"
+}

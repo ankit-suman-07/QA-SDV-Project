@@ -1,0 +1,25 @@
+# Use with vehicle-simulator/docker-compose.v1.yml on the same Linux host.
+# Docker app-002 is opt-in; leave its profile disabled throughout Kanto use.
+services:
+  mqtt:
+    ports: !override
+      - "127.0.0.1:18883:1883"
+  kuksa-001:
+    ports: !override
+      - "127.0.0.1:55556:55555"
+  kuksa-002:
+    ports: !override
+      - "127.0.0.1:55557:55555"
+  provider-001:
+    ports: !override
+      - "127.0.0.1:8091:8090"
+  provider-002:
+    ports: !override
+      - "127.0.0.1:8092:8090"
+  app-001:
+    build: !reset null
+    image: ${V1_KANTO_APP_IMAGE:?Set the verified baseline app image}
+  app-002:
+    build: !reset null
+    image: ${V1_KANTO_APP_IMAGE:?Set the verified baseline app image}
+    profiles: [docker-app-002]

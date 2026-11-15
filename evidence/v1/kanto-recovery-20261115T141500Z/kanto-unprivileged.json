@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/opt/qa-sdv-v1-kanto/bin/kanto-cm",
+    "--host",
+    "/run/qa-sdv-v1-kanto/container-management.sock",
+    "--timeout",
+    "5",
+    "list"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "time=\"2026-11-15T09:13:31.932357874-05:00\" level=fatal msg=\"error while dialing /run/qa-sdv-v1-kanto/container-management.sock: context deadline exceeded\"\n"
+}

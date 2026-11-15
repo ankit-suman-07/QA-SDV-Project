@@ -1,0 +1,24 @@
+{
+  "kind": "prerequisite-only",
+  "mqttExit": 0,
+  "observedCount": 3,
+  "vehicle001ExactPropertiesMatch": true,
+  "vehicle002RestartCorrelation": "NOT EXECUTED: sudo authentication required",
+  "checks": [
+    {
+      "eventId": "vehicle-001-de87769af74c480c9036c5fc9a22c059",
+      "sourceTimestamp": "2026-11-15T14:13:34.209178Z",
+      "ageAtReceiptSeconds": 1.193537
+    },
+    {
+      "eventId": "vehicle-001-547ed2c4bc5c43ddb1bba9d71f465fbb",
+      "sourceTimestamp": "2026-11-15T14:13:39.222192Z",
+      "ageAtReceiptSeconds": 0.193387
+    },
+    {
+      "eventId": "vehicle-001-cc5c47535b0743ca84e19cb8f2708360",
+      "sourceTimestamp": "2026-11-15T14:13:44.234491Z",
+      "ageAtReceiptSeconds": 1.198011
+    }
+  ]
+}

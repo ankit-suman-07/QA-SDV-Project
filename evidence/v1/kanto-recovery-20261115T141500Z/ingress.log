@@ -1,0 +1,3 @@
+2026-11-15 09:13:35,653 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-de87769af74c480c9036c5fc9a22c059'
+2026-11-15 09:13:39,471 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-547ed2c4bc5c43ddb1bba9d71f465fbb'
+2026-11-15 09:13:45,476 INFO event_persisted topic='sdv/vehicle-001/health' vehicle='vehicle-001' event='vehicle-001-cc5c47535b0743ca84e19cb8f2708360'

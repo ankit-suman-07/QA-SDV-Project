@@ -1,0 +1,86 @@
+{
+  "mode": "dry-run",
+  "execution_permitted": false,
+  "cli_support": "HELP_CHECKS_PASSED",
+  "descriptor": {
+    "container_name": "autonomoushealthapp-vehicle-002",
+    "image": {
+      "name": "docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446"
+    },
+    "host_config": {
+      "devices": [],
+      "network_mode": "host",
+      "privileged": false,
+      "restart_policy": {
+        "type": "unless-stopped",
+        "maximum_retry_count": 0,
+        "retry_timeout": 0
+      }
+    },
+    "config": {
+      "env": [
+        "SDV_MIDDLEWARE_TYPE=native",
+        "SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557",
+        "SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883",
+        "DATABROKER_HOST=127.0.0.1",
+        "DATABROKER_PORT=55557",
+        "SIMULATED_VEHICLE_ID=vehicle-002",
+        "AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0"
+      ]
+    }
+  },
+  "lifecycle": [
+    {
+      "operation": "inspect",
+      "container_name": "autonomoushealthapp-vehicle-002",
+      "execute": false
+    },
+    {
+      "operation": "create-if-absent",
+      "container_name": "autonomoushealthapp-vehicle-002",
+      "execute": false
+    },
+    {
+      "operation": "start",
+      "container_name": "autonomoushealthapp-vehicle-002",
+      "execute": false
+    },
+    {
+      "operation": "stop",
+      "container_name": "autonomoushealthapp-vehicle-002",
+      "execute": false
+    },
+    {
+      "operation": "start",
+      "container_name": "autonomoushealthapp-vehicle-002",
+      "execute": false
+    },
+    {
+      "operation": "inspect",
+      "container_name": "autonomoushealthapp-vehicle-002",
+      "execute": false
+    }
+  ],
+  "publisher_handoff": {
+    "vehicle_id": "vehicle-002",
+    "docker_service": "app-002",
+    "kanto_container": "autonomoushealthapp-vehicle-002",
+    "before_kanto_start": [
+      "Record whether Docker app-002 was running.",
+      "Stop only Docker app-002 and verify it is stopped.",
+      "Verify no other vehicle-002 publisher or fixture replay is active."
+    ],
+    "before_docker_restore": [
+      "Stop the pilot Kanto container and verify it is stopped.",
+      "Restore Docker app-002 only if it was running before the pilot."
+    ],
+    "execution_permitted": false
+  },
+  "blockers": [
+    "Actual Linux Kanto version, create options and effective descriptor settings need review.",
+    "Existing container names must be inspected; replacement is not permitted by this tool.",
+    "Ankit must verify the V1 image revision, target architecture, registry access and endpoints.",
+    "Exclusive vehicle-002 publisher ownership and cleanup/restoration must be verified.",
+    "Real post-restart MQTT and matching Ditto evidence are pending."
+  ]
+}

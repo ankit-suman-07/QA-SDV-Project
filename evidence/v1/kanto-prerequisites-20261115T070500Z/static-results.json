@@ -1,0 +1,13 @@
+{
+  "relativeLinksChecked": 33,
+  "bashBlocksSyntaxChecked": 25,
+  "composeStaticJobExit": 0,
+  "json": "PASS",
+  "noRuntimePilot": true,
+  "pythonRegressionExit": 0,
+  "pythonSummary": "516 passed, 2 skipped, 9 deselected, 386 subtests passed in 15.83s",
+  "java21CleanVerifyExit": 0,
+  "javaTests": 208,
+  "realBackendReadSmokeExit": 0,
+  "firstBackendObserverAttempt": "TypeError due to list-response shape; preserved and corrected"
+}

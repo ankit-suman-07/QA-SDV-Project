@@ -1,0 +1,11 @@
+{
+  "pid": 167242,
+  "bootId": "ee03bff1-9c77-402f-9d98-eb718091b81f",
+  "startTicks": "1750157",
+  "argv": [
+    "/tmp/qa-v1-env/bin/python",
+    "-m",
+    "ditto.v1",
+    "run"
+  ]
+}

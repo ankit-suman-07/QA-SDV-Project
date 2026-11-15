@@ -1,0 +1,11 @@
+{
+  "pid": 24753,
+  "argv": [
+    "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python",
+    "-m",
+    "ditto.v1",
+    "run"
+  ],
+  "startTicks": "286102",
+  "bootId": "980ff1ee-972d-4dbe-bed0-e4033ba000fb"
+}
