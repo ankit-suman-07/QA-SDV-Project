@@ -83,6 +83,9 @@ The binary/image archives remain local prerequisites, not Git artifacts. If lost
 redownload the official checksum-verified archive and rebuild/export from the
 recorded source; record any changed image identity rather than reusing old hashes.
 The raw capture, snapshots, command outputs and build log are tracked durably.
+Trailing whitespace in captured build/Maven logs was normalized for Git checks;
+the manifest names the affected logs. Results, identities and values are preserved,
+and artifact hashes cover the reviewed tracked files.
 
 ### Exact continuation commands and configuration
 

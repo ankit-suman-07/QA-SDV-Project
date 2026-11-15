@@ -3,14 +3,14 @@
   "backend-read-smoke.log": "5d1f1f3546dd708f74db23f089fd84a7a7826c5f6678186b9f473bfb638e207e",
   "backend-read-first-attempt.json": "15dd0c0a4c4b564bd136ba3e2789a4a5acf86f6d84867db343666f605cf4f093",
   "backend-read-first-attempt.log": "05d9872148132d5c76ff9776bc1340175bfa434135fff86ac8ee3cd98c47678d",
-  "java-verification.log": "9bd40e6be81a99897fb8d9e562540c5005a3011b317298275021577cb8206639",
+  "java-verification.log": "20f83530476d9cc9a172d6cce3243bd074e980300a8f98488d81e640c850f191",
   "ingress-identity.json": "cc2b7dd5303ff48e818139ea00dcb7367a5e5c048d29ee3f5b4c6d317a9b3a8a",
   "python-regression.log": "87c591e77dc5acaf6638db85cebc7966d6f6f6086008c17af3ca314e0782ec4d",
   "static-results.json": "6fadfacbbecbfd1e30bd79f2ec9630e26783aab8bd1d824a5dd32d0fc3dba59c",
   "compose-static-checks.log": "a21b99936c9a360e6ee82bd69a23242106fdf92cbba50821f4a5777deb1b7d8d",
   "static-plan.json": "bfac2bc492c4da07d34e8a5d3c6120e63e6b98c860561fd4a8db14d5019361ba",
   "ingress-preparation-snapshot.log": "6484a185160736ed8786cd613ae57fb6dcac025c0f4a73959e33ea7454906b48",
-  "manifest.json": "bb437ef8e7da4ac6008b7939b0538af9eb9ee967e35c77f6a1d5130cd278ad42",
+  "manifest.json": "7e623f29bb66b0c3f47e5bfd44a8a56762d03bf68cf12b64d4d4999d57af0cdf",
   "preflight-09.log": "cb9c938883e9024ff8cfd5d1be8d34f376020a92037f979ad12a2b13e0c630dc",
   "preflight-08.log": "0cfeae7e322e24b3799e740d3a90330fe310248735535d39f255978289634845",
   "preflight-07.log": "8313b8b32b8c49d9807d21d43f042e1362b46fbb520b7eb757737e2d2dc02b54",
@@ -30,5 +30,5 @@
   "ditto-access.json": "c760aadd25848bc0c80768b9574f7f8d72cd0f97c0828bde2b679d477f0514f9",
   "kuksa-readings.json": "ff8280263ce59e3d2590372504fb45c6c2086bd28c65f670b239fe78a6baad91",
   "mqtt-vehicle-001.jsonl": "b8beb42e7e2d7a7221c1ca03dfceec54c0290b7953b19c145c0e12cddda0f0f9",
-  "image-build.log": "b908879bb7b221316b032705a109261d602c3c50b94e3aee1c75d29a86348c50"
+  "image-build.log": "92593eb0b4045b24b001a5de55bff9de3a82152b407958d77e02f7edbfd188a1"
 }

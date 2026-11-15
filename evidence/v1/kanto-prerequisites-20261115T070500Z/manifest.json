@@ -136,5 +136,12 @@
   "fullPilotExecuted": false,
   "kantoDaemonStarted": false,
   "outagesOrFaultsInjected": false,
-  "containerdConfigSha256": "e2bdf61ad4c980e7439ed09a1ab65441afadede63087761679a97cc77cd4d20d"
+  "containerdConfigSha256": "e2bdf61ad4c980e7439ed09a1ab65441afadede63087761679a97cc77cd4d20d",
+  "evidenceNormalization": {
+    "trailingWhitespaceRemovedFrom": [
+      "java-verification.log",
+      "image-build.log"
+    ],
+    "note": "Formatting only; original command outcomes, source/event identities and measurement values unchanged. Hashes cover tracked reviewed artifacts."
+  }
 }
