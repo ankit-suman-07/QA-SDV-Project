@@ -1,0 +1,4 @@
+516 passed, 2 skipped, 9 deselected, 386 subtests passed in 17.35s
+SKIPPED velocitas-app/app/tests/test_v1_publisher_integration.py:28: set V1_MQTT_TEST_HOST to run
+SKIPPED velocitas-app/app/tests/test_v1_publisher.py:127: velocitas_sdk.native.mqtt unavailable (velocitas_sdk not installed)
+Boundary: unit/mock/component checks; no external live services started.

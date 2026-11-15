@@ -264,6 +264,26 @@ def test_cli_capabilities_are_only_checked_with_help_and_never_deploy(capsys):
     assert plan['execution_permitted'] is False
 
 
+def test_preparation_requires_exclusive_vehicle_002_handoff():
+    prepare = module('prepare_v1_pilot')
+    descriptor = module('render_pilot_config').render_descriptor(example())
+    plan = prepare.preparation_plan(descriptor)
+    assert plan['publisher_handoff'] == {
+        'vehicle_id': 'vehicle-002',
+        'docker_service': 'app-002',
+        'kanto_container': 'autonomoushealthapp-vehicle-002',
+        'before_kanto_start': [
+            'Record whether Docker app-002 was running.',
+            'Stop only Docker app-002 and verify it is stopped.',
+            'Verify no other vehicle-002 publisher or fixture replay is active.'],
+        'before_docker_restore': [
+            'Stop the pilot Kanto container and verify it is stopped.',
+            'Restore Docker app-002 only if it was running before the pilot.'],
+        'execution_permitted': False,
+    }
+    assert all(step['execute'] is False for step in plan['lifecycle'])
+
+
 def test_missing_or_unsupported_cli_fails_without_mutation(capsys):
     prepare = module('prepare_v1_pilot')
     fake = Mock()
