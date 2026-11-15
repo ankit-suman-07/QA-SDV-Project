@@ -1,0 +1,461 @@
+added in remote
+  their  100644 6cfc1e531c91947a24f8ed50151867ee217e431e ditto/pressure_units.py
+@@ -0,0 +1,11 @@
++"""Explicit VSS kPa -> legacy diagnostic psi boundary.
++
++Protobuf tire_pressure_psi, Ditto tirePressurePsi and OpenSOVD thresholds
++already use psi and must not convert again. VSS uint16 rounds to whole kPa.
++"""
++
++KPA_PER_PSI = 6.894757293168
++
++
++def kpa_to_psi(pressure_kpa):
++    return float(pressure_kpa) / KPA_PER_PSI
+merged
+  result 100644 22494571f1ca4099d0b76bbfeb896c305276b8f9 ditto/scripts/interim-kuksa-to-ditto-bridge.py
+  our    100644 91763438f21a6c5d8f576a40f311e6918bc8dbb9 ditto/scripts/interim-kuksa-to-ditto-bridge.py
+@@ -22,6 +22,8 @@
+ )
+ from experiments.pipeline_evaluator import PipelineEvaluator
+ from experiments.result_summary import summarize_records
++from ditto.pressure_units import kpa_to_psi
++
+ from uprotocol.transport import (
+     publish_correlated_fault_cleared,
+     publish_correlated_fault_detected,
+@@ -188,7 +190,7 @@
+             coolant_pressure_kpa=float(
+                 coolant_pressure
+             ),
+-            tire_pressure_psi=float(tire_fl),
++            tire_pressure_psi=kpa_to_psi(tire_fl),
+         )
+
+         received_event = receive_vehicle_status(
+added in remote
+  their  100644 6b4a3bb28de86a0b7be605bce70db0113aa200c4 evidence/v1/tire-pressure-units/initial-collection-attempt.txt
+@@ -0,0 +1,16 @@
++
++==================================== ERRORS ====================================
++______________ ERROR collecting tests/test_tire_pressure_units.py ______________
++ImportError while importing test module '/tmp/qa-v1-pressure/tests/test_tire_pressure_units.py'.
++Hint: make sure your test modules/packages have valid Python names.
++Traceback:
++../qa-python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/importlib/__init__.py:90: in import_module
++    return _bootstrap._gcd_import(name[level:], package, level)
++           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++tests/test_tire_pressure_units.py:9: in <module>
++    from tests.test_fault_mapper import make_thing
++E   ModuleNotFoundError: No module named 'tests.test_fault_mapper'
++=========================== short test summary info ============================
++ERROR tests/test_tire_pressure_units.py
++!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
++1 error in 0.07s
+added in remote
+  their  100644 27e6f6c2cd00ba8b960282ede690a0027fe9f1fb evidence/v1/tire-pressure-units/red.txt
+@@ -0,0 +1,173 @@
++FFFFFFFFFFFFF.                                                           [100%]
++=================================== FAILURES ===================================
++_______ test_provider_converts_intended_psi_to_declared_uint16_kpa[0-0] ________
++
++psi = 0, kpa = 0
++
++    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
++    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
++        app = provider()
++        state = initial_state()
++        state['tire_pressure'] = psi
++>       values = app.publication_values(state)
++                 ^^^^^^^^^^^^^^^^^^^^^^
++E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
++
++tests/test_tire_pressure_units.py:27: AttributeError
++______ test_provider_converts_intended_psi_to_declared_uint16_kpa[24-165] ______
++
++psi = 24, kpa = 165
++
++    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
++    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
++        app = provider()
++        state = initial_state()
++        state['tire_pressure'] = psi
++>       values = app.publication_values(state)
++                 ^^^^^^^^^^^^^^^^^^^^^^
++E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
++
++tests/test_tire_pressure_units.py:27: AttributeError
++______ test_provider_converts_intended_psi_to_declared_uint16_kpa[28-193] ______
++
++psi = 28, kpa = 193
++
++    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
++    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
++        app = provider()
++        state = initial_state()
++        state['tire_pressure'] = psi
++>       values = app.publication_values(state)
++                 ^^^^^^^^^^^^^^^^^^^^^^
++E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
++
++tests/test_tire_pressure_units.py:27: AttributeError
++______ test_provider_converts_intended_psi_to_declared_uint16_kpa[32-221] ______
++
++psi = 32, kpa = 221
++
++    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
++    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
++        app = provider()
++        state = initial_state()
++        state['tire_pressure'] = psi
++>       values = app.publication_values(state)
++                 ^^^^^^^^^^^^^^^^^^^^^^
++E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
++
++tests/test_tire_pressure_units.py:27: AttributeError
++______ test_provider_converts_intended_psi_to_declared_uint16_kpa[34-234] ______
++
++psi = 34, kpa = 234
++
++    @pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
++    def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
++        app = provider()
++        state = initial_state()
++        state['tire_pressure'] = psi
++>       values = app.publication_values(state)
++                 ^^^^^^^^^^^^^^^^^^^^^^
++E       AttributeError: module 'pressure_provider' has no attribute 'publication_values'
++
++tests/test_tire_pressure_units.py:27: AttributeError
++______________ test_legacy_boundary_converts_kpa_to_psi_once[0-0] ______________
++
++kpa = 0, psi = 0
++
++    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
++    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:37: ModuleNotFoundError
++_______ test_legacy_boundary_converts_kpa_to_psi_once[165-23.931208726] ________
++
++kpa = 165, psi = 23.931208726
++
++    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
++    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:37: ModuleNotFoundError
++_______ test_legacy_boundary_converts_kpa_to_psi_once[193-27.992262328] ________
++
++kpa = 193, psi = 27.992262328
++
++    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
++    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:37: ModuleNotFoundError
++_______ test_legacy_boundary_converts_kpa_to_psi_once[221-32.053315931] ________
++
++kpa = 221, psi = 32.053315931
++
++    @pytest.mark.parametrize('kpa,psi', [(0, 0), (165, 23.931208726), (193, 27.992262328), (221, 32.053315931)])
++    def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:37: ModuleNotFoundError
++___________ test_runtime_bridge_uses_kpa_conversion_before_protobuf ____________
++
++    def test_runtime_bridge_uses_kpa_conversion_before_protobuf():
++        # The bridge has a live top-level loop; inspect its runtime call expression
++        # rather than importing it and contacting shared services.
++        tree = ast.parse((ROOT/'ditto/scripts/interim-kuksa-to-ditto-bridge.py').read_text())
++        calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call)
++                 and isinstance(n.func, ast.Name) and n.func.id=='publish_vehicle_status']
++        value = next(k.value for k in calls[0].keywords if k.arg=='tire_pressure_psi')
++>       assert ast.unparse(value) == 'kpa_to_psi(tire_fl)'
++E       AssertionError: assert 'float(tire_fl)' == 'kpa_to_psi(tire_fl)'
++E
++E         - kpa_to_psi(tire_fl)
++E         + float(tire_fl)
++
++tests/test_tire_pressure_units.py:48: AssertionError
++_ test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24-CRITICAL-24] _
++
++psi = 24, severity = 'CRITICAL', threshold = 24
++
++    @pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
++    def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:53: ModuleNotFoundError
++_ test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24.01-WARNING-28] _
++
++psi = 24.01, severity = 'WARNING', threshold = 28
++
++    @pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
++    def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:53: ModuleNotFoundError
++_ test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[28-WARNING-28] _
++
++psi = 28, severity = 'WARNING', threshold = 28
++
++    @pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
++    def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
++>       from ditto.pressure_units import kpa_to_psi
++E       ModuleNotFoundError: No module named 'ditto.pressure_units'
++
++tests/test_tire_pressure_units.py:53: ModuleNotFoundError
++=========================== short test summary info ============================
++FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[0-0]
++FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[24-165]
++FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[28-193]
++FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[32-221]
++FAILED tests/test_tire_pressure_units.py::test_provider_converts_intended_psi_to_declared_uint16_kpa[34-234]
++FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[0-0]
++FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[165-23.931208726]
++FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[193-27.992262328]
++FAILED tests/test_tire_pressure_units.py::test_legacy_boundary_converts_kpa_to_psi_once[221-32.053315931]
++FAILED tests/test_tire_pressure_units.py::test_runtime_bridge_uses_kpa_conversion_before_protobuf
++FAILED tests/test_tire_pressure_units.py::test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24-CRITICAL-24]
++FAILED tests/test_tire_pressure_units.py::test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[24.01-WARNING-28]
++FAILED tests/test_tire_pressure_units.py::test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion[28-WARNING-28]
++13 failed, 1 passed in 0.14s
+merged
+  result 100644 55ee535a125575e4415c1c709ea7aa950a16f98d tests/test_fault_mapper.py
+  our    100644 28a065841f4836dd507e9dd0a70436c6b300ed2b tests/test_fault_mapper.py
+@@ -29,7 +29,7 @@
+
+ class FaultMapperTest(unittest.TestCase):
+
+-    def test_legacy_tire_unit_and_thresholds_remain_psi_pending_upstream_confirmation(self):
++    def test_legacy_tire_unit_and_thresholds_remain_psi(self):
+         for pressure, severity, threshold in [(28, 'WARNING', 28), (24.01, 'WARNING', 28), (24, 'CRITICAL', 24)]:
+             thing = make_thing(tire_fl=pressure, active_faults=['TIRE_PRESSURE_LOW_FRONT_LEFT'])
+             mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT', thing)
+@@ -45,7 +45,7 @@
+         mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT',
+                                        make_thing(tire_fl=32, active_faults=['TIRE_PRESSURE_LOW_FRONT_LEFT']))
+         self.assertEqual('psi', mapped['unit'])
+-        self.assertEqual(32, mapped['observedValue'])  # no runtime conversion authorized yet
++        self.assertEqual(32, mapped['observedValue'])  # mapper receives already-converted legacy psi
+
+     def test_battery_low_maps_correctly(self):
+         thing = make_thing(battery=15, active_faults=["BATTERY_LOW"])
+added in remote
+  their  100644 4505df28e294663cc5bbdabe2b7ef83f399345ab tests/test_tire_pressure_units.py
+@@ -0,0 +1,74 @@
++"""Real source/boundary contract regressions, including uint16 quantization."""
++import ast
++import importlib.util
++from pathlib import Path
++import sys
++
++import pytest
++from opensovd.fault_mapper import map_fault_to_opensovd
++
++ROOT = Path(__file__).parents[1]
++sys.path.insert(0, str(ROOT/'vehicle-simulator/src'))
++from signal_generator import initial_state, next_state
++
++
++def provider():
++    spec = importlib.util.spec_from_file_location('pressure_provider', ROOT/'vehicle-simulator/src/main.py')
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++@pytest.mark.parametrize('psi,kpa', [(0, 0), (24, 165), (28, 193), (32, 221), (34, 234)])
++def test_provider_converts_intended_psi_to_declared_uint16_kpa(psi, kpa):
++    app = provider()
++    state = initial_state()
++    state['tire_pressure'] = psi
++    values = app.publication_values(state)
++    actual = values[app.SIGNAL_PATHS['tire_pressure']].value
++    assert type(actual) is int
++    assert actual == kpa
++    assert state['tire_pressure'] == psi  # publication must not reconvert state
++    assert app.publication_values(state)[app.SIGNAL_PATHS['tire_pressure']].value == kpa
++
++
++@pytest.mark.parametrize('kpa,psi', [(0, 0), (6.894757293168, 1), (100, 14.5037737730217), (221, 32.0533400383779)])
++def test_legacy_boundary_converts_kpa_to_psi_once(kpa, psi):
++    from ditto.pressure_units import kpa_to_psi
++    assert kpa_to_psi(kpa) == pytest.approx(psi, abs=1e-8)
++
++
++def test_runtime_bridge_uses_kpa_conversion_before_protobuf():
++    # The bridge has a live top-level loop; inspect its runtime call expression
++    # rather than importing it and contacting shared services.
++    tree = ast.parse((ROOT/'ditto/scripts/interim-kuksa-to-ditto-bridge.py').read_text())
++    calls = [n for n in ast.walk(tree) if isinstance(n, ast.Call)
++             and isinstance(n.func, ast.Name) and n.func.id=='publish_vehicle_status']
++    value = next(k.value for k in calls[0].keywords if k.arg=='tire_pressure_psi')
++    assert ast.unparse(value) == 'kpa_to_psi(tire_fl)'
++
++
++@pytest.mark.parametrize('psi,severity,threshold', [(24, 'CRITICAL', 24), (24.01, 'WARNING', 28), (28, 'WARNING', 28)])
++def test_roundtrip_uses_legacy_psi_thresholds_without_double_conversion(psi, severity, threshold):
++    from ditto.pressure_units import kpa_to_psi
++    app = provider()
++    state = initial_state()
++    state['tire_pressure'] = psi
++    kpa = app.publication_values(state)[app.SIGNAL_PATHS['tire_pressure']].value
++    diagnostic = kpa_to_psi(kpa)
++    mapped = map_fault_to_opensovd('TIRE_PRESSURE_LOW_FRONT_LEFT', {'features': {'signals': {'properties': {'tirePressurePsi': {'frontLeft': diagnostic}}},
++                      'health': {'properties': {'activeFaults': ['TIRE_PRESSURE_LOW_FRONT_LEFT']}}}})
++    assert mapped['unit'] == 'psi'
++    assert mapped['observedValue'] == diagnostic
++    assert mapped['severity'] == severity
++    assert mapped['threshold'] == threshold
++    assert abs(diagnostic-psi) <= .5/6.894757293168
++
++
++def test_source_fault_pressure_decreases_without_changing_lidar_contract():
++    state = initial_state()
++    assert state['tire_pressure'] == 32
++    for _ in range(20):
++        state = next_state(state, fault=True)
++    assert state['tire_pressure'] < 30
++    assert state['lidar_distance_m'] == 35
+changed in both
+  base   100644 ca7251799ca07a8e4a606acf5edc5de249140ee2 vehicle-simulator/src/main.py
+  our    100644 6e26ed46ea63d4e71dddc7e8d7d1136b593915a3 vehicle-simulator/src/main.py
+  their  100644 f3fb5007e4a5c2b54c208cf4134bb6b644ae04f6 vehicle-simulator/src/main.py
+@@ -139,8 +139,36 @@
+     return f"{key}={value:.1f}"
+
+
++<<<<<<< .our
+ def publish_loop(controller, stop):
+     """Keep scenario state across transient outages; publish only fresh observations.
++=======
++def publication_values(state):
++    """Generator tire state is psi; VSS Tire.Pressure is uint16 kPa.
++
++    Quantize once at the source boundary, never mutate/reconvert simulator state.
++    """
++    values = {path: Datapoint(state[key]) for key, path in SIGNAL_PATHS.items()}
++    values[SIGNAL_PATHS["tire_pressure"]] = Datapoint(
++        round(state["tire_pressure"] * 6.894757293168)
++    )
++    return values
++
++
++def main():
++    controller = create_scenario_controller()
++
++    control_server = start_control_server(
++        controller=controller,
++        host=CONTROL_HOST,
++        port=CONTROL_PORT,
++    )
++
++    print(
++        f"[Control] vehicle={SIMULATED_VEHICLE_ID} "
++        f"listening on {CONTROL_HOST}:{CONTROL_PORT}"
++    )
++>>>>>>> .their
+
+     Each RPC has a deadline. A fresh client/channel on recovery discards broker
+     metadata caches; context exit closes the old channel before interruptible
+@@ -224,12 +252,66 @@
+     }
+     control_server = None
+     try:
++<<<<<<< .our
+         control_server = start_control_server(
+             controller=controller, host=CONTROL_HOST, port=CONTROL_PORT,
+         )
+         print(f"[Control] vehicle={SIMULATED_VEHICLE_ID} "
+               f"listening on {CONTROL_HOST}:{CONTROL_PORT}")
+         publish_loop(controller, stop)
++=======
++        with get_client() as client:
++            while True:
++                cooling_failure = scenario_is_active(
++                    controller,
++                    COOLING_FAILURE,
++                )
++
++                lidar_obstruction = scenario_is_active(
++                    controller,
++                    LIDAR_OBSTRUCTION,
++                )
++
++                lidar_failure = scenario_is_active(
++                    controller,
++                    LIDAR_SENSOR_FAILURE,
++                )
++
++                state = next_state(
++                    state,
++                    fault=cooling_failure,
++                    obstacle=lidar_obstruction,
++                    lidar_failure=lidar_failure,
++                )
++
++                client.set_current_values(
++                    publication_values(state)
++                )
++
++                timestamp = datetime.now().isoformat()
++                mode = describe_modes(
++                    cooling_failure,
++                    lidar_obstruction,
++                    lidar_failure,
++                )
++
++                signal_summary = " ".join(
++                    format_signal_value(key, value)
++                    for key, value in state.items()
++                )
++
++                print(
++                    f"[{timestamp}] "
++                    f"vehicle={SIMULATED_VEHICLE_ID} "
++                    f"mode={mode} "
++                    f"interval={PUBLISH_INTERVAL_SECONDS} "
++                    f"{signal_summary}"
++                )
++
++                time.sleep(
++                    PUBLISH_INTERVAL_SECONDS
++                )
++>>>>>>> .their
+     finally:
+         if control_server is not None:
+             control_server.shutdown()
+merged
+  result 100644 6f8a125739047d4e380d7ba0954ff9f7d8af4f6c vehicle-simulator/src/signal_generator.py
+  our    100644 1af0a3abf51df896493202a2f5b0cb901a5ee729 vehicle-simulator/src/signal_generator.py
+@@ -7,6 +7,8 @@
+ LIDAR_WARNING_DISTANCE_M = 10.0
+ AUTONOMOUS_BRAKING_DISTANCE_M = 5.0
+
++# Internal tire-pressure state/range and random changes retain legacy psi.
++# main.publication_values converts once to the declared KUKSA uint16 kPa.
+ NORMAL_RANGES = {
+     "speed": (0, 120),
+     "battery": (40, 100),
+merged
+  result 100644 4e9a25f3214706087a736b6f02a43916df39c5d4 vehicle-simulator/tests/test_kuksa_publication.py
+  our    100644 7b6fcfc530802ca75313b40d4e807a36b6103935 vehicle-simulator/tests/test_kuksa_publication.py
+@@ -92,7 +92,8 @@
+     value = read_signal(TIRE_PRESSURE_PATH)
+
+     assert value is not None
+-    assert 0 <= value <= 34
++    # Published VSS path is integer kPa, not the generator's internal psi.
++    assert 0 <= value <= round(34 * 6.894757293168)
+
+
+ def test_coolant_pressure_is_published_and_in_range():

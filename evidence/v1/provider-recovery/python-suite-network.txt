@@ -1,0 +1,19 @@
+.......................................................... [ 11%]
+............................................................................................................................................................................................................. [ 53%]
+........................................................................ [ 68%]
+........................................................................ [ 82%]
+........................................................................ [ 97%]
+.............                                                            [100%]
+=============================== warnings summary ===============================
+velocitas-app/app/tests/test_v1_publisher.py::test_pinned_sdk_exposes_paho_publisher
+  /tmp/qa-sdk-0157/velocitas_sdk/native/mqtt.py:42: DeprecationWarning: Callback API version 1 is deprecated, update to latest version
+    self._pub_client = mqtt.Client()
+
+velocitas-app/app/tests/test_v1_publisher.py::test_pinned_sdk_exposes_paho_publisher
+  /tmp/qa-sdk-0157/velocitas_sdk/native/mqtt.py:43: DeprecationWarning: Callback API version 1 is deprecated, update to latest version
+    self._sub_client = mqtt.Client()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] velocitas-app/app/tests/test_v1_publisher_integration.py:28: set V1_MQTT_TEST_HOST to run
+492 passed, 1 skipped, 9 deselected, 2 warnings, 385 subtests passed in 16.13s

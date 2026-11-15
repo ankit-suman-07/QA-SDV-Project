@@ -1,0 +1,5 @@
+sha256:8df60a150d145d0a91428c3445e45b254d9f8073e70db1f8fae1c0d9a3ee7b96 ["qa-provider-recovery:fixed"]
+sha256:33a1ec03b816de2533d0f498602c1797ca3477643dd8ef22ab4547f33b8c1958 ["qa-v1verify-provider:20261114"]
+sha256:68c87df33526be780ce2848fd0349279721d889c476b211d018c2ef3e5799452 ["qa-v1verify-app:20261114"]
+sha256:9ace2824719ba7c05929f0af4827d9b25fa5ca7b2e0d58d0acff95885c649d6d ["ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0"]
+sha256:75d6662dee52c947dc9dd9c29f1d8d7ffef78ddaf38001caa09755681e8bbc98 ["eclipse-mosquitto:2"]

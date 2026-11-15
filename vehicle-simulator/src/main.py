@@ -1,9 +1,10 @@
 import os
-import time
+import signal
+import threading
 from datetime import datetime
 
 from dotenv import load_dotenv
-from kuksa_client.grpc import Datapoint
+from kuksa_client.grpc import Datapoint, VSSClientError
 
 from control_server import start_control_server
 from get_kuksa_client import get_client
@@ -150,77 +151,99 @@ def publication_values(state):
     return values
 
 
+def publish_loop(controller, stop):
+    """Keep scenario state across transient outages; publish only fresh observations.
+
+    Each RPC has a deadline. A fresh client/channel on recovery discards broker
+    metadata caches; context exit closes the old channel before interruptible
+    exponential backoff (1, 2, 4, then 5 seconds). Permanent errors still fail.
+    """
+    state = initial_state()
+    retry_delay = 1.0
+    while not stop.is_set():
+        try:
+            with get_client() as client:
+                while not stop.is_set():
+                    cooling_failure = scenario_is_active(
+                        controller,
+                        COOLING_FAILURE,
+                    )
+
+                    lidar_obstruction = scenario_is_active(
+                        controller,
+                        LIDAR_OBSTRUCTION,
+                    )
+
+                    lidar_failure = scenario_is_active(
+                        controller,
+                        LIDAR_SENSOR_FAILURE,
+                    )
+
+                    observation = next_state(
+                        state,
+                        fault=cooling_failure,
+                        obstacle=lidar_obstruction,
+                        lidar_failure=lidar_failure,
+                    )
+
+                    client.set_current_values(
+                        publication_values(observation),
+                        timeout=2.0,
+                    )
+                    state = observation
+                    retry_delay = 1.0
+
+                    timestamp = datetime.now().isoformat()
+                    mode = describe_modes(
+                        cooling_failure,
+                        lidar_obstruction,
+                        lidar_failure,
+                    )
+
+                    signal_summary = " ".join(
+                        format_signal_value(key, value)
+                        for key, value in state.items()
+                    )
+
+                    print(
+                        f"[{timestamp}] "
+                        f"vehicle={SIMULATED_VEHICLE_ID} "
+                        f"mode={mode} "
+                        f"interval={PUBLISH_INTERVAL_SECONDS} "
+                        f"{signal_summary}"
+                    )
+
+                    stop.wait(PUBLISH_INTERVAL_SECONDS)
+        except VSSClientError as error:
+            if error.error.get("code") not in (4, 14):
+                raise
+            print(f"[KUKSA] vehicle={SIMULATED_VEHICLE_ID} "
+                  f"temporarily unavailable; retry in {retry_delay}s", flush=True)
+            stop.wait(retry_delay)
+            retry_delay = min(retry_delay * 2, 5.0)
+
+
 def main():
     controller = create_scenario_controller()
-
-    control_server = start_control_server(
-        controller=controller,
-        host=CONTROL_HOST,
-        port=CONTROL_PORT,
-    )
-
-    print(
-        f"[Control] vehicle={SIMULATED_VEHICLE_ID} "
-        f"listening on {CONTROL_HOST}:{CONTROL_PORT}"
-    )
-
-    state = initial_state()
-
+    stop = threading.Event()
+    previous_handlers = {
+        sig: signal.signal(sig, lambda *_: stop.set())
+        for sig in (signal.SIGTERM, signal.SIGINT)
+    }
+    control_server = None
     try:
-        with get_client() as client:
-            while True:
-                cooling_failure = scenario_is_active(
-                    controller,
-                    COOLING_FAILURE,
-                )
-
-                lidar_obstruction = scenario_is_active(
-                    controller,
-                    LIDAR_OBSTRUCTION,
-                )
-
-                lidar_failure = scenario_is_active(
-                    controller,
-                    LIDAR_SENSOR_FAILURE,
-                )
-
-                state = next_state(
-                    state,
-                    fault=cooling_failure,
-                    obstacle=lidar_obstruction,
-                    lidar_failure=lidar_failure,
-                )
-
-                client.set_current_values(
-                    publication_values(state)
-                )
-
-                timestamp = datetime.now().isoformat()
-                mode = describe_modes(
-                    cooling_failure,
-                    lidar_obstruction,
-                    lidar_failure,
-                )
-
-                signal_summary = " ".join(
-                    format_signal_value(key, value)
-                    for key, value in state.items()
-                )
-
-                print(
-                    f"[{timestamp}] "
-                    f"vehicle={SIMULATED_VEHICLE_ID} "
-                    f"mode={mode} "
-                    f"interval={PUBLISH_INTERVAL_SECONDS} "
-                    f"{signal_summary}"
-                )
-
-                time.sleep(
-                    PUBLISH_INTERVAL_SECONDS
-                )
+        control_server = start_control_server(
+            controller=controller, host=CONTROL_HOST, port=CONTROL_PORT,
+        )
+        print(f"[Control] vehicle={SIMULATED_VEHICLE_ID} "
+              f"listening on {CONTROL_HOST}:{CONTROL_PORT}")
+        publish_loop(controller, stop)
     finally:
-        control_server.shutdown()
-        control_server.server_close()
+        if control_server is not None:
+            control_server.shutdown()
+            control_server.server_close()
+        for sig, handler in previous_handlers.items():
+            signal.signal(sig, handler)
 
 
 if __name__ == "__main__":

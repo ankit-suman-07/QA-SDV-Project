@@ -1,0 +1,62 @@
+[
+  {
+    "vehicle": "vehicle-002",
+    "automaticFreshRecovery": true,
+    "providerRunning": true,
+    "providerExitCode": 0,
+    "providerRestartCount": 0,
+    "otherVehicleAdvancedHealthy": true,
+    "restoredAt": "2026-11-14T06:12:31.285856+00:00",
+    "freshEvent": {
+      "receivedAt": "2026-11-14T06:12:35.927741+00:00",
+      "topic": "sdv/vehicle-002/health",
+      "qos": 1,
+      "retain": false,
+      "payload": {
+        "schemaVersion": "1.0.0",
+        "eventId": "vehicle-002-108b0c51e5614a03ba6c4f96b32ad3cd",
+        "vehicleId": "vehicle-002",
+        "sourceTimestamp": "2026-11-14T06:12:34.997604Z",
+        "health": "HEALTHY",
+        "faults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        }
+      }
+    }
+  },
+  {
+    "vehicle": "vehicle-001",
+    "automaticFreshRecovery": true,
+    "providerRunning": true,
+    "providerExitCode": 0,
+    "providerRestartCount": 0,
+    "otherVehicleAdvancedHealthy": true,
+    "restoredAt": "2026-11-14T06:12:48.535802+00:00",
+    "freshEvent": {
+      "receivedAt": "2026-11-14T06:12:55.939196+00:00",
+      "topic": "sdv/vehicle-001/health",
+      "qos": 1,
+      "retain": false,
+      "payload": {
+        "schemaVersion": "1.0.0",
+        "eventId": "vehicle-001-7ee66d5e33fa4d14a9776a3824bcf46a",
+        "vehicleId": "vehicle-001",
+        "sourceTimestamp": "2026-11-14T06:12:54.748097Z",
+        "health": "HEALTHY",
+        "faults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        }
+      }
+    }
+  },
+  {
+    "initialDependencyUnavailableThenFreshPublication": true
+  },
+  {
+    "controlledSigtermExitCode": 0
+  }
+]

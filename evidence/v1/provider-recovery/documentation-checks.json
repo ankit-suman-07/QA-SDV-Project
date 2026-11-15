@@ -1,0 +1,13 @@
+{
+  "relativeLinksChecked": 20,
+  "missing": [],
+  "credentialPatternFiles": [],
+  "mergePreview": "conflicts only in provider main; no merge applied",
+  "gitDiffCheck": 0,
+  "redactions": {
+    "artifact": "python-suite.txt",
+    "count": 1,
+    "reason": "Synthetic fixture Authorization header in failed-test traceback redacted; no real credentials supplied."
+  },
+  "branchToMainDiffCheckExitCode": 0
+}

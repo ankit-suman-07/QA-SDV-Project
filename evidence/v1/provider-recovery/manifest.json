@@ -1,0 +1,38 @@
+{
+  "recordedAt": "2026-11-14T06:19:57.481114+00:00",
+  "owner": "Ankit",
+  "branch": "ankit/fix/v1-provider-recovery",
+  "independentBaseline": "f33e7cbbb4968fec28d2d5acf4f10df246fa9fba",
+  "assessedImplementationRevision": "f10f06e8c6ce3e96891b60ea0ce13e498c5ad5d4",
+  "primaryCheckoutInitiallyClean": true,
+  "originMainAtStart": "f33e7cbbb4968fec28d2d5acf4f10df246fa9fba",
+  "unitRuntime": "CPython3.12.16; pinned existing provider/test environment; separate Velocitas SDK0.15.7 target",
+  "pythonCommandsEnvironment": {
+    "PYTHONPATH": "/tmp/qa-sdk-0157:/tmp/qa-v1-tooling/protobuf"
+  },
+  "testResults": {
+    "fullPythonPassed": 492,
+    "subtestsPassed": 385,
+    "skippedBrokerModules": 1,
+    "deselectedIntegrationTests": 9,
+    "sdkCallbackDeprecationWarnings": 2
+  },
+  "finalCommands": "final-commands.json",
+  "liveCommands": "fixed-commands.json",
+  "liveResult": "fixed-result.json",
+  "implementationSha256": {
+    "vehicle-simulator/docker-compose.v1.yml": "3ce6b3a7266068af35c0abafa177a2929cd43c4992d26d1a986ec8b71dfb3627",
+    "vehicle-simulator/docker-compose.yml": "edb1718e13c4dccf0ef388d677efb5fc5514f7264f7ba35a800e82027d1853e5",
+    "vehicle-simulator/src/get_kuksa_client.py": "6060605a3c664f8651ab73b2696fce4dcab993dab2217f49bfbb9a328fbcdff3",
+    "vehicle-simulator/src/main.py": "6e344a95da0cf1a3588422097b339bc6824d5c07f7a7a381466fa71ae1356694",
+    "vehicle-simulator/tests/test_provider_main.py": "1efb33f7a54f3676a501696683d2fbaac95ff023242dd45acce45d1fab4e5e36"
+  },
+  "cleanup": {
+    "allOwnedServicesStopped": true,
+    "ownedScenariosCleared": true,
+    "volumesDeleted": false,
+    "sharedTwinsUsed": false,
+    "unrelatedServicesStopped": false
+  },
+  "acceptanceLimits": "No full real Ditto/API/fleet/dashboard/Kanto acceptance; raw .txt artifacts tracked normally, no credentials stored."
+}
