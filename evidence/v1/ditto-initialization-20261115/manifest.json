@@ -12,6 +12,7 @@
     "live.json": "7874d90b5fb1f7ea1b3b740638cc66234d83fe96295de8ae0157611d70f17eec",
     "python-regression.txt": "4d18afdacd4f16189edff5d6ed5808f2ea80fc5ffa0a4b8376d1d8cb77258215",
     "python-regression-final.txt": "ea1ba65cadd127b3d8852b9b7a1dfb2e54325aea6a083ac36fbde93efb7fb1ee",
-    "README.md": "bed65d7e8e40a005fbb637ee4d2e839532c42d655d66a982886f35099b607622"
-  }
+    "README.md": "53a59a7afd420729a7e1c5d95804a063b84c6f65aec3e56360b6cb83d7771bfc"
+  },
+  "followUp": "Acceptance bootstrap removed in d3e3632; six offline controls passed; complete clean candidate verification pending."
 }
