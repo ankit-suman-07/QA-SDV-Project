@@ -1,0 +1,7 @@
+{
+  "sourceSha": "d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "dockerRef": "docker.io/library/qa-v1-shutdown-app:sha-d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "indexSha256": "94feff4f2714a5d70b796b58bbf75d8ca2a569d03d84ccf82bd79ac7eec9beed",
+  "archive": "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/kanto-shutdown-d8c1f4048522.tar",
+  "archiveSha256": "52ed54600ec1771da6c5bf634fe93f92f62383d018d3a24d806b1cfd4059ecb4"
+}
