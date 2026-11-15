@@ -1,0 +1,80 @@
+{
+  "sourceSha": "5f60f195cc1f73e00c9fb0e4075692f2f0e74b77",
+  "dirtyState": [
+    "?? evidence/v1/kanto-20261115T073002Z/"
+  ],
+  "recordedUtc": "2026-11-15T07:31:21.573472+00:00",
+  "commands": [
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "true"
+      ],
+      "exit": 1,
+      "log": "preflight-00.log"
+    },
+    {
+      "command": [
+        "uname",
+        "-srm"
+      ],
+      "exit": 0,
+      "log": "preflight-01.log"
+    },
+    {
+      "command": [
+        "containerd",
+        "--version"
+      ],
+      "exit": 0,
+      "log": "preflight-02.log"
+    },
+    {
+      "command": [
+        "timedatectl",
+        "show",
+        "-p",
+        "NTP",
+        "-p",
+        "NTPSynchronized"
+      ],
+      "exit": 0,
+      "log": "preflight-03.log"
+    },
+    {
+      "command": [
+        "chronyc",
+        "tracking"
+      ],
+      "exit": 0,
+      "log": "preflight-04.log"
+    },
+    {
+      "command": [
+        "docker",
+        "ps",
+        "-a",
+        "--format",
+        "{{.Names}} {{.Image}} {{.Status}}"
+      ],
+      "exit": 0,
+      "log": "preflight-05.log"
+    },
+    {
+      "command": [
+        "docker",
+        "image",
+        "inspect",
+        "qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446",
+        "--format",
+        "{{.Id}} {{.Os}}/{{.Architecture}} {{index .Config.Labels \"org.opencontainers.image.revision\"}}"
+      ],
+      "exit": 0,
+      "log": "preflight-06.log"
+    }
+  ],
+  "v1_09": "BLOCKED pending operator authentication and actual Kanto execution",
+  "pilotExecuted": false,
+  "priorEvidence": "../kanto-prerequisites-20261115T070500Z/manifest.json"
+}

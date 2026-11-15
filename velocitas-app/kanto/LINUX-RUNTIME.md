@@ -173,13 +173,13 @@ then use these lifecycle commands, recording each exit/status and return time:
 
 ```bash
 sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 30 start --name autonomoushealthapp-vehicle-002
-sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 5 get --name autonomoushealthapp-vehicle-002
+sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 5 get --name autonomoushealthapp-vehicle-002 > "$RUN_DIR/kanto-initial-start.json"
 "$PYTHON" -m ditto.v1 read all > "$RUN_DIR/before-restart-twins.json"
 sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 30 stop --name autonomoushealthapp-vehicle-002
 sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 5 get --name autonomoushealthapp-vehicle-002
 "$PYTHON" -c 'import datetime,json,time; print(json.dumps({"utc":datetime.datetime.now(datetime.timezone.utc).isoformat(),"monotonicNs":time.monotonic_ns()}))' > "$RUN_DIR/start-request.json"
 sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 30 start --name autonomoushealthapp-vehicle-002
-sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 5 get --name autonomoushealthapp-vehicle-002
+sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 5 get --name autonomoushealthapp-vehicle-002 > "$RUN_DIR/kanto-restarted.json"
 ```
 
 Wait for a real healthy event/twin match before saving the pre-restart snapshot.
@@ -191,6 +191,20 @@ after start; non-retained correct topic/schema/identity; source freshness/clock
 assumptions; **exact** event ID/source/properties in real Ditto; no intermediate
 vehicle-001 fault. Do not accept the old prepared twin or a different later event
 as proof. A managed stop/start is not crash auto-restart verification.
+
+For the actual pilot, also require source time **strictly after the restarted
+application's Kanto-reported `state.started_at`**, not just the start request.
+The pinned v1.0.0 CLI `get` emits the container JSON including `state.running`,
+`state.pid` and `state.started_at`. Preserve both initial and restarted JSON;
+require running state, a parseable timezone-aware start timestamp, and a later
+restart timestamp than the initial launch. Record PID and container ID as
+provenance, but do not use PID alone as restart proof. Reject missing/invalid
+runtime start time rather than substituting the request or observation time.
+Use a fresh event different from the pre-restart event and newer than **all**
+three boundaries: pre-restart source, start request, and runtime-reported restart.
+Continue capturing through stop/start so in-flight old events cannot satisfy this
+check. Keep both lifecycle command exits and return times. UTC comparisons use
+this host's synchronized clock; monotonic observer time measures completion.
 
 ## Cleanup and restoration
 

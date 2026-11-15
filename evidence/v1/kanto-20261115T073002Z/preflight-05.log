@@ -1,0 +1,18 @@
+qa-v1-kanto-prereq-edge-app-002-1 qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446 Exited (1) 21 minutes ago
+qa-v1-kanto-prereq-edge-app-001-1 549899e6a5a1 Up 25 minutes
+qa-v1-kanto-prereq-edge-provider-002-1 qa-sdv-provider:local Up 25 minutes
+qa-v1-kanto-prereq-edge-provider-001-1 qa-sdv-provider:local Up 25 minutes
+qa-v1-kanto-prereq-edge-mqtt-1 eclipse-mosquitto:2 Up 25 minutes
+qa-v1-kanto-prereq-edge-kuksa-001-1 ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0 Up 25 minutes
+qa-v1-kanto-prereq-edge-kuksa-002-1 ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0 Up 25 minutes
+qa-v1-kanto-prereq-ditto-nginx-1 nginx:1.27-alpine Up 25 minutes
+qa-v1-kanto-prereq-ditto-gateway-1 eclipse/ditto-gateway:3.8.4 Up 25 minutes (healthy)
+qa-v1-kanto-prereq-ditto-things-search-1 eclipse/ditto-things-search:3.8.4 Up 25 minutes (healthy)
+qa-v1-kanto-prereq-ditto-connectivity-1 eclipse/ditto-connectivity:3.8.4 Up 25 minutes (healthy)
+qa-v1-kanto-prereq-ditto-things-1 eclipse/ditto-things:3.8.4 Up 25 minutes (healthy)
+qa-v1-kanto-prereq-ditto-swagger-ui-1 swaggerapi/swagger-ui:v5.9.1 Up 25 minutes
+qa-v1-kanto-prereq-ditto-mongodb-1 mongo:7.0 Up 25 minutes
+qa-v1-kanto-prereq-ditto-ditto-ui-1 eclipse/ditto-ui:3.8.4 Up 25 minutes
+qa-v1-kanto-prereq-ditto-policies-1 eclipse/ditto-policies:3.8.4 Up 25 minutes (healthy)
+
+STDERR:

@@ -1,0 +1,22 @@
+[
+  {
+    "vehicleId": "vehicle-001",
+    "port": 55556,
+    "observations": {
+      "Vehicle.Automation.Lidar.Front.NearestObstacleDistance": {
+        "value": 35.0,
+        "sourceTimestamp": "2026-11-15 07:32:42.592674+00:00"
+      }
+    }
+  },
+  {
+    "vehicleId": "vehicle-002",
+    "port": 55557,
+    "observations": {
+      "Vehicle.Automation.Lidar.Front.NearestObstacleDistance": {
+        "value": 35.0,
+        "sourceTimestamp": "2026-11-15 07:32:38.002355+00:00"
+      }
+    }
+  }
+]

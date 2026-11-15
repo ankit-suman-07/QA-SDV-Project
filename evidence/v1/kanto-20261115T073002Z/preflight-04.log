@@ -1,0 +1,15 @@
+Reference ID    : 953813A3 (archer.fsck.ca)
+Stratum         : 3
+Ref time (UTC)  : Sun Nov 15 07:30:49 2026
+System time     : 0.000127541 seconds slow of NTP time
+Last offset     : -0.000131414 seconds
+RMS offset      : 0.037181087 seconds
+Frequency       : 10.822 ppm slow
+Residual freq   : +1.226 ppm
+Skew            : 3.720 ppm
+Root delay      : 0.016263185 seconds
+Root dispersion : 0.000880992 seconds
+Update interval : 129.6 seconds
+Leap status     : Normal
+
+STDERR:

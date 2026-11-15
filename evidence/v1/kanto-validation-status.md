@@ -1,5 +1,64 @@
 # Phase V1 Kanto validation preparation
 
+## Live pilot continuation — 2026-11-15T07:30:02Z
+
+**V1-09: BLOCKED awaiting operator authentication; not executed.** Recovered the
+existing PR #43 branch at `5f60f195cc1f73e00c9fb0e4075692f2f0e74b77` without
+touching other worktrees. `git ls-tree HEAD` confirms this status, `V1-PILOT.md`
+and `LINUX-RUNTIME.md` are Git blobs on the pushed PR branch, not merely files in
+`/tmp`. They are intentionally not merged into the original main checkout.
+PR #43 remains open/draft; seven checks were successful at inspection and the
+real two-vehicle core job was still in progress. No green check proves V1-09.
+
+Fresh [continuation manifest](kanto-20261115T073002Z/manifest.json),
+[ownership checks](kanto-20261115T073002Z/ownership.json),
+[vehicle-001 MQTT](kanto-20261115T073002Z/mqtt-vehicle-001.jsonl), and
+[KUKSA readings](kanto-20261115T073002Z/kuksa-readings.json) retain this attempt.
+Both upstream sensors remain healthy; app-001 and Ditto services are running;
+the recorded ingress PID/start identity still matches and its log shows newer
+vehicle-001 persisted events. Docker app-002 is exited, Kanto paths/socket/unit
+remain absent, and NTP reports synchronized. Local image/archive hashes still
+match the preceding evidence. No GHCR retry, credential-file read, fault, outage,
+shared reset, or publisher handoff was performed. Authenticated direct twin/API
+readback and continuous restart isolation assertions remain pending with the live
+pilot; previous successful backend checks are historical, not repeated here.
+
+The stopped Docker app-002 has exit code 1. Its retained prior shutdown log
+ends with `RuntimeError: Event loop stopped before Future completed.` at
+`velocitas-app/app/src/main.py:276`. Those lines are from the earlier baseline
+shutdown, not a newly executed Kanto trial. The inactive publisher does not
+conflict with Kanto, but clean application shutdown is not established; preserve
+and assess the exit/logs if it recurs during the real Kanto stop. No unrelated
+shutdown fix is included in this continuation.
+
+`sudo -n true` again returned exit 1, `sudo: a password is required`. Exact
+reviewed installation/import/isolated-daemon commands were presented for the
+operator's own terminal; only dependent privileged steps are paused. They match
+the administrator section of the committed Linux runbook. Do not provide a
+password in chat, pipe passwords, grant broad socket permissions, or alter shared
+containerd/Docker settings. Existing namespace/paths must be inspected before
+creation; stop on conflicts. After the operator reports success, inspect the
+dedicated daemon, namespace image identity and Kanto's real runtime resolution
+before creating/starting app-002. Privileged lifecycle/read-status commands may
+also require the operator's terminal; do not assume sudo authentication there
+authorizes another terminal.
+
+Pinned official Kanto v1.0.0 source uses containerd client **1.6.28**, while this
+host runs containerd **2.4.2**. This is not an established incompatibility or a
+compatibility pass: daemon/API and actual application lifecycle checks are still
+required. The pinned CLI emits JSON `state.started_at`; the runbook now explicitly
+requires the post-restart source to be newer than that actual runtime start as
+well as the request boundary and previous source. A command timestamp alone is
+insufficient. Preserve initial/restarted container JSON and all failed attempts.
+
+Targeted pilot preparation tests: **149 passed**; CLI help/config rendering also
+passed. Full Python/Java suites were not rerun because application code did not
+change. No current run claims Kanto launch, twin propagation or backend readback.
+No disruptions were introduced; prerequisites remain running, Docker app-002
+remains stopped. Do not start it while Kanto may be active. Next step is the
+operator administrator gate, followed by bounded capture and the actual pilot;
+V1-09 and PR #43's intended live evidence remain incomplete.
+
 ## Runtime prerequisite follow-up — 2026-11-15, after PR #42
 
 Baseline: `92f3fc14a15ae7bd1aa6663bdedccb99a6c69446`, the confirmed merge
