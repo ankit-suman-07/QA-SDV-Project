@@ -36,10 +36,22 @@ class MemoryHTTP:
     def __call__(self, method, url, **kwargs):
         self.calls.append((method, url, kwargs))
         identity = url.split('/api/2/things/')[1].split('/')[0]
+        import hashlib
+        feature = self.things[identity]['features'].get('v1')
+        etag = '"' + hashlib.sha256(json.dumps(feature).encode()).hexdigest() + '"'
+        tail = url.split('/api/2/things/')[1].split('/')[1:]
+        if tail and method == 'GET':
+            return SimpleNamespace(status_code=404 if feature is None else 200,
+                                   content=json.dumps(feature).encode(), headers={'ETag': etag})
         if method == 'PUT':
-            self.things[identity]['features']['v1'] = {'properties': json.loads(kwargs['data'])}
+            headers = kwargs['headers']
+            if ((headers.get('If-None-Match') == '*' and feature is not None) or
+                    ('If-Match' in headers and headers['If-Match'] != etag)):
+                return SimpleNamespace(status_code=412)
+            self.things[identity]['features']['v1'] = json.loads(kwargs['data'])
         return SimpleNamespace(status_code=200 if method == 'GET' else 204,
-                               content=json.dumps(self.things[identity]).encode())
+                               content=json.dumps(self.things[identity]).encode(), headers={})
+
 
 
 class PoisonInputTests(unittest.TestCase):

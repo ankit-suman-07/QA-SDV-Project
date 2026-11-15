@@ -16,7 +16,7 @@ from test_mqtt_ingress import fixture
 
 
 def response(status, body=None, raw=None):
-    result = Mock(status_code=status)
+    result = Mock(status_code=status, headers={})
     result.content = raw if raw is not None else json.dumps(body).encode()
     return result
 
@@ -37,13 +37,33 @@ class FakeDitto:
         store = self.things if kind == 'things' else self.policies
         if identity in self.fail:
             return response(self.fail[identity])
-        if method == 'GET':
-            return response(200, store[identity]) if identity in store else response(404)
         if tail:
             if identity not in store:
                 return response(404)
-            store[identity].setdefault('features', {})['v1'] = {'properties': copy.deepcopy(kwargs['json'])}
+            features = store[identity].setdefault('features', {})
+            feature = features.get('v1')
+            import hashlib
+            etag = '"' + hashlib.sha256(json.dumps(feature, sort_keys=True).encode()).hexdigest() + '"'
+            if method == 'GET':
+                if feature is None:
+                    return response(404)
+                result = response(200, feature)
+                result.headers = {'ETag': etag}
+                return result
+            headers = kwargs['headers']
+            if headers.get('If-None-Match') == '*' and feature is not None:
+                return response(412)
+            if 'If-Match' in headers and headers['If-Match'] != etag:
+                return response(412)
+            if tail == ['features', 'v1', 'properties']:
+                if feature is None:
+                    return response(404)  # actual Ditto cannot create the parent
+                feature['properties'] = copy.deepcopy(kwargs['json'])
+            else:
+                features['v1'] = copy.deepcopy(kwargs['json'])
             return response(204)
+        if method == 'GET':
+            return response(200, store[identity]) if identity in store else response(404)
         if identity in store:
             return response(412)
         if kwargs['headers'].get('If-None-Match') != '*':
@@ -99,7 +119,8 @@ class WriterTests(unittest.TestCase):
             self.assertEqual(one, self.http.things['sdv:vehicle-001'])
         puts = [(url, kw) for method, url, kw in self.http.calls if method == 'PUT' and '/features/' in url]
         self.assertEqual(4, len(puts))
-        self.assertTrue(all(url.endswith('/features/v1/properties') for url, _ in puts))
+        self.assertTrue(all(url.endswith('/features/v1') for url, _ in puts))
+        self.assertTrue(all('If-Match' in kw['headers'] or kw['headers'].get('If-None-Match') == '*' for _, kw in puts))
         for _, kw in puts:
             self.assertEqual(('ditto', 'secret'), kw['auth'])
             self.assertFalse(kw['allow_redirects'])
@@ -117,8 +138,8 @@ class WriterTests(unittest.TestCase):
         expected['lastEventId'] = expected.pop('eventId')
         self.assertEqual(expected, properties)
         put = [kw for method, url, kw in self.http.calls if method == 'PUT' and '/features/' in url][-1]
-        self.assertEqual(expected, json.loads(put['data']))
-        self.assertEqual(json.dumps(expected, ensure_ascii=False, separators=(',', ':')).encode(), put['data'])
+        self.assertEqual(expected, json.loads(put['data'])['properties'])
+        self.assertEqual(json.dumps({'properties': expected}, ensure_ascii=False, separators=(',', ':')).encode(), put['data'])
         # Fake GET deliberately ASCII-escapes Unicode: persisted responses do not
         # inherit the MQTT payload budget, whatever encoding the server chooses.
         restarted = Ingress(self.m.DittoWriter(self.config, request=self.http))
@@ -255,7 +276,7 @@ class WriterTests(unittest.TestCase):
             request = Mock(side_effect=[requests.Timeout(), response(503), response(status)])
             sleeper = Mock()
             writer = self.m.DittoWriter(self.config, request=request, sleeper=sleeper)
-            writer.persist('vehicle-002', properties)
+            writer._http('PUT', 'things/sdv:vehicle-002/features/v1', value={'properties': properties}, create_only=True)
             self.assertEqual(3, request.call_count)
             self.assertEqual([0.2, 0.4], [call.args[0] for call in sleeper.call_args_list])
 
