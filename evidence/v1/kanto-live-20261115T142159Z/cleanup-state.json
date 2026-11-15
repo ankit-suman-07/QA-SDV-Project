@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "sudo",
+    "-n",
+    "/opt/qa-sdv-v1-kanto/bin/kanto-cm",
+    "--host",
+    "/run/qa-sdv-v1-kanto/container-management.sock",
+    "--timeout",
+    "30",
+    "get",
+    "--name",
+    "autonomoushealthapp-vehicle-002"
+  ],
+  "request": {
+    "utc": "2026-11-15T14:22:29.439702+00:00",
+    "monotonicNs": 3398465247755
+  },
+  "returned": {
+    "utc": "2026-11-15T14:22:29.594163+00:00",
+    "monotonicNs": 3398619715308
+  },
+  "exit": 0,
+  "stdout": "{\n   \"container_id\": \"fd03dc2f-6e2c-48ec-8435-be801da106a3\",\n   \"container_name\": \"autonomoushealthapp-vehicle-002\",\n   \"image\": {\n      \"name\": \"docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446\"\n   },\n   \"domain_name\": \"autonomoushealthapp-vehicle-002-domain\",\n   \"host_name\": \"fedora\",\n   \"resolv_conf_path\": \"/var/lib/qa-sdv-v1-kanto/containers/fd03dc2f-6e2c-48ec-8435-be801da106a3/resolv.conf\",\n   \"hosts_path\": \"/var/lib/qa-sdv-v1-kanto/containers/fd03dc2f-6e2c-48ec-8435-be801da106a3/hosts\",\n   \"hostname_path\": \"/var/lib/qa-sdv-v1-kanto/containers/fd03dc2f-6e2c-48ec-8435-be801da106a3/hostname\",\n   \"mount_points\": null,\n   \"hooks\": null,\n   \"config\": {\n      \"env\": [\n         \"SDV_MIDDLEWARE_TYPE=native\",\n         \"SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557\",\n         \"SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883\",\n         \"DATABROKER_HOST=127.0.0.1\",\n         \"DATABROKER_PORT=55557\",\n         \"SIMULATED_VEHICLE_ID=vehicle-002\",\n         \"AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0\"\n      ]\n   },\n   \"host_config\": {\n      \"devices\": null,\n      \"network_mode\": \"host\",\n      \"privileged\": false,\n      \"restart_policy\": {\n         \"maximum_retry_count\": 0,\n         \"retry_timeout\": 0,\n         \"type\": \"unless-stopped\"\n      },\n      \"runtime\": \"io.containerd.runc.v2\",\n      \"extra_hosts\": null,\n      \"extra_capabilities\": null,\n      \"port_mappings\": null,\n      \"log_config\": {\n         \"driver_config\": {\n            \"type\": \"json-file\",\n            \"max_files\": 2,\n            \"max_size\": \"100M\"\n         },\n         \"mode_config\": {\n            \"mode\": \"blocking\"\n         }\n      },\n      \"resources\": null\n   },\n   \"io_config\": {\n      \"attach_stderr\": false,\n      \"attach_stdin\": false,\n      \"attach_stdout\": false,\n      \"open_stdin\": false,\n      \"stdin_once\": false,\n      \"tty\": false\n   },\n   \"network_settings\": null,\n   \"state\": {\n      \"pid\": -1,\n      \"started_at\": \"2026-11-15T14:22:24.216247116Z\",\n      \"error\": \"\",\n      \"exit_code\": 1,\n      \"finished_at\": \"2026-11-15T14:22:29.371058235Z\",\n      \"exited\": false,\n      \"dead\": false,\n      \"restarting\": false,\n      \"paused\": false,\n      \"running\": false,\n      \"oomKilled\": false,\n      \"status\": 3\n   },\n   \"created\": \"2026-11-15T14:22:14.524176329Z\",\n   \"restart_count\": 0,\n   \"manually_stopped\": true,\n   \"started_successfully_before\": false\n}\n",
+  "stderr": ""
+}

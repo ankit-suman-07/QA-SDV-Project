@@ -1,5 +1,19 @@
 # B5 V1 Kanto pilot preparation: vehicle-002
 
+## Current live result — November 15, 2026
+
+[V1-09 same-device managed stop/start PASS](../../evidence/v1/kanto-live-20261115T142159Z/README.md):
+actual Kanto launch/restart produced fresh vehicle-002 source newer than runtime
+started_at, start request and prior source, with exact MQTT/real-Ditto properties.
+Vehicle-001 remained healthy throughout the sampled timeline. Kanto and Docker
+app-002 are now stopped; prerequisites and one ingress remain running. Both Kanto
+stops reproduced application exit 1/event-loop RuntimeError; clean shutdown remains
+open. This does not establish remote-LAN behavior, automatic crash restart, full
+V1 acceptance or release readiness. Follow the updated Linux runbook and status.
+
+The preparation sections below retain historical results and blockers; they do
+not override this live checkpoint.
+
 ## Current preparation: 2026-11-15 UTC
 
 For the same-device Linux prerequisite follow-up after merged PR #42, use the

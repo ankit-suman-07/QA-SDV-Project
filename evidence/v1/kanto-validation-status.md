@@ -1,5 +1,37 @@
 # Phase V1 Kanto validation preparation
 
+## Live managed restart — 2026-11-15 14:22 UTC
+
+**V1-09 PASS for the requested same-device Linux managed stop/start pilot.**
+[Live evidence and remaining gaps](kanto-live-20261115T142159Z/README.md) and
+[independent review](kanto-live-20261115T142159Z/independent-review.json) supersede
+the earlier blocked checkpoints below. Operator-assisted execution used normal
+sudo in their own terminal; no credentials or security settings were changed.
+
+Actual Kanto create, launch, stop and start succeeded with the verified imported
+image/index. Effective environment/network/restart settings match the descriptor.
+Kanto restarted at `2026-11-15T14:22:24.216247116Z`; fresh event
+`vehicle-002-88d5e09f279d4e06b08e7a726afca3db` has original source
+`2026-11-15T14:22:25.713946Z`, newer than runtime restart, start request and prior
+source. Exact full event properties match real Ditto. Seven MQTT observations
+passed identity/schema/QoS/retain/freshness checks; 109 twin snapshots kept
+vehicle-001 HEALTHY/fault-free with advancing source, max sampling gap 0.381037 s.
+
+**Remaining gap:** both Kanto stops report application exit_code=1. Retained app
+logs reproduce `RuntimeError: Event loop stopped before Future completed.` at
+main.py:276, consistent with SIGTERM calling LOOP.stop under run_until_complete.
+Managed stop/start/propagation passed; clean shutdown is not established or fixed.
+Same-device loopback does not verify remote-LAN wording, crash automatic restart,
+other V1 criteria, release readiness or required human review. No full V1 claim.
+
+Recovery targeted checks: 153 passed; actual observer assertions independently
+reviewed. PR #43 remains draft/open, ready for evidence review, not merged.
+Final-head CI is inspected after push. Both Kanto and Docker app-002 are stopped;
+Kanto descriptor/container retained. Dedicated daemon, providers/KUKSA, MQTT,
+app-001, real Ditto and exactly one recovered ingress remain running. Observer
+exited/removed. MongoDB volumes, historical evidence and docker_default preserved.
+
+
 ## Persistent recovery checkpoint — 2026-11-15 14:14 UTC
 
 **V1-09 BLOCKED on privileged lifecycle execution; live pilot not run.**

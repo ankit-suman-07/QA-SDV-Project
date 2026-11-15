@@ -9,7 +9,26 @@ Initialize the required variables in every observer terminal; do not rely on
 variables exported in another terminal.
 
 
-## Recovery checkpoint — 2026-11-15 14:14 UTC
+## Verified live checkpoint — 2026-11-15 14:22 UTC
+
+[V1-09 same-device pilot passed](../../evidence/v1/kanto-live-20261115T142159Z/README.md)
+with operator-assisted privileged lifecycle execution. The agent terminal's sudo
+remained password-gated; the operator ran the reviewed observer in their own
+terminal. Actual namespace image digest, effective descriptor, launch and managed
+stop/start were verified. A fresh source newer than all three restart boundaries
+matched exact MQTT/real-Ditto identity and complete properties; vehicle-001 stayed
+healthy across sampled observations. This does not establish full V1 acceptance,
+remote-LAN behavior or automatic crash restart.
+
+Both stop states have application exit_code=1 and retained logs reproduce the
+historical event-loop shutdown RuntimeError. Preserve that follow-up gap; do not
+label cleanup a clean application exit. Kanto reports running=false, pid=-1,
+manually_stopped=true. Docker app-002 remains stopped. The Kanto container is
+retained for inspection, so the original create-only observer must not be rerun
+against its existing name; inspect first and use the reviewed existing-container
+lifecycle sequence if another trial is authorized. Do not replace it implicitly.
+
+## Historical recovery checkpoint — 2026-11-15 14:14 UTC
 
 [Recovery evidence](../../evidence/v1/kanto-recovery-20261115T141500Z/README.md)
 supersedes old temporary paths. Binaries are installed in

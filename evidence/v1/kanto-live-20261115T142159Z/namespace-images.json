@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "sudo",
+    "-n",
+    "ctr",
+    "--address",
+    "/run/containerd/containerd.sock",
+    "--namespace",
+    "qa-sdv-v1-kanto",
+    "images",
+    "list"
+  ],
+  "request": {
+    "utc": "2026-11-15T14:22:00.922886+00:00",
+    "monotonicNs": 3369948430475
+  },
+  "returned": {
+    "utc": "2026-11-15T14:22:01.015484+00:00",
+    "monotonicNs": 3370041038357
+  },
+  "exit": 0,
+  "stdout": "REF                                                                            TYPE                                    DIGEST                                                                  SIZE      PLATFORMS   LABELS \ndocker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446 application/vnd.oci.image.index.v1+json sha256:efad7228ebf00f092d43ec7242e2d60bdd56866d2f94f0afc3c8c5af9e6ac4a6 765.6 MiB linux/amd64 -      \n",
+  "stderr": ""
+}

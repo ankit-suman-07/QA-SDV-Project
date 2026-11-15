@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "git",
+    "rev-parse",
+    "HEAD"
+  ],
+  "request": {
+    "utc": "2026-11-15T14:22:00.835751+00:00",
+    "monotonicNs": 3369861300998
+  },
+  "returned": {
+    "utc": "2026-11-15T14:22:00.839407+00:00",
+    "monotonicNs": 3369864958064
+  },
+  "exit": 0,
+  "stdout": "633714cd48bfb883022e7c8799fab6f14ef3e5e6\n",
+  "stderr": ""
+}

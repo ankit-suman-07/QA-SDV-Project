@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "scope": "V1-09 same-device managed lifecycle and exact MQTT/real-Ditto propagation",
+  "eventId": "vehicle-002-88d5e09f279d4e06b08e7a726afca3db",
+  "sourceTimestamp": "2026-11-15T14:22:25.713946Z",
+  "runtimeStartedAt": "2026-11-15T14:22:24.216247116Z",
+  "startRequest": "2026-11-15T14:22:23.959401+00:00",
+  "previousSource": "2026-11-15T14:22:20.700757Z",
+  "sourceAfterRuntimeSeconds": 1.497699,
+  "mqttCounts": {
+    "vehicle-001": 5,
+    "vehicle-002": 2
+  },
+  "maxSourceAgeSeconds": 1.478962,
+  "twinTimelineSamples": 109,
+  "maxTwinSampleGapSeconds": 0.381037,
+  "effectiveDescriptorMatches": true,
+  "stopExitCodes": [
+    1,
+    1
+  ],
+  "cleanShutdownEstablished": false,
+  "cleanupStopped": true,
+  "limitations": [
+    "Sampled isolation, not a proof of unobserved instants",
+    "Same-device loopback; no remote LAN validation",
+    "Managed stop/start; no crash auto-restart trial",
+    "Full V1 acceptance and human review remain open"
+  ]
+}

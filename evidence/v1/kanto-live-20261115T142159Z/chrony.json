@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "chronyc",
+    "tracking"
+  ],
+  "request": {
+    "utc": "2026-11-15T14:22:00.823508+00:00",
+    "monotonicNs": 3369849062937
+  },
+  "returned": {
+    "utc": "2026-11-15T14:22:00.835236+00:00",
+    "monotonicNs": 3369860791711
+  },
+  "exit": 0,
+  "stdout": "Reference ID    : AE8ACCFB (174-138-204-251.cpe.distributel.net)\nStratum         : 2\nRef time (UTC)  : Sun Nov 15 14:15:41 2026\nSystem time     : 0.000041917 seconds slow of NTP time\nLast offset     : -0.000283988 seconds\nRMS offset      : 0.000324574 seconds\nFrequency       : 9.041 ppm slow\nResidual freq   : -0.026 ppm\nSkew            : 0.710 ppm\nRoot delay      : 0.012226956 seconds\nRoot dispersion : 0.002689856 seconds\nUpdate interval : 256.7 seconds\nLeap status     : Normal\n",
+  "stderr": ""
+}

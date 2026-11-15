@@ -1,0 +1,6 @@
+{
+  "observedAt": "2026-11-15T14:25:56.813408+00:00",
+  "docker": "qa-v1-kanto-prereq-ditto-nginx-1 Up 20 minutes\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up 20 minutes\nqa-v1-kanto-prereq-edge-app-001-1 Up 34 minutes\nqa-v1-kanto-prereq-edge-mqtt-1 Up 34 minutes\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 34 minutes\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 34 minutes\nqa-v1-kanto-prereq-edge-app-002-1 Exited (1) 7 hours ago\nqa-v1-kanto-prereq-edge-provider-002-1 Up 34 minutes\nqa-v1-kanto-prereq-edge-provider-001-1 Up 34 minutes\nqa-v1-kanto-prereq-ditto-gateway-1 Up 22 minutes (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up 22 minutes (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up 22 minutes (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up 22 minutes (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up 22 minutes\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up 22 minutes\nqa-v1-kanto-prereq-ditto-policies-1 Up 22 minutes (healthy)\n",
+  "ownedIngressIdentityVerified": true,
+  "ingressPid": 24753
+}
