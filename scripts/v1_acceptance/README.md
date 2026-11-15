@@ -122,3 +122,12 @@ clean provisioned Things start without V1 health/source state. Existing features
 legacy data and persisted watermarks are preserved. See the F03 evidence directory.
 Header compatibility is a separate independent change; historical nginx preparation
 is not resolved by initialization alone.
+## HTTP compatibility correction — November 15, 2026
+
+The Ditto reader and fleet writer now explicitly advertise one `Accept-Encoding:
+gzip, deflate` field. Spring 7.0.8's automatic compression otherwise supplies two
+values that the JDK emits separately; original nginx forwards them and Ditto rejects
+the duplicate fields. Compression decoding, timeouts, authentication and TLS remain
+unchanged. The acceptance launcher now mounts upstream nginx unchanged. The earlier
+prepared-deployment normalization below/above is historical. Feature initialization
+is a separate independent fix and its historical bootstrap is not closed by this PR.

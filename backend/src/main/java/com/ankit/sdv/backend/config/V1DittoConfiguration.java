@@ -18,7 +18,9 @@ public class V1DittoConfiguration {
                 .followRedirects(HttpClient.Redirect.NEVER).build();
         JdkClientHttpRequestFactory factory = new JdkClientHttpRequestFactory(http);
         factory.setReadTimeout(properties.readTimeout());
-        RestClient.Builder builder = RestClient.builder().requestFactory(factory);
+        RestClient.Builder builder = RestClient.builder().requestFactory(factory)
+                // One field avoids Ditto rejecting Spring/JDK automatic gzip + deflate duplicates.
+                .defaultHeader("Accept-Encoding", "gzip, deflate");
         if (properties.username() != null && !properties.username().isEmpty()) {
             builder.defaultHeaders(headers -> headers.setBasicAuth(properties.username(), properties.password()));
         }

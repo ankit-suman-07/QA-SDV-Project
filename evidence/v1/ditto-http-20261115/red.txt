@@ -1,0 +1,39 @@
+10:01:35.867 [main] WARN com.ankit.sdv.backend.adapter.ditto.HttpVehicleTwinReader -- ditto_read_failed vehicle=vehicle-002 code=HTTP_STATUS status=400
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.619 s <<< FAILURE! -- in com.ankit.sdv.backend.config.DittoTransportHeadersTest
+[ERROR] com.ankit.sdv.backend.config.DittoTransportHeadersTest.configuredReaderAndFleetWriterSendOneEncodingFieldAndDecodeGzip -- Time elapsed: 0.600 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+Expecting actual:
+  ["gzip", "deflate"]
+to contain exactly (and in same order):
+  ["gzip, deflate"]
+but some elements were not found:
+  ["gzip, deflate"]
+and others were not expected:
+  ["gzip", "deflate"]
+
+	at com.ankit.sdv.backend.config.DittoTransportHeadersTest.configuredReaderAndFleetWriterSendOneEncodingFieldAndDecodeGzip(DittoTransportHeadersTest.java:49)
+
+[ERROR] Failures: 
+[ERROR]   DittoTransportHeadersTest.configuredReaderAndFleetWriterSendOneEncodingFieldAndDecodeGzip:49 
+Expecting actual:
+  ["gzip", "deflate"]
+to contain exactly (and in same order):
+  ["gzip, deflate"]
+but some elements were not found:
+  ["gzip, deflate"]
+and others were not expected:
+  ["gzip", "deflate"]
+
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.6:test (default-test) on project backend: There are test failures.
+[ERROR] 
+[ERROR] See /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/ditto-http/backend/target/surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
