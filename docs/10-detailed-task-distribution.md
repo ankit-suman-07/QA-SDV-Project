@@ -268,3 +268,18 @@ These are assigned implementation tasks, not fixes delivered by the contract pac
 After this contract PR is reviewed and merged, all three developers branch from the **same updated main revision**. Each uses the mocks/fixtures from that revision; no cherry-picking or waiting for another developer’s feature branch. Suggested focused branches/PRs and file ownership are in [the guide](v1-independent-development.md). A shared contract change requires affected-owner review and synchronized fixtures/tests.
 
 A6–A7, B4/B6/B7 and E3–E5 remain Phase V2 with their objectives and acceptance criteria intact. V2 extends these boundaries through a reviewed contract revision: CARLA actor/vehicle mapping, observation freshness and recovery windows, third twin, diagnostic outcomes, one real uProtocol exchange and supported OpenSOVD operation, CARLA-backed Kanto, skill comparison and final evaluation. B6 supplies the third individual twin to Ankit’s single aggregator; it does not create a competing fleet implementation. No V2 functionality is implemented by this preparation package.
+
+## Phase V1 measurement expectations
+
+For exactly two synthetic vehicles, measure command-to-observed fault and recovery
+completion separately at MQTT, individual twin, API, materialized fleet twin and
+dashboard boundaries where measurable. Dispatch acknowledgement is a separate
+boundary, not health completion. Use one observer monotonic clock where possible;
+scenario progression is included, so these are not pure transport latency.
+Retain failures; target at least five fault/recovery trials and report sample
+counts, median/range and limitations. Source-to-twin propagation requires documented
+source/observer clock synchronization assumptions. Record observed update success
+and vehicle isolation at each boundary, without treating PUBACK as persistence.
+Capture lightweight CPU/memory samples during the representative recorded run.
+Broader CARLA runtime evaluation and customized-skill comparison remain Phase V2.
+No MVP speedup is justified when scenarios or measurement methods differ.

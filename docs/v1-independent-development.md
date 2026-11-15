@@ -231,3 +231,18 @@ git switch -c <owner>/<type>/<focused-task>
 6. Capture the separate Kanto post-restart event→twin check, actual skill-use/review evidence, release tag, report, video and contributions. Unavailable Linux or other blockers stay pending.
 
 Mock-only implementation readiness is never described as satisfying live V1 acceptance. CARLA, full diagnostic execution outcomes, networked uProtocol/OpenSOVD and customized-skill comparisons remain V2.
+
+## Phase V1 measurement expectations
+
+For exactly two synthetic vehicles, measure command-to-observed fault and recovery
+completion separately at MQTT, individual twin, API, materialized fleet twin and
+dashboard boundaries where measurable. Dispatch acknowledgement is a separate
+boundary, not health completion. Use one observer monotonic clock where possible;
+scenario progression is included, so these are not pure transport latency.
+Retain failures; target at least five fault/recovery trials and report sample
+counts, median/range and limitations. Source-to-twin propagation requires documented
+source/observer clock synchronization assumptions. Record observed update success
+and vehicle isolation at each boundary, without treating PUBACK as persistence.
+Capture lightweight CPU/memory samples during the representative recorded run.
+Broader CARLA runtime evaluation and customized-skill comparison remain Phase V2.
+No MVP speedup is justified when scenarios or measurement methods differ.

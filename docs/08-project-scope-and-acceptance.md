@@ -42,7 +42,7 @@ Run services locally or in containers. Use one KUKSA broker and one vehicle appl
 | Eclipse Kanto | Manage the vehicle application on Linux and demonstrate launch and restart with observable results. |
 | uProtocol and OpenSOVD | Provide bounded, demonstrated service communication and diagnostic operations. Freeze exact operations and implementation choices before dependent V2 work. |
 
-Operational flow follows simulator → KUKSA → Velocitas → Mosquitto → twin bridge → Ditto → Spring Boot → dashboard. The fleet aggregator derives the fleet twin from individual vehicle states. Diagnostic requests follow dashboard → backend → selected diagnostic/edge target → execution result. Preserve action and trace identifiers through this control path. Document where uProtocol carries the agreed exchange and where OpenSOVD handles the selected diagnostic operation.
+Operational flow follows simulator → KUKSA → Velocitas → Mosquitto → twin bridge → Ditto → Spring Boot → dashboard. The sole Spring Boot fleet aggregator derives summaries from individual vehicle twins and materializes them into the fleet Thing. The fleet API derives its response from individual twins; it does not read the materialized fleet Thing. Diagnostic requests follow dashboard → backend → selected diagnostic/edge target → execution result. Preserve action and trace identifiers through this control path. Document where uProtocol carries the agreed exchange and where OpenSOVD handles the selected diagnostic operation.
 
 The adapter supplies observations and separate labelled ground truth. Velocitas owns health decisions. Record source freshness independently of event publication time. Keep raw LiDAR point clouds outside Ditto.
 
@@ -100,7 +100,7 @@ Freeze numeric freshness thresholds, persistence/recovery windows, update budget
 | DevOps, measurement and stage comparison | 10 | MVP/V1/V2 references, versioned specs/skills, CI, development/runtime measurements, reproducible procedures and honest stage comparisons. |
 | Portfolio and accountability | 5 | Contributions linked to work, reviewed issues/PRs, decisions, lessons learned, final demonstration and individual checks. |
 
-Measure detection delay, fault-to-twin propagation, restored-input-to-stable-health recovery, delivery/update success, vehicle isolation and CPU/memory under recorded workloads. Separate action/restart timing from restoration of sensor input. Use repeated trials and report sample counts and variability. Preserve timestamps and specify clock handling.
+For Phase V1 measure command completion, fault-to-twin propagation, observed update success/isolation and CPU/memory during a representative run. Broader detection/recovery evaluation with CARLA belongs to Phase V2. Separate action/restart timing from restoration of sensor input. Use repeated trials and report sample counts and variability. Preserve timestamps and specify clock handling.
 
 For skill comparisons, keep task, starting code, acceptance criteria and evaluation procedure comparable. Record model/tool settings and human interventions. Compare requirement coverage, missed defects and review corrections. Separate skill effects from added product features and mark unavailable historical measurements as unmeasured.
 
@@ -111,3 +111,18 @@ Required delivery uses local services and repeatable inputs. Optional work inclu
 Keep the Python synthetic demo available for CI and fallback evidence. A synthetic fallback or Docker-only run must be reported against the CARLA or Kanto criterion as partial until runtime validation passes. Record open issues and prioritize the required integrated workflow before optional work.
 
 This is a proposed full-project scope incorporating the agreed V1 direction. The detailed ownership allocation and bounded uProtocol/OpenSOVD commitment are proposed for team review. It defines intended acceptance, and current completion must be recorded separately against each criterion.
+
+## Phase V1 measurement expectations
+
+For exactly two synthetic vehicles, measure command-to-observed fault and recovery
+completion separately at MQTT, individual twin, API, materialized fleet twin and
+dashboard boundaries where measurable. Dispatch acknowledgement is a separate
+boundary, not health completion. Use one observer monotonic clock where possible;
+scenario progression is included, so these are not pure transport latency.
+Retain failures; target at least five fault/recovery trials and report sample
+counts, median/range and limitations. Source-to-twin propagation requires documented
+source/observer clock synchronization assumptions. Record observed update success
+and vehicle isolation at each boundary, without treating PUBACK as persistence.
+Capture lightweight CPU/memory samples during the representative recorded run.
+Broader CARLA runtime evaluation and customized-skill comparison remain Phase V2.
+No MVP speedup is justified when scenarios or measurement methods differ.
