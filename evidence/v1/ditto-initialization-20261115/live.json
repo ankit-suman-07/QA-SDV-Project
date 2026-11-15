@@ -1,0 +1,231 @@
+{
+  "result": "PASS",
+  "namespace": "qa_v1_init_20261115145557",
+  "things": {
+    "vehicle-001": "qa_v1_init_20261115145557:vehicle-001",
+    "vehicle-002": "qa_v1_init_20261115145557:vehicle-002"
+  },
+  "policyIds": {
+    "vehicle-001": "qa_v1_init_20261115145557:vehicle-001-policy",
+    "vehicle-002": "qa_v1_init_20261115145557:vehicle-002-policy"
+  },
+  "mqtt": [
+    {
+      "tst": "2026-11-15T14:56:01.206011+0000",
+      "topic": "sdv/vehicle-001/health",
+      "qos": 1,
+      "retain": false,
+      "payloadlen": 242,
+      "mid": 1,
+      "payload": "{\"schemaVersion\":\"1.0.0\",\"eventId\":\"vehicle-001-252a6856d877456ab17e03eb1a85d8dc\",\"vehicleId\":\"vehicle-001\",\"sourceTimestamp\":\"2026-11-15T14:56:00.626282Z\",\"health\":\"HEALTHY\",\"faults\":[],\"lidar\":{\"distanceMeters\":35.0,\"sensorAvailable\":true}}"
+    },
+    {
+      "tst": "2026-11-15T14:56:07.226389+0000",
+      "topic": "sdv/vehicle-001/health",
+      "qos": 1,
+      "retain": false,
+      "payloadlen": 242,
+      "mid": 2,
+      "payload": "{\"schemaVersion\":\"1.0.0\",\"eventId\":\"vehicle-001-aad1b771f4954fb9a6dbe8e2ea1489a9\",\"vehicleId\":\"vehicle-001\",\"sourceTimestamp\":\"2026-11-15T14:56:05.638785Z\",\"health\":\"HEALTHY\",\"faults\":[],\"lidar\":{\"distanceMeters\":35.0,\"sensorAvailable\":true}}"
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "policies/qa_v1_init_20261115145557:vehicle-001-policy",
+      "status": 404,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": null
+    },
+    {
+      "method": "PUT",
+      "path": "policies/qa_v1_init_20261115145557:vehicle-001-policy",
+      "status": 201,
+      "ifNoneMatch": "*",
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "policies/qa_v1_init_20261115145557:vehicle-001-policy",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "policies/qa_v1_init_20261115145557:vehicle-002-policy",
+      "status": 404,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": null
+    },
+    {
+      "method": "PUT",
+      "path": "policies/qa_v1_init_20261115145557:vehicle-002-policy",
+      "status": 201,
+      "ifNoneMatch": "*",
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "policies/qa_v1_init_20261115145557:vehicle-002-policy",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 404,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": null
+    },
+    {
+      "method": "PUT",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 201,
+      "ifNoneMatch": "*",
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-002",
+      "status": 404,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": null
+    },
+    {
+      "method": "PUT",
+      "path": "things/qa_v1_init_20261115145557:vehicle-002",
+      "status": 201,
+      "ifNoneMatch": "*",
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-002",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:1\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:2\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:2\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:2\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001/features/v1",
+      "status": 404,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": null
+    },
+    {
+      "method": "PUT",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001/features/v1",
+      "status": 201,
+      "ifNoneMatch": "*",
+      "ifMatch": null,
+      "etag": "\"hash:20c23aa2\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:3\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:3\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001/features/v1",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"hash:20c23aa2\""
+    },
+    {
+      "method": "PUT",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001/features/v1",
+      "status": 204,
+      "ifNoneMatch": null,
+      "ifMatch": "\"hash:20c23aa2\"",
+      "etag": "\"hash:c767de00\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:4\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:4\""
+    },
+    {
+      "method": "GET",
+      "path": "things/qa_v1_init_20261115145557:vehicle-001",
+      "status": 200,
+      "ifNoneMatch": null,
+      "ifMatch": null,
+      "etag": "\"rev:4\""
+    }
+  ],
+  "firstEventInitialization": true,
+  "conditionalSubsequentUpdate": true,
+  "legacyPreserved": true,
+  "restartDuplicateRejected": true,
+  "resources": "retained; only new namespaced resources created; shared twins/policies unchanged"
+}

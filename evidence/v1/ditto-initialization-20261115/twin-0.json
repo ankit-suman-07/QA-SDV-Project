@@ -1,0 +1,28 @@
+{
+  "thingId": "qa_v1_init_20261115145557:vehicle-001",
+  "policyId": "qa_v1_init_20261115145557:vehicle-001-policy",
+  "attributes": {
+    "vehicleId": "vehicle-001"
+  },
+  "features": {
+    "legacy": {
+      "properties": {
+        "sentinel": "preserve"
+      }
+    },
+    "v1": {
+      "properties": {
+        "schemaVersion": "1.0.0",
+        "vehicleId": "vehicle-001",
+        "sourceTimestamp": "2026-11-15T14:56:00.626282Z",
+        "health": "HEALTHY",
+        "faults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "lastEventId": "vehicle-001-252a6856d877456ab17e03eb1a85d8dc"
+      }
+    }
+  }
+}

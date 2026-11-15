@@ -5,7 +5,11 @@ Baseline: `docs/v1-interface-contracts.md` v1.0.0, C2/C3/C5/C6, and
 twin boundary for V1-03/04/08. Ankit A5 owns all fleet provisioning/counting/writes.
 
 `v1_writer.py` implements authenticated whole-Thing reads and one atomic
-`PUT /api/2/things/{thingId}/features/v1/properties` per accepted observation.
+`PUT /api/2/things/{thingId}/features/v1` per accepted observation. Initial writes
+use `If-None-Match: *`; later writes preserve feature metadata and use the ETag
+from an authenticated feature GET in `If-Match`. A conflict invalidates the ingress
+watermark cache and requires a fresh read before retry. Feature-level READ/WRITE
+permissions are required; production principal approval remains open.
 `v1.py` wires it to the B1 subscriber; no fake writer or generated healthy fallback
 exists. Legacy bridge/configuration/features are preserved. Shared strict JSON
 decoding and event validation come from the production `mqtt_ingress.py` module,

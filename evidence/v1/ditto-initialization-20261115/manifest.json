@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-11-15T14:58:35.937045+00:00",
+  "baseline": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+  "status": "UNMERGED FIX; real isolated-resource check PASS",
+  "hashes": {
+    "red.txt": "6869f7e26c44bc6659a837454290d583c2d59bafed08c04cc155557e5eae31ad",
+    "green.txt": "f4327cbbcc974bfc2eaab74dfb05d4fd512c4abbbb0a95a609038db9861d92a3",
+    "live_initialization.py": "4f5a10914f24018884fe527d8cd3fb6f70bbcf6ec117e17a4bc227e9274adfae",
+    "preflight-failure.json": "14922c984a9d89a40030de29e24107aa5986b64b7141111af43a2161c5e51fa6",
+    "twin-0.json": "a16fbf351182091298748553b7677784373049526bddc7eea9a8f232f26ccf34",
+    "twin-1.json": "48b159f0347b37814791ba04ef0e8e39f5e747ba83e84d6b11d79c138b833076",
+    "live.json": "7874d90b5fb1f7ea1b3b740638cc66234d83fe96295de8ae0157611d70f17eec",
+    "python-regression.txt": "4d18afdacd4f16189edff5d6ed5808f2ea80fc5ffa0a4b8376d1d8cb77258215",
+    "python-regression-final.txt": "ea1ba65cadd127b3d8852b9b7a1dfb2e54325aea6a083ac36fbde93efb7fb1ee",
+    "README.md": "bed65d7e8e40a005fbb637ee4d2e839532c42d655d66a982886f35099b607622"
+  }
+}
