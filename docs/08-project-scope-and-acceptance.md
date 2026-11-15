@@ -1,5 +1,18 @@
 # SDV fleet enhancement — Scope, work distribution and acceptance
 
+## Remaining Phase V1 ownership — November 14, 2026
+
+Ankit owns all remaining Phase V1 remediation, integration, verification, fleet CI,
+Kanto validation (B5 / V1-09), report/video and release work. Bayan and Emmanuel's
+component contributions and original task IDs remain historical attribution, not
+assignments of remaining work. Phase V2 ownership is unchanged. The sole fleet
+aggregator and fleet-twin materializer are in Spring Boot under Ankit (A5).
+V1-09 remains required and separately tracked; a blocked Linux/LAN pilot does not
+constitute acceptance. Release still requires all applicable criteria and reviews.
+This ownership update does not approve proposed interfaces, freshness defaults,
+measurement budgets, authentication subjects or other unresolved decisions.
+
+
 Proposed team agreement · November 6, 2026
 
 ## Objective and delivery stages
@@ -29,7 +42,7 @@ Run services locally or in containers. Use one KUKSA broker and one vehicle appl
 | Eclipse Kanto | Manage the vehicle application on Linux and demonstrate launch and restart with observable results. |
 | uProtocol and OpenSOVD | Provide bounded, demonstrated service communication and diagnostic operations. Freeze exact operations and implementation choices before dependent V2 work. |
 
-Operational flow follows simulator → KUKSA → Velocitas → Mosquitto → twin bridge → Ditto → Spring Boot → dashboard. The fleet aggregator derives the fleet twin from individual vehicle states. Diagnostic requests follow dashboard → backend → selected diagnostic/edge target → execution result. Preserve action and trace identifiers through this control path. Document where uProtocol carries the agreed exchange and where OpenSOVD handles the selected diagnostic operation.
+Operational flow follows simulator → KUKSA → Velocitas → Mosquitto → twin bridge → Ditto → Spring Boot → dashboard. The sole Spring Boot fleet aggregator derives summaries from individual vehicle twins and materializes them into the fleet Thing. The fleet API derives its response from individual twins; it does not read the materialized fleet Thing. Diagnostic requests follow dashboard → backend → selected diagnostic/edge target → execution result. Preserve action and trace identifiers through this control path. Document where uProtocol carries the agreed exchange and where OpenSOVD handles the selected diagnostic operation.
 
 The adapter supplies observations and separate labelled ground truth. Velocitas owns health decisions. Record source freshness independently of event publication time. Keep raw LiDAR point clouds outside Ditto.
 
@@ -40,11 +53,11 @@ This adapts the component responsibilities in `05-work-distribution.md`, with An
 | Member | Phase V1 | Phase V2 and continuing responsibility |
 |---|---|---|
 | **Ankit — Architecture, backend integration and quality lead** | Freeze shared contracts with the team. Connect Spring Boot to live twin state and expose per-vehicle APIs. Route inject/clear requests to the correct provider. Expose fleet state in the basic dashboard. Own system integration, fleet CI, end-to-end verification and submission coordination. | Own backend integration across twins, fleet queries and diagnostic services. Extend fleet/vehicle APIs and dashboard with diagnostic action status and history. Lead architecture decisions, CI/CD, measurement harness, final integration, stage comparison and evaluation/report consolidation. |
-| **Bayan — Messaging, twins and edge deployment lead** | Implement MQTT ingestion and vehicle-aware twin routing. Provision two twins, preserve event identity and source time, and test routing and malformed-input handling. Provide Ankit with twin schemas and read interfaces. Aggregate both twins and run the one-vehicle Kanto pilot on Linux. | Extend fleet aggregation to three twins and add history and duplicate/out-of-order handling. Repeat Kanto validation against the CARLA-backed fleet. Own the agreed uProtocol/OpenSOVD integration, coordinating backend command/result contracts with Ankit. |
+| **Bayan — Messaging, twins and edge deployment lead** | Implement MQTT ingestion and vehicle-aware twin routing. Provision two twins, preserve event identity and source time, and test routing and malformed-input handling. Provide Ankit with twin schemas and read interfaces. Historical messaging/twin and Kanto preparation contributions; Ankit owns remaining validation. Fleet aggregation belongs to Ankit in Spring Boot. | Extend fleet aggregation to three twins and add history and duplicate/out-of-order handling. Repeat Kanto validation against the CARLA-backed fleet. Own the agreed uProtocol/OpenSOVD integration, coordinating backend command/result contracts with Ankit. |
 | **Emmanuel — Simulation, sensors and vehicle application lead** | Run two isolated synthetic providers, brokers and Velocitas apps. Supply targeted fault/clear scenarios and valid status events. Verify signal publication and per-vehicle independence. | Own CARLA setup, actor-to-vehicle mapping, front LiDAR observations, controlled degradation/dropout and reproducible scenarios for three vehicles. Extend Velocitas detection and recovery rules, and verify adapter units, freshness and sensor behavior. Supply runtime ground truth and component evidence. |
 | **All members** | Use pre-prepared skills, review another member’s work, test owned components and contribute video/report evidence. | Customize skills using course concepts, evaluate them on comparable cases, review PRs, participate in integrated runs and document actual contributions and limitations. |
 
-Ankit coordinates quality while each component owner supplies its tests and runtime evidence. Each owner requests review from the member consuming the interface. Agree shared Compose, schema and backend changes before implementation.
+Ankit owns remaining Phase V1 tests and runtime evidence, preserving each contributor’s completed work. Each owner requests review from the member consuming the interface. Agree shared Compose, schema and backend changes before implementation.
 
 ## Phase V1 acceptance
 
@@ -58,7 +71,7 @@ Ankit coordinates quality while each component owner supplies its tests and runt
 | V1-06 | Pre-prepared vendor skills guide actual tasks, with human review and requirement-to-test traceability. | Skill source/version, rationale, reviewed examples, spec/PR history and traceability table. |
 | V1-07 | The tagged V1 can be rerun, demonstrated and explained by the team. | Video, report, startup/scenario instructions and contribution statements. |
 | V1-08 | The fleet summary and basic dashboard reflect both live twins during fault and recovery. | Compare live Ditto state with the fleet API and dashboard. |
-| V1-09 | On Bayan’s Linux device, Kanto launches and restarts the vehicle-002 Velocitas app and a fresh event reaches its Ditto twin. | Kanto logs and correlated MQTT/twin evidence. Track separately from the core demo if the Linux or LAN setup blocks the pilot. |
+| V1-09 | On an Ankit-managed Linux device, Kanto launches and restarts the vehicle-002 Velocitas app and a fresh event reaches its Ditto twin. | Kanto logs and correlated MQTT/twin evidence. Track separately from the core demo if the Linux or LAN setup blocks the pilot. |
 
 ## Phase V2 acceptance
 
@@ -87,7 +100,7 @@ Freeze numeric freshness thresholds, persistence/recovery windows, update budget
 | DevOps, measurement and stage comparison | 10 | MVP/V1/V2 references, versioned specs/skills, CI, development/runtime measurements, reproducible procedures and honest stage comparisons. |
 | Portfolio and accountability | 5 | Contributions linked to work, reviewed issues/PRs, decisions, lessons learned, final demonstration and individual checks. |
 
-Measure detection delay, fault-to-twin propagation, restored-input-to-stable-health recovery, delivery/update success, vehicle isolation and CPU/memory under recorded workloads. Separate action/restart timing from restoration of sensor input. Use repeated trials and report sample counts and variability. Preserve timestamps and specify clock handling.
+For Phase V1 measure command completion, fault-to-twin propagation, observed update success/isolation and CPU/memory during a representative run. Broader detection/recovery evaluation with CARLA belongs to Phase V2. Separate action/restart timing from restoration of sensor input. Use repeated trials and report sample counts and variability. Preserve timestamps and specify clock handling.
 
 For skill comparisons, keep task, starting code, acceptance criteria and evaluation procedure comparable. Record model/tool settings and human interventions. Compare requirement coverage, missed defects and review corrections. Separate skill effects from added product features and mark unavailable historical measurements as unmeasured.
 
@@ -98,3 +111,18 @@ Required delivery uses local services and repeatable inputs. Optional work inclu
 Keep the Python synthetic demo available for CI and fallback evidence. A synthetic fallback or Docker-only run must be reported against the CARLA or Kanto criterion as partial until runtime validation passes. Record open issues and prioritize the required integrated workflow before optional work.
 
 This is a proposed full-project scope incorporating the agreed V1 direction. The detailed ownership allocation and bounded uProtocol/OpenSOVD commitment are proposed for team review. It defines intended acceptance, and current completion must be recorded separately against each criterion.
+
+## Phase V1 measurement expectations
+
+For exactly two synthetic vehicles, measure command-to-observed fault and recovery
+completion separately at MQTT, individual twin, API, materialized fleet twin and
+dashboard boundaries where measurable. Dispatch acknowledgement is a separate
+boundary, not health completion. Use one observer monotonic clock where possible;
+scenario progression is included, so these are not pure transport latency.
+Retain failures; target at least five fault/recovery trials and report sample
+counts, median/range and limitations. Source-to-twin propagation requires documented
+source/observer clock synchronization assumptions. Record observed update success
+and vehicle isolation at each boundary, without treating PUBACK as persistence.
+Capture lightweight CPU/memory samples during the representative recorded run.
+Broader CARLA runtime evaluation and customized-skill comparison remain Phase V2.
+No MVP speedup is justified when scenarios or measurement methods differ.
