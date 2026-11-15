@@ -1,0 +1,2 @@
+{"argv": ["/home/ankitsuman/.local/share/qa-sdv-v1/runtime/jdk21/bin/java", "-jar", "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/merged-main-verification/backend/target/backend-0.0.1-SNAPSHOT.jar"], "pid": 406422, "label": "backend"}
+{"argv": ["/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python", "-B", "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/demo-launcher/scripts/v1_demo.py", "--serve", "3000", "http://127.0.0.1:18081"], "pid": 406530, "label": "frontend"}

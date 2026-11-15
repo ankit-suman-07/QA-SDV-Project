@@ -1,0 +1,21 @@
+.....E.....
+======================================================================
+ERROR: test_fault_match_uses_contract_string_faults_and_exact_identity (test_v1_demo_launcher.DemoControls.test_fault_match_uses_contract_string_faults_and_exact_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/demo-launcher/tests/test_v1_demo_launcher.py", line 32, in test_fault_match_uses_contract_string_faults_and_exact_identity
+    self.assertTrue(demo.match('CRITICAL'))
+                    ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/demo-launcher/scripts/v1_demo.py", line 247, in match
+    if health=='CRITICAL' and not any(f.get('code')=='LIDAR_OBSTRUCTION' for f in event['faults']):
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/demo-launcher/scripts/v1_demo.py", line 247, in <genexpr>
+    if health=='CRITICAL' and not any(f.get('code')=='LIDAR_OBSTRUCTION' for f in event['faults']):
+                                      ^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.042s
+
+FAILED (errors=1)
+CLEANUP REQUIRES ATTENTION: Kanto cleanup unverified; DO NOT start Docker app002

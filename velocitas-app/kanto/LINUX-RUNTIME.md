@@ -327,3 +327,86 @@ on it, an operator may stop the dedicated `qa-sdv-v1-kanto` transient service.
 Do not stop shared Docker/containerd, delete shared namespaces/policies/Things,
 clear retained messages, or reset volumes. Initial state was no Docker containers;
 the next session deliberately starts from the documented running prerequisites.
+
+
+## Interactive Phase V1 demo launcher
+
+From a reviewed main-based checkout:
+
+```bash
+bash scripts/run-v1-demo.sh
+```
+
+First copy `scripts/v1-demo.example.json` to
+`$HOME/.local/share/qa-sdv-v1/runtime/demo.json` (or pass `--config PATH`) and review
+its endpoints/container names/artifact paths. The example matches the restored
+same-device prerequisite deployment; it is not a new Compose deployment. Reuse an
+already provisioned real Ditto, both Things/policies, fleet Thing/policy, sole
+individual ingress, MQTT, both KUKSA/providers and app001. Keep the configured Docker
+app002 container present (running or stopped). No image rebuilds, downloads, package
+installation, provisioning, twin reset or volume deletion occur in this launcher.
+If those prerequisites are missing, follow this guide's explicit preparation and
+`scripts/v1_fleet_provision.py` instructions with authorized subjects; never invent
+subjects or replace existing policies. Only one backend may write this fleet Thing.
+
+Use the persistent Python3.12 environment with documented requirements-test.txt
+(including paho-mqtt) and the existing prepared Java21/backend jar. Set `backendJar`
+to an already built, verified artifact (the example reuses the merged-main validation
+worktree). `imageInfo` points to the verified image/source/index metadata; its image
+must already be imported in the dedicated Kanto namespace. The launcher checks image
+identity and current application-source compatibility; it does not import/build
+images automatically. Missing-image output supplies the exact local import command.
+The dedicated daemon must use its documented HOME/XDG_CONFIG_HOME correction.
+
+Load authorized Ditto credentials through `SDV_V1_DITTO_USERNAME` and
+`SDV_V1_DITTO_PASSWORD` in your private terminal environment, or use the launcher's
+hidden terminal prompts. Do not put credentials in JSON, command arguments, shell
+history or recordings; never enable shell tracing. The documented official local
+sample authentication may be used for this prepared local demo. Production subject/
+TLS separation remains an approval decision. Normal interactive `sudo -v` is used
+for Kanto, followed by bounded `sudo -n` operations; no socket/sudo permissions change.
+
+The launcher reuses compatible services and may start only its packaged backend and
+static dashboard on free configured loopback ports. An occupied incompatible endpoint
+fails readiness and is never displaced. Frontend origins must match existing backend
+CORS (default `http://localhost:3000`). It opens the dashboard when desktop support
+exists, otherwise prints the URL. A read-only preliminary check is available with
+`bash scripts/run-v1-demo.sh --check`; it intentionally does not start observers,
+authenticate sudo, start services or claim complete integration/publisher readiness.
+
+Press Enter for healthy vehicles, backend A3 inject, observed002 fault with001
+isolation, A3 clear/recovery, and managed Kanto stop/start. When Docker002 is running,
+it is stopped and verified absent before a uniquely named Kanto002 starts. If Docker002
+was initially stopped, the unique Kanto pilot supplies002 from preparation onward.
+Other/duplicate publishers or active prior scenarios cause refusal. The restart must
+exit0 and produce a different live QoS1/non-retained event with source time after the
+previous source, start request and runtime-reported start; MQTT, real twin, individual
+API and fleet observations must agree. ACK timing is separate from polled completion.
+
+A compact status table appears at startup, readiness and each step (also on failure):
+RUNNING means process/TCP evidence only; READY means the indicated real read/subscription
+check passed; PUBLISHING requires a fresh validated MQTT observation; STALE denotes
+aged source data; FAILED means the required check failed/unavailable. In read-only
+mode Kanto remains unverified, shown FAILED with that limitation. A dashboard HTTP
+check proves its shell is served; inspect the displayed live state during narration.
+KUKSA TCP alone remains RUNNING, not integrated READY. Detailed secret-redacted logs,
+commands/exits, action IDs, snapshots, source/image/artifact identities and status rows
+are saved under root `evidence/v1/demo-<UTC timestamp>/`. Show existing spec/skill-use/
+CI evidence afterward; do not regenerate it. No full acceptance, remote LAN or crash
+auto-restart claim is made.
+
+Choose N at completion to stop owned observers/backend/dashboard/Kanto and restore
+Docker002 **only if this run stopped it and Kanto is confirmed stopped**. Initially
+stopped002 stays stopped. Choose Y to keep services running under this terminal's
+supervision; Enter or Ctrl+C then performs restoration. Keep the terminal open in
+that mode so redacted log readers remain alive. Existing shared services, policies,
+twins, volumes and historical pilots are preserved. Created pilots remain stopped
+for inspection; no container/volume deletion is attempted.
+
+On failure/Ctrl+C, review `result.json`, `failure.json` and `cleanup.json` in that run's
+evidence directory. It attempts to clear its injected scenario and stops only its
+owned resources. If Kanto cleanup is unverified, **do not start Docker002**: inspect
+with the documented CLI `get --name <kantoName from cleanup.json>` and perform a normal
+managed stop first. Correct the recorded missing prerequisite/conflict, then rerun;
+never reset shared state to manufacture a pass. Do not call an incomplete rehearsal
+successful. Submission video recording is outside this launcher task.

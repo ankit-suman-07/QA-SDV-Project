@@ -1,0 +1,27 @@
+{
+  "sha": "6fee175127c79ac28c3970eb5984b3dc7fa3b70d",
+  "dirty": "?? evidence/v1/demo-launcher-development-20261115/\n?? scripts/run-v1-demo.sh\n?? scripts/v1-demo.example.json\n?? scripts/v1_demo.py\n?? tests/test_v1_demo_launcher.py",
+  "startedAt": "2026-11-15T23:35:35.367723+00:00",
+  "config": {
+    "ditto": "http://127.0.0.1:18080",
+    "backend": "http://127.0.0.1:18081",
+    "frontend": "http://localhost:3000",
+    "mqttHost": "127.0.0.1",
+    "mqttPort": 18883,
+    "kuksaPorts": {
+      "vehicle-001": 55556,
+      "vehicle-002": 55557
+    },
+    "providers": {
+      "vehicle-001": "http://127.0.0.1:8091",
+      "vehicle-002": "http://127.0.0.1:8092"
+    },
+    "app001": "qa-v1-kanto-prereq-edge-app-001-1",
+    "dockerApp002": "qa-v1-kanto-prereq-edge-app-002-1",
+    "backendJar": "~/.local/share/qa-sdv-v1/worktrees/merged-main-verification/backend/target/backend-0.0.1-SNAPSHOT.jar",
+    "imageInfo": "evidence/v1/merged-main-20261115/image.json",
+    "kantoCli": "/opt/qa-sdv-v1-kanto/bin/kanto-cm",
+    "kantoSocket": "/run/qa-sdv-v1-kanto/container-management.sock"
+  },
+  "scope": "same-device narrated demo; not acceptance, remote LAN or automatic crash restart"
+}

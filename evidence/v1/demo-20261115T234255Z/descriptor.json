@@ -1,0 +1,27 @@
+{
+  "container_name": "autonomoushealthapp-vehicle-002-demo-20261115t234255z",
+  "image": {
+    "name": "docker.io/library/qa-v1-main-app:sha-4afbbd8c11425a9e0e1701fea66b7ed13731abfe"
+  },
+  "host_config": {
+    "devices": [],
+    "network_mode": "host",
+    "privileged": false,
+    "restart_policy": {
+      "type": "unless-stopped",
+      "maximum_retry_count": 0,
+      "retry_timeout": 0
+    }
+  },
+  "config": {
+    "env": [
+      "SDV_MIDDLEWARE_TYPE=native",
+      "SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557",
+      "SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883",
+      "DATABROKER_HOST=127.0.0.1",
+      "DATABROKER_PORT=55557",
+      "SIMULATED_VEHICLE_ID=vehicle-002",
+      "AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0"
+    ]
+  }
+}

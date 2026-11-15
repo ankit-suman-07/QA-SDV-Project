@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "bash",
+    "scripts/run-v1-demo.sh",
+    "--check"
+  ],
+  "exit": 1,
+  "scope": "real read-only rehearsal, no services or scenarios started/stopped; credentials loaded in memory from documented official sample",
+  "config": "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/demo.json"
+}

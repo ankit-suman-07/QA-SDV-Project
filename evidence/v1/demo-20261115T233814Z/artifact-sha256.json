@@ -1,0 +1,10 @@
+{
+  "baseline.json": "fe0d1c284b8ffafcc343ef960eeeba09a653a68928b5628d0defb0a484a07b78",
+  "commands.jsonl": "407bfce38bf2fe396231bca471505b2e21a562841fd9de2c0927bf360f4fa86c",
+  "docker-inventory.json": "7754c4756ce15ea93b7230029cb2b66fb17519de90636ee5800db3b9196a614f",
+  "status-startup.json": "fbf251093dca7a363610a7b3a3f5e679e9ab7725bedf9f56eb272d50f4d4e4b3",
+  "failure.json": "a0bd51106d514bf67b7daea54d9fd14e93a76ba3bc61506e91bd9b11c152d263",
+  "status-failed.json": "33fdf2f7d9b1dfc252cdc2d0a9affd2192394fb6b13877348a8662dffcaa5799",
+  "cleanup.json": "78648129f4750ce51f686a6dd1a25664f50b5d2f48554abd778655474a6b2a99",
+  "result.json": "dc1892cef601a6614f71121273cd01361cb96759b5cd50d5f8a9fc4890dca80a"
+}

@@ -1,0 +1,7 @@
+{
+  "sourceSha": "4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+  "dockerRef": "docker.io/library/qa-v1-main-app:sha-4afbbd8c11425a9e0e1701fea66b7ed13731abfe",
+  "indexSha256": "a9e031ea6d90b442a3efc80580caa5a929d6a46f1b1bf7e569d5cab3a9b87117",
+  "archive": "/home/ankitsuman/.local/share/qa-sdv-v1/runtime/kanto-main-4afbbd8.tar",
+  "archiveSha256": "679060372c3d7582be46abb9909a3d28ea12c01ceff9fa9531fb09308036f929"
+}

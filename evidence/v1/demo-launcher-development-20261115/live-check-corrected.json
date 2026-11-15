@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "bash",
+    "scripts/run-v1-demo.sh",
+    "--check"
+  ],
+  "exit": 1,
+  "scope": "rerun after provider classification fix; real read-only rehearsal only",
+  "fleetRead": {
+    "fleetThingHttpStatus": 200
+  },
+  "fullRehearsal": "BLOCKED: existing backend/dashboard absent, app002 stopped; interactive sudo and prepared fleet resources required; no mutation attempted"
+}

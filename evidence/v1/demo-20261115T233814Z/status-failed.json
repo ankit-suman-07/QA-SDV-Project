@@ -1,0 +1,151 @@
+{
+  "at": "2026-11-15T23:38:15.170622+00:00",
+  "rows": [
+    [
+      "Ditto",
+      "vehicle-001",
+      "READY",
+      "http://127.0.0.1:18080/api/2/things/sdv:vehicle-001",
+      "2026-11-15T23:38:11.544983Z vehicle-001-a5ae74cc99ec"
+    ],
+    [
+      "App / MQTT",
+      "vehicle-001",
+      "RUNNING",
+      "Docker; sdv/vehicle-001/health",
+      "-"
+    ],
+    [
+      "KUKSA",
+      "vehicle-001",
+      "RUNNING",
+      "127.0.0.1:55556",
+      "TCP only; integration shown above"
+    ],
+    [
+      "Backend",
+      "vehicle-001",
+      "FAILED",
+      "http://127.0.0.1:18081/api/v1/vehicles/vehicle-001/state",
+      "-"
+    ],
+    [
+      "Provider",
+      "vehicle-001",
+      "READY",
+      "http://127.0.0.1:8091",
+      "-"
+    ],
+    [
+      "Ditto",
+      "vehicle-002",
+      "STALE",
+      "http://127.0.0.1:18080/api/2/things/sdv:vehicle-002",
+      "2026-11-15T19:18:59.523812Z vehicle-002-badfbff96977"
+    ],
+    [
+      "App / MQTT",
+      "vehicle-002",
+      "FAILED",
+      "Docker; sdv/vehicle-002/health",
+      "-"
+    ],
+    [
+      "KUKSA",
+      "vehicle-002",
+      "RUNNING",
+      "127.0.0.1:55557",
+      "TCP only; integration shown above"
+    ],
+    [
+      "Backend",
+      "vehicle-002",
+      "FAILED",
+      "http://127.0.0.1:18081/api/v1/vehicles/vehicle-002/state",
+      "-"
+    ],
+    [
+      "Provider",
+      "vehicle-002",
+      "READY",
+      "http://127.0.0.1:8092",
+      "-"
+    ],
+    [
+      "MQTT",
+      "both",
+      "RUNNING",
+      "127.0.0.1:18883",
+      "TCP only"
+    ],
+    [
+      "Fleet",
+      "both",
+      "FAILED",
+      "http://127.0.0.1:18081/api/v1/fleet",
+      "API + authenticated fleet Thing read"
+    ],
+    [
+      "Dashboard",
+      "both",
+      "FAILED",
+      "http://localhost:3000",
+      "HTTP/UI shell; inspect rendered state"
+    ],
+    [
+      "Kanto",
+      "vehicle-002",
+      "FAILED",
+      "/run/qa-sdv-v1-kanto/container-management.sock",
+      "namespace qa-sdv-v1-kanto; see runtime states"
+    ]
+  ],
+  "things": {
+    "vehicle-001": {
+      "thingId": "sdv:vehicle-001",
+      "policyId": "sdv:vehicle-001-policy",
+      "attributes": {
+        "vehicleId": "vehicle-001"
+      },
+      "features": {
+        "v1": {
+          "properties": {
+            "schemaVersion": "1.0.0",
+            "vehicleId": "vehicle-001",
+            "sourceTimestamp": "2026-11-15T23:38:11.544983Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            },
+            "lastEventId": "vehicle-001-a5ae74cc99ec4d269e97d845f168fa63"
+          }
+        }
+      }
+    },
+    "vehicle-002": {
+      "thingId": "sdv:vehicle-002",
+      "policyId": "sdv:vehicle-002-policy",
+      "attributes": {
+        "vehicleId": "vehicle-002"
+      },
+      "features": {
+        "v1": {
+          "properties": {
+            "schemaVersion": "1.0.0",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T19:18:59.523812Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            },
+            "lastEventId": "vehicle-002-badfbff9697747a08c644b8a382ac051"
+          }
+        }
+      }
+    }
+  }
+}

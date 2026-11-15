@@ -1,0 +1,17 @@
+{
+  "keep": false,
+  "errors": [],
+  "dockerChanged": false,
+  "kantoName": "autonomoushealthapp-vehicle-002-demo-20261115t234255z",
+  "ownedProcesses": [
+    {
+      "pid": 406422,
+      "label": "backend"
+    },
+    {
+      "pid": 406530,
+      "label": "frontend"
+    }
+  ],
+  "sharedResources": "twins/policies/volumes/prerequisite services untouched"
+}
