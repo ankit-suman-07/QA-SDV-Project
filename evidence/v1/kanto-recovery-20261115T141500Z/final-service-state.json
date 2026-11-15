@@ -1,0 +1,8 @@
+{
+  "ingressIdentityVerified": true,
+  "ingressPid": 24753,
+  "dockerApp002": "exited",
+  "kantoLifecycle": "not attempted",
+  "prerequisites": "left running",
+  "volumesAndNetworks": "preserved"
+}

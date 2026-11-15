@@ -1,4 +1,4 @@
-# Same-device Linux runtime continuation (preparation only)
+# Same-device Linux runtime continuation
 
 See [current evidence/status](../../evidence/v1/kanto-validation-status.md).
 No command below authorizes acceptance without real Kanto observations. Run from
@@ -8,16 +8,64 @@ Execute gated commands one at a time and stop on unexpected nonzero exits.
 Initialize the required variables in every observer terminal; do not rely on
 variables exported in another terminal.
 
+
+## Recovery checkpoint — 2026-11-15 14:14 UTC
+
+[Recovery evidence](../../evidence/v1/kanto-recovery-20261115T141500Z/README.md)
+supersedes old temporary paths. Binaries are installed in
+`/opt/qa-sdv-v1-kanto/bin`; dedicated daemon is active. Persistent runtime is
+`$HOME/.local/share/qa-sdv-v1/runtime`. Do not reinstall, reimport, recreate the
+namespace or restart the daemon just to continue. The operator reports imported
+image/index `efad7228ebf00f092d43ec7242e2d60bdd56866d2f94f0afc3c8c5af9e6ac4a6`;
+privileged namespace/image inspection and actual Kanto resolution remain pending.
+
+The daemon initially crashed with HOME/XDG_CONFIG_HOME unset. Its inspected unit
+now has `HOME=/var/lib/qa-sdv-v1-kanto` and
+`XDG_CONFIG_HOME=/var/lib/qa-sdv-v1-kanto/config`; retain both on future starts.
+Automatic deployment and remote Things integration are disabled. The corrected
+systemd-run example below records these settings; it is not an instruction to
+restart the running service.
+
+Restore the documented observer/test environment without using system Python
+3.14 (grpcio-tools 1.68.0 falls back to a source build there):
+
+```bash
+export RUNTIME="$HOME/.local/share/qa-sdv-v1/runtime"
+uv python install 3.12.16
+# Only if this environment is absent:
+uv venv --python 3.12.16 "$RUNTIME/venv-3.12"
+uv pip install --python "$RUNTIME/venv-3.12/bin/python" -r requirements-test.txt
+export PYTHON="$RUNTIME/venv-3.12/bin/python"
+```
+
+One recovered ingress uses this interpreter and repository checkout. Its process
+identity and log live at `runtime/ingress-identity.json` and `runtime/ingress.log`
+under the persistent runtime parent. Inspect the identity and processes before
+starting another; do not print process environments. Both existing Things were
+read, never provisioned or replaced. Credentials were read in memory from the
+restored official source's documented local-sample authentication and not saved.
+Restored Compose is `runtime/ditto-restored.json`; it reuses the existing Ditto
+network. Preserve MongoDB volumes and the unused `docker_default` network.
+
+This session's `sudo -n true` requires authentication. Direct unprivileged Kanto
+list times out on the protected socket, which is not evidence the daemon is down.
+Ask the operator to run the exact privileged list command below; do not loosen
+socket permissions, request passwords, or assume their terminal's sudo timestamp
+applies to an agent terminal. Launch/managed restart and post-restart event
+correlation remain blocked until authorized privileged execution is available.
+The old optional `/tmp/qa-v1-jdk` backend command is historical and unavailable;
+no backend is needed for this bounded Kanto pilot.
+
 ## Current non-deploying checks
 
 ```bash
 set -euo pipefail
-export PYTHON=/tmp/qa-v1-env/bin/python
+export PYTHON=${HOME}/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python
 export V1_KANTO_APP_IMAGE=docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446
-export PATH=/tmp/qa-v1-runtime/kanto-1.0.0/container-management:$PATH
+export PATH=/opt/qa-sdv-v1-kanto/bin:$PATH
 "$PYTHON" velocitas-app/kanto/prepare_v1_pilot.py --config velocitas-app/kanto/pilot-config.local-linux.json --check-cli
 docker compose -p qa-v1-kanto-prereq-edge -f vehicle-simulator/docker-compose.v1.yml -f velocitas-app/kanto/compose.prerequisites.yml config --quiet
-docker compose -p qa-v1-kanto-prereq-edge -f /tmp/qa-v1-runtime/edge.json ps -a
+docker compose -p qa-v1-kanto-prereq-edge -f vehicle-simulator/docker-compose.v1.yml -f velocitas-app/kanto/compose.prerequisites.yml ps -a
 timedatectl show -p NTPSynchronized -p NTP
 chronyc tracking
 ```
@@ -28,7 +76,7 @@ Only if prerequisites have stopped, bring them back without enabling app-002:
 
 ```bash
 docker compose -p qa-v1-kanto-prereq-edge -f vehicle-simulator/docker-compose.v1.yml -f velocitas-app/kanto/compose.prerequisites.yml up -d --no-build mqtt kuksa-001 kuksa-002 provider-001 provider-002 app-001
-docker compose -p qa-v1-kanto-prereq-ditto -f /tmp/qa-v1-runtime/ditto.json up -d
+docker compose -p qa-v1-kanto-prereq-ditto -f ${HOME}/.local/share/qa-sdv-v1/runtime/ditto-restored.json up -d
 ```
 
 Do not use `--build` for the app reference. If rebuilding is necessary:
@@ -36,8 +84,8 @@ Do not use `--build` for the app reference. If rebuilding is necessary:
 ```bash
 docker build --platform linux/amd64 --label org.opencontainers.image.source=https://github.com/ankit-suman-07/QA-SDV-Project --label org.opencontainers.image.revision=92f3fc14a15ae7bd1aa6663bdedccb99a6c69446 --file velocitas-app/app/Dockerfile --tag "$V1_KANTO_APP_IMAGE" velocitas-app
 docker image inspect "$V1_KANTO_APP_IMAGE" --format '{{.Id}} {{.Os}}/{{.Architecture}} {{index .Config.Labels "org.opencontainers.image.revision"}}'
-docker save -o /tmp/qa-v1-runtime/kanto-app-92f3fc1.tar "$V1_KANTO_APP_IMAGE"
-sha256sum /tmp/qa-v1-runtime/kanto-app-92f3fc1.tar
+docker save -o ${HOME}/.local/share/qa-sdv-v1/runtime/kanto-app-92f3fc1.tar "$V1_KANTO_APP_IMAGE"
+sha256sum ${HOME}/.local/share/qa-sdv-v1/runtime/kanto-app-92f3fc1.tar
 ```
 
 Only label a build with that SHA after confirming the application build inputs
@@ -64,10 +112,10 @@ Use its own terminal and Ctrl-C for cleanup. Do not log credentials or enable
 Actuator environment dumps. The real read smoke is recorded in current evidence;
 this is not dashboard or fleet-materialization acceptance.
 
-## Administrator gate — BLOCKED, not executed
+## Administrator installation — historical procedure; inspect restored state first
 
 Use the official [Kanto 1.0.0 release](https://github.com/eclipse-kanto/kanto/releases/tag/v1.0.0).
-The verified archive already exists in `/tmp/qa-v1-runtime/downloads`; extracted
+The verified archive already exists in `${HOME}/.local/share/qa-sdv-v1/runtime/downloads`; extracted
 binaries run on this host. No package scripts were run. Do not install the full
 suite blindly: it includes unrelated connectors/services. Secure sudo operator
 authentication is required; never provide a password to this PR or chat.
@@ -80,10 +128,10 @@ Docker services, shared namespaces and socket permissions must stay intact.
 ```bash
 systemctl status qa-sdv-v1-kanto --no-pager
 sudo ctr --address /run/containerd/containerd.sock namespaces list
-sha256sum /tmp/qa-v1-runtime/downloads/kanto_1.0.0_linux_x86_64.tar.gz
+sha256sum ${HOME}/.local/share/qa-sdv-v1/runtime/downloads/kanto_1.0.0_linux_x86_64.tar.gz
 sudo install -d -m 0755 /opt/qa-sdv-v1-kanto/bin /var/lib/qa-sdv-v1-kanto /run/qa-sdv-v1-kanto /var/log/qa-sdv-v1-kanto
-sudo install -m 0755 /tmp/qa-v1-runtime/kanto-1.0.0/container-management/kanto-cm /opt/qa-sdv-v1-kanto/bin/kanto-cm
-sudo install -m 0755 /tmp/qa-v1-runtime/kanto-1.0.0/container-management/container-management /opt/qa-sdv-v1-kanto/bin/container-management
+sudo install -m 0755 ${HOME}/.local/share/qa-sdv-v1/runtime/kanto-1.0.0/container-management/kanto-cm /opt/qa-sdv-v1-kanto/bin/kanto-cm
+sudo install -m 0755 ${HOME}/.local/share/qa-sdv-v1/runtime/kanto-1.0.0/container-management/container-management /opt/qa-sdv-v1-kanto/bin/container-management
 ```
 
 Verify the archive against the recorded official checksum before installation;
@@ -93,7 +141,7 @@ store, and its import is not yet proof that Kanto resolves the image:
 
 ```bash
 sudo ctr --address /run/containerd/containerd.sock namespaces create qa-sdv-v1-kanto
-sudo ctr --address /run/containerd/containerd.sock --namespace qa-sdv-v1-kanto images import --platform linux/amd64 /tmp/qa-v1-runtime/kanto-app-92f3fc1.tar
+sudo ctr --address /run/containerd/containerd.sock --namespace qa-sdv-v1-kanto images import --platform linux/amd64 ${HOME}/.local/share/qa-sdv-v1/runtime/kanto-app-92f3fc1.tar
 sudo ctr --address /run/containerd/containerd.sock --namespace qa-sdv-v1-kanto images list
 ```
 
@@ -103,7 +151,7 @@ confirmed against the downloaded binary's help. Disable its unrelated remote
 Things integration and default bridge; app descriptor uses host networking.
 
 ```bash
-sudo systemd-run --unit=qa-sdv-v1-kanto --collect /opt/qa-sdv-v1-kanto/bin/container-management --ccl-ap /run/containerd/containerd.sock --ccl-default-ns qa-sdv-v1-kanto --grpc-serv-ap /run/qa-sdv-v1-kanto/container-management.sock --cm-home-dir /var/lib/qa-sdv-v1-kanto --cm-exec-root-dir /run/qa-sdv-v1-kanto --ccl-home-dir /var/lib/qa-sdv-v1-kanto --ccl-exec-root-dir /run/qa-sdv-v1-kanto --deployment-home-dir /var/lib/qa-sdv-v1-kanto --things-home-dir /var/lib/qa-sdv-v1-kanto --net-home-dir /var/lib/qa-sdv-v1-kanto --net-exec-root-dir /run/qa-sdv-v1-kanto --net-type host --net-tbr-disable --things-enable=false --log-file /var/log/qa-sdv-v1-kanto/container-management.log
+sudo systemd-run --unit=qa-sdv-v1-kanto --collect --setenv=HOME=/var/lib/qa-sdv-v1-kanto --setenv=XDG_CONFIG_HOME=/var/lib/qa-sdv-v1-kanto/config /opt/qa-sdv-v1-kanto/bin/container-management --ccl-ap /run/containerd/containerd.sock --ccl-default-ns qa-sdv-v1-kanto --grpc-serv-ap /run/qa-sdv-v1-kanto/container-management.sock --cm-home-dir /var/lib/qa-sdv-v1-kanto --cm-exec-root-dir /run/qa-sdv-v1-kanto --ccl-home-dir /var/lib/qa-sdv-v1-kanto --ccl-exec-root-dir /run/qa-sdv-v1-kanto --deployment-home-dir /var/lib/qa-sdv-v1-kanto --deployment-enable=false --things-home-dir /var/lib/qa-sdv-v1-kanto --net-home-dir /var/lib/qa-sdv-v1-kanto --net-exec-root-dir /run/qa-sdv-v1-kanto --net-type host --net-tbr-disable --things-enable=false --log-file /var/log/qa-sdv-v1-kanto/container-management.log
 export KANTO_CLI=/opt/qa-sdv-v1-kanto/bin/kanto-cm
 export KANTO_HOST=/run/qa-sdv-v1-kanto/container-management.sock
 sudo "$KANTO_CLI" --host "$KANTO_HOST" --timeout 5 list
@@ -118,7 +166,7 @@ an unavailable registry despite import, retain that failure and resolve the cach
 or approved isolated registry configuration, never claim the import succeeded as
 an application launch.
 
-## Next-session pilot commands — do not run in preparation
+## Live pilot commands — require current readiness and privileged access
 
 Require current READY statuses, synchronized clock, real Ditto access, one
 ingress, no replay publisher and app-001 healthy. Set a new evidence directory
@@ -233,7 +281,7 @@ terminate that process only. Then:
 "$PYTHON" - <<'PY'
 import json, os, signal
 from pathlib import Path
-record = json.loads(Path('/tmp/qa-v1-runtime/ingress-identity.json').read_text())
+record = json.loads((Path.home() / '.local/share/qa-sdv-v1/runtime/ingress-identity.json').read_text())
 proc = Path('/proc') / str(record['pid'])
 assert Path('/proc/sys/kernel/random/boot_id').read_text().strip() == record['bootId']
 assert proc.joinpath('stat').read_text().rsplit(')', 1)[1].split()[19] == record['startTicks']
@@ -248,8 +296,8 @@ For a newly started ingress in its own terminal, use Ctrl-C in that owned termin
 Then stop only the two test-owned projects:
 
 ```bash
-docker compose -p qa-v1-kanto-prereq-edge -f /tmp/qa-v1-runtime/edge.json down
-docker compose -p qa-v1-kanto-prereq-ditto -f /tmp/qa-v1-runtime/ditto.json down
+docker compose -p qa-v1-kanto-prereq-edge -f vehicle-simulator/docker-compose.v1.yml -f velocitas-app/kanto/compose.prerequisites.yml down
+docker compose -p qa-v1-kanto-prereq-ditto -f ${HOME}/.local/share/qa-sdv-v1/runtime/ditto-restored.json down
 ```
 
 These commands omit volume deletion. Preserve the test-owned stopped app-002

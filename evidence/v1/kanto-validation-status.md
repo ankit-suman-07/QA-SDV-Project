@@ -1,5 +1,34 @@
 # Phase V1 Kanto validation preparation
 
+## Persistent recovery checkpoint — 2026-11-15 14:14 UTC
+
+**V1-09 BLOCKED on privileged lifecycle execution; live pilot not run.**
+[Durable recovery evidence](kanto-recovery-20261115T141500Z/README.md) records
+Python 3.12.16/dependency restoration, both authenticated twin HTTP 200 reads,
+synchronized clock, healthy real KUKSA, three fresh vehicle-001 MQTT events and
+an exact event/property match at real Ditto. No ingress existed; exactly one was
+restored with persistent process identity/log. Existing Things/policies preserved.
+Vehicle-002's twin remains historical; Docker app-002 stays stopped.
+
+Dedicated daemon is active and installed CLI help passes. Unit inspection confirms
+HOME/XDG_CONFIG_HOME correction, disabled automatic deployment and disabled remote
+Things integration. `sudo -n true` requires authentication; unprivileged CLI socket
+access times out. No create/start/stop was attempted, no runtime started_at was
+obtained, and no post-restart event or continuous restart isolation is claimed.
+Operator-reported imported image/index still requires privileged verification.
+The [runbook](../../velocitas-app/kanto/LINUX-RUNTIME.md) now uses persistent paths
+and records the environment correction. Old temporary paths below are historical.
+
+Targeted checks: **153 passed**; renderer/installed CLI help passed. All eight checks
+on starting PR head `f7d5f4f56c9441f578408b529c7201302ed1c166` succeeded.
+Updated-head CI is inspected separately after push. PR #43 stays draft/open and
+incomplete for live acceptance. Full V1 acceptance, remote-LAN validation, release,
+review and automatic crash restart are not established by recovered prerequisites.
+Services left: edge/real Ditto, one ingress, dedicated Kanto daemon; Docker app-002
+stopped. No faults/outages/full harness or destructive cleanup. MongoDB volumes,
+historical evidence and unused docker_default network preserved.
+
+
 ## Live pilot continuation — 2026-11-15T07:30:02Z
 
 **V1-09: BLOCKED awaiting operator authentication; not executed.** Recovered the

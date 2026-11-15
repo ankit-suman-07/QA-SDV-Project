@@ -1,0 +1,10 @@
+[
+  {
+    "vehicle": "vehicle-001",
+    "status": 200
+  },
+  {
+    "vehicle": "vehicle-002",
+    "status": 200
+  }
+]

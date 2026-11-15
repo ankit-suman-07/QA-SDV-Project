@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "timedatectl",
+    "show",
+    "-p",
+    "NTPSynchronized",
+    "-p",
+    "NTP"
+  ],
+  "exit": 0,
+  "stdout": "NTP=yes\nNTPSynchronized=yes\n",
+  "stderr": ""
+}

@@ -1,0 +1,23 @@
+{
+  "thingId": "sdv:vehicle-001",
+  "policyId": "sdv:vehicle-001-policy",
+  "attributes": {
+    "vehicleId": "vehicle-001"
+  },
+  "features": {
+    "v1": {
+      "properties": {
+        "schemaVersion": "1.0.0",
+        "vehicleId": "vehicle-001",
+        "sourceTimestamp": "2026-11-15T14:13:44.234491Z",
+        "health": "HEALTHY",
+        "faults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "lastEventId": "vehicle-001-cc5c47535b0743ca84e19cb8f2708360"
+      }
+    }
+  }
+}

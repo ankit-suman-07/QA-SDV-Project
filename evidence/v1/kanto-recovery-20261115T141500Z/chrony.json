@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "chronyc",
+    "tracking"
+  ],
+  "exit": 0,
+  "stdout": "Reference ID    : AE8ACCFB (174-138-204-251.cpe.distributel.net)\nStratum         : 2\nRef time (UTC)  : Sun Nov 15 14:11:24 2026\nSystem time     : 0.000157544 seconds slow of NTP time\nLast offset     : -0.000120336 seconds\nRMS offset      : 0.000328775 seconds\nFrequency       : 8.921 ppm slow\nResidual freq   : -0.013 ppm\nSkew            : 0.773 ppm\nRoot delay      : 0.012226956 seconds\nRoot dispersion : 0.002187250 seconds\nUpdate interval : 258.3 seconds\nLeap status     : Normal\n",
+  "stderr": ""
+}
