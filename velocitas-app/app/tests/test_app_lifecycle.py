@@ -115,3 +115,18 @@ def test_failed_inflight_read_cannot_swallow_shutdown_cancellation():
         await asyncio.sleep(0.01);t.cancel()
         with pytest.raises(asyncio.CancelledError):await t
     asyncio.run(case())
+
+
+def test_paho_loop_already_stopped_after_disconnect_is_complete():
+    m=api()
+    async def case():
+        class Finished(Client):
+            def loop_stop(self):
+                self.calls.append('loop_stop')
+                return 3  # Paho2.1: _thread is already None after DISCONNECT.
+        class SDK:
+            _hostname='127.0.0.1';_port=1883
+            _pub_client=Finished();_sub_client=Finished()
+        life=m.NativeMqttLifecycle(SDK())
+        await life.start();await life.close()
+    asyncio.run(case())

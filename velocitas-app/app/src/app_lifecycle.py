@@ -86,7 +86,9 @@ class NativeMqttLifecycle:
         for client in self.started:
             try:
                 result = await asyncio.wait_for(asyncio.to_thread(client.loop_stop), 3.0)
-                if result != 0:
+                # Paho2.1 returns INVAL only when its thread is already None
+                # (DISCONNECT may have finished it before loop_stop was called).
+                if result not in (0, 3):
                     raise RuntimeError('MQTT loop did not stop')
             except Exception as error:
                 errors.append(error)
