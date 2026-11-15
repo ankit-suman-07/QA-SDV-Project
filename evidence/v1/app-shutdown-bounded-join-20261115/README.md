@@ -1,5 +1,13 @@
 # d8c1f40 targeted shutdown verification — final stop checkpoint
 
+## Resumed final verification
+
+[Actual d8c1f40 Kanto three-cycle PASS](../shutdown-bounded-kanto-live-20261115T182944Z/README.md)
+supersedes the Kanto-pending statement in the historical stop checkpoint below.
+All three source/runtime comparisons and exact Ditto matches pass, every stop
+exit0,154 final healthy001 samples. Combined verification remains separately tracked.
+
+
 Confirmed defect: asyncio.to_thread client join can remain blocked after wait_for
 times out; asyncio.run then waits forever for its default executor.
 [Red subprocess regression](stalled-join-red.txt) times out after9 seconds.

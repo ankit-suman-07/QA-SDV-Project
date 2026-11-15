@@ -1,0 +1,74 @@
+{
+  "container_id": "78eaf169-585e-4e39-abee-abc478255321",
+  "container_name": "autonomoushealthapp-vehicle-002-shutdown-20261115182944",
+  "image": {
+    "name": "docker.io/library/qa-v1-shutdown-app:sha-d8c1f4048522da3e79a81e6ee5919017b941b00d"
+  },
+  "domain_name": "autonomoushealthapp-vehicle-002-shutdown-20261115182944-domain",
+  "host_name": "autonomoushealthapp-vehicle-002-shutdown-20261115182944-host",
+  "mount_points": null,
+  "hooks": null,
+  "config": {
+    "env": [
+      "SDV_MIDDLEWARE_TYPE=native",
+      "SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557",
+      "SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883",
+      "DATABROKER_HOST=127.0.0.1",
+      "DATABROKER_PORT=55557",
+      "SIMULATED_VEHICLE_ID=vehicle-002",
+      "AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0"
+    ]
+  },
+  "host_config": {
+    "devices": null,
+    "network_mode": "host",
+    "privileged": false,
+    "restart_policy": {
+      "maximum_retry_count": 0,
+      "retry_timeout": 0,
+      "type": "unless-stopped"
+    },
+    "runtime": "io.containerd.runc.v2",
+    "extra_hosts": null,
+    "extra_capabilities": null,
+    "port_mappings": null,
+    "log_config": {
+      "driver_config": {
+        "type": "json-file",
+        "max_files": 2,
+        "max_size": "100M"
+      },
+      "mode_config": {
+        "mode": "blocking"
+      }
+    },
+    "resources": null
+  },
+  "io_config": {
+    "attach_stderr": false,
+    "attach_stdin": false,
+    "attach_stdout": false,
+    "open_stdin": false,
+    "stdin_once": false,
+    "tty": false
+  },
+  "network_settings": null,
+  "state": {
+    "pid": -1,
+    "started_at": "",
+    "error": "",
+    "exit_code": 0,
+    "finished_at": "",
+    "exited": false,
+    "dead": false,
+    "restarting": false,
+    "paused": false,
+    "running": false,
+    "oomKilled": false,
+    "status": 1
+  },
+  "created": "2026-11-15T18:30:09.828997715Z",
+  "restart_count": 0,
+  "manually_stopped": false,
+  "started_successfully_before": false
+}
