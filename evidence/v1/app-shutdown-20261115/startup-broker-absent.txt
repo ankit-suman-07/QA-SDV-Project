@@ -1,0 +1,7 @@
+/usr/local/lib/python3.10/dist-packages/opentelemetry/instrumentation/dependencies.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import (
+2026-11-15 15:20:25,878 INFO [__main__] [main.py:299] [trace_id=7d83430e54f311ead585c5f4d36f5502 span_id=93ec567bdb3bb0d4 resource.service.name=src/main.py trace_sampled=True] - Launching Velocitas AutonomousHealthApp
+2026-11-15 15:20:26,886 INFO [__main__] [main.py:290] [trace_id=7d83430e54f311ead585c5f4d36f5502 span_id=93ec567bdb3bb0d4 resource.service.name=src/main.py trace_sampled=True] - Application shutdown completed
+Error in sys.excepthook:
+
+Original exception was:

@@ -1,0 +1,49 @@
+{
+  "result": "PASS",
+  "scope": "same-device managed stop/start pilot only; no full V1 acceptance, remote LAN or crash auto-restart claim",
+  "eventId": "vehicle-002-1dacab71bb40432989f0813a7d0c7a64",
+  "sourceTimestamp": "2026-11-15T15:22:24.497053Z",
+  "runtimeStartedAt": "2026-11-15T15:22:23.144509+00:00",
+  "request": {
+    "utc": "2026-11-15T15:22:22.886602+00:00",
+    "monotonicNs": 6991912176131
+  },
+  "previousSourceTimestamp": "2026-11-15T15:22:19.486120Z",
+  "mqttMessages": 11,
+  "twinSnapshots": 151,
+  "cycles": [
+    {
+      "cycle": 1,
+      "eventId": "vehicle-002-ddb643c466354a5692355297752ff191",
+      "sourceTimestamp": "2026-11-15T15:22:14.473499Z",
+      "runtimeStartedAt": "2026-11-15T15:22:12.089332463Z",
+      "request": {
+        "utc": "2026-11-15T15:22:11.841633+00:00",
+        "monotonicNs": 6980867199660
+      },
+      "previousSourceTimestamp": "2026-11-15T15:22:09.459537Z"
+    },
+    {
+      "cycle": 2,
+      "eventId": "vehicle-002-0f6313238054471cb102f5c43a6aa4d3",
+      "sourceTimestamp": "2026-11-15T15:22:19.486120Z",
+      "runtimeStartedAt": "2026-11-15T15:22:17.619386395Z",
+      "request": {
+        "utc": "2026-11-15T15:22:17.368359+00:00",
+        "monotonicNs": 6986393933726
+      },
+      "previousSourceTimestamp": "2026-11-15T15:22:14.473499Z"
+    },
+    {
+      "cycle": 3,
+      "eventId": "vehicle-002-1dacab71bb40432989f0813a7d0c7a64",
+      "sourceTimestamp": "2026-11-15T15:22:24.497053Z",
+      "runtimeStartedAt": "2026-11-15T15:22:23.144509557Z",
+      "request": {
+        "utc": "2026-11-15T15:22:22.886602+00:00",
+        "monotonicNs": 6991912176131
+      },
+      "previousSourceTimestamp": "2026-11-15T15:22:19.486120Z"
+    }
+  ]
+}

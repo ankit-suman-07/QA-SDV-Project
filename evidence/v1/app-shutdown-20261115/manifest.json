@@ -1,0 +1,24 @@
+{
+  "scope": "UNMERGED shutdown fix; managed lifecycle only",
+  "hashes": {
+    "red.txt": "00e13507149b31cada5050b597ff9a31ef8abf62ca637bab82199c24564b9bdc",
+    "green.txt": "e319f45391c47e1d358b94f8ed280065b4c1d19578c810d181d827bb36f81911",
+    "image-build.txt": "9650cf26f4c5d23e995d426537513b64a979594e03ac4605e65333e733d6b553",
+    "python-regression.txt": "28207d562fcea1bac597bc0d882cc4280022360444258b8a8dbe9560bc458343",
+    "docker_lifecycle.py": "ef8a60d46d91b14b84043bc012b112606ee843b62180eb11ace53ec98dbc8da5",
+    "docker-live.json": "b3db55b13d5e0044ea8910110773bdce941e89544e493530e31f49387d279eae",
+    "kanto_lifecycle.py": "59d31b4c99f57ea0a09cd5961932869866274451cf72c64d9efcd91183d00876",
+    "first-image-failure.txt": "00ef68e17c5efc91b6fcd715d8ddd103934307102b874b1099acd6301c94ae98",
+    "paho-already-stopped-red.txt": "ccc14737dabad173375400d8bd331db40cc7d5332bc1f35ad1b50dcfb1f06149",
+    "docker-live-first.json": "cb9a2ba579bd1b9d036d2dde638ce7af9da1c6b70d60d6d9eac372290ad1ee0a",
+    "image-build-final.txt": "31383b66d7c6c646261fb81c2b6d1b34e3bc9c196c43f8bc9fbac39c52596ca1",
+    "image.json": "1639129e024242f96203a2cb5cc22ca3c9332798c722e164bcdec37a43e72d52",
+    "polling-1.txt": "17817106a5b913ce6faed7f546db801b3e6258dde9a11a9bacadcf3ccbbaf6a4",
+    "polling-2.txt": "81b9b688e6ebe1b86877a0fc99cd584cf74eb9f6621527096963da305bffba87",
+    "startup-broker-absent.txt": "ed199aadd4130397e1302b28f3810137228676e5f9b7c61da3ce922d1b1feb6c",
+    "kuksa-absent.txt": "52f98d81a35d3e2e51c9d20c5b743d85125636bdb4389887804b2f9395378851",
+    "publication-broker-paused.txt": "cd27de3760dc34091a813cbe74d886d9c7cc55612c4c5676e583a83fa5ec566b",
+    "python-regression-final.txt": "397f7d55c4c46ef40a757368a46990431c0dc064cb093d20d32ed8e4f92eb0a7",
+    "README.md": "e8e7b743451201be6450f2cf3bfb54cdf3e6c2dab32d36f0f16206b8567844f1"
+  }
+}

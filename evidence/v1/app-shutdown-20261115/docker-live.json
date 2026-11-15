@@ -1,0 +1,190 @@
+{
+  "result": "PASS",
+  "records": [
+    {
+      "mode": "polling-1",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:20:16.153628852Z",
+      "stopRequest": "2026-11-15T15:20:19.932550+00:00",
+      "stopDurationSeconds": 0.32137722300012683,
+      "oom": false,
+      "matchedEvents": [
+        {
+          "observedAt": "2026-11-15T15:20:19.832634+00:00",
+          "event": {
+            "schemaVersion": "1.0.0",
+            "eventId": "vehicle-002-10c58448effc444eafedb70d32faa110",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T15:20:19.198934Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            }
+          },
+          "twin": {
+            "thingId": "sdv:vehicle-002",
+            "policyId": "sdv:http-check-policy",
+            "attributes": {
+              "vehicleId": "vehicle-002"
+            },
+            "features": {
+              "v1": {
+                "properties": {
+                  "schemaVersion": "1.0.0",
+                  "vehicleId": "vehicle-002",
+                  "sourceTimestamp": "2026-11-15T15:20:19.198934Z",
+                  "health": "HEALTHY",
+                  "faults": [],
+                  "lidar": {
+                    "distanceMeters": 35.0,
+                    "sensorAvailable": true
+                  },
+                  "lastEventId": "vehicle-002-10c58448effc444eafedb70d32faa110"
+                }
+              }
+            }
+          },
+          "qos": 1,
+          "retain": false
+        }
+      ]
+    },
+    {
+      "mode": "polling-2",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:20:20.521204085Z",
+      "stopRequest": "2026-11-15T15:20:24.604275+00:00",
+      "stopDurationSeconds": 0.2815033480001148,
+      "oom": false,
+      "matchedEvents": [
+        {
+          "observedAt": "2026-11-15T15:20:24.511689+00:00",
+          "event": {
+            "schemaVersion": "1.0.0",
+            "eventId": "vehicle-002-e48cd3b9a7f546ec9e264467ff65acaa",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T15:20:24.212760Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            }
+          },
+          "twin": {
+            "thingId": "sdv:vehicle-002",
+            "policyId": "sdv:http-check-policy",
+            "attributes": {
+              "vehicleId": "vehicle-002"
+            },
+            "features": {
+              "v1": {
+                "properties": {
+                  "schemaVersion": "1.0.0",
+                  "vehicleId": "vehicle-002",
+                  "sourceTimestamp": "2026-11-15T15:20:24.212760Z",
+                  "health": "HEALTHY",
+                  "faults": [],
+                  "lidar": {
+                    "distanceMeters": 35.0,
+                    "sensorAvailable": true
+                  },
+                  "lastEventId": "vehicle-002-e48cd3b9a7f546ec9e264467ff65acaa"
+                }
+              }
+            }
+          },
+          "qos": 1,
+          "retain": false
+        }
+      ]
+    },
+    {
+      "mode": "startup-broker-absent",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:20:25.143061563Z",
+      "stopRequest": "2026-11-15T15:20:25.974265+00:00",
+      "stopDurationSeconds": 1.1448940370000855,
+      "oom": false,
+      "matchedEvents": []
+    },
+    {
+      "mode": "kuksa-absent",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:20:27.36642284Z",
+      "stopRequest": "2026-11-15T15:20:28.149054+00:00",
+      "stopDurationSeconds": 0.1988809719996425,
+      "oom": false,
+      "matchedEvents": []
+    },
+    {
+      "mode": "publication-broker-paused",
+      "stopExit": 0,
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "startedAt": "2026-11-15T15:20:28.507719389Z",
+      "stopRequest": "2026-11-15T15:20:36.618149+00:00",
+      "stopDurationSeconds": 0.2621793419993992,
+      "oom": false,
+      "matchedEvents": [
+        {
+          "observedAt": "2026-11-15T15:20:29.554983+00:00",
+          "event": {
+            "schemaVersion": "1.0.0",
+            "eventId": "vehicle-002-bb02cb885ebd4696ad4b203cd1055912",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T15:20:29.223035Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            }
+          },
+          "twin": {
+            "thingId": "sdv:vehicle-002",
+            "policyId": "sdv:http-check-policy",
+            "attributes": {
+              "vehicleId": "vehicle-002"
+            },
+            "features": {
+              "v1": {
+                "properties": {
+                  "schemaVersion": "1.0.0",
+                  "vehicleId": "vehicle-002",
+                  "sourceTimestamp": "2026-11-15T15:20:29.223035Z",
+                  "health": "HEALTHY",
+                  "faults": [],
+                  "lidar": {
+                    "distanceMeters": 35.0,
+                    "sensorAvailable": true
+                  },
+                  "lastEventId": "vehicle-002-bb02cb885ebd4696ad4b203cd1055912"
+                }
+              }
+            }
+          },
+          "qos": 1,
+          "retain": false
+        }
+      ]
+    }
+  ],
+  "observerFailures": [],
+  "resources": "Only new broker/app containers stopped; retained for inspection. Shared edge/ingress/twins unaffected. Isolated Ditto18090 updated by this sole test observer."
+}

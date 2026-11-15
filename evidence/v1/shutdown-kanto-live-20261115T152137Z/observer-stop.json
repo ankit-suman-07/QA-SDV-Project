@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "docker",
+    "stop",
+    "--time",
+    "3",
+    "qa-v1-kanto-observer-shutdown-kanto-live-20261115t152137z"
+  ],
+  "request": {
+    "utc": "2026-11-15T15:22:27.618623+00:00",
+    "monotonicNs": 6996644168257
+  },
+  "returned": {
+    "utc": "2026-11-15T15:22:27.827998+00:00",
+    "monotonicNs": 6996853557786
+  },
+  "exit": 0,
+  "stdout": "Flag --time has been deprecated, use --timeout instead\nqa-v1-kanto-observer-shutdown-kanto-live-20261115t152137z\n",
+  "stderr": ""
+}

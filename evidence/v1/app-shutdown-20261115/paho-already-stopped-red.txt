@@ -1,0 +1,86 @@
+.......F                                                                 [100%]
+=================================== FAILURES ===================================
+_________ test_paho_loop_already_stopped_after_disconnect_is_complete __________
+
+self = <app_lifecycle.NativeMqttLifecycle object at 0x7f5d3719f2c0>
+
+    async def _close(self):
+        errors = []
+        for client in self.clients:
+            try:
+                # NOT_CONNECTED is expected if startup was cancelled or broker lost.
+                result = client.disconnect()
+                if result not in (0, 4):
+                    raise RuntimeError('MQTT disconnect failed')
+            except Exception as error:
+                errors.append(error)
+        for client in self.started:
+            try:
+                result = await asyncio.wait_for(asyncio.to_thread(client.loop_stop), 3.0)
+                if result != 0:
+>                   raise RuntimeError('MQTT loop did not stop')
+E                   RuntimeError: MQTT loop did not stop
+
+velocitas-app/app/src/app_lifecycle.py:90: RuntimeError
+
+The above exception was the direct cause of the following exception:
+
+    def test_paho_loop_already_stopped_after_disconnect_is_complete():
+        m=api()
+        async def case():
+            class Finished(Client):
+                def loop_stop(self):
+                    self.calls.append('loop_stop')
+                    return 3  # Paho2.1: _thread is already None after DISCONNECT.
+            class SDK:
+                _hostname='127.0.0.1';_port=1883
+                _pub_client=Finished();_sub_client=Finished()
+            life=m.NativeMqttLifecycle(SDK())
+            await life.start();await life.close()
+>       asyncio.run(case())
+
+velocitas-app/app/tests/test_app_lifecycle.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:195: in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/asyncio/runners.py:118: in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/asyncio/base_events.py:691: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+velocitas-app/app/tests/test_app_lifecycle.py:131: in case
+    await life.start();await life.close()
+                       ^^^^^^^^^^^^^^^^^^
+velocitas-app/app/src/app_lifecycle.py:74: in close
+    await asyncio.shield(self._closing)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <app_lifecycle.NativeMqttLifecycle object at 0x7f5d3719f2c0>
+
+    async def _close(self):
+        errors = []
+        for client in self.clients:
+            try:
+                # NOT_CONNECTED is expected if startup was cancelled or broker lost.
+                result = client.disconnect()
+                if result not in (0, 4):
+                    raise RuntimeError('MQTT disconnect failed')
+            except Exception as error:
+                errors.append(error)
+        for client in self.started:
+            try:
+                result = await asyncio.wait_for(asyncio.to_thread(client.loop_stop), 3.0)
+                if result != 0:
+                    raise RuntimeError('MQTT loop did not stop')
+            except Exception as error:
+                errors.append(error)
+        if errors:
+>           raise RuntimeError('MQTT cleanup incomplete') from errors[0]
+E           RuntimeError: MQTT cleanup incomplete
+
+velocitas-app/app/src/app_lifecycle.py:94: RuntimeError
+=========================== short test summary info ============================
+FAILED velocitas-app/app/tests/test_app_lifecycle.py::test_paho_loop_already_stopped_after_disconnect_is_complete
+1 failed, 7 passed in 0.26s
