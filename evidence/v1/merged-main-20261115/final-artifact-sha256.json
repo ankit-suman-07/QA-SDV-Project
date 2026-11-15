@@ -19,8 +19,9 @@
   "final-state.json": "0e2620a536e8e9f4e1b84c6d7b17c7edb62c28ea92b44f6d8416f887ddf967a9",
   "commands-summary.json": "96797db51279444847b1047481c747a827d9240981163cdec66246ea4a5639ac",
   "text-normalization.json": "0d17edbbb1f66502738e6efd508cb6cbcf678e19d231bf8039147fe8f7bb05e8",
-  "README.md": "8cb1ca7804f26b9068e96048847be5ac3b1b7f2d83c795925080c1bff93e5942",
-  "validate_artifacts.py": "ec4e8c8946df582d4a42115e6c427113584a1e0183b6c32deb0a8efcef2f8627",
-  "validation.json": "cc0ad70ce454c9f21e1f55a45f7a7ca1e7d98eccf68b1ed0596d96cfa50ebde3",
-  "independent-review-console.txt": "73ecf0bbe5d2350487e82b67214218c642c26aa93079fbb41165376a57543c17"
+  "README.md": "392f03b56c91e56f68a4d95b0f9555ead152336bed177b5c5cf82a603f7fbe04",
+  "validate_artifacts.py": "10be898a40d7203a8b0c1a39d99141de1c40120605c2f34b4a7b855df0adc84e",
+  "validation.json": "29a495e6ce153d1f89df52ff2c1c11e44e14f85e03f9f211f5f515c706223b48",
+  "independent-review-console.txt": "73ecf0bbe5d2350487e82b67214218c642c26aa93079fbb41165376a57543c17",
+  "evidence-json-correction.json": "5b2cf39e446c7813e1ca25076e11ff5c6622d889a2c353aebb75b45092bc21c6"
 }

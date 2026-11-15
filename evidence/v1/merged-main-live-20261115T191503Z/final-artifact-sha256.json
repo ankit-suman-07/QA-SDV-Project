@@ -1,5 +1,5 @@
 {
-  "harness-source.json": "158632e91c929b4fef795301fd91fbeb544c0fffe443c02e2cabfaf19341219a",
+  "harness-source.json": "bec896a9c1f6c79c0c07443ca26dc07b1f8147a2f19e46fc224644899d1317a5",
   "manifest.json": "ba75f2e49b8a0c9d20286b3e0b5f6b2c02e301508afbf3ea36d714002523d8c4",
   "ditto.json": "4e3c34d7109c2fec3ad16b293ae99db8fe2596691ed1174f86f9e3571a46d51a",
   "command-000.txt": "9f78754b7939ecdaf23fb0384ed6c148308ed8c06f39327de3c5e34824194f5a",
@@ -51,5 +51,6 @@
   "statistics.json": "1d7e20dba24ed75380a28b8800f663255a854cb1eaae0079eaec79a5e9486b07",
   "measurement-limitations.json": "fd5149c0c48de818f13834ac9f46dfefc1058f0e38e4d8b47fcb6b813cc1e7db",
   "merged-main-verdict.json": "efaa6859c02b366edd9611aea1c517e7623d0784d22f5a9cdfee2e97ca1bb266",
-  "selected-gates-review.json": "78bab9b96b0627333852b5798d0c9271c519a6329f559f8520d453ff2fa2791f"
+  "selected-gates-review.json": "78bab9b96b0627333852b5798d0c9271c519a6329f559f8520d453ff2fa2791f",
+  "harness-source-redaction-invalid.txt": "158632e91c929b4fef795301fd91fbeb544c0fffe443c02e2cabfaf19341219a"
 }

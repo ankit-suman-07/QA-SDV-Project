@@ -80,3 +80,13 @@ The harness's original artifact-sha256 manifest is retained. Additional redactio
 passes transformed its source/config snapshots; text-normalization.json records
 before/after hashes. final-artifact-sha256.json identifies the final reviewed bytes;
 validate_artifacts.py verifies original hashes or the exact recorded transformation.
+
+## Evidence-only CI correction
+
+Configuration CI on a053ff3 found an invalid JSON escape introduced by an extra
+raw-text redaction pass over harness-source.json. The exact original source snapshot
+was reconstructed from tested main and its SHA256 matches the harness's original
+manifest; no actual credentials occur in source. Invalid redacted bytes remain as
+harness-source-redaction-invalid.txt. [Correction record](evidence-json-correction.json)
+retains the failed head/run/hash and restoration. All tracked JSON is now parsed
+locally before push; application/runtime results are unchanged.

@@ -14,6 +14,7 @@ for folder in folders:
     transformed.append(str(p.relative_to(root)))
    verified+=1
 for p in out.glob('*.py'):ast.parse(p.read_text())
+for name in subprocess.check_output(['git','ls-files','*.json'],cwd=root,text=True).splitlines():json.loads((root/name).read_text(encoding='utf-8-sig'))
 source=(Path.home()/'.local/share/qa-sdv-v1/runtime/ditto-source/documentation/src/main/resources/pages/ditto/intro-hello-world.md').read_text()
 auth=re.findall(r'(?:-u|--user)\s+[\'\"]?([A-Za-z0-9_-]+):([A-Za-z0-9_-]+)',source)[0];pair=':'.join(auth)
 files=[p for folder in folders for p in folder.rglob('*') if p.is_file()]

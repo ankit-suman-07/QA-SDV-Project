@@ -1,12 +1,11 @@
 {
-  "at": "2026-11-15T19:25:18.967295+00:00",
+  "at": "2026-11-15T19:27:58.694408+00:00",
   "priorArtifactHashesVerifiedOrDocumentedNormalization": 51,
   "normalizedArtifacts": [
-    "evidence/v1/merged-main-live-20261115T191503Z/harness-source.json",
     "evidence/v1/merged-main-live-20261115T191503Z/ditto.json"
   ],
-  "freshFilesSecretScanned": 137,
-  "relativeLinksChecked": 190,
+  "freshFilesSecretScanned": 139,
+  "relativeLinksChecked": 191,
   "newMissingLinks": [],
   "historicalMissingLinks": [
     {
