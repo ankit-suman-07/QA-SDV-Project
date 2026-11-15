@@ -1,0 +1,61 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_stalled_client_join_exits_nonzero_within_budget_instead_of_hanging_executor _
+
+    def test_stalled_client_join_exits_nonzero_within_budget_instead_of_hanging_executor():
+        import subprocess
+        import textwrap
+        api()
+        source = textwrap.dedent('''
+            import asyncio, threading
+            from app_lifecycle import NativeMqttLifecycle
+            class Client:
+                def connect_async(self,*a):return 0
+                def loop_start(self):return 0
+                def is_connected(self):return True
+                def disconnect(self):return 0
+                def loop_stop(self):threading.Event().wait()
+            class SDK:
+                _hostname='localhost';_port=1883
+                _pub_client=Client();_sub_client=Client()
+            async def main():
+                life=NativeMqttLifecycle(SDK());await life.start();await life.close()
+            asyncio.run(main())
+        ''')
+        import os
+        env=dict(os.environ, PYTHONPATH=str(Path(__file__).resolve().parents[1]/'src'))
+>       result=subprocess.run([sys.executable,'-c',source],env=env,capture_output=True,text=True,timeout=9)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+velocitas-app/app/tests/test_app_lifecycle.py:157:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py:550: in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py:1209: in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py:2116: in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <Popen: returncode: -9 args: ['/home/ankitsuman/.local/share/qa-sdv-v1/runti...>
+endtime = 8565.710698211, orig_timeout = 9, stdout_seq = [], stderr_seq = []
+skip_check_and_raise = False
+
+    def _check_timeout(self, endtime, orig_timeout, stdout_seq, stderr_seq,
+                       skip_check_and_raise=False):
+        """Convenience for checking if a timeout has expired."""
+        if endtime is None:
+            return
+        if skip_check_and_raise or _time() > endtime:
+>           raise TimeoutExpired(
+                    self.args, orig_timeout,
+                    output=b''.join(stdout_seq) if stdout_seq else None,
+                    stderr=b''.join(stderr_seq) if stderr_seq else None)
+E           subprocess.TimeoutExpired: Command '['/home/ankitsuman/.local/share/qa-sdv-v1/runtime/venv-3.12/bin/python', '-c', "\nimport asyncio, threading\nfrom app_lifecycle import NativeMqttLifecycle\nclass Client:\n    def connect_async(self,*a):return 0\n    def loop_start(self):return 0\n    def is_connected(self):return True\n    def disconnect(self):return 0\n    def loop_stop(self):threading.Event().wait()\nclass SDK:\n    _hostname='localhost';_port=1883\n    _pub_client=Client();_sub_client=Client()\nasync def main():\n    life=NativeMqttLifecycle(SDK());await life.start();await life.close()\nasyncio.run(main())\n"]' timed out after 9 seconds
+
+../../../uv/python/cpython-3.12.16-linux-x86_64-gnu/lib/python3.12/subprocess.py:1253: TimeoutExpired
+=========================== short test summary info ============================
+FAILED velocitas-app/app/tests/test_app_lifecycle.py::test_stalled_client_join_exits_nonzero_within_budget_instead_of_hanging_executor
+1 failed, 8 deselected in 9.13s

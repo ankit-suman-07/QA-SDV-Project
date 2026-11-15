@@ -1,0 +1,44 @@
+{
+  "sourceSha": "d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "appTests": "214 passed, 2 skipped",
+  "stalledJoin": "red: subprocess exceeded9s; green: returns nonzero cleanup failure within budget",
+  "docker": [
+    {
+      "mode": "polling-1",
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "stopDurationSeconds": 0.1734230900001421
+    },
+    {
+      "mode": "polling-2",
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "stopDurationSeconds": 0.4183735599999636
+    },
+    {
+      "mode": "startup-broker-absent",
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "stopDurationSeconds": 0.8524177700001019
+    },
+    {
+      "mode": "kuksa-absent",
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "stopDurationSeconds": 0.25998430000072403
+    },
+    {
+      "mode": "publication-broker-paused",
+      "applicationExit": 0,
+      "running": false,
+      "pid": 0,
+      "stopDurationSeconds": 0.2274474480000208
+    }
+  ],
+  "kanto": "PENDING on d8c1f40; prior three-cycle PASS is source6ad9a4b",
+  "combined": "PENDING after d8c1f40; prior full candidate PASS is6a6badc"
+}

@@ -1,5 +1,15 @@
 # UNMERGED INTEGRATION CANDIDATE — November 15, 2026
 
+## Final stop checkpoint — d8c1f40 INCLUDED
+
+Current candidate includes shutdown source d8c1f40 and branch checkpoint5211375.
+[Exact inclusion and pending checks](delta-d8c1f40.json). Targeted app214/2 skips
+and five actual Docker cases pass. **Final combined and Kanto verification after
+this correction are PENDING.** The complete combined PASS below tested6a6badc,
+before d8c1f40; do not relabel it as current-candidate or final-main verification.
+No further enhancement/full integration run started after the stop instruction.
+
+
 **Engineering checks PASS within the recorded boundaries; not verified main or a release.**
 Ankit assembled exact independent fix commits in a persistent worktree, without
 merging a PR or changing main. [Inputs/assembly](included-commits.json) records

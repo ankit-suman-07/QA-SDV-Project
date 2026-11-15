@@ -1,0 +1,11 @@
+{
+  "label": "UNMERGED INTEGRATION CANDIDATE",
+  "includesD8c1f40": true,
+  "shutdownSource": "d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "shutdownBranchHead": "52113759df178057c24749cbd4baef5303c67589",
+  "priorFullTestedCandidate": "6a6badc207e3cf43f6bba1d1c9584538d6450fed",
+  "currentCombinedVerification": "PENDING after d8c1f40",
+  "currentKantoVerification": "PENDING after d8c1f40; prior three cycles source6ad9a4b",
+  "targeted": "214 app tests passed/2 skipped; five actual Docker cases exit0",
+  "stopReason": "User requested stop checkpoint at8% remaining usage; no further enhancements/full integration run"
+}

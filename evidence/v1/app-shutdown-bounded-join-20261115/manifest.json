@@ -1,0 +1,20 @@
+{
+  "sourceSha": "d8c1f4048522da3e79a81e6ee5919017b941b00d",
+  "hashes": {
+    "docker_lifecycle.py": "ef8a60d46d91b14b84043bc012b112606ee843b62180eb11ace53ec98dbc8da5",
+    "kanto_lifecycle.py": "e5841b65d994a48bb767d0c154e1b7cea06353c21e592405b70f3904ccf3c62e",
+    "image-build.txt": "6b8a4cb1b23e11fb80dad4865f6cc8373756ae9be6b0c4e9f90bc353350056ab",
+    "image.json": "185af2026e97e631050ea8acec6c00721d8478b9496463c20b98be1b88583803",
+    "polling-1.txt": "a68f0074ab91650ba09135858336a28c77208a7bd4e3b03984f5c8d1e1bfdd60",
+    "polling-2.txt": "72fe84c330fd4450c8a500544808b5a404ff1d62471115d8be924c3385316793",
+    "startup-broker-absent.txt": "a732ef65055f04e8dad51b9a93ff111ae8b7d710c2b59f4dd009099992b7f745",
+    "kuksa-absent.txt": "a48538fbdb69f15f42b7da752766cf3e0e7888d2479f92111ae0d21d071dd012",
+    "publication-broker-paused.txt": "1d5d131e2c9cd6d56f4b13b52322344ce53ceabaaba50536350ef4a3e7408027",
+    "docker-live.json": "e188e069a947f4d939e7ef34f7f6508e3038c40791eafea140e22647fce7d9bb",
+    "green-bounded-join.txt": "eda96dc8bdad52e82ca7cbec73ac72435e611b188913da477708d2ad86719afc",
+    "stalled-join-red.txt": "526f79a3010ad5ea8c6dc62b0483515197ce5e9a6fe69d4ee230a7b4e5b93480",
+    "targeted-verification.json": "410e70960650bd9d1c6065af662320442a65d4ef7a4c1d577f6165359e6288e8",
+    "README.md": "84aa96bbf73019f3981ae541f05f294e86e75df6e91fc8d2af79a2aac74b2bae",
+    "text-normalization.json": "3cf57ec349849ccd80201c2b68c9b72379e1bd8fe6838269c92902d193536653"
+  }
+}
