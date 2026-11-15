@@ -1,0 +1,1 @@
+{"status":400,"cause":"Initial observer namespace contained hyphens, rejected by real Ditto namespace grammar; no resources were created; corrected observer namespace to underscores."}

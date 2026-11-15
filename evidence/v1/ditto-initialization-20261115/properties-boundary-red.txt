@@ -1,0 +1,72 @@
+...............F                                                         [100%]
+=================================== FAILURES ===================================
+__ test_existing_feature_updates_keep_properties_only_authorization_boundary ___
+
+    def test_existing_feature_updates_keep_properties_only_authorization_boundary():
+        http, writer = setup()
+        send(writer, 'vehicle-002-healthy')
+        original = writer._request
+        def request(method, url, **kw):
+            if method == 'PUT' and url.endswith('/features/v1'):
+                return response(403)  # existing principal may update properties, not definitions
+            return original(method, url, **kw)
+        writer._request = request
+>       send(writer)
+
+tests/test_ditto_feature_initialization.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_ditto_feature_initialization.py:23: in send
+    return Ingress(writer).process('sdv/vehicle-002/health', json.dumps(event))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ditto/mqtt_ingress.py:236: in process
+    self.writer.persist(vehicle, properties)
+ditto/v1_writer.py:205: in persist
+    self._http('PUT', path, value=feature, match_etag=etag)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ditto.v1_writer.DittoWriter object at 0x7f3de19e86b0>, method = 'PUT'
+path = 'things/sdv:vehicle-002/features/v1'
+value = {'properties': {'schemaVersion': '1.0.0', 'vehicleId': 'vehicle-002', 'sourceTimestamp': '2026-01-01T00:00:01Z', 'health': 'CRITICAL', ...}}
+create_only = False, missing_ok = False
+match_etag = '"d4e313e3efb2d3b445fc5103b7be296d5d9d453bf1efcb4add5cbb99a3ebc685"'
+
+    def _http(self, method, path, *, value=None, create_only=False, missing_ok=False, match_etag=None):
+        headers = {'Accept': 'application/json'}
+        body = None
+        if value is not None:
+            headers['Content-Type'] = 'application/json'
+            body = encode_json(value)
+        if create_only:
+            headers['If-None-Match'] = '*'
+        if match_etag is not None:
+            headers['If-Match'] = match_etag
+        failure = DittoError('DITTO_UNAVAILABLE')
+        for attempt in range(self.config.attempts):
+            try:
+                result = self._request(method, self.config.base_url.rstrip('/') + '/api/2/' + path,
+                    auth=(self.config.username, self.config.password), headers=headers,
+                    timeout=self.config.timeout_seconds, verify=self.config.tls_ca or True,
+                    allow_redirects=False, **({'data': body} if body is not None else {}))
+            except requests.exceptions.SSLError as error:
+                raise DittoError('DITTO_TLS_FAILURE') from error
+            except (requests.Timeout, requests.ConnectionError) as error:
+                failure = DittoError('DITTO_TIMEOUT' if isinstance(error, requests.Timeout)
+                                     else 'DITTO_UNAVAILABLE')
+            except requests.RequestException as error:
+                raise DittoError('DITTO_REQUEST_FAILURE') from error
+            else:
+                status = result.status_code
+                if (method == 'GET' and status == 200) or (method == 'PUT' and status in (200, 201, 204)):
+                    return result
+                if status == 404 and missing_ok:
+                    return None
+                if status == 412 and create_only:
+                    return None  # raced with another creator; caller must reread/validate
+                if status in (401, 403):
+>                   raise DittoError('DITTO_AUTH_FAILURE', status)
+E                   ditto.v1_writer.DittoError: DITTO_AUTH_FAILURE status=403
+
+ditto/v1_writer.py:146: DittoError
+=========================== short test summary info ============================
+FAILED tests/test_ditto_feature_initialization.py::test_existing_feature_updates_keep_properties_only_authorization_boundary
+1 failed, 15 passed in 0.38s
