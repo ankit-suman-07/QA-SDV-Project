@@ -1,5 +1,11 @@
 # SDV project evidence
 
+**Final stop checkpoint:** d8c1f40 adds bounded handling for a stalled cleanup join.
+Targeted app checks pass; final combined verification after this delta is pending.
+The dated readiness handoff identifies included commits and prior tested revisions.
+Earlier full candidate and Kanto results below predate this final delta.
+
+
 ## Current engineering checkpoint — November 15, 2026
 
 [Release-readiness assessment](../docs/findings/v1-release-readiness.md) supersedes

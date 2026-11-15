@@ -1,5 +1,20 @@
 # Phase V1 engineering and release readiness — November 15, 2026
 
+## Stop checkpoint requested after d8c1f40
+
+Final combined verification is **PENDING** after the bounded-cleanup correction
+`d8c1f4048522da3e79a81e6ee5919017b941b00d`. It prevents a stalled client join from
+hanging Python's default-executor shutdown, while retaining a nonzero incomplete-
+cleanup result. Targeted app verification passes 214 tests with two explicit skips;
+the stalled-join subprocess regression now terminates within its budget.
+
+The complete combined run recorded below tested `6a6badc`, **before d8c1f40**.
+Its results remain valid historical evidence at that SHA and must not be relabelled
+as final combined verification of d8c1f40. The final handoff records the updated
+candidate's actual inclusion and remaining smoke/CI checks. No further enhancement
+or full integration run was started after the user's stop-checkpoint instruction.
+
+
 **UNMERGED INTEGRATION CANDIDATE: engineering verification PASS; full V1 acceptance
 and release approval remain pending.** Report/video writing, recording and submission
 were excluded from this work and remain pending unless separately evidenced. No PR

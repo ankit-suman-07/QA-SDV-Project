@@ -1,5 +1,11 @@
 # Phase V1 implementation verification
 
+**Stop checkpoint after d8c1f40:** earlier combined PASS is for candidate6a6badc,
+before the final bounded-cleanup-join correction. Targeted app checks pass; final
+combined verification and latest shutdown-head CI remain pending. See the current
+release-readiness handoff; no prior result is relabelled as a final-main pass.
+
+
 ## Latest follow-up — November 15, 2026: unmerged engineering candidate
 
 The [dated release-readiness assessment](v1-release-readiness.md) and
