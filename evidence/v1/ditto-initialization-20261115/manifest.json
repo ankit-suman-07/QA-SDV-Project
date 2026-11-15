@@ -1,0 +1,23 @@
+{
+  "observedAt": "2026-11-15T14:58:35.937045+00:00",
+  "baseline": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+  "status": "UNMERGED FIX; real isolated-resource check PASS",
+  "hashes": {
+    "red.txt": "6869f7e26c44bc6659a837454290d583c2d59bafed08c04cc155557e5eae31ad",
+    "green.txt": "f4327cbbcc974bfc2eaab74dfb05d4fd512c4abbbb0a95a609038db9861d92a3",
+    "live_initialization.py": "4f5a10914f24018884fe527d8cd3fb6f70bbcf6ec117e17a4bc227e9274adfae",
+    "preflight-failure.json": "14922c984a9d89a40030de29e24107aa5986b64b7141111af43a2161c5e51fa6",
+    "twin-0.json": "8e7e9cea70e89064f7b3cb99a97b2fe689031c1abb8ba30d6a80d55768c43811",
+    "twin-1.json": "9a445bcbdc10c8ae5ec67cd45935049bc22854d67521d8aae192c1e1ccc59444",
+    "live.json": "25fd02ac484b01169c7c6d3b6992f91d7968a02a559f4bf7be257d210d1bb9ae",
+    "python-regression.txt": "4d18afdacd4f16189edff5d6ed5808f2ea80fc5ffa0a4b8376d1d8cb77258215",
+    "python-regression-final.txt": "ef3506a60b21edd89c73b188a9ffd19f8ca9afd3ee1e13db574da5b55d05e832",
+    "README.md": "2c5f135ad85318976476e247e97c91555a66ffcd4208ab5683525d156a700d09",
+    "properties-boundary-red.txt": "c9aa208a4e3a692c97a387ae80450ae5e56c5b57a3df48dd5132df33f238b240"
+  },
+  "followUp": "Acceptance bootstrap removed in d3e3632; six offline controls passed; complete clean candidate verification pending.",
+  "sourceHashes": {
+    "ditto/v1_writer.py": "a806db120d23308d38db3a07661b6556f317028581b851d8ab306dda2ef3688c",
+    "tests/test_ditto_feature_initialization.py": "0fabc7ed3955cd9faf620d02d9410f96f3bd598d2e431f4cac587f70f09e4baf"
+  }
+}

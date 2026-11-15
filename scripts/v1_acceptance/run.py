@@ -223,19 +223,8 @@ class Run:
             SDV_MQTT_CLIENT_ID=self.project+'-ingress')
         self.owned.append('edge'); self.compose('edge','up','-d','--build', timeout=900)
         self.start_capture()
-        # The existing provision CLI creates Things without a v1 feature, while
-        # properties-only PUT cannot create that feature. Bootstrap once from a
-        # real captured provider observation before the sole ingress writer starts.
-        def initial_events():
-            with self.lock:
-                found={e['vehicleId']:e for e,t in self.events.values()}
-            return found if set(found)==set(IDS) else None
-        initial=self.wait(initial_events,90)
-        for vehicle,event in initial.items():
-            assert 'v1' not in self.thing(vehicle).get('features',{}), 'fresh namespace required'
-            props=copy.deepcopy(event);props['lastEventId']=props.pop('eventId')
-            self.http(self.ditto,'/api/2/things/sdv:'+vehicle+'/features/v1',{'properties':props},'PUT',True)
-        self.write('bootstrap-real-observations.json', initial)
+        # Ingress itself initializes absent features conditionally from actual
+        # observations. No observer/provisioner seeds telemetry or watermarks.
         self.ingress = self.spawn([sys.executable,'-B','-m','ditto.v1','run'], 'ingress', self.ingress_env)
         env = dict(os.environ, SERVER_PORT=str(self.ports['api']), SDV_V1_DITTO_BASE_URL=self.ditto,
             SDV_V1_DITTO_USERNAME=self.auth[0], SDV_V1_DITTO_PASSWORD=self.auth[1], SDV_V1_DITTO_MODE='live',
