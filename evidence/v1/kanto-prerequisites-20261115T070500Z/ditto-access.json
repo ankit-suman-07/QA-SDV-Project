@@ -1,0 +1,22 @@
+{
+  "baseUrl": "http://127.0.0.1:18080",
+  "authenticationSource": "Existing repository Ditto README official local-sample authentication; secret omitted",
+  "subject": "nginx:ditto",
+  "individualTwins": [
+    {
+      "vehicleId": "vehicle-001",
+      "thingId": "sdv:vehicle-001",
+      "policyId": "sdv:vehicle-001-policy",
+      "featurePresent": false
+    },
+    {
+      "vehicleId": "vehicle-002",
+      "thingId": "sdv:vehicle-002",
+      "policyId": "sdv:vehicle-002-policy",
+      "featurePresent": false
+    }
+  ],
+  "provisioning": "Create absent only; existing resources validated unchanged",
+  "backendSubjects": "same local sample identity available; backend process not started",
+  "fleetWriterRunning": false
+}

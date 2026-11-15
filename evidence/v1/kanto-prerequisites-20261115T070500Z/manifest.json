@@ -1,0 +1,140 @@
+{
+  "baselineSha": "92f3fc14a15ae7bd1aa6663bdedccb99a6c69446",
+  "preparationDirty": true,
+  "recordedUtc": "2026-11-15T07:12:37.366025+00:00",
+  "commands": [
+    {
+      "command": [
+        "uname",
+        "-srm"
+      ],
+      "exit": 0,
+      "log": "preflight-00.log"
+    },
+    {
+      "command": [
+        "containerd",
+        "--version"
+      ],
+      "exit": 0,
+      "log": "preflight-01.log"
+    },
+    {
+      "command": [
+        "ctr",
+        "version"
+      ],
+      "exit": 1,
+      "log": "preflight-02.log"
+    },
+    {
+      "command": [
+        "sudo",
+        "-n",
+        "true"
+      ],
+      "exit": 1,
+      "log": "preflight-03.log"
+    },
+    {
+      "command": [
+        "timedatectl",
+        "show",
+        "-p",
+        "NTPSynchronized",
+        "-p",
+        "NTP",
+        "-p",
+        "Timezone"
+      ],
+      "exit": 0,
+      "log": "preflight-04.log"
+    },
+    {
+      "command": [
+        "chronyc",
+        "tracking"
+      ],
+      "exit": 0,
+      "log": "preflight-05.log"
+    },
+    {
+      "command": [
+        "/tmp/qa-v1-runtime/kanto-1.0.0/container-management/kanto-cm",
+        "--timeout",
+        "2",
+        "list"
+      ],
+      "exit": 1,
+      "log": "preflight-06.log"
+    },
+    {
+      "command": [
+        "docker",
+        "compose",
+        "version"
+      ],
+      "exit": 0,
+      "log": "preflight-07.log"
+    },
+    {
+      "command": [
+        "docker",
+        "ps",
+        "-a",
+        "--format",
+        "{{.Names}} {{.Image}} {{.Status}}"
+      ],
+      "exit": 0,
+      "log": "preflight-08.log"
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "--read-only",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "--entrypoint",
+        "mosquitto_sub",
+        "eclipse-mosquitto@sha256:75d6662dee52c947dc9dd9c29f1d8d7ffef78ddaf38001caa09755681e8bbc98",
+        "--help"
+      ],
+      "exit": 1,
+      "log": "preflight-09.log"
+    }
+  ],
+  "kantoArchiveSha256": "3d28098008e27621624f28adb880d1e3ed93654c29fb5919bcfca21c439d593a",
+  "image": {
+    "reference": "docker.io/library/qa-v1-kanto-app:sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446",
+    "id": "sha256:efad7228ebf00f092d43ec7242e2d60bdd56866d2f94f0afc3c8c5af9e6ac4a6",
+    "platform": "linux/amd64",
+    "revisionLabel": "92f3fc14a15ae7bd1aa6663bdedccb99a6c69446",
+    "archive": "/tmp/qa-v1-runtime/kanto-app-92f3fc1.tar",
+    "archiveSha256": "e38c7eb081dda149535b62d4a7767f9b36b8dc19aa5f0a595e58e54d3fa66403",
+    "kantoNamespaceImport": "BLOCKED: root socket permission",
+    "app001ImageId": "sha256:549899e6a5a1c5a22bb86a218a09327153bea15017be433a790b5313efeb5c88",
+    "app001RootfsMatchesVerifiedImage": true,
+    "note": "Compose initially rebuilt app-001 without OCI labels; original verified tag was restored from export. Overlay now clears inherited app build settings. app-001 was not restarted."
+  },
+  "registry": {
+    "anonymousTokenStatus": 401,
+    "existingCredentialTokenStatus": 200,
+    "manifestStatuses": {
+      "sha-755916e0efea1f5dab58b7f5b71c8db63e41c129": 403,
+      "sha-92f3fc14a15ae7bd1aa6663bdedccb99a6c69446": 403
+    },
+    "manifestError": "DENIED",
+    "packageApiError": "read:packages required",
+    "imageMissing": "not established; authorization failed"
+  },
+  "fullPilotExecuted": false,
+  "kantoDaemonStarted": false,
+  "outagesOrFaultsInjected": false,
+  "containerdConfigSha256": "e2bdf61ad4c980e7439ed09a1ab65441afadede63087761679a97cc77cd4d20d"
+}

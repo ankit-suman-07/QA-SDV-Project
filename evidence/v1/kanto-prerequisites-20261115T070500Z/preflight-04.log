@@ -1,0 +1,5 @@
+Timezone=America/Toronto
+NTP=yes
+NTPSynchronized=yes
+
+STDERR:

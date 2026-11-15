@@ -133,6 +133,38 @@ jobs:
             -f vehicle-simulator/docker-compose.yml \
             config --quiet
 
+      - name: Validate isolated Kanto prerequisite configuration (no runtime)
+        env:
+          V1_KANTO_APP_IMAGE: example.invalid/kanto/app:configuration-only
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+
+          command = ['docker', 'compose', '-f', 'vehicle-simulator/docker-compose.v1.yml',
+                     '-f', 'velocitas-app/kanto/compose.prerequisites.yml']
+          def services(extra):
+              result = subprocess.run(command + extra + ['config', '--format', 'json'],
+                                      check=True, capture_output=True, text=True, timeout=30)
+              return json.loads(result.stdout)['services']
+          default = services([])
+          assert 'app-001' in default and 'app-002' not in default
+          opted_in = services(['--profile', 'docker-app-002'])
+          for identity in ('001', '002'):
+              app = opted_in['app-' + identity]
+              assert not app.get('build'), 'Do not rebuild the verified app reference'
+              assert app['environment']['SIMULATED_VEHICLE_ID'] == 'vehicle-' + identity
+              assert opted_in['provider-' + identity]['environment']['SIMULATED_VEHICLE_ID'] == 'vehicle-' + identity
+          for name in ('mqtt', 'kuksa-001', 'kuksa-002', 'provider-001', 'provider-002'):
+              assert all(port['host_ip'] == '127.0.0.1' for port in default[name]['ports'])
+          missing_image_env = {k: v for k, v in os.environ.items() if k != 'V1_KANTO_APP_IMAGE'}
+          result = subprocess.run(command + ['config', '--quiet'], env=missing_image_env,
+                                  capture_output=True, text=True, timeout=30)
+          assert result.returncode != 0, 'An unset image must fail configuration'
+          print('Static Compose isolation, identities, image and publisher gates passed; no live Kanto verification')
+          PY
+
   docker:
     name: Docker build (${{ matrix.service }})
     runs-on: ubuntu-22.04

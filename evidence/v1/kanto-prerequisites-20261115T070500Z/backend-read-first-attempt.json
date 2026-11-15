@@ -1,0 +1,4 @@
+{
+  "exit": 1,
+  "result": "Observer TypeError: treated /api/v1/vehicles VehicleIds object as rows; corrected probe to use vehicleIds and per-vehicle health endpoints. No production defect inferred. Owned process stopped in finally."
+}

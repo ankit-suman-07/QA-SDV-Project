@@ -2,6 +2,11 @@
 
 ## Current preparation: 2026-11-15 UTC
 
+For the same-device Linux prerequisite follow-up after merged PR #42, use the
+[Linux runtime continuation](LINUX-RUNTIME.md). Real local KUKSA/MQTT and Ditto
+prerequisites were prepared; Kanto daemon permissions/compatibility and image
+import remain blocked. Baseline Docker observations are not Kanto validation.
+
 Ankit owns all remaining Phase V1 work, including B5/V1-09. Follow the
 [current status and gated Linux runbook](../../evidence/v1/kanto-validation-status.md)
 for the merged-main baseline, prerequisites, exclusive Docker/Kanto publisher

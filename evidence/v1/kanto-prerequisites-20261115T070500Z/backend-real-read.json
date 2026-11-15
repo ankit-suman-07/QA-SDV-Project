@@ -1,0 +1,54 @@
+{
+  "vehicles": [
+    {
+      "vehicleId": "vehicle-001",
+      "thingId": "sdv:vehicle-001",
+      "healthStatus": "HEALTHY",
+      "availability": "AVAILABLE",
+      "activeFaults": [],
+      "lidar": {
+        "distanceMeters": 35.0,
+        "sensorAvailable": true
+      },
+      "sourceTimestamp": "2026-11-15T07:21:26.407900Z",
+      "lastEventId": "vehicle-001-7f7bceba31854d0e9044625c4f30dd00"
+    },
+    {
+      "vehicleId": "vehicle-002",
+      "thingId": "sdv:vehicle-002",
+      "healthStatus": "HEALTHY",
+      "availability": "UNAVAILABLE",
+      "activeFaults": [],
+      "lidar": {
+        "distanceMeters": 35.0,
+        "sensorAvailable": true
+      },
+      "sourceTimestamp": "2026-11-15T07:09:20.427904Z",
+      "lastEventId": "vehicle-002-be4f388aa0a54c85b32800b08935a41b"
+    }
+  ],
+  "matchingDittoProperties": {
+    "schemaVersion": "1.0.0",
+    "vehicleId": "vehicle-001",
+    "sourceTimestamp": "2026-11-15T07:21:26.407900Z",
+    "health": "HEALTHY",
+    "faults": [],
+    "lidar": {
+      "distanceMeters": 35.0,
+      "sensorAvailable": true
+    },
+    "lastEventId": "vehicle-001-7f7bceba31854d0e9044625c4f30dd00"
+  },
+  "configuredSubject": "nginx:ditto",
+  "exactlyTwoVehicles": true,
+  "fleetWriterEnabled": false,
+  "command": [
+    "/tmp/qa-v1-jdk/bin/java",
+    "-Xmx256m",
+    "-jar",
+    "backend/target/backend-0.0.1-SNAPSHOT.jar"
+  ],
+  "configurationFile": "velocitas-app/kanto/backend.local-linux.env.example",
+  "credentialSource": "existing documented official local sample; secrets supplied in process environment only",
+  "exit": 0
+}
