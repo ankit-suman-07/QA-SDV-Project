@@ -1,0 +1,11 @@
+test_cross_vehicle_corruption_fails (test_v1_acceptance.AcceptanceControls.test_cross_vehicle_corruption_fails) ... ok
+test_nullable_unavailable_denominator (test_v1_acceptance.AcceptanceControls.test_nullable_unavailable_denominator) ... ok
+test_source_and_event_preserved (test_v1_acceptance.AcceptanceControls.test_source_and_event_preserved) ... ok
+test_stale_must_not_count_healthy (test_v1_acceptance.AcceptanceControls.test_stale_must_not_count_healthy) ... ok
+test_two_vehicle_summary_and_counts (test_v1_acceptance.AcceptanceControls.test_two_vehicle_summary_and_counts) ... ok
+test_redacts_credentials_but_preserves_service_and_event_identity (test_v1_acceptance.EvidenceControls.test_redacts_credentials_but_preserves_service_and_event_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.004s
+
+OK

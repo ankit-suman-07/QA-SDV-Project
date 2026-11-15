@@ -106,3 +106,9 @@ approved production provisioning and proxy/client compatibility remediation with
 regressions, in addition to the two already open fix PRs and Kanto. The compatibility
 preparation is part of the recorded configuration, not a silently accepted contract
 change or a resolution of those defects.
+
+Text evidence is authentication-redacted before command outputs are retained and
+again before final hashing/upload. Fresh text output trailing whitespace is
+normalized. Source/event IDs, timestamps, results and exits are preserved; reviewed
+hashes identify these secret-free artifacts. Do not upload older raw service logs
+without applying the same review/redaction.

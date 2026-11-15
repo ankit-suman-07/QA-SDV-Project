@@ -1,0 +1,2 @@
+HTTP_1_1 200 {"thingId":"sdv:vehicle-001","policyId":"sdv:vehicle-001-policy","attributes":{"vehicleId":"vehicle-001"}}
+HTTP_2 200 {"thingId":"sdv:vehicle-001","policyId":"sdv:vehicle-001-policy","attributes":{"vehicleId":"vehicle-001"}}

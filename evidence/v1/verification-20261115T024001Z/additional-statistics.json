@@ -1,0 +1,25 @@
+{
+  "dispatchAckSeconds": {
+    "n": 10,
+    "median": 0.007674998999959826,
+    "range": [
+      0.0051817360001678026,
+      0.10084221600004639
+    ]
+  },
+  "sourceToTwinPollingObservationSeconds": {
+    "n": 66,
+    "median": 1.250769,
+    "range": [
+      0.143541,
+      2.82831
+    ]
+  },
+  "sourceClockAssumptions": "same host kernel UTC; no measured error bound; repeated polls of same event may appear; not independent propagation trials",
+  "trialBoundarySuccess": {
+    "fault": 5,
+    "recovery": 5,
+    "attemptsEach": 5
+  },
+  "resourceRows": 536
+}

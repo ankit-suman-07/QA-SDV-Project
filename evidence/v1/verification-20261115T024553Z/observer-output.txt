@@ -1,0 +1,23 @@
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /css/layout.css HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /js/fleet-dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /css/tokens.css HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /css/fleet.css HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /css/components.css HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /js/fleet-api.js HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /js/config.js HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /js/diagnostic-api.js HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /js/fleet-model.js HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /js/api-client.js HTTP/1.1" 200 -
+127.0.0.1 - - [14/Nov/2026 21:46:31] code 404, message File not found
+127.0.0.1 - - [14/Nov/2026 21:46:31] "GET /favicon.ico HTTP/1.1" 404 -
+readiness PASS
+healthy PASS
+fault-recovery-trials PASS
+freshness-null PASS
+invalid-ordering-restart PASS
+individual-write-recovery PASS
+fleet-write-recovery PASS
+mqtt-reconnect PASS
+dashboard PASS
+provider-kuksa-recovery PASS

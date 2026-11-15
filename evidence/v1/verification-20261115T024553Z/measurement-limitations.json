@@ -1,0 +1,9 @@
+{
+  "method": "command-to-observed completion including scenario progression, HTTP/poll/browser work; not pure transport latency",
+  "mqttContext": "events may omit actionId/traceId; temporal association on isolated stack is not causal command correlation",
+  "sourceClocks": "shared host kernel UTC assumed; no clock error bound; source-to-twin samples are upper polling observations",
+  "updateSuccess": "trial boundary observations only, not every MQTT event delivery or persistence success rate",
+  "resources": "docker stats samples during workload; no isolated process attribution or benchmark claim",
+  "fleetComparison": "separate evaluations; counts checked on materialized and API summaries, generatedAt may differ",
+  "mvpComparison": "not directly comparable; no speedup claimed"
+}

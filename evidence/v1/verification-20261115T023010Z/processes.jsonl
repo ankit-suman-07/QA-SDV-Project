@@ -1,0 +1,2 @@
+{"argv": ["/tmp/qa-v1-env/bin/python", "-B", "-m", "ditto.v1", "run"], "pid": 21846, "log": "ingress.txt"}
+{"argv": ["java", "-jar", "/tmp/qa-v1-acceptance/backend/target/backend-0.0.1-SNAPSHOT.jar"], "pid": 21847, "log": "backend.txt"}

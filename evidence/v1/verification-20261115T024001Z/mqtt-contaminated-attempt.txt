@@ -1,0 +1,28 @@
+.F                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_qos0_negative_control_is_rejected ____________________
+
+ingress = (<test_v1_publisher_integration.RecordingIngress object at 0x7f9fc4116660>, [('sdv/vehicle-001/health', 0, False), ('sdv/vehicle-001/health', 1, False)])
+publisher = <paho.mqtt.client.Client object at 0x7f9fc3dcefc0>
+
+    def test_qos0_negative_control_is_rejected(ingress, publisher):
+        recording, deliveries = ingress
+        payload = serialize(_event("vehicle-001"))
+
+        publisher.publish(topic("vehicle-001"), payload).wait_for_publish(2)
+
+        assert _wait_for(lambda: deliveries)
+        assert deliveries == [(topic("vehicle-001"), 0, False)]
+        time.sleep(0.5)
+>       assert recording.processed == []
+E       assert [('sdv/vehicl...ble":true}}')] == []
+E
+E         Left contains one more item: ('sdv/vehicle-001/health', b'{"schemaVersion":"1.0.0","eventId":"vehicle-001-b1b1ffa9edfd4ecc99848b2da2debdb7","vehicl...:"2026-11-15T02:33:43.235619Z","health":"HEALTHY","faults":[],"lidar":{"distanceMeters":35.0,"sensorAvailable":true}}')
+E         Use -v to get more diff
+
+velocitas-app/app/tests/test_v1_publisher_integration.py:124: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  ditto.mqtt_subscriber:mqtt_subscriber.py:144 event_rejected code=INVALID_MQTT_DELIVERY topic='sdv/vehicle-001/health' vehicle=None event=None
+=========================== short test summary info ============================
+FAILED velocitas-app/app/tests/test_v1_publisher_integration.py::test_qos0_negative_control_is_rejected
+1 failed, 1 passed in 3.45s

@@ -1,0 +1,297 @@
+{
+  "services": {
+    "mongodb": {
+      "image": "docker.io/mongo:7.0",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "256m"
+          }
+        }
+      },
+      "restart": "no",
+      "networks": {
+        "default": {
+          "aliases": [
+            "mongodb"
+          ]
+        }
+      },
+      "command": "mongod --storageEngine wiredTiger --noscripting",
+      "user": "mongodb",
+      "environment": {
+        "TZ": "Europe/Berlin"
+      },
+      "logging": {
+        "options": {
+          "max-size": "50m"
+        }
+      }
+    },
+    "policies": {
+      "image": "docker.io/eclipse/ditto-policies:3.8.4",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "512m"
+          }
+        }
+      },
+      "restart": "no",
+      "networks": {
+        "default": {
+          "aliases": [
+            "ditto-cluster"
+          ]
+        }
+      },
+      "environment": [
+        "TZ=Europe/Berlin",
+        "BIND_HOSTNAME=0.0.0.0",
+        "JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=",
+        "MONGO_DB_HOSTNAME=mongodb"
+      ],
+      "healthcheck": {
+        "test": "curl --fail `hostname`:7626/alive || exit 1",
+        "interval": "30s",
+        "timeout": "15s",
+        "retries": 4,
+        "start_period": "120s"
+      },
+      "logging": {
+        "options": {
+          "max-size": "50m"
+        }
+      }
+    },
+    "things": {
+      "image": "docker.io/eclipse/ditto-things:3.8.4",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "512m"
+          }
+        }
+      },
+      "restart": "no",
+      "networks": {
+        "default": {
+          "aliases": [
+            "ditto-cluster"
+          ]
+        }
+      },
+      "depends_on": [
+        "policies"
+      ],
+      "environment": [
+        "TZ=Europe/Berlin",
+        "BIND_HOSTNAME=0.0.0.0",
+        "JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=",
+        "MONGO_DB_HOSTNAME=mongodb"
+      ],
+      "healthcheck": {
+        "test": "curl --fail `hostname`:7626/alive || exit 1",
+        "interval": "30s",
+        "timeout": "15s",
+        "retries": 4,
+        "start_period": "120s"
+      },
+      "logging": {
+        "options": {
+          "max-size": "50m"
+        }
+      }
+    },
+    "things-search": {
+      "image": "docker.io/eclipse/ditto-things-search:3.8.4",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "512m"
+          }
+        }
+      },
+      "restart": "no",
+      "networks": {
+        "default": {
+          "aliases": [
+            "ditto-cluster"
+          ]
+        }
+      },
+      "depends_on": [
+        "policies"
+      ],
+      "environment": [
+        "TZ=Europe/Berlin",
+        "BIND_HOSTNAME=0.0.0.0",
+        "JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=",
+        "MONGO_DB_HOSTNAME=mongodb"
+      ],
+      "healthcheck": {
+        "test": "curl --fail `hostname`:7626/alive || exit 1",
+        "interval": "30s",
+        "timeout": "15s",
+        "retries": 4,
+        "start_period": "120s"
+      },
+      "logging": {
+        "options": {
+          "max-size": "50m"
+        }
+      }
+    },
+    "connectivity": {
+      "image": "docker.io/eclipse/ditto-connectivity:3.8.4",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "768m"
+          }
+        }
+      },
+      "restart": "no",
+      "networks": {
+        "default": {
+          "aliases": [
+            "ditto-cluster"
+          ]
+        }
+      },
+      "depends_on": [
+        "policies"
+      ],
+      "environment": [
+        "TZ=Europe/Berlin",
+        "BIND_HOSTNAME=0.0.0.0",
+        "JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class=",
+        "MONGO_DB_HOSTNAME=mongodb"
+      ],
+      "healthcheck": {
+        "test": "curl --fail `hostname`:7626/alive || exit 1",
+        "interval": "30s",
+        "timeout": "15s",
+        "retries": 4,
+        "start_period": "120s"
+      },
+      "logging": {
+        "options": {
+          "max-size": "50m"
+        }
+      }
+    },
+    "gateway": {
+      "image": "docker.io/eclipse/ditto-gateway:3.8.4",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "512m"
+          }
+        }
+      },
+      "restart": "no",
+      "networks": {
+        "default": {
+          "aliases": [
+            "ditto-cluster"
+          ]
+        }
+      },
+      "depends_on": [
+        "policies"
+      ],
+      "environment": [
+        "TZ=Europe/Berlin",
+        "BIND_HOSTNAME=0.0.0.0",
+        "ENABLE_PRE_AUTHENTICATION=true",
+        "JAVA_TOOL_OPTIONS=-XX:ActiveProcessorCount=2 -XX:+ExitOnOutOfMemoryError -XX:+UseContainerSupport -XX:+UseStringDeduplication -Xss512k -XX:MaxRAMPercentage=50 -XX:+UseG1GC -XX:MaxGCPauseMillis=150 -Dpekko.coordinated-shutdown.exit-jvm=on -Dpekko.cluster.shutdown-after-unsuccessful-join-seed-nodes=180s -Dpekko.cluster.failure-detector.threshold=15.0 -Dpekko.cluster.failure-detector.expected-response-after=10s -Dpekko.cluster.failure-detector.acceptable-heartbeat-pause=20s -Dpekko.cluster.downing-provider-class="
+      ],
+      "healthcheck": {
+        "test": "curl --fail `hostname`:7626/alive || exit 1",
+        "interval": "30s",
+        "timeout": "15s",
+        "retries": 4,
+        "start_period": "120s"
+      },
+      "logging": {
+        "options": {
+          "max-size": "50m"
+        }
+      }
+    },
+    "ditto-ui": {
+      "image": "docker.io/eclipse/ditto-ui:3.8.4",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "32m"
+          }
+        }
+      },
+      "restart": "no",
+      "logging": {
+        "options": {
+          "max-size": "10m"
+        }
+      }
+    },
+    "swagger-ui": {
+      "image": "docker.io/swaggerapi/swagger-ui:v5.9.1",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "32m"
+          }
+        }
+      },
+      "restart": "no",
+      "environment": [
+        "QUERY_CONFIG_ENABLED=true"
+      ],
+      "volumes": [
+        "/tmp/qa-v1-ditto-source/documentation/src/main/resources/openapi:/usr/share/nginx/html/openapi:ro",
+        "/tmp/qa-v1-ditto-source/documentation/src/main/resources/images:/usr/share/nginx/html/images:ro",
+        "/tmp/qa-v1-ditto-source/deployment/docker/swagger3-index.html:/usr/share/nginx/html/index.html:ro"
+      ],
+      "command": "nginx -g 'daemon off;'",
+      "logging": {
+        "options": {
+          "max-size": "10m"
+        }
+      }
+    },
+    "nginx": {
+      "image": "docker.io/nginx:1.27-alpine",
+      "deploy": {
+        "resources": {
+          "limits": {
+            "memory": "32m"
+          }
+        }
+      },
+      "restart": "no",
+      "volumes": [
+        "/tmp/qa-v1-acceptance/evidence/v1/verification-20261115T024553Z/nginx-acceptance.conf:/etc/nginx/nginx.conf:ro",
+        "/tmp/qa-v1-ditto-source/deployment/docker/nginx.htpasswd:/etc/nginx/nginx.htpasswd:ro",
+        "/tmp/qa-v1-ditto-source/deployment/docker/nginx-cors.conf:/etc/nginx/nginx-cors.conf:ro",
+        "/tmp/qa-v1-ditto-source/deployment/docker/mime.types:/etc/nginx/mime.types:ro",
+        "/tmp/qa-v1-ditto-source/deployment/docker/index.html:/etc/nginx/html/index.html:ro",
+        "/tmp/qa-v1-ditto-source/documentation/src/main/resources/images:/etc/nginx/html/images:ro",
+        "/tmp/qa-v1-ditto-source/documentation/src/main/resources/wot:/etc/nginx/html/wot:ro"
+      ],
+      "depends_on": [
+        "gateway",
+        "swagger-ui"
+      ],
+      "logging": {
+        "options": {
+          "max-size": "10m"
+        }
+      },
+      "ports": [
+        "127.0.0.1:49221:80"
+      ]
+    }
+  }
+}

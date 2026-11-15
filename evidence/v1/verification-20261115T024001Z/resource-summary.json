@@ -1,0 +1,550 @@
+{
+  "qa-v1-20261115024001-40525-ditto-connectivity-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 7.75,
+      "range": [
+        3.62,
+        26.12
+      ]
+    },
+    "memorySamples": [
+      "573.3MiB / 768MiB",
+      "573.4MiB / 768MiB",
+      "573.9MiB / 768MiB",
+      "574MiB / 768MiB",
+      "577MiB / 768MiB",
+      "578.6MiB / 768MiB",
+      "579.3MiB / 768MiB",
+      "579.6MiB / 768MiB",
+      "579.8MiB / 768MiB",
+      "579MiB / 768MiB",
+      "580.1MiB / 768MiB",
+      "580.7MiB / 768MiB",
+      "582MiB / 768MiB",
+      "583.1MiB / 768MiB",
+      "583.5MiB / 768MiB",
+      "586.5MiB / 768MiB",
+      "587.1MiB / 768MiB",
+      "587.2MiB / 768MiB",
+      "587.3MiB / 768MiB",
+      "588MiB / 768MiB",
+      "589.6MiB / 768MiB",
+      "589.9MiB / 768MiB",
+      "591.2MiB / 768MiB",
+      "591.7MiB / 768MiB",
+      "592.2MiB / 768MiB",
+      "592.5MiB / 768MiB",
+      "592.9MiB / 768MiB",
+      "593.1MiB / 768MiB",
+      "593.2MiB / 768MiB",
+      "594.5MiB / 768MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-ditto-ui-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 0.0,
+      "range": [
+        0.0,
+        0.0
+      ]
+    },
+    "memorySamples": [
+      "12.44MiB / 32MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-gateway-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 23.34,
+      "range": [
+        6.35,
+        94.73
+      ]
+    },
+    "memorySamples": [
+      "459.8MiB / 512MiB",
+      "476.1MiB / 512MiB",
+      "485.1MiB / 512MiB",
+      "489.9MiB / 512MiB",
+      "493.1MiB / 512MiB",
+      "494.2MiB / 512MiB",
+      "494.5MiB / 512MiB",
+      "494MiB / 512MiB",
+      "495.1MiB / 512MiB",
+      "495.2MiB / 512MiB",
+      "495.4MiB / 512MiB",
+      "495MiB / 512MiB",
+      "496.7MiB / 512MiB",
+      "496.8MiB / 512MiB",
+      "497.3MiB / 512MiB",
+      "497.8MiB / 512MiB",
+      "497.9MiB / 512MiB",
+      "498.3MiB / 512MiB",
+      "499.3MiB / 512MiB",
+      "499.4MiB / 512MiB",
+      "499.5MiB / 512MiB",
+      "499.6MiB / 512MiB",
+      "499.8MiB / 512MiB",
+      "500.1MiB / 512MiB",
+      "500.2MiB / 512MiB",
+      "500.3MiB / 512MiB",
+      "500.6MiB / 512MiB",
+      "500.7MiB / 512MiB",
+      "501.2MiB / 512MiB",
+      "501.3MiB / 512MiB",
+      "501.4MiB / 512MiB",
+      "501.8MiB / 512MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-mongodb-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 1.09,
+      "range": [
+        0.77,
+        2.72
+      ]
+    },
+    "memorySamples": [
+      "86.66MiB / 256MiB",
+      "86.69MiB / 256MiB",
+      "86.83MiB / 256MiB",
+      "87.24MiB / 256MiB",
+      "87.52MiB / 256MiB",
+      "87.9MiB / 256MiB",
+      "88.32MiB / 256MiB",
+      "88.59MiB / 256MiB",
+      "89.32MiB / 256MiB",
+      "89.34MiB / 256MiB",
+      "89.39MiB / 256MiB",
+      "89.48MiB / 256MiB",
+      "89.54MiB / 256MiB",
+      "89.55MiB / 256MiB",
+      "89.56MiB / 256MiB",
+      "89.85MiB / 256MiB",
+      "89.91MiB / 256MiB",
+      "90.35MiB / 256MiB",
+      "90.39MiB / 256MiB",
+      "90.81MiB / 256MiB",
+      "90.83MiB / 256MiB",
+      "90.84MiB / 256MiB",
+      "91.11MiB / 256MiB",
+      "91.16MiB / 256MiB",
+      "91.18MiB / 256MiB",
+      "91.2MiB / 256MiB",
+      "91.31MiB / 256MiB",
+      "91.35MiB / 256MiB",
+      "91.86MiB / 256MiB",
+      "92.05MiB / 256MiB",
+      "92.13MiB / 256MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-nginx-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 0.67,
+      "range": [
+        0.0,
+        2.45
+      ]
+    },
+    "memorySamples": [
+      "13.62MiB / 32MiB",
+      "13.64MiB / 32MiB",
+      "13.76MiB / 32MiB",
+      "13.83MiB / 32MiB",
+      "13.86MiB / 32MiB",
+      "13.87MiB / 32MiB",
+      "14.11MiB / 32MiB",
+      "14.12MiB / 32MiB",
+      "14.17MiB / 32MiB",
+      "14.35MiB / 32MiB",
+      "14.37MiB / 32MiB",
+      "14.39MiB / 32MiB",
+      "14.3MiB / 32MiB",
+      "14.61MiB / 32MiB",
+      "14.62MiB / 32MiB",
+      "14.63MiB / 32MiB",
+      "14.64MiB / 32MiB",
+      "14.66MiB / 32MiB",
+      "14.86MiB / 32MiB",
+      "14.95MiB / 32MiB",
+      "14.96MiB / 32MiB",
+      "14.98MiB / 32MiB",
+      "15.09MiB / 32MiB",
+      "15.13MiB / 32MiB",
+      "15.1MiB / 32MiB",
+      "15.39MiB / 32MiB",
+      "15.41MiB / 32MiB",
+      "15.68MiB / 32MiB",
+      "15.6MiB / 32MiB",
+      "15.91MiB / 32MiB",
+      "16.05MiB / 32MiB",
+      "16.28MiB / 32MiB",
+      "16.36MiB / 32MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-policies-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 5.65,
+      "range": [
+        4.25,
+        28.24
+      ]
+    },
+    "memorySamples": [
+      "496.5MiB / 512MiB",
+      "497.2MiB / 512MiB",
+      "497.5MiB / 512MiB",
+      "498.2MiB / 512MiB",
+      "498.5MiB / 512MiB",
+      "498.6MiB / 512MiB",
+      "499.5MiB / 512MiB",
+      "500.6MiB / 512MiB",
+      "501.5MiB / 512MiB",
+      "502.8MiB / 512MiB",
+      "502.9MiB / 512MiB",
+      "503.2MiB / 512MiB",
+      "503.3MiB / 512MiB",
+      "503.5MiB / 512MiB",
+      "503.9MiB / 512MiB",
+      "504.2MiB / 512MiB",
+      "504.3MiB / 512MiB",
+      "504.6MiB / 512MiB",
+      "504.8MiB / 512MiB",
+      "505.3MiB / 512MiB",
+      "505.4MiB / 512MiB",
+      "505.7MiB / 512MiB",
+      "505.9MiB / 512MiB",
+      "506.1MiB / 512MiB",
+      "507.3MiB / 512MiB",
+      "507.6MiB / 512MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-swagger-ui-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 0.0,
+      "range": [
+        0.0,
+        0.0
+      ]
+    },
+    "memorySamples": [
+      "12.56MiB / 32MiB",
+      "12.57MiB / 32MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-things-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 21.29,
+      "range": [
+        5.71,
+        86.48
+      ]
+    },
+    "memorySamples": [
+      "502.2MiB / 512MiB",
+      "502.3MiB / 512MiB",
+      "503.2MiB / 512MiB",
+      "503.6MiB / 512MiB",
+      "503.7MiB / 512MiB",
+      "503.9MiB / 512MiB",
+      "504.1MiB / 512MiB",
+      "504.3MiB / 512MiB",
+      "504.4MiB / 512MiB",
+      "504.5MiB / 512MiB",
+      "504.9MiB / 512MiB",
+      "504MiB / 512MiB",
+      "507.9MiB / 512MiB",
+      "508.7MiB / 512MiB",
+      "509.3MiB / 512MiB",
+      "509.6MiB / 512MiB",
+      "509.7MiB / 512MiB",
+      "510.3MiB / 512MiB",
+      "510.4MiB / 512MiB",
+      "510.6MiB / 512MiB",
+      "510.7MiB / 512MiB",
+      "510.8MiB / 512MiB",
+      "510.9MiB / 512MiB",
+      "510MiB / 512MiB",
+      "511.1MiB / 512MiB",
+      "511.2MiB / 512MiB",
+      "511.3MiB / 512MiB",
+      "511.5MiB / 512MiB",
+      "511.6MiB / 512MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-ditto-things-search-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 8.14,
+      "range": [
+        3.91,
+        28.56
+      ]
+    },
+    "memorySamples": [
+      "500.9MiB / 512MiB",
+      "502.4MiB / 512MiB",
+      "503.2MiB / 512MiB",
+      "504.5MiB / 512MiB",
+      "505.8MiB / 512MiB",
+      "507.2MiB / 512MiB",
+      "507.3MiB / 512MiB",
+      "507.7MiB / 512MiB",
+      "507.9MiB / 512MiB",
+      "507MiB / 512MiB",
+      "508.3MiB / 512MiB",
+      "508.5MiB / 512MiB",
+      "508.6MiB / 512MiB",
+      "508.8MiB / 512MiB",
+      "508MiB / 512MiB",
+      "509.1MiB / 512MiB",
+      "509.2MiB / 512MiB",
+      "509.4MiB / 512MiB",
+      "509.5MiB / 512MiB",
+      "509.7MiB / 512MiB",
+      "509.9MiB / 512MiB",
+      "509MiB / 512MiB",
+      "510.1MiB / 512MiB",
+      "510.2MiB / 512MiB",
+      "510.8MiB / 512MiB",
+      "510.9MiB / 512MiB",
+      "511.9MiB / 512MiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-app-001-1": {
+    "samples": 29,
+    "cpuPercent": {
+      "n": 29,
+      "median": 0.38,
+      "range": [
+        0.17,
+        24.0
+      ]
+    },
+    "memorySamples": [
+      "28.45MiB / 12.66GiB",
+      "28.49MiB / 12.66GiB",
+      "28.51MiB / 12.66GiB",
+      "28.52MiB / 12.66GiB",
+      "28.54MiB / 12.66GiB",
+      "28.55MiB / 12.66GiB",
+      "28.57MiB / 12.66GiB",
+      "28.58MiB / 12.66GiB",
+      "29.52MiB / 12.66GiB",
+      "29.53MiB / 12.66GiB",
+      "29.54MiB / 12.66GiB",
+      "29.56MiB / 12.66GiB",
+      "29.57MiB / 12.66GiB",
+      "29.58MiB / 12.66GiB",
+      "29.59MiB / 12.66GiB",
+      "29.78MiB / 12.66GiB",
+      "29.83MiB / 12.66GiB",
+      "30.06MiB / 12.66GiB",
+      "30.15MiB / 12.66GiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-app-002-1": {
+    "samples": 21,
+    "cpuPercent": {
+      "n": 21,
+      "median": 0.41,
+      "range": [
+        0.19,
+        20.76
+      ]
+    },
+    "memorySamples": [
+      "28.44MiB / 12.66GiB",
+      "28.47MiB / 12.66GiB",
+      "28.51MiB / 12.66GiB",
+      "28.5MiB / 12.66GiB",
+      "28.62MiB / 12.66GiB",
+      "28.64MiB / 12.66GiB",
+      "28.69MiB / 12.66GiB",
+      "29.23MiB / 12.66GiB",
+      "29.55MiB / 12.66GiB",
+      "29.56MiB / 12.66GiB",
+      "29.57MiB / 12.66GiB",
+      "29.59MiB / 12.66GiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-kuksa-001-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 0.54,
+      "range": [
+        0.28,
+        0.97
+      ]
+    },
+    "memorySamples": [
+      "3.641MiB / 12.66GiB",
+      "3.652MiB / 12.66GiB",
+      "3.656MiB / 12.66GiB",
+      "3.664MiB / 12.66GiB",
+      "3.668MiB / 12.66GiB",
+      "3.672MiB / 12.66GiB",
+      "3.676MiB / 12.66GiB",
+      "3.68MiB / 12.66GiB",
+      "3.691MiB / 12.66GiB",
+      "3.695MiB / 12.66GiB",
+      "3.699MiB / 12.66GiB",
+      "3.902MiB / 12.66GiB",
+      "3.922MiB / 12.66GiB",
+      "3.926MiB / 12.66GiB",
+      "3.934MiB / 12.66GiB",
+      "3.938MiB / 12.66GiB",
+      "3.93MiB / 12.66GiB",
+      "3.945MiB / 12.66GiB",
+      "4.27MiB / 12.66GiB",
+      "4.387MiB / 12.66GiB",
+      "4.406MiB / 12.66GiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-kuksa-002-1": {
+    "samples": 32,
+    "cpuPercent": {
+      "n": 32,
+      "median": 0.515,
+      "range": [
+        0.23,
+        0.94
+      ]
+    },
+    "memorySamples": [
+      "3.57MiB / 12.66GiB",
+      "3.641MiB / 12.66GiB",
+      "3.645MiB / 12.66GiB",
+      "3.652MiB / 12.66GiB",
+      "3.66MiB / 12.66GiB",
+      "3.672MiB / 12.66GiB",
+      "3.676MiB / 12.66GiB",
+      "3.684MiB / 12.66GiB",
+      "3.68MiB / 12.66GiB",
+      "3.734MiB / 12.66GiB",
+      "3.762MiB / 12.66GiB",
+      "3.859MiB / 12.66GiB",
+      "3.891MiB / 12.66GiB",
+      "3.914MiB / 12.66GiB",
+      "3.918MiB / 12.66GiB",
+      "3.926MiB / 12.66GiB",
+      "3.938MiB / 12.66GiB",
+      "4.125MiB / 12.66GiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-mqtt-1": {
+    "samples": 34,
+    "cpuPercent": {
+      "n": 34,
+      "median": 0.08499999999999999,
+      "range": [
+        0.04,
+        0.77
+      ]
+    },
+    "memorySamples": [
+      "2.359MiB / 12.66GiB",
+      "2.695MiB / 12.66GiB",
+      "2.699MiB / 12.66GiB",
+      "2.707MiB / 12.66GiB",
+      "2.711MiB / 12.66GiB",
+      "2.715MiB / 12.66GiB",
+      "2.719MiB / 12.66GiB",
+      "2.727MiB / 12.66GiB",
+      "2.734MiB / 12.66GiB",
+      "2.738MiB / 12.66GiB",
+      "2.973MiB / 12.66GiB",
+      "2.977MiB / 12.66GiB",
+      "2.988MiB / 12.66GiB",
+      "2.98MiB / 12.66GiB",
+      "3.195MiB / 12.66GiB",
+      "3.215MiB / 12.66GiB",
+      "3.613MiB / 12.66GiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-provider-001-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 1.32,
+      "range": [
+        0.86,
+        1.81
+      ]
+    },
+    "memorySamples": [
+      "19.62MiB / 12.66GiB",
+      "19.64MiB / 12.66GiB",
+      "19.65MiB / 12.66GiB",
+      "19.66MiB / 12.66GiB",
+      "19.67MiB / 12.66GiB",
+      "19.88MiB / 12.66GiB",
+      "19.89MiB / 12.66GiB",
+      "19.91MiB / 12.66GiB",
+      "20.11MiB / 12.66GiB",
+      "20.12MiB / 12.66GiB",
+      "20.14MiB / 12.66GiB",
+      "20.15MiB / 12.66GiB",
+      "20.16MiB / 12.66GiB",
+      "20.17MiB / 12.66GiB",
+      "20.18MiB / 12.66GiB",
+      "20.19MiB / 12.66GiB",
+      "20.22MiB / 12.66GiB",
+      "20.2MiB / 12.66GiB",
+      "20.31MiB / 12.66GiB",
+      "20.44MiB / 12.66GiB",
+      "20.68MiB / 12.66GiB",
+      "20.84MiB / 12.66GiB"
+    ]
+  },
+  "qa-v1-20261115024001-40525-edge-provider-002-1": {
+    "samples": 35,
+    "cpuPercent": {
+      "n": 35,
+      "median": 1.25,
+      "range": [
+        0.35,
+        2.05
+      ]
+    },
+    "memorySamples": [
+      "19.71MiB / 12.66GiB",
+      "19.73MiB / 12.66GiB",
+      "19.74MiB / 12.66GiB",
+      "19.75MiB / 12.66GiB",
+      "19.76MiB / 12.66GiB",
+      "19.7MiB / 12.66GiB",
+      "19.93MiB / 12.66GiB",
+      "20.02MiB / 12.66GiB",
+      "20.06MiB / 12.66GiB",
+      "20.18MiB / 12.66GiB",
+      "20.19MiB / 12.66GiB",
+      "20.21MiB / 12.66GiB",
+      "20.23MiB / 12.66GiB",
+      "20.24MiB / 12.66GiB",
+      "20.25MiB / 12.66GiB",
+      "20.26MiB / 12.66GiB",
+      "20.27MiB / 12.66GiB",
+      "20.2MiB / 12.66GiB",
+      "20.49MiB / 12.66GiB",
+      "20.75MiB / 12.66GiB"
+    ]
+  }
+}

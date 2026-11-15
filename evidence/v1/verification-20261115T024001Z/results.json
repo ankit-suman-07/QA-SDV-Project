@@ -1,0 +1,50 @@
+{
+  "readiness": {
+    "status": "PASS",
+    "seconds": 38.75114912199979
+  },
+  "healthy": {
+    "status": "PASS",
+    "seconds": 0.7452863999999408
+  },
+  "fault-recovery-trials": {
+    "status": "PASS",
+    "seconds": 48.072124261
+  },
+  "freshness-null": {
+    "status": "PASS",
+    "seconds": 33.354244324999854
+  },
+  "invalid-ordering-restart": {
+    "status": "PASS",
+    "seconds": 15.170889570999861
+  },
+  "individual-write-recovery": {
+    "status": "PASS",
+    "seconds": 25.95645341499994
+  },
+  "fleet-write-recovery": {
+    "status": "PASS",
+    "seconds": 12.367692015999864
+  },
+  "mqtt-reconnect": {
+    "status": "PASS",
+    "seconds": 19.774219183000014
+  },
+  "provider-kuksa-recovery": {
+    "status": "PASS",
+    "seconds": 21.6010730349999
+  },
+  "dashboard": {
+    "status": "PASS",
+    "seconds": 0.16921141600005285
+  },
+  "baseline-regression": {
+    "status": "BLOCKED",
+    "reason": "run existing baseline workflow separately; this runner never replaces it"
+  },
+  "kanto-v1-09": {
+    "status": "BLOCKED",
+    "reason": "requires actual Linux Kanto launch/restart -> fresh source/event -> real twin; Docker is insufficient"
+  }
+}

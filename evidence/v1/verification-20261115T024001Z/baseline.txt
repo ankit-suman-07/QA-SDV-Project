@@ -1,0 +1,200 @@
+========================================
+Autonomous SDV MVP Demonstration
+========================================
+Vehicle: vehicle-001
+Scenario: LIDAR_OBSTRUCTION
+
+Starting the demonstration stack...
+ Image qa-sdv-autonomous-health-app:local Building
+ Image qa-v1-baseline-20261115-provider Building
+#1 [internal] load local bake definitions
+#1 reading from stdin 1.09kB done
+#1 DONE 0.0s
+
+#2 [provider internal] load build definition from Dockerfile
+#2 transferring dockerfile: 261B done
+#2 DONE 0.0s
+
+#3 [autonomous-health-app internal] load build definition from Dockerfile
+#3 transferring dockerfile: 941B done
+#3 DONE 0.0s
+
+#4 [autonomous-health-app] resolve image config for docker-image://docker.io/docker/dockerfile:1.2
+#4 DONE 0.5s
+
+#5 [provider internal] load metadata for docker.io/library/python:3.10-slim
+#5 DONE 0.5s
+
+#6 [provider internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [autonomous-health-app] docker-image://docker.io/docker/dockerfile:1.2@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc
+#7 resolve docker.io/docker/dockerfile:1.2@sha256:e2a8561e419ab1ba6b2fe6cbdf49fd92b95912df1cf7d313c3e2230a333fdbcc 0.0s done
+#7 CACHED
+
+#8 [provider internal] load build context
+#8 transferring context: 45.96kB done
+#8 DONE 0.0s
+
+#9 [provider 1/5] FROM docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d
+#9 resolve docker.io/library/python:3.10-slim@sha256:6ff506466f8b1e981719b468cc0023b8ef000b983cdec0eafe119d01f379e31d 0.2s done
+#9 DONE 0.2s
+
+#10 [provider 2/5] WORKDIR /app
+#10 CACHED
+
+#11 [provider 3/5] COPY requirements.txt .
+#11 CACHED
+
+#12 [provider 4/5] RUN pip install --no-cache-dir -r requirements.txt
+#12 CACHED
+
+#13 [provider 5/5] COPY src/ ./src/
+#13 CACHED
+
+#14 [provider] exporting to image
+#14 exporting layers done
+#14 exporting manifest sha256:c3a27b5d943364edca5f79e05dc030b638c27caf89e6facfd582cfd4fda3604b 0.0s done
+#14 exporting config sha256:cb947ed7204132541142730a5f59749b3d6cc9a8dc386f826af025572905d22b 0.0s done
+#14 exporting attestation manifest sha256:62f38c2acd38bfd7996c8681a01356f8d830fea5ae9278be65819e1433cbd0de 0.0s done
+#14 exporting manifest list sha256:89165db806d38c76723766cc4d1c3670562cbb69821657af39962ef29390efbb
+#14 exporting manifest list sha256:89165db806d38c76723766cc4d1c3670562cbb69821657af39962ef29390efbb 0.0s done
+#14 naming to docker.io/library/qa-v1-baseline-20261115-provider:latest done
+#14 unpacking to docker.io/library/qa-v1-baseline-20261115-provider:latest 0.0s done
+#14 DONE 0.2s
+
+#3 [autonomous-health-app internal] load build definition from Dockerfile
+#3 transferring dockerfile: 941B done
+#3 DONE 0.0s
+
+#15 [autonomous-health-app internal] load build definition from Dockerfile
+#15 DONE 0.0s
+
+#16 [autonomous-health-app internal] load .dockerignore
+#16 transferring context: 2B done
+#16 DONE 0.0s
+
+#17 [provider] resolving provenance for metadata file
+#17 DONE 0.0s
+
+#18 [autonomous-health-app internal] load metadata for ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4
+#18 DONE 1.3s
+
+#19 [autonomous-health-app  1/10] FROM ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774
+#19 resolve ghcr.io/eclipse-velocitas/devcontainer-base-images/python:v0.4@sha256:4e2cc1880e34ae0dd48018254e2d10d4f49fdfc740248f40fe85233d1690f774 0.0s done
+#19 DONE 0.0s
+
+#20 [autonomous-health-app internal] load build context
+#20 transferring context: 4.09kB done
+#20 DONE 0.0s
+
+#21 [autonomous-health-app  8/10] WORKDIR /workspace
+#21 CACHED
+
+#22 [autonomous-health-app  5/10] RUN pip3 install --no-cache-dir     -r /workspace/app/requirements.txt
+#22 CACHED
+
+#23 [autonomous-health-app  9/10] RUN velocitas init
+#23 CACHED
+
+#24 [autonomous-health-app  6/10] RUN pip3 install     --no-cache-dir     --no-deps     kuksa_client==0.5.1
+#24 CACHED
+
+#25 [autonomous-health-app  7/10] RUN pip3 install     --no-cache-dir     --force-reinstall     --no-deps     grpcio==1.68.0
+#25 CACHED
+
+#26 [autonomous-health-app  3/10] COPY ./.velocitas-lock.json     /workspace/.velocitas-lock.json
+#26 CACHED
+
+#27 [autonomous-health-app  2/10] COPY ./.velocitas.json /workspace/.velocitas.json
+#27 CACHED
+
+#28 [autonomous-health-app  4/10] COPY ./app /workspace/app
+#28 CACHED
+
+#29 [autonomous-health-app 10/10] WORKDIR /workspace/app
+#29 CACHED
+
+#30 [autonomous-health-app] exporting to image
+#30 exporting layers done
+#30 exporting manifest sha256:1a60eb98c4a94e47eb3c0a638d8d824474c352886d2774f0fe6c9623778e2162 0.0s done
+#30 exporting config sha256:619eb1eb66c7c5f6ba550f4349afea2188bc3a1de60ae80e0291c0b865ee6ce3 0.0s done
+#30 exporting attestation manifest sha256:908122b7313bf7cd93c09341e05b24e948c08f580ffa050d8af12b6abaf43af9 0.0s done
+#30 exporting manifest list sha256:e060b71d98cc4fbbeffffca5fdc410e6de0e48998d89039b772d265a8975653a 0.0s done
+#30 naming to docker.io/library/qa-sdv-autonomous-health-app:local 0.0s done
+#30 unpacking to docker.io/library/qa-sdv-autonomous-health-app:local 0.0s done
+#30 DONE 0.2s
+
+#31 [autonomous-health-app] resolving provenance for metadata file
+#31 DONE 0.0s
+ Image qa-sdv-autonomous-health-app:local Built
+ Image qa-v1-baseline-20261115-provider Built
+ Network qa-v1-baseline-20261115_default Creating
+ Network qa-v1-baseline-20261115_default Created
+ Container qa-v1-baseline-20261115-databroker-1 Creating
+ Container qa-v1-baseline-20261115-mqtt-1 Creating
+ Container qa-v1-baseline-20261115-databroker-1 Created
+ Container qa-v1-baseline-20261115-provider-1 Creating
+ Container qa-v1-baseline-20261115-mqtt-1 Created
+ Container qa-v1-baseline-20261115-provider-1 Created
+ Container qa-v1-baseline-20261115-autonomous-health-app-1 Creating
+ Container qa-v1-baseline-20261115-autonomous-health-app-1 Created
+ Container qa-v1-baseline-20261115-mqtt-1 Starting
+ Container qa-v1-baseline-20261115-databroker-1 Starting
+ Container qa-v1-baseline-20261115-mqtt-1 Started
+ Container qa-v1-baseline-20261115-databroker-1 Started
+ Container qa-v1-baseline-20261115-provider-1 Starting
+ Container qa-v1-baseline-20261115-provider-1 Started
+ Container qa-v1-baseline-20261115-autonomous-health-app-1 Starting
+ Container qa-v1-baseline-20261115-autonomous-health-app-1 Started
+Waiting for the simulator control API...
+Simulator control API is ready.
+Waiting for the Velocitas application...
+Velocitas application is running.
+
+NAME                                              IMAGE                                          COMMAND                  SERVICE                 CREATED         STATUS                  PORTS
+qa-v1-baseline-20261115-autonomous-health-app-1   qa-sdv-autonomous-health-app:local             "python3 src/main.py"    autonomous-health-app   2 seconds ago   Up Less than a second
+qa-v1-baseline-20261115-databroker-1              ghcr.io/eclipse-kuksa/kuksa-databroker:0.7.0   "/app/databroker --i…"   databroker              3 seconds ago   Up 1 second             0.0.0.0:55556->55555/tcp, [::]:55556->55555/tcp
+qa-v1-baseline-20261115-mqtt-1                    eclipse-mosquitto:2                            "/docker-entrypoint.…"   mqtt                    3 seconds ago   Up 1 second             0.0.0.0:1883->1883/tcp, [::]:1883->1883/tcp
+qa-v1-baseline-20261115-provider-1                qa-v1-baseline-20261115-provider               "python -u src/main.…"   provider                2 seconds ago   Up Less than a second   0.0.0.0:8090->8090/tcp, [::]:8090->8090/tcp
+
+Waiting for HEALTHY MQTT event...
+{"vehicleId": "vehicle-001", "timestamp": "2026-11-15T02:33:11.236866+00:00", "healthStatus": "HEALTHY", "speed": 64.64641571044922, "lidarDistanceMeters": 35.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+
+Injecting LiDAR obstruction...
+{
+    "vehicleId": "vehicle-001",
+    "scenario": "LIDAR_OBSTRUCTION",
+    "active": true,
+    "actionId": "demo-obstruction-001",
+    "traceId": "demo-obstruction-001",
+    "action": "INJECT_SCENARIO"
+}
+
+Waiting for EMERGENCY_BRAKING MQTT event...
+{"vehicleId": "vehicle-001", "timestamp": "2026-11-15T02:33:17.296336+00:00", "healthStatus": "EMERGENCY_BRAKING", "speed": 50.905574798583984, "lidarDistanceMeters": 3.0, "lidarSensorHealthy": true, "obstacleWarning": true, "autonomousBraking": true}
+
+Clearing LiDAR obstruction...
+{
+    "vehicleId": "vehicle-001",
+    "scenario": "LIDAR_OBSTRUCTION",
+    "active": false,
+    "actionId": "demo-clear-001",
+    "traceId": "demo-clear-001",
+    "action": "CLEAR_SCENARIO"
+}
+
+Waiting for HEALTHY MQTT event...
+{"vehicleId": "vehicle-001", "timestamp": "2026-11-15T02:33:21.390300+00:00", "healthStatus": "HEALTHY", "speed": 26.084575653076172, "lidarDistanceMeters": 20.0, "lidarSensorHealthy": true, "obstacleWarning": false, "autonomousBraking": false}
+
+========================================
+MVP demonstration completed successfully
+========================================
+
+Validated pipeline:
+Simulator -> KUKSA -> Velocitas -> MQTT
+
+The Docker services remain running.
+Stop them with:
+docker compose -f vehicle-simulator/docker-compose.yml down
