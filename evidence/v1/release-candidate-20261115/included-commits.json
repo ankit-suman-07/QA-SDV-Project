@@ -1,0 +1,12 @@
+{
+  "label": "UNMERGED INTEGRATION CANDIDATE",
+  "included": {
+    "main": "6a965bbaf5966d096e18c57058cfdbee6185ee2e",
+    "ankit/fix/v1-ditto-feature-initialization": "cd89160ccdd1b65901d365e46431b1af73ea1efc",
+    "ankit/fix/v1-ditto-http-compatibility": "0a010eb30e81a63595638b88f81096dc561c5b28",
+    "ankit/fix/v1-graceful-app-shutdown": "9c899c823cc71c0431319c91d6bd79e06ad71564"
+  },
+  "assemblySha": "aeb3f9ca65be501c28f9195be387f6265fc35b1e",
+  "resolution": "Only scripts/v1_acceptance/README.md append conflict; retained both initialization and HTTP follow-ups. No implementation conflict.",
+  "source": "all three fixes independent from same main; locally combined only in candidate, no remote PR merge"
+}
