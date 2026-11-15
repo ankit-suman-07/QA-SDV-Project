@@ -1,0 +1,178 @@
+{
+  "monotonic": 13235.361145939,
+  "things": {
+    "vehicle-001": {
+      "thingId": "sdv:vehicle-001",
+      "policyId": "sdv:vehicle-001-policy",
+      "attributes": {
+        "vehicleId": "vehicle-001"
+      },
+      "features": {
+        "v1": {
+          "properties": {
+            "schemaVersion": "1.0.0",
+            "vehicleId": "vehicle-001",
+            "sourceTimestamp": "2026-11-15T18:36:30.861107Z",
+            "health": "HEALTHY",
+            "faults": [],
+            "lidar": {
+              "distanceMeters": 35.0,
+              "sensorAvailable": true
+            },
+            "lastEventId": "vehicle-001-406ab4474ce7477a8d9b370ae96b0929"
+          }
+        }
+      }
+    },
+    "vehicle-002": {
+      "thingId": "sdv:vehicle-002",
+      "policyId": "sdv:vehicle-002-policy",
+      "attributes": {
+        "vehicleId": "vehicle-002"
+      },
+      "features": {
+        "v1": {
+          "properties": {
+            "schemaVersion": "1.0.0",
+            "vehicleId": "vehicle-002",
+            "sourceTimestamp": "2026-11-15T18:36:30.723098Z",
+            "health": "CRITICAL",
+            "faults": [
+              "LIDAR_OBSTRUCTION"
+            ],
+            "lidar": {
+              "distanceMeters": 3.0,
+              "sensorAvailable": true
+            },
+            "lastEventId": "vehicle-002-e4a04e8c659b4c5db36c26f7e389884e"
+          }
+        }
+      }
+    }
+  },
+  "views": {
+    "vehicle-001": {
+      "vehicleId": "vehicle-001",
+      "thingId": "sdv:vehicle-001",
+      "healthStatus": "HEALTHY",
+      "availability": "AVAILABLE",
+      "activeFaults": [],
+      "lidar": {
+        "distanceMeters": 35.0,
+        "sensorAvailable": true
+      },
+      "sourceTimestamp": "2026-11-15T18:36:30.861107Z",
+      "lastEventId": "vehicle-001-406ab4474ce7477a8d9b370ae96b0929"
+    },
+    "vehicle-002": {
+      "vehicleId": "vehicle-002",
+      "thingId": "sdv:vehicle-002",
+      "healthStatus": "CRITICAL",
+      "availability": "AVAILABLE",
+      "activeFaults": [
+        "LIDAR_OBSTRUCTION"
+      ],
+      "lidar": {
+        "distanceMeters": 3.0,
+        "sensorAvailable": true
+      },
+      "sourceTimestamp": "2026-11-15T18:36:30.723098Z",
+      "lastEventId": "vehicle-002-e4a04e8c659b4c5db36c26f7e389884e"
+    }
+  },
+  "apiFleet": {
+    "generatedAt": "2026-11-15T18:36:32.764808499Z",
+    "totalVehicles": 2,
+    "availableVehicles": 2,
+    "staleVehicles": 0,
+    "unavailableVehicles": 0,
+    "healthyVehicles": 1,
+    "warningVehicles": 0,
+    "criticalVehicles": 1,
+    "vehicles": [
+      {
+        "vehicleId": "vehicle-001",
+        "thingId": "sdv:vehicle-001",
+        "healthStatus": "HEALTHY",
+        "availability": "AVAILABLE",
+        "activeFaults": [],
+        "lidar": {
+          "distanceMeters": 35.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-15T18:36:30.861107Z",
+        "lastEventId": "vehicle-001-406ab4474ce7477a8d9b370ae96b0929"
+      },
+      {
+        "vehicleId": "vehicle-002",
+        "thingId": "sdv:vehicle-002",
+        "healthStatus": "CRITICAL",
+        "availability": "AVAILABLE",
+        "activeFaults": [
+          "LIDAR_OBSTRUCTION"
+        ],
+        "lidar": {
+          "distanceMeters": 3.0,
+          "sensorAvailable": true
+        },
+        "sourceTimestamp": "2026-11-15T18:36:30.723098Z",
+        "lastEventId": "vehicle-002-e4a04e8c659b4c5db36c26f7e389884e"
+      }
+    ]
+  },
+  "fleetThing": {
+    "thingId": "sdv:fleet-v1",
+    "policyId": "sdv:fleet-v1-policy",
+    "attributes": {
+      "kind": "fleet",
+      "vehicleIds": [
+        "vehicle-001",
+        "vehicle-002"
+      ]
+    },
+    "features": {
+      "summary": {
+        "properties": {
+          "generatedAt": "2026-11-15T18:36:32.066474282Z",
+          "totalVehicles": 2,
+          "availableVehicles": 2,
+          "staleVehicles": 0,
+          "unavailableVehicles": 0,
+          "healthyVehicles": 1,
+          "warningVehicles": 0,
+          "criticalVehicles": 1,
+          "vehicles": [
+            {
+              "vehicleId": "vehicle-001",
+              "thingId": "sdv:vehicle-001",
+              "healthStatus": "HEALTHY",
+              "availability": "AVAILABLE",
+              "activeFaults": [],
+              "lidar": {
+                "distanceMeters": 35.0,
+                "sensorAvailable": true
+              },
+              "sourceTimestamp": "2026-11-15T18:36:30.861107Z",
+              "lastEventId": "vehicle-001-406ab4474ce7477a8d9b370ae96b0929"
+            },
+            {
+              "vehicleId": "vehicle-002",
+              "thingId": "sdv:vehicle-002",
+              "healthStatus": "CRITICAL",
+              "availability": "AVAILABLE",
+              "activeFaults": [
+                "LIDAR_OBSTRUCTION"
+              ],
+              "lidar": {
+                "distanceMeters": 3.0,
+                "sensorAvailable": true
+              },
+              "sourceTimestamp": "2026-11-15T18:36:30.723098Z",
+              "lastEventId": "vehicle-002-e4a04e8c659b4c5db36c26f7e389884e"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

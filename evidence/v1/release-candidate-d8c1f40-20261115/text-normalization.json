@@ -1,0 +1,10 @@
+{
+  "change": "Trailing whitespace only; outcomes unchanged",
+  "files": [
+    {
+      "file": "java.txt",
+      "before": "1241cad517cc88ed598082285a3ae87191e117844b87d66396f2d34e808fc83b",
+      "after": "8fb5d1a8b8c3453f27fdeac5c1c5ac942602827ab7829cdfedb5b36b9b9e8c03"
+    }
+  ]
+}

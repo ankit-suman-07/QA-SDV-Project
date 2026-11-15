@@ -1,6 +1,14 @@
 # UNMERGED INTEGRATION CANDIDATE — November 15, 2026
 
-## Final stop checkpoint — d8c1f40 INCLUDED
+## Resumed final result — d8c1f40 VERIFIED
+
+[Final static/live verification](../release-candidate-d8c1f40-20261115/README.md)
+supersedes the pending stop checkpoint below. Final code was tested at49f8b8d:
+Python541 +386 subtests,Java209,frontend7, nine selected real gates and three actual
+d8c1f40 Kanto cycles PASS. No final-main/full-V1/remote-LAN/crash-auto-restart claim.
+
+
+## Historical stop checkpoint — d8c1f40 INCLUDED
 
 Current candidate includes shutdown source d8c1f40 and branch checkpoint5211375.
 [Exact inclusion and pending checks](delta-d8c1f40.json). Targeted app214/2 skips

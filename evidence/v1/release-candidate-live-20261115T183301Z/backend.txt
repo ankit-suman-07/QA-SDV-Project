@@ -1,0 +1,112 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.0)
+
+2026-11-15T13:36:01.651-05:00  INFO 265172 --- [backend] [           main] c.ankit.sdv.backend.BackendApplication   : Starting BackendApplication v0.0.1-SNAPSHOT using Java 21.0.13 with PID 265172 (/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/release-candidate/backend/target/backend-0.0.1-SNAPSHOT.jar started by ankitsuman in /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/release-candidate)
+2026-11-15T13:36:01.656-05:00  INFO 265172 --- [backend] [           main] c.ankit.sdv.backend.BackendApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-11-15T13:36:02.953-05:00  INFO 265172 --- [backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 42809 (http)
+2026-11-15T13:36:02.969-05:00  INFO 265172 --- [backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-15T13:36:02.969-05:00  INFO 265172 --- [backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.22]
+2026-11-15T13:36:03.006-05:00  INFO 265172 --- [backend] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1288 ms
+2026-11-15T13:36:03.969-05:00  INFO 265172 --- [backend] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint beneath base path '/actuator'
+2026-11-15T13:36:04.045-05:00  INFO 265172 --- [backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 42809 (http) with context path '/'
+2026-11-15T13:36:04.056-05:00  INFO 265172 --- [backend] [           main] c.ankit.sdv.backend.BackendApplication   : Started BackendApplication in 3.437 seconds (process running for 4.238)
+2026-11-15T13:36:04.227-05:00  INFO 265172 --- [backend] [io-42809-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-15T13:36:04.228-05:00  INFO 265172 --- [backend] [io-42809-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-15T13:36:04.229-05:00  INFO 265172 --- [backend] [io-42809-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-15T13:36:06.271-05:00  INFO 265172 --- [backend] [     virtual-73] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:08.107-05:00  INFO 265172 --- [backend] [    virtual-114] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:10.108-05:00  INFO 265172 --- [backend] [    virtual-137] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:12.100-05:00  INFO 265172 --- [backend] [    virtual-160] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:14.104-05:00  INFO 265172 --- [backend] [    virtual-188] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:16.098-05:00  INFO 265172 --- [backend] [    virtual-211] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:18.094-05:00  INFO 265172 --- [backend] [    virtual-238] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:20.100-05:00  INFO 265172 --- [backend] [    virtual-263] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:22.104-05:00  INFO 265172 --- [backend] [    virtual-288] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:24.102-05:00  INFO 265172 --- [backend] [    virtual-315] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:26.094-05:00  INFO 265172 --- [backend] [    virtual-340] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:28.103-05:00  INFO 265172 --- [backend] [    virtual-369] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:30.100-05:00  INFO 265172 --- [backend] [    virtual-394] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:32.093-05:00  INFO 265172 --- [backend] [    virtual-419] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:34.099-05:00  INFO 265172 --- [backend] [    virtual-448] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:36.092-05:00  INFO 265172 --- [backend] [    virtual-473] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:38.103-05:00  INFO 265172 --- [backend] [    virtual-502] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:40.099-05:00  INFO 265172 --- [backend] [    virtual-529] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:42.100-05:00  INFO 265172 --- [backend] [    virtual-552] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:44.095-05:00  INFO 265172 --- [backend] [    virtual-581] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:46.096-05:00  INFO 265172 --- [backend] [    virtual-608] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:48.095-05:00  INFO 265172 --- [backend] [    virtual-637] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:50.099-05:00  INFO 265172 --- [backend] [    virtual-662] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:52.095-05:00  INFO 265172 --- [backend] [    virtual-687] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:54.099-05:00  INFO 265172 --- [backend] [    virtual-718] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:56.100-05:00  INFO 265172 --- [backend] [    virtual-743] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:36:58.095-05:00  INFO 265172 --- [backend] [    virtual-762] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:00.104-05:00  INFO 265172 --- [backend] [    virtual-769] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:02.110-05:00  INFO 265172 --- [backend] [    virtual-778] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:04.107-05:00  INFO 265172 --- [backend] [    virtual-785] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:06.111-05:00  INFO 265172 --- [backend] [    virtual-792] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:08.101-05:00  INFO 265172 --- [backend] [    virtual-799] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:10.105-05:00  INFO 265172 --- [backend] [    virtual-806] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:12.106-05:00  INFO 265172 --- [backend] [    virtual-813] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:14.102-05:00  INFO 265172 --- [backend] [    virtual-820] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:16.103-05:00  INFO 265172 --- [backend] [    virtual-827] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:18.103-05:00  INFO 265172 --- [backend] [    virtual-834] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:20.105-05:00  INFO 265172 --- [backend] [    virtual-841] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:22.106-05:00  INFO 265172 --- [backend] [    virtual-848] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:24.104-05:00  INFO 265172 --- [backend] [    virtual-855] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:25.126-05:00  WARN 265172 --- [backend] [io-42809-exec-8] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T13:37:25.170-05:00  WARN 265172 --- [backend] [o-42809-exec-10] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T13:37:25.183-05:00  WARN 265172 --- [backend] [    virtual-865] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T13:37:25.200-05:00  WARN 265172 --- [backend] [io-42809-exec-3] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T13:37:25.204-05:00  WARN 265172 --- [backend] [    virtual-867] c.a.s.b.a.ditto.HttpVehicleTwinReader    : ditto_read_failed vehicle=vehicle-002 code=INVALID_SNAPSHOT
+2026-11-15T13:37:26.108-05:00  INFO 265172 --- [backend] [    virtual-868] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:28.109-05:00  INFO 265172 --- [backend] [    virtual-875] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:30.108-05:00  INFO 265172 --- [backend] [    virtual-882] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:32.109-05:00  INFO 265172 --- [backend] [    virtual-889] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:34.111-05:00  INFO 265172 --- [backend] [    virtual-896] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:36.106-05:00  INFO 265172 --- [backend] [    virtual-903] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:38.106-05:00  INFO 265172 --- [backend] [    virtual-910] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:40.109-05:00  INFO 265172 --- [backend] [    virtual-917] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:42.111-05:00  INFO 265172 --- [backend] [    virtual-924] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:44.112-05:00  INFO 265172 --- [backend] [    virtual-931] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:46.111-05:00  INFO 265172 --- [backend] [    virtual-940] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:48.112-05:00  INFO 265172 --- [backend] [    virtual-947] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:50.112-05:00  INFO 265172 --- [backend] [    virtual-954] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:52.113-05:00  INFO 265172 --- [backend] [    virtual-961] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:54.112-05:00  INFO 265172 --- [backend] [    virtual-968] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:56.114-05:00  INFO 265172 --- [backend] [    virtual-975] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:37:58.115-05:00  INFO 265172 --- [backend] [    virtual-982] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:00.118-05:00  INFO 265172 --- [backend] [    virtual-989] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:02.118-05:00  INFO 265172 --- [backend] [    virtual-996] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:04.131-05:00  INFO 265172 --- [backend] [   virtual-1003] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:06.117-05:00  INFO 265172 --- [backend] [   virtual-1010] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:08.117-05:00  INFO 265172 --- [backend] [   virtual-1019] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:10.117-05:00  INFO 265172 --- [backend] [   virtual-1026] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:12.135-05:00 ERROR 265172 --- [backend] [   virtual-1038] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=403
+2026-11-15T13:38:12.135-05:00  WARN 265172 --- [backend] [   virtual-1035] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T13:38:14.115-05:00 ERROR 265172 --- [backend] [   virtual-1046] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=403
+2026-11-15T13:38:14.115-05:00  WARN 265172 --- [backend] [   virtual-1043] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T13:38:16.112-05:00 ERROR 265172 --- [backend] [   virtual-1053] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=403
+2026-11-15T13:38:16.112-05:00  WARN 265172 --- [backend] [   virtual-1050] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T13:38:18.115-05:00 ERROR 265172 --- [backend] [   virtual-1060] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=403
+2026-11-15T13:38:18.115-05:00  WARN 265172 --- [backend] [   virtual-1057] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T13:38:20.116-05:00 ERROR 265172 --- [backend] [   virtual-1067] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=AUTH_CONFIGURATION status=403
+2026-11-15T13:38:20.117-05:00  WARN 265172 --- [backend] [   virtual-1064] c.a.s.backend.service.FleetMaterializer  : fleet_write_failed code=HTTP_STATUS retry=NEXT_INTERVAL
+2026-11-15T13:38:22.126-05:00  INFO 265172 --- [backend] [   virtual-1075] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:24.122-05:00  INFO 265172 --- [backend] [   virtual-1084] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:26.121-05:00  INFO 265172 --- [backend] [   virtual-1091] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:28.123-05:00  INFO 265172 --- [backend] [   virtual-1098] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:30.127-05:00  INFO 265172 --- [backend] [   virtual-1105] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:32.123-05:00  INFO 265172 --- [backend] [   virtual-1116] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:34.124-05:00  INFO 265172 --- [backend] [   virtual-1123] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:36.124-05:00  INFO 265172 --- [backend] [   virtual-1130] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:38.126-05:00  INFO 265172 --- [backend] [   virtual-1137] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:40.126-05:00  INFO 265172 --- [backend] [   virtual-1144] c.a.s.backend.service.FleetMaterializer  : fleet_write_succeeded thing=sdv:fleet-v1
+2026-11-15T13:38:40.688-05:00  INFO 265172 --- [backend] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-11-15T13:38:40.696-05:00  INFO 265172 --- [backend] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
