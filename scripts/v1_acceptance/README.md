@@ -112,3 +112,13 @@ again before final hashing/upload. Fresh text output trailing whitespace is
 normalized. Source/event IDs, timestamps, results and exits are preserved; reviewed
 hashes identify these secret-free artifacts. Do not upload older raw service logs
 without applying the same review/redaction.
+
+
+## First-event initialization correction — November 15, 2026
+
+The sole ingress now creates absent V1 features conditionally from validated real
+observations. The acceptance launcher no longer manually bootstraps telemetry;
+clean provisioned Things start without V1 health/source state. Existing features,
+legacy data and persisted watermarks are preserved. See the F03 evidence directory.
+Header compatibility is a separate independent change; historical nginx preparation
+is not resolved by initialization alone.

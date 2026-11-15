@@ -57,3 +57,6 @@ Applied repository TDD, systematic-debugging and verification-before-completion
 instructions. Their exact current files remain in Git at the baseline; unavailable
 supporting technique/writing-good-tests files are not claimed. Human review pending.
 Combined candidate, exact-head CI and release approval remain separate work.
+
+The acceptance launcher now starts the sole ingress without manual telemetry
+bootstrap. Its complete clean-start integrated execution is reserved for Part D.
