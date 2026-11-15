@@ -46,9 +46,10 @@
     "capture-exit.json": "abd5095b0ca57e6a76270a0d9c73256812c49a4afc9eb45afe3d9ebe69d8bc15",
     "independent-review.json": "ff5697efb84dbcf29d8790245bb4f0d3ffe540c3ac19843ef867a008ee9846ff",
     "collect-kanto-log.py": "89ebcffbd2a58d8db2b8f645e576c79c353cb1dfbdb2c36db700272d6e6a48c6",
-    "kanto-app.log": "99a7119ce6f71ce1c26e0cc3eb8f823913a19a4a68d6d2d0f3b6e53cc3f94caf",
+    "kanto-app.log": "d14c730dcb3ccec97e3793b4fe9b3c77928ffb37e78b22ddb955c21884e1d3af",
     "log-capture.json": "ff11d661a1e41b0ac5e53f1484a47d425a50f6c52b083068aafc1a0ce6e67aee",
     "README.md": "a01220d7c72af0b1513b24d3de809cd81d4c1556d4cd0fc50dadf4da47b86d00",
     "final-services.json": "cbcacb4d1f1a98490efde8d6b68e1c21f685c4d0635c03c693862d13e75ef886"
-  }
+  },
+  "normalization": "Removed one trailing blank line from kanto-app.log for Git whitespace checks; log events unchanged"
 }
