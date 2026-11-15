@@ -1,0 +1,6 @@
+{
+  "file": "java.txt",
+  "beforeSha256": "a2a96fd674bce8dc4e6784f47f97be4b9af06be5eb2579dc6610f689a48287e6",
+  "afterSha256": "40c5a6fd3831b159f4722d64917e649297aaa439199cc8b33199cbf26c93c094",
+  "change": "Trailing whitespace only for git diff --check; test content/results/exits unchanged"
+}

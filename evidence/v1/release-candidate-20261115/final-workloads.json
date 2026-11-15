@@ -1,0 +1,52 @@
+[
+  {
+    "argv": [
+      "docker",
+      "ps",
+      "-a",
+      "--format",
+      "{{.Names}} {{.Status}}"
+    ],
+    "exit": 0,
+    "stdout": "qa-v1-shutdown-app-1794756028-4 Exited (0) 13 minutes ago\nqa-v1-shutdown-app-1794756027-3 Exited (0) 14 minutes ago\nqa-v1-shutdown-app-1794756024-2 Exited (0) 14 minutes ago\nqa-v1-shutdown-app-1794756020-1 Exited (0) 14 minutes ago\nqa-v1-shutdown-app-1794756015-0 Exited (0) 14 minutes ago\nqa-v1-shutdown-mqtt-1794756015 Exited (0) 13 minutes ago\nqa-v1-shutdown-app-0 Exited (1) 18 minutes ago\nqa-v1-shutdown-mqtt Exited (0) 18 minutes ago\nqa-v1-release-engineering-ditto-nginx-1 Exited (0) 8 minutes ago\nqa-v1-release-engineering-ditto-things-1 Exited (137) 8 minutes ago\nqa-v1-release-engineering-ditto-connectivity-1 Exited (143) 8 minutes ago\nqa-v1-release-engineering-ditto-things-search-1 Exited (143) 8 minutes ago\nqa-v1-release-engineering-ditto-gateway-1 Exited (143) 8 minutes ago\nqa-v1-release-engineering-ditto-swagger-ui-1 Exited (0) 8 minutes ago\nqa-v1-release-engineering-ditto-ditto-ui-1 Exited (0) 8 minutes ago\nqa-v1-release-engineering-ditto-mongodb-1 Exited (0) 8 minutes ago\nqa-v1-release-engineering-ditto-policies-1 Exited (137) 8 minutes ago\nqa-v1-kanto-prereq-ditto-nginx-1 Up About an hour\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up About an hour\nqa-v1-kanto-prereq-edge-app-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 2 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-app-002-1 Exited (1) 8 hours ago\nqa-v1-kanto-prereq-edge-provider-002-1 Up 2 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up 2 hours (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up 2 hours\nqa-v1-kanto-prereq-ditto-policies-1 Up 2 hours (healthy)\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "qa-v1-kanto-prereq-ditto-mongodb-1",
+      "--format",
+      "{{json .Mounts}}"
+    ],
+    "exit": 0,
+    "stdout": "[{\"Type\":\"volume\",\"Name\":\"7c300dbbaf358ff3b9d94e35d4bed01b5b9a55e7cfaa2cdf51c215ee922ffc15\",\"Source\":\"/var/lib/docker/volumes/7c300dbbaf358ff3b9d94e35d4bed01b5b9a55e7cfaa2cdf51c215ee922ffc15/_data\",\"Destination\":\"/data/configdb\",\"Driver\":\"local\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"},{\"Type\":\"volume\",\"Name\":\"949698e479b557c5e2dd1eee203d1f9975fd137d602f36a7f6285b7a21ab7314\",\"Source\":\"/var/lib/docker/volumes/949698e479b557c5e2dd1eee203d1f9975fd137d602f36a7f6285b7a21ab7314/_data\",\"Destination\":\"/data/db\",\"Driver\":\"local\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"}]\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "docker",
+      "inspect",
+      "qa-v1-release-engineering-ditto-mongodb-1",
+      "--format",
+      "{{json .Mounts}}"
+    ],
+    "exit": 0,
+    "stdout": "[{\"Type\":\"volume\",\"Name\":\"7da44d9128778908dc268c1a13f050479104a38feccc5dcc038dec5bde263d43\",\"Source\":\"/var/lib/docker/volumes/7da44d9128778908dc268c1a13f050479104a38feccc5dcc038dec5bde263d43/_data\",\"Destination\":\"/data/configdb\",\"Driver\":\"local\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"},{\"Type\":\"volume\",\"Name\":\"295a10663a150a2399dd160af398eea2097982da7dd75a6e78b68f12040ed5fd\",\"Source\":\"/var/lib/docker/volumes/295a10663a150a2399dd160af398eea2097982da7dd75a6e78b68f12040ed5fd/_data\",\"Destination\":\"/data/db\",\"Driver\":\"local\",\"Mode\":\"\",\"RW\":true,\"Propagation\":\"\"}]\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "systemctl",
+      "show",
+      "qa-sdv-v1-kanto",
+      "-p",
+      "ActiveState",
+      "-p",
+      "SubState"
+    ],
+    "exit": 0,
+    "stdout": "ActiveState=active\nSubState=running\n",
+    "stderr": ""
+  }
+]

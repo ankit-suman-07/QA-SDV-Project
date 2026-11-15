@@ -1,0 +1,11 @@
+{
+  "run_candidate.py": "18ac3d0f9aa1ddd7177b1cf1dde19ee700baad458232fde6879711104ac3cabe",
+  "included-commits.json": "eabadd7448cb5f7ffb29c9f7b9e19282430c47be3c765026baeb59508d963437",
+  "python.txt": "7173a4319a53b21bb6e01df047f6fbe97b0da164ca77bcbd3494d257691e369a",
+  "java.txt": "40c5a6fd3831b159f4722d64917e649297aaa439199cc8b33199cbf26c93c094",
+  "frontend.txt": "bcfdd839eeeb51717e21c680c5bd9543c61d625d61cf811e64a03a1b8003a0cb",
+  "versions-readiness.json": "16959ca4b39618181f9ffd7905b88c4f69471536b9528058591161d33fd1ad4c",
+  "final-workloads.json": "5ee4caa3f469c4589d2360799f467b5cb3e1c58a1b45b9456611a1d33205399d",
+  "README.md": "4b6d70d89dc8de2ccbc3707ecb08841d5dd7aa6b0027fe3b0e092abf627735fb",
+  "text-normalization.json": "55f8027b5c4f0b8699d7bb2620dd6ca725593f65b3933102c31c6f0f017c6b6b"
+}
