@@ -8,7 +8,7 @@ from urllib.parse import quote, urlsplit
 import requests
 
 from ditto.mqtt_ingress import (VEHICLES, EventError, WatermarkError, validate_event,
-                                decode_json, encode_json)
+                                decode_json, encode_json, timestamp_key)
 
 THINGS = {vehicle: f'sdv:{vehicle}' for vehicle in VEHICLES}
 POLICIES = {vehicle: f'sdv:{vehicle}-policy' for vehicle in VEHICLES}
@@ -110,7 +110,7 @@ class DittoWriter:
         self._request = request or requests.request
         self._sleep = sleeper or time.sleep
 
-    def _http(self, method, path, *, value=None, create_only=False, missing_ok=False):
+    def _http(self, method, path, *, value=None, create_only=False, missing_ok=False, match_etag=None):
         headers = {'Accept': 'application/json'}
         body = None
         if value is not None:
@@ -118,6 +118,8 @@ class DittoWriter:
             body = encode_json(value)
         if create_only:
             headers['If-None-Match'] = '*'
+        if match_etag is not None:
+            headers['If-Match'] = match_etag
         failure = DittoError('DITTO_UNAVAILABLE')
         for attempt in range(self.config.attempts):
             try:
@@ -172,7 +174,33 @@ class DittoWriter:
 
     def persist(self, vehicle_id, properties):
         validate_properties(vehicle_id, properties)
-        self._http('PUT', f'things/{THINGS[vehicle_id]}/features/v1/properties', value=properties)
+        # A failed/unauthorized whole-Thing read never authorizes creation.
+        thing = self.read_thing(vehicle_id)
+        path = f'things/{THINGS[vehicle_id]}/features/v1'
+        if 'v1' not in thing.get('features', {}):
+            # This subresource PUT cannot create a missing Thing. A concurrent
+            # creator wins: never overwrite its feature or trust a failed reply.
+            if self._http('PUT', path, value={'properties': properties}, create_only=True) is None:
+                raise DittoError('DITTO_CONCURRENT_UPDATE', 412)
+            return
+        path += '/properties'
+        result = self._http('GET', path)
+        try:
+            stored = decode_json(result.content, max_bytes=1024 * 1024)
+        except EventError as error:
+            raise DittoError('INVALID_PERSISTED_STATE') from error
+        previous = validate_properties(vehicle_id, stored)
+        if (previous[0] == properties['lastEventId'] or
+                timestamp_key(properties['sourceTimestamp']) <= timestamp_key(previous[1])):
+            # Ingress invalidates its cache on failure; next attempt reloads and
+            # classifies duplicate/old input without acknowledging a lost write.
+            raise DittoError('DITTO_WATERMARK_CHANGED')
+        etag = result.headers.get('ETag')
+        if not isinstance(etag, str) or not etag.strip():
+            raise DittoError('DITTO_ETAG_MISSING')
+        # Keep the existing properties-only authorization boundary. Definitions,
+        # desiredProperties and legacy features are outside this conditional write.
+        self._http('PUT', path, value=properties, match_etag=etag)
 
     @staticmethod
     def _validate_policy(policy, policy_id, subject):

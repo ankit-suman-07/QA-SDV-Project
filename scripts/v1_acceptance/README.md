@@ -123,3 +123,11 @@ the duplicate fields. Compression decoding, timeouts, authentication and TLS rem
 unchanged. The acceptance launcher now mounts upstream nginx unchanged. The earlier
 prepared-deployment normalization below/above is historical. Feature initialization
 is a separate independent fix and its historical bootstrap is not closed by this PR.
+## First-event initialization correction — November 15, 2026
+
+The sole ingress now creates absent V1 features conditionally from validated real
+observations. The acceptance launcher no longer manually bootstraps telemetry;
+clean provisioned Things start without V1 health/source state. Existing features,
+legacy data and persisted watermarks are preserved. See the F03 evidence directory.
+Header compatibility is a separate independent change; historical nginx preparation
+is not resolved by initialization alone.
