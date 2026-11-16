@@ -1,0 +1,14 @@
+......E.
+======================================================================
+ERROR: test_provider_identity_is_not_an_application_publisher (test_v1_demo_launcher.DemoControls.test_provider_identity_is_not_an_application_publisher)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/ankitsuman/.local/share/qa-sdv-v1/worktrees/demo-launcher/tests/test_v1_demo_launcher.py", line 16, in test_provider_identity_is_not_an_application_publisher
+    self.assertFalse(self.m.is_publisher('provider-002','vehicle-002'))
+                     ^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'demo' has no attribute 'is_publisher'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.046s
+
+FAILED (errors=1)

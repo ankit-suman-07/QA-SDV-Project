@@ -1,0 +1,6 @@
+...........
+----------------------------------------------------------------------
+Ran 11 tests in 0.049s
+
+OK
+CLEANUP REQUIRES ATTENTION: Kanto cleanup unverified; DO NOT start Docker app002

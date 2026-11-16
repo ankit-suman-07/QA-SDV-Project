@@ -1,0 +1,5 @@
+{
+  "at": "2026-11-15T23:38:14.927244+00:00",
+  "type": "RuntimeError",
+  "detail": "real HTTP read/action failed (credentials and URLs omitted)"
+}

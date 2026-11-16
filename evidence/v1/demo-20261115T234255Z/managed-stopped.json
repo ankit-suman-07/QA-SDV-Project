@@ -1,0 +1,77 @@
+{
+  "container_id": "6ae8d9f4-7b13-40f1-8c8f-af1f45a8289f",
+  "container_name": "autonomoushealthapp-vehicle-002-demo-20261115t234255z",
+  "image": {
+    "name": "docker.io/library/qa-v1-main-app:sha-4afbbd8c11425a9e0e1701fea66b7ed13731abfe"
+  },
+  "domain_name": "autonomoushealthapp-vehicle-002-demo-20261115t234255z-domain",
+  "host_name": "fedora",
+  "resolv_conf_path": "/var/lib/qa-sdv-v1-kanto/containers/6ae8d9f4-7b13-40f1-8c8f-af1f45a8289f/resolv.conf",
+  "hosts_path": "/var/lib/qa-sdv-v1-kanto/containers/6ae8d9f4-7b13-40f1-8c8f-af1f45a8289f/hosts",
+  "hostname_path": "/var/lib/qa-sdv-v1-kanto/containers/6ae8d9f4-7b13-40f1-8c8f-af1f45a8289f/hostname",
+  "mount_points": null,
+  "hooks": null,
+  "config": {
+    "env": [
+      "SDV_MIDDLEWARE_TYPE=native",
+      "SDV_VEHICLEDATABROKER_ADDRESS=grpc://127.0.0.1:55557",
+      "SDV_MQTT_ADDRESS=mqtt://127.0.0.1:18883",
+      "DATABROKER_HOST=127.0.0.1",
+      "DATABROKER_PORT=55557",
+      "SIMULATED_VEHICLE_ID=vehicle-002",
+      "AUTONOMOUS_HEALTH_POLL_INTERVAL_SECONDS=2.0"
+    ]
+  },
+  "host_config": {
+    "devices": null,
+    "network_mode": "host",
+    "privileged": false,
+    "restart_policy": {
+      "maximum_retry_count": 0,
+      "retry_timeout": 0,
+      "type": "unless-stopped"
+    },
+    "runtime": "io.containerd.runc.v2",
+    "extra_hosts": null,
+    "extra_capabilities": null,
+    "port_mappings": null,
+    "log_config": {
+      "driver_config": {
+        "type": "json-file",
+        "max_files": 2,
+        "max_size": "100M"
+      },
+      "mode_config": {
+        "mode": "blocking"
+      }
+    },
+    "resources": null
+  },
+  "io_config": {
+    "attach_stderr": false,
+    "attach_stdin": false,
+    "attach_stdout": false,
+    "open_stdin": false,
+    "stdin_once": false,
+    "tty": false
+  },
+  "network_settings": null,
+  "state": {
+    "pid": -1,
+    "started_at": "2026-11-15T23:43:07.796026858Z",
+    "error": "",
+    "exit_code": 0,
+    "finished_at": "2026-11-15T23:45:16.037475379Z",
+    "exited": false,
+    "dead": false,
+    "restarting": false,
+    "paused": false,
+    "running": false,
+    "oomKilled": false,
+    "status": 3
+  },
+  "created": "2026-11-15T23:43:07.526515623Z",
+  "restart_count": 0,
+  "manually_stopped": true,
+  "started_successfully_before": false
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-15T23:49:59.130928+00:00",
+  "baseline": "6fee175127c79ac28c3970eb5984b3dc7fa3b70d",
+  "targeted": "11 passed",
+  "shell": "bash -n PASS",
+  "descriptor": "strict existing renderer PASS",
+  "fullRehearsal": "Working-copy sequence PASS:demo-20261115T234255Z; final metadata/fleet/cleanup hardening unit-verified only",
+  "sourceHashes": {
+    "scripts/v1_demo.py": "9eaaa5fe838ba8eef7e0ea1506e296350a4f63a73d4ae0d13f7b2ce8a7baf1a5",
+    "scripts/run-v1-demo.sh": "f9cf04fb21511db0721676cdfff0aff8728d9c99da148ecd27244abe17acd0fc",
+    "tests/test_v1_demo_launcher.py": "c429acea5f65c5704e8d65eb53bdc52bbfe17133818cfe9161d9facc6086bbe5"
+  }
+}

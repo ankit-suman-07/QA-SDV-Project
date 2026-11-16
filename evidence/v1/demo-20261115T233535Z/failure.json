@@ -1,0 +1,5 @@
+{
+  "at": "2026-11-15T23:35:36.039417+00:00",
+  "type": "RuntimeError",
+  "detail": "Refusing duplicate/unknown vehicle-002 publisher; inspect Docker and dedicated Kanto namespace"
+}

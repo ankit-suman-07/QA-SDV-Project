@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "docker",
+    "ps",
+    "--format",
+    "{{.Names}} {{.Status}}"
+  ],
+  "exit": 0,
+  "stdout": "qa-v1-kanto-prereq-ditto-nginx-1 Up 10 hours\nqa-v1-kanto-prereq-ditto-swagger-ui-1 Up 10 hours\nqa-v1-kanto-prereq-edge-app-001-1 Up 10 hours\nqa-v1-kanto-prereq-edge-mqtt-1 Up 10 hours\nqa-v1-kanto-prereq-edge-kuksa-001-1 Up 10 hours\nqa-v1-kanto-prereq-edge-kuksa-002-1 Up 10 hours\nqa-v1-kanto-prereq-edge-provider-002-1 Up 10 hours\nqa-v1-kanto-prereq-edge-provider-001-1 Up 10 hours\nqa-v1-kanto-prereq-ditto-gateway-1 Up 10 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-search-1 Up 10 hours (healthy)\nqa-v1-kanto-prereq-ditto-connectivity-1 Up 10 hours (healthy)\nqa-v1-kanto-prereq-ditto-things-1 Up 10 hours (healthy)\nqa-v1-kanto-prereq-ditto-mongodb-1 Up 10 hours\nqa-v1-kanto-prereq-ditto-ditto-ui-1 Up 10 hours\nqa-v1-kanto-prereq-ditto-policies-1 Up 10 hours (healthy)\n",
+  "notes": "Operator-owned demo resources stopped, shared original services preserved; no volume/network deletion."
+}

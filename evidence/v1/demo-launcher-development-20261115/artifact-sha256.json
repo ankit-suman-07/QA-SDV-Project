@@ -1,0 +1,14 @@
+{
+  "red.txt": "97c33b3de657b2df67c43baebb39fa6af275983cec686c8e8fdf5213750a2469",
+  "green.txt": "d8c13243f80cc1fd1e802bce3d63e563126651f77479f14ca29450a40c879aeb",
+  "live-check.txt": "58ef1c0b5b3cb3d12cc7b61ccbd6cee15fb2f2d94ce2e99554358951b5be93c5",
+  "live-check.json": "eec0022f7e10fc4d8f5aac783f1c5d243f82faeef1b86445215ef869e068dbd9",
+  "provider-classification-red.txt": "139b9c541ca3ca25a42ba10b9616f9bb7362b681fcd71ee61b85f565bb2777a0",
+  "live-check-corrected.txt": "74f67fab516bac5f315c13d83d688e33c8a5c848478e1eb7a67610936e65aa6c",
+  "live-check-corrected.json": "9eb424d2d33d38b3c38c0513606584d3fc0da900d4c307aacfa7a1545bbc8ba6",
+  "fault-contract-red.txt": "1405eae6961437ad08443abdefd9a8d310b3ceba0d4dcd8724881db9b06d49dd",
+  "README.md": "0947752b5bb358db702548a4279648e88827391c61573aea006cd5b50f757bd2",
+  "verification.json": "cc2365c0902676ce91fcb3a133a49bcdcbdb3441e43870d41b01c0de7e5306e2",
+  "review_rehearsal.py": "ce256c1120b1f1179e6f1015074f1db8860a4f395fc920b24e775fbf6f170c26",
+  "final-services.json": "07ac8e2e2d08df087319c4a188eeae8f3e07318a2b4cdb6d2f77aae959c2891d"
+}

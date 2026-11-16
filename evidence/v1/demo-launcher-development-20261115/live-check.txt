@@ -1,0 +1,36 @@
+
+startup
+Component | Vehicle | Observed | Endpoint/runtime | Source UTC / event
+Ditto | vehicle-001 | READY | http://127.0.0.1:18080/api/2/things/sdv:vehicle-001 | 2026-11-15T23:35:31.197322Z vehicle-001-a3acb0cab38c
+App / MQTT | vehicle-001 | RUNNING | Docker; sdv/vehicle-001/health | -
+KUKSA | vehicle-001 | RUNNING | 127.0.0.1:55556 | TCP only; integration shown above
+Backend | vehicle-001 | FAILED | http://127.0.0.1:18081/api/v1/vehicles/vehicle-001/state | -
+Provider | vehicle-001 | READY | http://127.0.0.1:8091 | -
+Ditto | vehicle-002 | STALE | http://127.0.0.1:18080/api/2/things/sdv:vehicle-002 | 2026-11-15T19:18:59.523812Z vehicle-002-badfbff96977
+App / MQTT | vehicle-002 | RUNNING | Docker; sdv/vehicle-002/health | -
+KUKSA | vehicle-002 | RUNNING | 127.0.0.1:55557 | TCP only; integration shown above
+Backend | vehicle-002 | FAILED | http://127.0.0.1:18081/api/v1/vehicles/vehicle-002/state | -
+Provider | vehicle-002 | READY | http://127.0.0.1:8092 | -
+MQTT | both | RUNNING | 127.0.0.1:18883 | TCP only
+Fleet | both | FAILED | http://127.0.0.1:18081/api/v1/fleet | API + authenticated fleet Thing read
+Dashboard | both | FAILED | http://localhost:3000 | HTTP/UI shell; inspect rendered state
+Kanto | vehicle-002 | FAILED | /run/qa-sdv-v1-kanto/container-management.sock | namespace qa-sdv-v1-kanto; see runtime states
+BLOCKED/FAILED: Refusing duplicate/unknown vehicle-002 publisher; inspect Docker and dedicated Kanto namespace
+
+failed
+Component | Vehicle | Observed | Endpoint/runtime | Source UTC / event
+Ditto | vehicle-001 | STALE | http://127.0.0.1:18080/api/2/things/sdv:vehicle-001 | 2026-11-15T23:35:31.197322Z vehicle-001-a3acb0cab38c
+App / MQTT | vehicle-001 | RUNNING | Docker; sdv/vehicle-001/health | -
+KUKSA | vehicle-001 | RUNNING | 127.0.0.1:55556 | TCP only; integration shown above
+Backend | vehicle-001 | FAILED | http://127.0.0.1:18081/api/v1/vehicles/vehicle-001/state | -
+Provider | vehicle-001 | READY | http://127.0.0.1:8091 | -
+Ditto | vehicle-002 | STALE | http://127.0.0.1:18080/api/2/things/sdv:vehicle-002 | 2026-11-15T19:18:59.523812Z vehicle-002-badfbff96977
+App / MQTT | vehicle-002 | RUNNING | Docker; sdv/vehicle-002/health | -
+KUKSA | vehicle-002 | RUNNING | 127.0.0.1:55557 | TCP only; integration shown above
+Backend | vehicle-002 | FAILED | http://127.0.0.1:18081/api/v1/vehicles/vehicle-002/state | -
+Provider | vehicle-002 | READY | http://127.0.0.1:8092 | -
+MQTT | both | RUNNING | 127.0.0.1:18883 | TCP only
+Fleet | both | FAILED | http://127.0.0.1:18081/api/v1/fleet | API + authenticated fleet Thing read
+Dashboard | both | FAILED | http://localhost:3000 | HTTP/UI shell; inspect rendered state
+Kanto | vehicle-002 | FAILED | /run/qa-sdv-v1-kanto/container-management.sock | namespace qa-sdv-v1-kanto; see runtime states
+Evidence: /home/ankitsuman/.local/share/qa-sdv-v1/worktrees/demo-launcher/evidence/v1/demo-20261115T233535Z

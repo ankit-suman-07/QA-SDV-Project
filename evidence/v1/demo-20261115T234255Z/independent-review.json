@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "scope": "operator working-copy demo sequence; not final SHA/full acceptance",
+  "mqttMessages": 101,
+  "vehicle001HealthyMqttMessages": 51,
+  "faultAndRecoveryFleetIdentity": "exact source/event match",
+  "restart": "exact MQTT/twin/API and three source boundaries PASS; stop/cleanup exit0",
+  "cleanup": "owned Kanto/backend/frontend stopped; initially stopped Docker002 unchanged",
+  "limitations": [
+    "Operator run predates final source-hash/backend-artifact metadata, fleet-lag retry/status and bounded observer-close hardening. Those final changes covered by focused controls; no second full campaign.",
+    "Restart fleet snapshots lagged individual identity while retaining healthy counts; latest helper retries exact identity before step completion.",
+    "Docker-to-Kanto transition/keep-running/failure cleanup controls tested with focused substitutes; live run began with Docker002 already stopped."
+  ]
+}
