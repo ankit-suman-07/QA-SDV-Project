@@ -1,5 +1,19 @@
 # SDV project source of truth
 
+## Phase V2 preparation — November 17, 2026
+
+Current V2 allocation follows [final plan](11-FINAL-phase-v2-plan.md),
+[technical decisions](12-FINAL-phase-v2-technical-decisions.md) and
+[task acceptance](13-FINAL-phase-v2-tasks-and-acceptance.md). Emmanuel owns CARLA,
+observations/scenarios/ground truth; Ankit adapter-to-KUKSA, backend/actions,
+sole fleet writer, dashboard/integration/evaluation; Bayan health/recovery,
+individual twins/history, native diagnostics and coordinated Kanto validation.
+These V2 sources supersede older conflicting V2 assignments, preserving V1 history.
+Use [V2 contracts](v2-interface-contracts.md), [independent guide](v2-independent-development.md)
+and [native feasibility](v2-native-diagnostic-feasibility.md) for preparation.
+New bounded defaults are project-lead decisions for affected-owner review, not
+formal team approval or implemented features. [Evidence](../evidence/v2/preparation.md).
+
 ## Remaining Phase V1 ownership — November 14, 2026
 
 Ankit owns all remaining Phase V1 remediation, integration, verification, fleet CI,

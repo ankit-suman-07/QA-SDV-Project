@@ -16,6 +16,14 @@ measurement budgets, authentication subjects or other unresolved decisions.
 Phase V1 is due **November 16, 2026** and covers approximately 60% of remaining effort with two synthetic vehicles. Phase V2 is due **December 5, 2026** and covers the remaining 40%, including three CARLA vehicles with front LiDAR. Task IDs below map to acceptance criteria in [08-project-scope-and-acceptance.md](08-project-scope-and-acceptance.md). For tasks moved earlier, use the phase assignments in this document. Runtime flows are in [09-architecture-diagrams.md](09-architecture-diagrams.md).
 
 
+## Current V2 allocation
+
+Use the [final V2 task cards](13-FINAL-phase-v2-tasks-and-acceptance.md) and
+[V2 contracts/owner workflows](v2-independent-development.md). Emmanuel owns CARLA
+source/extraction/scenarios; Ankit owns adapter publication/backend/fleet/UI;
+Bayan owns health/recovery/individual twins/native diagnostics. These supersede
+older conflicting V2 assignment wording below; V1 records stay historical.
+
 ## Contract-first V1 development baseline
 
 Updated November 11, 2026 at the project owner's request. [V1 interface contracts](v1-interface-contracts.md) version 1.0.0 is **proposed for affected-owner review**, with runnable development fixtures/mocks. See [independent development](v1-independent-development.md) for setup, exact commands and environment verification status. The formerly planned `docs/interface-contracts.md` is missing; the new V1 document fills that role. The scope's historical approval provenance is still unconfirmed; this document does not claim approval or feature completion.
@@ -56,14 +64,14 @@ No networked uProtocol or V2 CARLA work is a V1 dependency. Production files are
 | B5 · Phase V1 Kanto pilot | Launch and restart the vehicle-002 Velocitas app with Kanto on an Ankit-managed Linux device. Connect it to KUKSA and Mosquitto using the main host’s LAN address. | A fresh event reaches the correct Ditto twin after restart. Save Kanto and twin evidence. |
 | B7 · Phase V2 Kanto validation | Repeat deployment and restart verification with the CARLA-backed fleet. | A fresh post-restart event reaches the selected CARLA vehicle twin. Covers V2-05. |
 
-## Emmanuel — Simulation, LiDAR and Velocitas
+## Emmanuel — Simulation and LiDAR (V2 health ownership: Bayan)
 
 | Task | Work | Done when |
 |---|---|---|
 | E1 · Phase V1 two-vehicle edge | Configure two synthetic providers, two KUKSA brokers and two Velocitas apps. Assign unique IDs and non-conflicting endpoints. Document the signal fields and units. | Both edge instances publish independently and their events carry the agreed vehicle IDs. Covers V1-01. |
 | E2 · Phase V1 fault and clear | Supply a deterministic LiDAR fault/clear scenario for vehicle-002 and give Ankit the provider command contract. Give Bayan examples of the healthy, fault and recovery events. | The scenario can be rerun locally. Vehicle-002 emits the expected transitions and vehicle-001 receives no injected fault. Supports V1-03. |
 | E3 · Phase V2 CARLA adapter | Set up CARLA and its Python adapter on a separate GPU-capable host if available. Validate one actor first, then connect three actors with front LiDAR to their respective edge instances. Preserve actor/vehicle mapping, source timestamps, units and labelled injection timing. Document startup and cleanup. | All three vehicles publish identifiable LiDAR observations through their correct brokers. A reproducible configuration and runtime evidence cover V2-01. |
-| E4 · Phase V2 sensor diagnosis | Implement controlled degradation and dropout scenarios. In Velocitas, evaluate observation age and agreed health thresholds, then apply the recovery window once valid input resumes. | Labelled runs and boundary tests establish when a fault is raised and cleared, with other vehicles unaffected. Covers V2-02. |
+| E4 · Phase V2 sensor diagnosis | Implement controlled degradation and dropout scenarios. Hand observations and independent ground truth to Bayan, who owns Velocitas observation-age/health/recovery implementation under the final V2 plan. | Labelled runs and boundary tests establish when a fault is raised and cleared, with other vehicles unaffected. Covers V2-02. |
 | E5 · Phase V2 runtime handoff | Give Bayan the app build/configuration and Ankit the scenario commands, ground truth and runtime observations. Keep the synthetic scenario available for CI and comparison. | Both teammates can reproduce a fault and recovery with documented inputs and identify the source of each measured transition. |
 
 ## Real integration order and reviews
