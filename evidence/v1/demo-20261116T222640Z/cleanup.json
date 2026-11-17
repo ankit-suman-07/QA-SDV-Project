@@ -1,0 +1,8 @@
+{
+  "keep": false,
+  "errors": [],
+  "dockerChanged": false,
+  "kantoName": null,
+  "ownedProcesses": [],
+  "sharedResources": "twins/policies/volumes/prerequisite services untouched"
+}

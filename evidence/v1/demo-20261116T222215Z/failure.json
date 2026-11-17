@@ -1,0 +1,5 @@
+{
+  "at": "2026-11-16T22:22:20.656311+00:00",
+  "type": "RuntimeError",
+  "detail": "Missing /run/qa-sdv-v1-kanto/container-management.sock; follow velocitas-app/kanto/LINUX-RUNTIME.md and configure demo.json; no install/build attempted"
+}

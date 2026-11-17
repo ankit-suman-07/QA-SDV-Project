@@ -1,0 +1,104 @@
+{
+  "at": "2026-11-16T22:26:45.751898+00:00",
+  "rows": [
+    [
+      "Ditto",
+      "vehicle-001",
+      "FAILED",
+      "http://127.0.0.1:18080/api/2/things/sdv:vehicle-001",
+      "-"
+    ],
+    [
+      "App / MQTT",
+      "vehicle-001",
+      "RUNNING",
+      "Docker; sdv/vehicle-001/health",
+      "-"
+    ],
+    [
+      "KUKSA",
+      "vehicle-001",
+      "FAILED",
+      "127.0.0.1:55556",
+      "TCP only; integration shown above"
+    ],
+    [
+      "Backend",
+      "vehicle-001",
+      "FAILED",
+      "http://127.0.0.1:18081/api/v1/vehicles/vehicle-001/state",
+      "-"
+    ],
+    [
+      "Provider",
+      "vehicle-001",
+      "FAILED",
+      "http://127.0.0.1:8091",
+      "-"
+    ],
+    [
+      "Ditto",
+      "vehicle-002",
+      "FAILED",
+      "http://127.0.0.1:18080/api/2/things/sdv:vehicle-002",
+      "-"
+    ],
+    [
+      "App / MQTT",
+      "vehicle-002",
+      "FAILED",
+      "Docker; sdv/vehicle-002/health",
+      "-"
+    ],
+    [
+      "KUKSA",
+      "vehicle-002",
+      "FAILED",
+      "127.0.0.1:55557",
+      "TCP only; integration shown above"
+    ],
+    [
+      "Backend",
+      "vehicle-002",
+      "FAILED",
+      "http://127.0.0.1:18081/api/v1/vehicles/vehicle-002/state",
+      "-"
+    ],
+    [
+      "Provider",
+      "vehicle-002",
+      "FAILED",
+      "http://127.0.0.1:8092",
+      "-"
+    ],
+    [
+      "MQTT",
+      "both",
+      "FAILED",
+      "127.0.0.1:18883",
+      "TCP only"
+    ],
+    [
+      "Fleet",
+      "both",
+      "FAILED",
+      "http://127.0.0.1:18081/api/v1/fleet",
+      "API + authenticated fleet Thing read"
+    ],
+    [
+      "Dashboard",
+      "both",
+      "FAILED",
+      "http://localhost:3000",
+      "HTTP/UI shell; inspect rendered state"
+    ],
+    [
+      "Kanto",
+      "vehicle-002",
+      "FAILED",
+      "/run/qa-sdv-v1-kanto/container-management.sock",
+      "namespace qa-sdv-v1-kanto; see runtime states"
+    ]
+  ],
+  "things": {}
+}
