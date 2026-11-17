@@ -1,0 +1,40 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "requirement": "V2-C1,V2-C2",
+  "sessionId": "session-1",
+  "sessionGeneration": 1,
+  "utcOrigin": "2026-01-01T00:00:00.000Z",
+  "simulationOrigin": 100,
+  "vehicles": [
+    {
+      "vehicleId": "vehicle-001",
+      "actorId": 101,
+      "sensorId": 201,
+      "provider": "provider-001",
+      "broker": "kuksa-001",
+      "brokerPort": 55555,
+      "app": "app-001",
+      "twinId": "sdv:vehicle-001"
+    },
+    {
+      "vehicleId": "vehicle-002",
+      "actorId": 102,
+      "sensorId": 202,
+      "provider": "provider-002",
+      "broker": "kuksa-002",
+      "brokerPort": 55555,
+      "app": "app-002",
+      "twinId": "sdv:vehicle-002"
+    },
+    {
+      "vehicleId": "vehicle-003",
+      "actorId": 103,
+      "sensorId": 203,
+      "provider": "provider-003",
+      "broker": "kuksa-003",
+      "brokerPort": 55555,
+      "app": "app-003",
+      "twinId": "sdv:vehicle-003"
+    }
+  ]
+}

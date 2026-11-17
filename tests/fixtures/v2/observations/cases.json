@@ -1,0 +1,515 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "cases": [
+    {
+      "id": "distance-0",
+      "kind": "classify",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 0,
+          "sensorAvailable": true
+        }
+      },
+      "expected": [
+        "CRITICAL",
+        [
+          "LIDAR_OBSTRUCTION"
+        ]
+      ],
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "distance-5",
+      "kind": "classify",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 5,
+          "sensorAvailable": true
+        }
+      },
+      "expected": [
+        "CRITICAL",
+        [
+          "LIDAR_OBSTRUCTION"
+        ]
+      ],
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "distance-5.001",
+      "kind": "classify",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 5.001,
+          "sensorAvailable": true
+        }
+      },
+      "expected": [
+        "WARNING",
+        [
+          "LIDAR_OBSTRUCTION"
+        ]
+      ],
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "distance-10",
+      "kind": "classify",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 10,
+          "sensorAvailable": true
+        }
+      },
+      "expected": [
+        "WARNING",
+        [
+          "LIDAR_OBSTRUCTION"
+        ]
+      ],
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "distance-10.001",
+      "kind": "classify",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 10.001,
+          "sensorAvailable": true
+        }
+      },
+      "expected": [
+        "HEALTHY",
+        []
+      ],
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "sensor-invalid",
+      "kind": "classify",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": null,
+          "sensorAvailable": false
+        }
+      },
+      "expected": [
+        "CRITICAL",
+        [
+          "LIDAR_SENSOR_FAILURE"
+        ]
+      ],
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "unknown",
+      "kind": "validate",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-999",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "expected": "UNKNOWN_VEHICLE",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "bool-distance",
+      "kind": "validate",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": true,
+          "sensorAvailable": true
+        }
+      },
+      "expected": "INVALID_TYPE",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "unavailable-distance",
+      "kind": "validate",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": false
+        }
+      },
+      "expected": "INVALID_TYPE",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "bad-time",
+      "kind": "validate",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "no",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "expected": "INVALID_TIMESTAMP",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "negative-sequence",
+      "kind": "validate",
+      "input": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": -1,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "expected": "INVALID_TYPE",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "topic-mismatch",
+      "kind": "validate",
+      "input": {
+        "topic": "sdv/vehicle-001/v2/observations",
+        "event": {
+          "fixtureLabel": "SYNTHETIC",
+          "schemaVersion": "2.0.0",
+          "vehicleId": "vehicle-002",
+          "eventId": "vehicle-002-s1-0",
+          "sessionId": "session-1",
+          "sessionGeneration": 1,
+          "sequence": 0,
+          "frame": 100,
+          "simulationSeconds": 100,
+          "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+          "processingTimestamp": "2026-01-01T00:00:00.010Z",
+          "provenance": "SYNTHETIC",
+          "lidar": {
+            "distanceMeters": 20,
+            "sensorAvailable": true
+          }
+        }
+      },
+      "expected": "TOPIC_MISMATCH",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "malformed",
+      "kind": "decode",
+      "input": "{\"x\":",
+      "expected": "MALFORMED_JSON",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "duplicate-json-key",
+      "kind": "decode",
+      "input": "{\"x\":1,\"x\":2}",
+      "expected": "MALFORMED_JSON",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "age-5",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "now": "2026-01-01T00:00:05.000Z"
+      },
+      "expected": "AVAILABLE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "age-5.001",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "now": "2026-01-01T00:00:05.001Z"
+      },
+      "expected": "STALE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "age-30",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "now": "2026-01-01T00:00:30.000Z"
+      },
+      "expected": "STALE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "age-30.001",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "now": "2026-01-01T00:00:30.001Z"
+      },
+      "expected": "UNAVAILABLE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "age--1",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "now": "2025-12-31T23:59:59.000Z"
+      },
+      "expected": "AVAILABLE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "age--1.001",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "now": "2025-12-31T23:59:58.999Z"
+      },
+      "expected": "UNAVAILABLE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "missing-time",
+      "kind": "availability",
+      "input": {
+        "sourceTimestamp": null,
+        "now": "2026-01-01T00:00:00.000Z"
+      },
+      "expected": "UNAVAILABLE",
+      "requirement": "V2-C4"
+    },
+    {
+      "id": "simulation-conversion",
+      "kind": "clock",
+      "input": {
+        "utcOrigin": "2026-01-01T00:00:00.000Z",
+        "simulationOrigin": 100,
+        "simulationSeconds": 102.5
+      },
+      "expected": "2026-01-01T00:00:02.500Z",
+      "requirement": "V2-C2"
+    },
+    {
+      "id": "front",
+      "kind": "extract",
+      "input": [
+        [
+          5,
+          0,
+          0,
+          1
+        ],
+        [
+          3,
+          2,
+          0,
+          1
+        ],
+        [
+          -1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        5,
+        true
+      ],
+      "requirement": "V2-C3"
+    },
+    {
+      "id": "inclusive",
+      "kind": "extract",
+      "input": [
+        [
+          10,
+          1.5,
+          -1,
+          0.5
+        ],
+        [
+          4,
+          0,
+          -1.1,
+          1
+        ]
+      ],
+      "expected": [
+        10,
+        true
+      ],
+      "requirement": "V2-C3"
+    },
+    {
+      "id": "no-hit",
+      "kind": "extract",
+      "input": [
+        [
+          2,
+          2,
+          0,
+          1
+        ]
+      ],
+      "expected": [
+        50,
+        true
+      ],
+      "requirement": "V2-C3"
+    },
+    {
+      "id": "empty",
+      "kind": "extract",
+      "input": [],
+      "expected": [
+        null,
+        false
+      ],
+      "requirement": "V2-C3"
+    },
+    {
+      "id": "invalid",
+      "kind": "extract",
+      "input": [
+        [
+          1,
+          0,
+          0,
+          "bad"
+        ]
+      ],
+      "expected": [
+        null,
+        false
+      ],
+      "requirement": "V2-C3"
+    }
+  ]
+}
