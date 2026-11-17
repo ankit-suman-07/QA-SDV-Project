@@ -1,0 +1,8 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "vehicleId": "vehicle-003",
+  "actionId": "action-003",
+  "traceId": "trace-003",
+  "action": "INJECT_SCENARIO",
+  "scenario": "LIDAR_OBSTRUCTION"
+}

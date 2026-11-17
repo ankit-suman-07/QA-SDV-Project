@@ -1,0 +1,34 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "thingId": "sdv:vehicle-001",
+  "attributes": {
+    "vehicleId": "vehicle-001"
+  },
+  "features": {
+    "v2": {
+      "properties": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-001",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        },
+        "health": "HEALTHY",
+        "faults": [],
+        "recoveryState": "NONE",
+        "recoveryStartedAt": null,
+        "sourceSilent": false,
+        "lastEventId": "vehicle-001-s1-0"
+      }
+    }
+  }
+}

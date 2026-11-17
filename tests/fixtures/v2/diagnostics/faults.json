@@ -1,0 +1,33 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "boundary": "PROJECT_MOCK_NOT_NATIVE_SOVD",
+  "requirement": "V2-C6",
+  "vehicleId": "vehicle-003",
+  "faults": [
+    {
+      "faultId": "lidar-obstruction",
+      "code": "LIDAR_OBSTRUCTION",
+      "severity": "CRITICAL",
+      "status": "ACTIVE",
+      "observedValue": 3,
+      "unit": "m",
+      "warningThreshold": 10,
+      "criticalThreshold": 5,
+      "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+      "eventId": "vehicle-003-s1-0",
+      "sessionId": "session-1"
+    },
+    {
+      "faultId": "lidar-sensor-failure",
+      "code": "LIDAR_SENSOR_FAILURE",
+      "severity": "CRITICAL",
+      "status": "ACTIVE",
+      "observedValue": null,
+      "unit": "m",
+      "sourceTimestamp": "2026-01-01T00:00:01.000Z",
+      "eventId": "vehicle-003-s1-1",
+      "sessionId": "session-1"
+    }
+  ],
+  "note": "Independent mapping examples; not simultaneous active faults. No standardized DTC asserted."
+}

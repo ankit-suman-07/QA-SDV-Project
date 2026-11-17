@@ -1,0 +1,148 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "requirement": "V2-C2,V2-C4,V2-C5",
+  "steps": [
+    {
+      "observation": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 3,
+          "sensorAvailable": true
+        }
+      },
+      "now": "2026-01-01T00:00:00.000Z",
+      "expected": [
+        "CRITICAL",
+        "NONE"
+      ]
+    },
+    {
+      "observation": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0.1",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 1,
+        "frame": 101,
+        "simulationSeconds": 100.1,
+        "sourceTimestamp": "2026-01-01T00:00:00.100Z",
+        "processingTimestamp": "2026-01-01T00:00:00.110Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "now": "2026-01-01T00:00:00.100Z",
+      "expected": [
+        "CRITICAL",
+        "IN_PROGRESS"
+      ]
+    },
+    {
+      "observation": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0.1",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 1,
+        "frame": 101,
+        "simulationSeconds": 100.1,
+        "sourceTimestamp": "2026-01-01T00:00:00.100Z",
+        "processingTimestamp": "2026-01-01T00:00:00.110Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "now": "2026-01-01T00:00:00.100Z",
+      "expected": "DUPLICATE_EVENT",
+      "nowOverride": "2026-01-01T00:00:02.200Z"
+    },
+    {
+      "observation": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "equal",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 1,
+        "frame": 101,
+        "simulationSeconds": 100.1,
+        "sourceTimestamp": "2026-01-01T00:00:00.100Z",
+        "processingTimestamp": "2026-01-01T00:00:00.110Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "now": "2026-01-01T00:00:00.100Z",
+      "expected": "OUT_OF_ORDER"
+    },
+    {
+      "observation": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 0,
+        "frame": 100,
+        "simulationSeconds": 100,
+        "sourceTimestamp": "2026-01-01T00:00:00.000Z",
+        "processingTimestamp": "2026-01-01T00:00:00.010Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "now": "2026-01-01T00:00:00.000Z",
+      "expected": "OUT_OF_ORDER"
+    },
+    {
+      "observation": {
+        "fixtureLabel": "SYNTHETIC",
+        "schemaVersion": "2.0.0",
+        "vehicleId": "vehicle-002",
+        "eventId": "vehicle-002-s1-0.2",
+        "sessionId": "session-1",
+        "sessionGeneration": 1,
+        "sequence": 2,
+        "frame": 102,
+        "simulationSeconds": 100.2,
+        "sourceTimestamp": "2026-01-01T00:00:00.200Z",
+        "processingTimestamp": "2026-01-01T00:00:00.210Z",
+        "provenance": "SYNTHETIC",
+        "lidar": {
+          "distanceMeters": 20,
+          "sensorAvailable": true
+        }
+      },
+      "now": "2026-01-01T00:00:00.200Z",
+      "expected": [
+        "CRITICAL",
+        "IN_PROGRESS"
+      ]
+    }
+  ]
+}

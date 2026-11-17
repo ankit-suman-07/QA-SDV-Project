@@ -1,0 +1,55 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "requirement": "V2-C6",
+  "request": {
+    "vehicleId": "vehicle-003",
+    "actionId": "action-003",
+    "traceId": "trace-003",
+    "action": "INJECT_SCENARIO",
+    "scenario": "LIDAR_OBSTRUCTION"
+  },
+  "cases": [
+    {
+      "id": "success",
+      "statuses": [
+        "ACCEPTED",
+        "EXECUTING",
+        "SUCCEEDED"
+      ],
+      "expected": "SUCCEEDED"
+    },
+    {
+      "id": "failure",
+      "statuses": [
+        "ACCEPTED",
+        "EXECUTING",
+        "FAILED"
+      ],
+      "expected": "FAILED"
+    },
+    {
+      "id": "timeout",
+      "statuses": [
+        "ACCEPTED",
+        "EXECUTING"
+      ],
+      "advanceSeconds": 10,
+      "expected": "TIMED_OUT"
+    },
+    {
+      "id": "correlation",
+      "statuses": [
+        "ACCEPTED"
+      ],
+      "result": {
+        "vehicleId": "vehicle-003",
+        "actionId": "action-003",
+        "traceId": "wrong",
+        "action": "INJECT_SCENARIO",
+        "scenario": "LIDAR_OBSTRUCTION",
+        "status": "SUCCEEDED"
+      },
+      "expected": "CORRELATION_MISMATCH"
+    }
+  ]
+}
