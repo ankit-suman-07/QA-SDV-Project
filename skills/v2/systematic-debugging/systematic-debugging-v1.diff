@@ -1,0 +1,21 @@
+--- a/systematic-debugging/SKILL.md
++++ b/systematic-debugging/SKILL.md
+@@ -116,6 +116,18 @@
+    - What called this with bad value?
+    - Keep tracing up until you find the source
+    - Fix at source, not at symptom
++
++#### Distributed vehicle systems: trace identity before proposing a fix
++
++**Required when a defect may involve vehicle identity, routing, or correlation.** Use this check within Phase 1, then continue with Phases 2?4.
++
++1. **State the invariant.** Identify which vehicle, event, or request a result must belong to. Name any contract-defined translation between identifiers and state how a mismatch should be handled.
++2. **Trace one reproducible case.** At each relevant boundary, record the identity and correlation values received, the validation or translation applied, and the values actually sent or used. Compare expected and observed values for the same event or exchange. Mark assumptions and missing observations explicitly. Use authorized logs, tests, or instrumentation and omit secrets.
++3. **Locate the first violation.** Identify the earliest observed boundary with valid input and an output that violates the invariant. If a preceding boundary is unobserved, record the gap and gather the smallest missing observation before claiming a root cause.
++4. **Test one hypothesis.** Explain how a specific operation could cause the divergence. Change one variable in a controlled reproduction or gather an observation that can disprove the hypothesis, following Phase 3.
++5. **Prove the correction.** In Phase 4, reproduce the failure with a regression test before editing implementation code. Make the minimum justified fix. Verify the intended result and compare relevant unrelated entities before and after. Report the observed trace, failing and passing checks, and what the evidence could not establish.
++
++**Illustrative boundaries.** MQTT receipt and validation, twin selection and persistence, diagnostic request dispatch and response matching, or event production and routing. Choose the boundaries and identifiers defined by the system under investigation.
+ 
+ ### Phase 2: Pattern Analysis
+ 
