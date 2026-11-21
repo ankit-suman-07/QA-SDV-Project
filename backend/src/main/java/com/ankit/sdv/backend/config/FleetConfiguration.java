@@ -29,6 +29,6 @@ public class FleetConfiguration {
                 // One field avoids Ditto rejecting Spring/JDK automatic gzip + deflate duplicates.
                 .defaultHeader("Accept-Encoding", "gzip, deflate");
         if (properties.authenticated()) builder.defaultHeaders(h -> h.setBasicAuth(properties.username(), properties.password()));
-        return new FleetMaterializer(fleet, builder.build(), ditto.baseUrl(), properties.writeTimeout(), clock);
+        return new FleetMaterializer(fleet, builder.build(), ditto.baseUrl(), properties.writeTimeout(), clock, properties.version());
     }
 }
