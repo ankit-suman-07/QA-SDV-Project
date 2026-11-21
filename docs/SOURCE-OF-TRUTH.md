@@ -6,7 +6,7 @@
 
 Use this document as the authoritative project index for developers, coding agents and project chats. Read the relevant sources before changing implementation, tests or architecture. Repository revisions and explicit decision/review records take precedence over recollections from chats.
 
-**Intended repository location: `docs/SOURCE_OF_TRUTH.md`.** Links below are relative to that location. When adopting this filename, rename the older `docs/SOURCE-OF-TRUTH.md` and update its references in the same PR. Do not maintain competing active copies. Historical revision links remain historical evidence.
+**Canonical repository location: `docs/SOURCE-OF-TRUTH.md`.** Existing repository links use this path. Historical revision links remain historical evidence.
 
 Root `AGENTS.md` should direct agents here and contain short workflow instructions, not duplicate product specifications. A root `CLAUDE.md`, if used, should share those instructions rather than define a different scope.
 
@@ -31,6 +31,7 @@ The earlier 60/40 effort split is an estimate, not a completion rule. Phase V2 e
 | [Phase V2 tasks and acceptance](13-FINAL-phase-v2-tasks-and-acceptance.md) | Current owner-specific tasks and completion conditions. |
 | [V2 interface contracts](v2-interface-contracts.md) | Versioned payloads, timing/ordering, twin/API/action structures and bounded defaults. |
 | [V2 independent-development guide](v2-independent-development.md) | Fixtures, substitutes, owner workflows and exact preparation commands. |
+| [Ankit V2 baseline and decisions](v2-ankit-preparation-baseline.md) | Tested V1 reference, prep coverage and proposed companion binding for review. |
 | [V2 native diagnostic feasibility](v2-native-diagnostic-feasibility.md) | Supported implementations and unresolved protocol/service bindings. |
 | [Architecture](09-architecture-diagrams.md) | Component roles and runtime flows; reconcile historical diagrams with current decisions/contracts. |
 | [Detailed task distribution](10-detailed-task-distribution.md) | Historical allocations and continuing handoffs; newer V2 task documents supersede conflicting V2 ownership. |
