@@ -43,7 +43,10 @@ class TraceTest(unittest.TestCase):
 
     def test_missing_boundary_is_blocked_for_its_vehicle_only(self):
         rows = self.rows[:-1]
-        self.assertEqual(set(verify(self.manifest, rows, ["vehicle-001"], synthetic=True)), {"vehicle-001"})
+        one_actor = copy.deepcopy(self.manifest)
+        for mapping in one_actor["vehicles"][1:]:
+            mapping.update(actorId=None, sensorId=None)
+        self.assertEqual(set(verify(one_actor, rows, ["vehicle-001"], synthetic=True)), {"vehicle-001"})
         with self.assertRaisesRegex(MissingCapture, "vehicle-003"):
             verify(self.manifest, rows, VEHICLES, synthetic=True)
 

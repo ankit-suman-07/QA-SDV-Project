@@ -88,8 +88,12 @@ def verify(manifest, captures, vehicles, *, synthetic=False):
     rows = manifest["vehicles"]
     require(len(rows) == 3 and {row["vehicleId"] for row in rows} == set(VEHICLES), "manifest requires all three mappings")
     require(len({(row["broker"], row["brokerPort"]) for row in rows}) == 3, "broker endpoints must be distinct")
-    require(len({row["actorId"] for row in rows}) == 3 and len({row["sensorId"] for row in rows}) == 3,
-            "actor and sensor mappings must be distinct")
+    for key in ("actorId", "sensorId"):
+        assigned = [row[key] for row in rows if row.get(key) is not None]
+        require(all(type(value) is int and value >= 0 for value in assigned)
+                and len(set(assigned)) == len(assigned), f"invalid or duplicate {key} mapping")
+        require(all(row.get(key) is not None for row in rows if row["vehicleId"] in vehicles),
+                f"selected vehicle has no assigned {key}")
     for row in rows:
         require(row["twinId"] == f"sdv:{row['vehicleId']}", "incorrect twin mapping")
 
