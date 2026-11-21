@@ -127,3 +127,23 @@ coverage. Shared session context and order can influence the difference;
 there is no historical baseline or independent human review claim. This
 bounded comparison is recorded while the planned independent evaluation and
 review remain open.
+
+## Verification
+
+Tested `5bd5506c06d6d2fa335a9bc6d46bd0fcace81752`. Applied Ankit
+verification-before-completion v1.0.0 to the collector's expected counts,
+clock conflict, retained timeout and process evidence boundaries.
+
+- `python -m unittest tests.test_v2_measure tests.test_v2_trace -q` exited 0,
+  eight tests. A separate CLI smoke serialized the measurement unit test's
+  temporary synthetic input, confirmed its scope, one PASS trial and two
+  duplicates, and observed BLOCKED/exit 2 for an absent input.
+- `python -m scripts.v2_dev.check` exited 0, eight tests and 23 fixture files
+  plus referenced guide links.
+- Python 3.12 CI-equivalent `python -m pytest -q -ra -m "not integration"`
+  with the five existing protobuf modules generated into a temporary
+  PYTHONPATH exited 0 with 581 passed, 461 subtests passed, 2 skipped
+  (V1 MQTT host and native SDK), and 9 deselected.
+- Local comparison, skill and evidence links resolved.
+  `git diff --check origin/main HEAD` passed. No Java, frontend or
+  production runtime files changed. No owned services remain running.
