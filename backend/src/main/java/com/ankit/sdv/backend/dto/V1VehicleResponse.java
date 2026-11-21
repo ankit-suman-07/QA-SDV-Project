@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @JsonInclude(JsonInclude.Include.ALWAYS)
 public record V1VehicleResponse(String vehicleId, String thingId, String healthStatus,
         String availability, List<String> activeFaults, Lidar lidar,
-        String sourceTimestamp, String lastEventId) {
+        String sourceTimestamp, String lastEventId) implements VehicleProjection {
     public record Lidar(BigDecimal distanceMeters, boolean sensorAvailable) {}
 
     public static V1VehicleResponse unavailable(String vehicleId, String thingId) {
