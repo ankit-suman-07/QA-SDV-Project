@@ -29,60 +29,44 @@ and history, native diagnostics and coordinated Kanto validation.
 
 | Area | Specified and checked offline | Pending owner decision or proof |
 |---|---|---|
-| C1–C2 identity and time | Synthetic manifest pins three vehicles and maps simulation origin 100 to UTC midnight. Event IDs survive retries. Sequences exercise duplicate/equal/late events and explicit successor registration, including rejection before registration and after retirement. Replay preserves simulation time and shifts UTC together. | Emmanuel supplies real actor/sensor mapping and anchor uncertainty. Ankit and Bayan agree how trusted registration is provisioned and restored, including persisted generation/watermark and newer UTC. Fixture registration is a harness control. |
+| C1–C2 identity and time | Synthetic manifest pins three vehicles and maps simulation origin 100 to UTC midnight. Event IDs survive retries. Sequences exercise duplicate/equal/late events and explicit successor registration, including rejection before registration and after retirement. Replay preserves simulation time and shifts UTC together. | Emmanuel supplies real actor/sensor mapping and anchor uncertainty. Ankit and Bayan review how trusted registration is provisioned and restored, including persisted generation/watermark and newer UTC. Fixture registration is a harness control. |
 | C2–C4 cadence, dropout and recovery | 10 Hz nominal and 0.5 s inclusive maximum healthy gap are prep defaults. Recovery/clock sequences exercise the 0.5 s boundary and greater-than gap, reset on dropout/stale/future input, and retain severity until 2 s of continuous healthy samples. Unavailable has null distance and false sensor validity. Health events carry recoveryState, recoveryStartedAt and sourceSilent. Clock-only silence retains last-known health and cancels recovery. | Emmanuel and Bayan review nominal cadence, gap and detection reasons. The fixtures exercise source/evaluation time. Live monotonic receipt gaps, clock sync and the exact wire representation of the C2 dropout reason still need review. Observation examples use the lidar pair without a reason key. |
 | C4–C6 freshness and budgets | Literal cases bracket 5 s and 30 s age and 1 s future tolerance. Diagnostic cases anchor inject/clear execution at 10 s and exercise lifecycle and correlation. | Preserve freshness behavior and review the defaults separately from measured budgets. The 2 s native request and provider acceptance limits and 30 s managed restart limit need real deadline evidence. Mock timeout is a controlled result. |
 
 See [C1–C7](v2-interface-contracts.md), [fixture coverage](../tests/fixtures/v2/README.md)
 and [offline commands](v2-independent-development.md).
 
-## Proposed live companion binding for review
+## Authorized observation companion binding
 
-Use the existing C5 topic `sdv/{vehicleId}/v2/observations` with the C2 envelope,
-QoS 1, retain false and the 64 KiB wire limit. Use one adapter publisher and one
-health consumer per vehicle. Configure the same vehicle ID, topic, session
-registry and per-vehicle KUKSA endpoint on both sides. Configure the MQTT
-endpoint, distinct client IDs, local credential references and TLS for
-authenticated cross-host traffic. Grant the adapter publish and the health app
-subscribe only on that vehicle's observation topic. Bayan's health output uses
-its separate C5 health topic.
+Ankit Suman authorized implementation in the PR #56 continuation instruction.
+This supersedes the initial proposal and motion-input gap for implementation.
+Bayan's review of consumer behavior, registry and ACLs and Emmanuel's review
+of source motion, timing and rollover remain pending under C7.
 
-Validate the observation before side effects. Serialize each vehicle's writes.
-Build the KUKSA LiDAR update and companion from the same validated object.
-The update carries original source UTC in supported broker sample metadata.
-Publish the companion only after successful KUKSA acknowledgement for all
-required writes. For unavailable input, write false validity and publish the
-original unavailable envelope. Any earlier cached distance is invalid under
-false validity. The envelope preserves vehicle/session/generation/sequence/frame/
-sourceTimestamp/eventId and the exact distance/validity for that acknowledged
-write. The envelope is the health app's fresh LiDAR input. The broker sample
-can be correlated by per-vehicle broker, source UTC and corresponding values,
-with the full identity carried in the envelope. A newer broker write may
-already have replaced the value when MQTT delivers the earlier observation.
-Review must verify broker timestamp support and acknowledgement behavior on
-the selected broker/SDK before enabling this binding. Cross-system atomicity
-is unavailable. A write failure emits no companion. A successful write with
-failed MQTT delivery leaves a gap detectable by the consumer.
+Use `sdv/{vehicleId}/v2/observations`, QoS 1, retain false, and the unchanged
+C2 envelope. Serialize one publisher per vehicle, with a distinct KUKSA
+endpoint and MQTT client ID. The adapter uses KUKSA Client 0.5.1 VAL v1 Set
+with a deadline and checks the response for top-level and per-path errors.
+Only after confirmed writes can it send the companion. Partial or uncertain
+KUKSA writes leave the batch pending. After confirmation the adapter retries
+only the companion. An uncertain MQTT acknowledgement can cause redelivery
+with the original identity. The receiver must deduplicate. There is no
+cross-system atomicity and PUBACK confirms broker acceptance only.
 
-Apply the C2/C5 validation and persisted per-vehicle ordering rules. Ignore
-exact retries and reject conflicting or retired identities before updating
-health or receipt timers. Use clean MQTT sessions with no offline backlog.
-Reconnect and resubscribe to the configured topic, retaining the persisted
-ordering watermark and registered session. Discard queued disconnected samples.
-Allow QoS retransmission of the same valid in-flight envelope without changing
-its identity/time. Losing the receipt clock across a process restart resets
-the recovery window. A source UTC gap or monotonic receipt gap greater than
-0.5 s resets recovery. A local timer marks silence without a new envelope or
-source timestamp. Enforce freshness on delivery independently of receipt
-interval. Disconnect, broker cache reads and rejected deliveries cannot refresh
-source age or count toward recovery.
+The adapter supplies source UTC in each KUKSA request. The isolated 0.7.0
+broker stamped write time on readback, so consumers use the companion's
+original source UTC and identity. The companion identifies the exact mapped
+write input for that vehicle. A cached broker value may have been superseded
+or lost and cannot attest to sample identity or freshness.
 
-Ankit and Bayan review registry provisioning, topic ACLs, broker metadata and
-reconnect behavior. Emmanuel reviews source cadence, episode rollover and
-clock mapping. Record decisions before dependent production integration under
-C7. Review proof should include equal-value successive samples with distinct
-identities, unsuccessful writes, duplicates, disconnect/reconnect, a retired
-session, unaffected peers and silence at either side of 0.5 s.
+Velocitas owns the 100 ms silence timer and strictly greater than 0.5 s gap
+rule. A separate versioned status message must preserve the last genuine
+observation identity and time and carry independently ordered status.
+Bayan's scheduler and status ingress are separate work. The adapter emits no
+observation on silence, and a status transition must never go through as a
+fresh observation. Backend source freshness remains independent.
+
+[Configuration, recovery behavior and verification](../evidence/v2/ankit/observation-kuksa-adapter/README.md#publication-continuation)
 
 ## Diagnostic project handoff
 
