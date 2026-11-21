@@ -59,10 +59,7 @@ final class HttpActionExecution implements ActionExecution, AutoCloseable {
         if (base == null) throw unavailable();
         String path = settings.fixtureBase() != null ? ACTIONS : "/actions";
         var ack = exchange(base, path, request, 202);
-        if (!request.vehicleId().equals(ack.path("vehicleId").asText())
-                || !request.actionId().equals(ack.path("actionId").asText())
-                || !request.traceId().equals(ack.path("traceId").asText())
-                || !"ACCEPTED".equals(ack.path("status").asText())) throw timeout();
+        if (!correlates(ack, request) || !matches(ack, "status", "ACCEPTED")) throw timeout();
     }
 
     @Override public Optional<Result> result(Request request) {
@@ -75,9 +72,7 @@ final class HttpActionExecution implements ActionExecution, AutoCloseable {
         } catch (ResponseStatusException failure) {
             return Optional.empty(); // Read-side outage never turns an action into a success or a rejection.
         }
-        if (!request.vehicleId().equals(result.path("vehicleId").asText())
-                || !request.actionId().equals(result.path("actionId").asText())
-                || !request.traceId().equals(result.path("traceId").asText())) {
+        if (!correlates(result, request)) {
             throw error(HttpStatus.CONFLICT, "CORRELATION_MISMATCH");
         }
         var status = result.path("status").asText();
@@ -90,6 +85,17 @@ final class HttpActionExecution implements ActionExecution, AutoCloseable {
         }
     }
 
+    private static boolean correlates(JsonNode response, Request request) {
+        return matches(response, "vehicleId", request.vehicleId())
+                && matches(response, "actionId", request.actionId())
+                && matches(response, "traceId", request.traceId());
+    }
+
+    private static boolean matches(JsonNode response, String field, String expected) {
+        var value = response.path(field);
+        return value.isTextual() && expected.equals(value.asText());
+    }
+
     enum Diagnostic { HEALTH, FAULTS }
 
     /** Callable project projection while Bayan's native bindings are pending. */
@@ -99,8 +105,8 @@ final class HttpActionExecution implements ActionExecution, AutoCloseable {
         if (base == null) throw unavailable();
         var result = exchange(base, "/mock/v2/diagnostics/" + vehicle
                 + (kind == Diagnostic.HEALTH ? "/health" : "/faults"), null, 200);
-        if (!vehicle.equals(result.path("vehicleId").asText())
-                || !"PROJECT_MOCK_NOT_NATIVE_PROTOCOL".equals(result.path("boundary").asText())) throw unavailable();
+        if (!matches(result, "vehicleId", vehicle)
+                || !matches(result, "boundary", "PROJECT_MOCK_NOT_NATIVE_PROTOCOL")) throw unavailable();
         return result;
     }
 
