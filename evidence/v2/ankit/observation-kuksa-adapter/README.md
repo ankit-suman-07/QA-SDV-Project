@@ -75,3 +75,120 @@ workflow. No Ankit versioned TDD derivative was available.
   with loopback permission. Exit 0, 567 passed, 456 subtests passed, 2 skipped
   (V1 MQTT host and native SDK unavailable), 9 deselected. The original
   sandboxed run had failures/errors while the permitted run passed.
+
+## Publication continuation
+
+The offline-only blocker above describes the original draft revision. Ankit
+Suman explicitly authorized implementation of the companion, confirmed-write
+ordering, durable retries, optional motion and the silence ownership rules
+in the PR #56 continuation instruction. Bayan and Emmanuel have pending
+affected-owner review. See the [updated decision record](../../../../docs/v2-ankit-preparation-baseline.md#authorized-observation-companion-binding).
+
+Tested implementation `760afaa0759715b6720a7de8c711a4fa0ad219ee`. Applied
+Ankit verification-before-completion v1.0.0 to map C1/C2/C4/C5 to the
+negative cases, client response proof, isolated component check and limits
+below. No versioned Ankit TDD derivative was available and no paired skill
+evaluation is claimed.
+
+### Configuration and source handoff
+
+Install the existing pins with
+`python -m pip install -r vehicle-simulator/requirements.txt -r ditto/requirements-mqtt.txt`.
+The publisher uses KUKSA Client 0.5.1 and Paho MQTT 2.1.0. No pins changed.
+Run one process for each registered vehicle on Linux. Give all local
+instances the same private persistent state directory and use one dedicated
+writer/credential set per vehicle. Disable the V1 synthetic writer for any
+broker assigned to the V2 adapter. Across hosts, enforce one active owner per
+vehicle through deployment and per-target KUKSA/MQTT grants. The local file
+lock prevents duplicate processes sharing the configured state directory.
+It cannot fence independently configured hosts or directories.
+
+Copy the [manifest example](../../../../tests/fixtures/v2/observations/session-manifest.json)
+and configure its trusted registry with all three vehicle IDs, distinct
+broker host/port pairs, registered session and exact UTC/simulation origin.
+For example, use loopback broker ports 55556, 55557 and 55558, with local
+Mosquitto at 1883. Use `--kuksa-ca` and `--mqtt-ca` for non-loopback
+endpoints. For authenticated deployments supply `SDV_KUKSA_TOKEN` and
+`--mqtt-user` with `SDV_MQTT_PASSWORD` through local secret configuration.
+The MQTT client requires MQTT 5 and uses a clean start with no persistent
+offline queue.
+
+```bash
+python -m scripts.v2_dev.observation_publisher \
+  --vehicle vehicle-001 --manifest ./trusted-session.json \
+  --state-dir ./local-adapter-state --mqtt-host 127.0.0.1 --mqtt-port 1883 \
+  < ./vehicle-001-observations.jsonl
+```
+
+Emmanuel feeds one original compact C2 observation per UTF-8 JSON line.
+The replay tool's outer topic/evaluationTime record is for its offline
+harness. Feed its payload alone when intentionally checking against isolated
+brokers. The [motion fixture](../../../../tests/fixtures/v2/observations/vehicle-001-motion.json)
+supplies `velocityMetersPerSecond: {"x":3,"y":-4,"z":0}`, which yields
+`Vehicle.Speed` float 18.0 km/h, LiDAR 20.0 m, boolean validity true and the
+original envelope on `sdv/vehicle-001/v2/observations`. Missing motion omits
+the speed write. Dropout writes false validity and omits distance, so consumers
+must ignore any cached distance. This publisher emits no supporting battery,
+temperature or tire telemetry. V1 retains its existing synthetic signals and
+psi conversion. Emmanuel's actor/extractor changes remain his handoff.
+
+### Ordering, failure and restart
+
+Each vehicle keeps a SQLite pending record, KUKSA-confirmation phase, completed
+watermark and used event IDs. Keep the journal across restarts. Its event ID
+ledger grows with accepted observations. Drain the pending observation before
+changing endpoint mappings or session manifests. Restart first resumes the
+pending observation, then accepts new input. Upstream observations not yet
+journaled need replay if lost. A malformed or mismatched record has no
+publication side effects. An overlong input line stops the process to avoid
+treating its tail as another record.
+
+KUKSA metadata checks validate the expected types and units. The pinned
+client's explicit VAL v1 Set checks top-level and per-path errors. The public
+convenience method can fall back from VAL v2 without carrying the deadline,
+so the publisher selects VAL v1 directly. Each RPC and MQTT connection or
+acknowledgement wait has a 2 s bound, with up to three attempts per phase
+and 0.25/0.5 s retry waits. OS name resolution is external to the socket
+timeout. Failure closes the corresponding client before reconnect. If
+attempts exhaust, the process exits nonzero with the pending state intact.
+
+Incomplete or uncertain KUKSA writes cannot advance completion or emit a
+companion. A retry may rewrite signals already applied in a partial batch.
+After KUKSA confirmation is journaled, retry resumes at MQTT. If the process
+dies before journaling that confirmation, it reruns the same KUKSA write.
+A lost PUBACK or crash before persisting completion can redeliver the original
+companion. QoS 1 confirms broker acceptance rather than consumer processing.
+The consumer must deduplicate. No atomicity spans KUKSA, MQTT and SQLite.
+
+Bayan's consumer uses the companion for original identity and source UTC.
+The 100 ms Velocitas silence evaluation, separate versioned status schema and
+ingress ordering remain Bayan's handoff. The status must retain last real
+identity/time. Cached, rejected and duplicate deliveries cannot reset silence
+or advance recovery. Backend freshness remains independent of status.
+
+### Verification of the continuation
+
+- Focused Python tests exercised MQTT disconnect/negative acknowledgement,
+  unchanged retry and completed duplicate, pending restart, wrong target,
+  per-path KUKSA rejection and reconnect, metadata mismatch, dropout and speed.
+  `python -m pytest -q tests/test_v2_observation_mapping.py tests/test_v2_observation_publisher.py vehicle-simulator/tests/test_kuksa_publication.py`
+  returned 12 passed and 19 subtests passed. Nine existing V1 live tests were
+  deselected by the non-integration default.
+- `python -m scripts.v2_dev.check` passed 8 tests and 23 fixture/link checks.
+- `git diff --check origin/main HEAD` passed.
+- Python 3.12 CI-equivalent suite used the same five generated protobuf
+  modules and command documented above, with loopback permission. Exit 0,
+  573 passed, 461 subtests passed, 2 skipped (V1 MQTT host and native SDK),
+  and 9 V1 integration tests deselected.
+- `bash evidence/v2/ankit/observation-kuksa-adapter/component-check.sh`
+  used temporary loopback KUKSA 0.7.0 and Mosquitto 2 with the existing VSS.
+  Exit 0. Read back 20.0 m, true validity and 18.0 km/h. Actual MQTT subscriber
+  received the byte-identical envelope at QoS 1, retain false, and a completed
+  retry after publisher restart emitted nothing. The source was
+  `2026-01-01T00:00:00.000Z`. KUKSA readback used broker time
+  `2026-11-21T03:51:10.627Z` (individual writes differed below a millisecond).
+  The SDK test verified the original timestamp in every outbound VAL Set
+  entry, and MQTT retained the original timestamp. This used synthetic input
+  with real components, without CARLA or Velocitas. Both temporary containers
+  were stopped. Joined three-vehicle CARLA/Velocitas, production TLS/ACLs and
+  owner review remain pending.
