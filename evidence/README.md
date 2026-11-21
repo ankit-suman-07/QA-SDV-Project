@@ -76,3 +76,8 @@ Original live-wrapper summary FAIL/exit1 is retained and qualified as a gate-cou
 instrumentation error; selected-gate independent review passes. Historical candidate
 results remain candidate evidence. PR47 targets main; temporary PR48 remains unmerged.
 Human decisions/provenance/report-video gates stay open; no full acceptance/tag claim.
+
+## V2 preparation
+
+- [Shared preparation](v2/preparation.md)
+- [Ankit contract baseline and skill setup](v2/ankit/contracts-and-skill-baseline/README.md)

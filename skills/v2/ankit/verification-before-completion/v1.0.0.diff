@@ -1,0 +1,23 @@
+diff --git a/skills/verification-before-completion.md b/skills/v2/ankit/verification-before-completion/SKILL.md
+index 7d45333..1ce56e7 100644
+--- a/skills/verification-before-completion.md
++++ b/skills/v2/ankit/verification-before-completion/SKILL.md
+@@ -2 +2,2 @@
+-name: verification-before-completion
++name: verification-before-completion-sdv-ankit
++version: 1.0.0
+@@ -37,0 +39,14 @@ Skip any step = lying, not verifying
++## SDV contract and evidence review
++
++Before running checks, list the requirement or contract clause, literal expected
++result, command, and evidence needed for each claim. Include the isolation or
++rejection case when a shared vehicle boundary is involved. Preserve any prior
++failure and attach the later result to the exact revision and configuration.
++
++After each check, record the observed result and exit status. Identify the
++boundary actually exercised (synthetic/replay, HTTP substitute, real component,
++or joined live). For each requirement, record any missing check or pending
++owner decision. A command exit, technical outcome and owner approval are
++three separate facts. Preserve exact-revision evidence and rerun affected checks
++when their inputs change.
++
