@@ -32,4 +32,4 @@ synthetic proof is distinguished from live binding and approval. Record model,
 settings, tool calls, interventions, missed assertions, false claims,
 corrections and reviewer. Compare coverage and effort and record ties or
 drawbacks. Store both raw outputs and the review with Ankit's V2 evidence.
-This setup has no comparison results yet.
+A [dated same-session comparison](../../../../evidence/v2/ankit/measurements-comparison/README.md#dated-verification-skill-comparison) is available. The independent paired evaluation and review remain open.

@@ -1,0 +1,30 @@
+2026-11-21 | Original verification-before-completion
+Input revision: e3b4a6af5421a3b9c88e2c16f51d78f929052990
+Skill Git blob: 7d45333cc4a49c57a80df6c1fe2fa777a207afbc
+Commands from the exported baseline:
+rg -n 'register|expected|OUT_OF_ORDER|UNREGISTERED_SESSION|IN_PROGRESS|CRITICAL' tests/fixtures/v2/sequences/sessions.json
+PYTHONDONTWRITEBYTECODE=1 python -m scripts.v2_dev.check
+
+25:      "expected": [
+26:        "CRITICAL",
+50:      "expected": "UNREGISTERED_SESSION"
+72:      "expected": [
+73:        "CRITICAL",
+74:        "IN_PROGRESS"
+76:      "register": [
+101:      "expected": "OUT_OF_ORDER"
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+OK
+22 SYNTHETIC JSON files; local Markdown links checked
+exit=0
+
+Assessment:
+The offline checker passed 8 tests. The session fixture rejects the
+unregistered successor at line 50. The registered successor at lines 72–76
+enters IN_PROGRESS while retaining CRITICAL health, and the retired sample
+at line 101 is OUT_OF_ORDER. The run covers synthetic fixture behavior.
+Live companion delivery, registration provisioning and owner review remain
+pending.
