@@ -37,7 +37,20 @@ def validate(event, topic=None):
     d=lidar.get('distanceMeters')
     require((lidar['sensorAvailable'] and number(d) and d>=0) or
             (not lidar['sensorAvailable'] and d is None),'INVALID_TYPE','distance/availability')
+    if 'velocityMetersPerSecond' in event:
+        velocity = event['velocityMetersPerSecond']
+        require(isinstance(velocity, dict) and velocity.keys() == {'x', 'y', 'z'},
+                'INVALID_TYPE', 'velocity requires x, y and z')
+        require(all(number(value) for value in velocity.values()),
+                'INVALID_TYPE', 'velocity components must be finite numbers')
+        require(speed_kmh(velocity) <= float.fromhex('0x1.fffffep127'),
+                'INVALID_TYPE', 'speed exceeds VSS float')
     return event
+
+
+def speed_kmh(velocity):
+    return 3.6 * math.hypot(velocity['x'], velocity['y'], velocity['z'])
+
 
 def validate_health(event):
     validate(event)

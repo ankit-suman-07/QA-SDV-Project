@@ -1,12 +1,13 @@
-"""Offline preparation of per-vehicle LiDAR writes from the C2 replay envelope."""
+"""Preparation of per-vehicle VSS writes from the C2 replay envelope."""
 
 import json
 from datetime import timedelta
 
 from scripts.v1_dev.contract import ContractError, decode_event, parse_timestamp, require
-from scripts.v2_dev.contract import validate
+from scripts.v2_dev.contract import speed_kmh, validate
 
 DISTANCE = "Vehicle.Automation.Lidar.Front.NearestObstacleDistance"
+SPEED = "Vehicle.Speed"
 VALIDITY = "Vehicle.Automation.Lidar.Front.IsHealthy"
 
 
@@ -72,4 +73,6 @@ def prepare_observation(wire, *, vehicle_id, manifest, now, previous=None):
         distance = lidar["distanceMeters"]
         require(distance <= float.fromhex("0x1.fffffep127"), "INVALID_TYPE", "distance exceeds VSS float")
         signals[DISTANCE] = float(distance)
+    if "velocityMetersPerSecond" in event:
+        signals[SPEED] = speed_kmh(event["velocityMetersPerSecond"])
     return event, signals

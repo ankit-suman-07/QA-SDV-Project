@@ -31,7 +31,7 @@ The earlier 60/40 effort split is an estimate, not a completion rule. Phase V2 e
 | [Phase V2 tasks and acceptance](13-FINAL-phase-v2-tasks-and-acceptance.md) | Current owner-specific tasks and completion conditions. |
 | [V2 interface contracts](v2-interface-contracts.md) | Versioned payloads, timing/ordering, twin/API/action structures and bounded defaults. |
 | [V2 independent-development guide](v2-independent-development.md) | Fixtures, substitutes, owner workflows and exact preparation commands. |
-| [Ankit V2 baseline and decisions](v2-ankit-preparation-baseline.md) | Tested V1 reference, prep coverage and proposed companion binding for review. |
+| [Ankit V2 baseline and decisions](v2-ankit-preparation-baseline.md) | Tested V1 reference, prep coverage and authorized companion implementation with affected-owner review pending. |
 | [V2 native diagnostic feasibility](v2-native-diagnostic-feasibility.md) | Supported implementations and unresolved protocol/service bindings. |
 | [Architecture](09-architecture-diagrams.md) | Component roles and runtime flows; reconcile historical diagrams with current decisions/contracts. |
 | [Detailed task distribution](10-detailed-task-distribution.md) | Historical allocations and continuing handoffs; newer V2 task documents supersede conflicting V2 ownership. |
@@ -72,7 +72,7 @@ These allocations supersede older conflicting V2 assignments. Preserve original 
 4. Implement against shared expected results. Cover identity, units, timing, recovery and relevant negative cases; shared-contract changes update contracts, fixtures and tests together under the existing review rules.
 5. Record independently implemented/mock-tested status honestly. Real CARLA, native diagnostic and joined three-vehicle acceptance remain separate integration obligations.
 
-The preparation package does not itself establish native uProtocol transport/service binding, OpenSOVD vehicle/provider mapping or live observation-companion binding. Check the feasibility record and close affected decisions before dependent native implementation.
+The preparation package does not itself establish native uProtocol transport/service binding, OpenSOVD vehicle/provider mapping or live observation-companion acceptance. The baseline decision records Ankit’s authorization for publisher implementation. Check the feasibility record and close affected decisions before dependent native implementation.
 
 ## Skills for Phase V2
 

@@ -42,7 +42,12 @@ Reject malformed JSON, duplicate keys, nonfinite numbers, booleans as numbers,
 unknown/padded IDs, unsupported versions and mismatches before side effects.
 Event ID identifies one observation; retry preserves payload and ID. Processing
 UTC records extraction/receipt and never refreshes source time. Optional actionId
-and traceId are preserved together when known.
+and traceId are preserved together when known. Optional
+`velocityMetersPerSecond={x,y,z}` contains three actual CARLA velocity
+components in m/s. Each must be finite and numeric, excluding booleans.
+The derived speed must be finite and representable as a VSS float. Omit the
+field when motion is unknown. Existing LiDAR-only envelopes remain valid.
+[Motion example](../tests/fixtures/v2/observations/vehicle-001-motion.json).
 
 Each session manifest contains simulation origin and UTC origin. Convert:
 `sourceUTC = utcOrigin + (simulationSeconds - simulationOrigin)`.
@@ -103,12 +108,14 @@ float metres and `Vehicle.Automation.Lidar.Front.IsHealthy` boolean sensor valid
 remain compatible legacy outputs. Adapter must not independently decide V2 health.
 Unavailable writes validity false; never a fabricated large distance. Preserve
 source timestamp and observation identity through an explicit companion envelope;
-KUKSA value polling alone cannot prove new samples. The companion transport is a
-project observation JSON stream/file or versioned MQTT observation topic; do not
-invent unregistered VSS paths. Ankit/Bayan must select the live companion delivery
-binding before integration; fixtures let both implement now.
+KUKSA value polling alone cannot prove new samples. Ankit authorized the C5
+MQTT observation topic for implementation after all required KUKSA writes are
+confirmed. Preserve the original envelope across retries and use the
+companion's source timestamp for freshness. KUKSA 0.7.0 can stamp broker
+write time on readback. See the [binding decision](v2-ankit-preparation-baseline.md#authorized-observation-companion-binding).
 
-Speed = 3.6 × norm(CARLA velocity m/s), provenance CARLA. Existing battery
+Speed = 3.6 × norm(CARLA velocity m/s), provenance CARLA for actual source
+input. Omitted motion leaves speed unpublished. Existing battery
 `Vehicle.Powertrain.TractionBattery.StateOfCharge.Current` (%), temperature
 `Vehicle.Powertrain.CombustionEngine.EngineCoolant.Temperature` (°C), tire
 `Vehicle.Chassis.Axle.Row1.Wheel.Left.Tire.Pressure` (uint16 kPa) may stay SYNTHETIC.
@@ -126,7 +133,14 @@ never advance it. Initial fresh healthy observation needs no recovery window.
 Freshness uses original UTC: age ≤5 s AVAILABLE, >5 through 30 STALE, >30 UNAVAILABLE;
 >1 s future UNAVAILABLE/clock error. Sensor validity, last-known health, source
 silence, recovery and transport availability are distinct fields. Stale values
-remain visible but cannot clear faults or count currently healthy.
+remain visible but cannot clear faults or count currently healthy. Velocitas owns
+`evaluate_silence()` every 100 ms using source intervals and local monotonic
+receipt time. A gap strictly greater than 0.5 s triggers silence. Cached,
+rejected and duplicate samples cannot reset silence or advance recovery.
+The backend independently derives source availability. Silence propagation
+requires a separate versioned status update with independent ordering that
+retains the last real observation identity and time. Bayan's status schema
+and ingress handoff remain pending.
 
 ## V2-C5 Events, twins, ordering and history
 
