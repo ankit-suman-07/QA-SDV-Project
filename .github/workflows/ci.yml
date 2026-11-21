@@ -78,6 +78,26 @@ jobs:
       - name: Run unit tests
         run: python -m pytest -q -ra -m "not integration"
 
+  frontend:
+    name: Frontend contract tests
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run dashboard tests
+        working-directory: frontend
+        run: npm test
+
   configuration:
     name: Configuration validation
     runs-on: ubuntu-22.04
@@ -93,6 +113,9 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+
+      - name: Check V2 preparation fixtures and contract links
+        run: python -m scripts.v2_dev.check
 
       - name: Validate tracked JSON files
         run: |
