@@ -187,7 +187,9 @@ public final class HttpVehicleTwinReader {
         if (distance == null) return "CRITICAL".equals(health) && faults.equals(sensorFailure);
         if (distance.compareTo(BigDecimal.valueOf(5)) <= 0) return "CRITICAL".equals(health) && faults.equals(obstruction);
         if (distance.compareTo(BigDecimal.TEN) <= 0) return "WARNING".equals(health) && faults.equals(obstruction);
-        return "HEALTHY".equals(health) && faults.isEmpty();
+        // A recovery reset can retain the critical obstruction and the last accepted clear distance.
+        return ("HEALTHY".equals(health) && faults.isEmpty())
+                || ("CRITICAL".equals(health) && faults.equals(obstruction));
     }
 
     private static BigInteger integer(JsonNode props, String name, int minimum) {

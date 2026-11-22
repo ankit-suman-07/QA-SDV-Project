@@ -3,6 +3,8 @@ package com.ankit.sdv.backend.controller;
 import com.ankit.sdv.backend.service.FleetMaterializer;
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -128,6 +130,43 @@ class V2FleetProjectionTest {
         assertThat(fleet.get("availableVehicles").asInt()).isEqualTo(3);
         assertThat(fleet.get("criticalVehicles").asInt()).isEqualTo(1);
         assertThat(fleet.at("/vehicles/2/sourceSilent").booleanValue()).isTrue();
+    }
+
+    @Test
+    void preservesLastAcceptedObservationAndCriticalFaultAfterRecoveryReset() throws Exception {
+        fault("vehicle-002", 20, "CRITICAL");
+
+        var state = state("vehicle-002");
+        assertThat(state.get("availability").asText()).isEqualTo("AVAILABLE");
+        assertThat(state.get("healthStatus").asText()).isEqualTo("CRITICAL");
+        assertThat(state.get("activeFaults")).isEqualTo(json.valueToTree(List.of("LIDAR_OBSTRUCTION")));
+        assertThat(state.get("recoveryState").asText()).isEqualTo("NONE");
+        assertThat(state.get("recoveryStartedAt").isNull()).isTrue();
+        assertThat(state.at("/lidar/distanceMeters").asInt()).isEqualTo(20);
+        assertThat(state.get("lastEventId").asText()).isEqualTo("vehicle-002-s1-0");
+        assertThat(state.get("sourceTimestamp").asText()).isEqualTo("2026-01-01T00:00:00.000Z");
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "20, HEALTHY, LIDAR_OBSTRUCTION,",
+            "20, CRITICAL, LIDAR_OBSTRUCTION, 2026-01-01T00:00:00Z",
+            "20, CRITICAL, LIDAR_SENSOR_FAILURE,",
+            "20, CRITICAL, UNKNOWN_FAULT,",
+            "8, CRITICAL, LIDAR_OBSTRUCTION,"
+    })
+    void rejectsInvalidRecoveryResetSnapshots(int distance, String health, String faultCode,
+                                              String recoveryStartedAt) throws Exception {
+        fault("vehicle-002", distance, health);
+        var thing = thing("vehicle-002");
+        var props = (ObjectNode) thing.at("/features/v2/properties");
+        props.putArray("faults").add(faultCode);
+        props.put("recoveryStartedAt", recoveryStartedAt);
+        save("vehicle-002", thing);
+
+        var state = state("vehicle-002");
+        assertThat(state.get("availability").asText()).isEqualTo("UNAVAILABLE");
+        assertThat(state.get("healthStatus").isNull()).isTrue();
     }
 
     @Test
