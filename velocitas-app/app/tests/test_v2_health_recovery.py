@@ -413,28 +413,55 @@ def test_ordering_rejection_preserves_recovery(recovery_near_completion, source_
     assert at_deadline["recoveryStartedAt"] is None
 
 
-@pytest.mark.parametrize(
-    ("age_ms", "clears_fault"),
-    [
-        pytest.param(5000, True, id="age-5s-fresh"),
-        pytest.param(5001, False, id="age-5s-plus-1ms-stale"),
-        pytest.param(30000, False, id="age-30s-stale"),
-        pytest.param(30001, False, id="age-30s-plus-1ms-unavailable"),
-        pytest.param(-1000, True, id="future-1s-tolerated"),
-        pytest.param(-1001, False, id="future-1s-plus-1ms-unavailable"),
-    ],
-)
-def test_recovery_completion_requires_fresh_utc_input(
-    recovery_near_completion, age_ms, clears_fault,
-):
+@pytest.mark.parametrize("age_ms", [5000, -1000])
+def test_recovery_completion_accepts_fresh_utc_boundaries(recovery_near_completion, age_ms):
     _, deliver, _ = recovery_near_completion
-    # C4 classifies availability separately. The clock fixture shows that
-    # ordered stale/future input retains the fault and resets the window.
     result = deliver(5, 2500, 2480, age_ms=age_ms)
-    assert result["recoveryState"] == "NONE"
+    assert (result["health"], result["recoveryState"]) == ("HEALTHY", "NONE")
+    assert result["faults"] == []
     assert result["recoveryStartedAt"] is None
-    assert result["health"] == ("HEALTHY" if clears_fault else "CRITICAL")
-    assert result["faults"] == ([] if clears_fault else ["LIDAR_OBSTRUCTION"])
+
+
+@pytest.mark.parametrize("age_ms", [5001, 30000, 30001, -1001])
+def test_clock_rejection_preserves_accepted_observation_and_restarts_recovery(replay_session, age_ms):
+    _, make_engine, observation = replay_session
+    engine = make_engine()
+    initial = engine.process(observation(0, source_ms=0))
+    assert initial["health"] == "CRITICAL" and initial["faults"] == ["LIDAR_OBSTRUCTION"]
+    accepted = observation(1, distance=20, source_ms=500)
+    assert engine.process(accepted)["recoveryState"] == "IN_PROGRESS"
+    before = accepted_recovery_state(engine)
+    rejected = observation(2, distance=31, source_ms=1000, age_ms=age_ms, provenance="CARLA")
+    reset = engine.process(rejected)
+
+    assert {field: reset[field] for field in accepted} == accepted
+    assert (reset["health"], reset["recoveryState"]) == ("CRITICAL", "NONE")
+    assert reset["faults"] == ["LIDAR_OBSTRUCTION"]
+    assert reset["recoveryStartedAt"] is None
+    assert accepted_recovery_state(engine) == (before[0], None, *before[2:])
+
+    # The first fresh sample can reuse the rejected sample's identity and time.
+    for index, ms in enumerate((1000, 1500, 2000, 2500, 2999), start=2):
+        fresh = engine.process(observation(index, distance=20, source_ms=ms))
+        assert (fresh["health"], fresh["recoveryState"]) == ("CRITICAL", "IN_PROGRESS")
+        assert fresh["faults"] == ["LIDAR_OBSTRUCTION"]
+        assert datetime.fromisoformat(fresh["recoveryStartedAt"]) == (
+            datetime.fromisoformat(accepted["sourceTimestamp"]) + timedelta(milliseconds=500)
+        )
+
+    cleared = engine.process(observation(7, distance=20, source_ms=3000))
+    assert (cleared["health"], cleared["recoveryState"]) == ("HEALTHY", "NONE")
+    assert cleared["faults"] == []
+    assert cleared["recoveryStartedAt"] is None
+
+
+def test_clock_rejection_before_first_accepted_observation(replay_session):
+    _, make_engine, observation = replay_session
+    engine = make_engine()
+    with pytest.raises(ValueError, match="without an accepted sample"):
+        engine.process(observation(0, age_ms=-1001))
+    assert engine.evaluate_silence()["health"] is None
+    assert engine.process(observation(0, distance=20))["health"] == "HEALTHY"
 
 
 def test_clock_only_silence_interrupts_recovery_without_changing_observation(monkeypatch):
