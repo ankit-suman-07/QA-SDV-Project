@@ -131,14 +131,14 @@ source observations. Then HEALTHY/[] and `recoveryState=NONE`. A fault/invalid/g
 stale/future input or session restart resets window. Duplicate/cached/late events
 never advance it. Initial fresh healthy observation needs no recovery window.
 
-**Owner-approved clarification (Ankit Suman, November 21, 2026):** If a stale
-or future-dated observation is rejected during recovery from a CRITICAL
-obstruction, retain the last accepted LiDAR values and the active
-`LIDAR_OBSTRUCTION` fault with `health=CRITICAL`. Set `recoveryState=NONE`
-and `recoveryStartedAt=null`. A retained distance above 10 m is valid in this
-state. A subsequent fresh valid observation above 10 m starts a new recovery
-window, and clearing still requires at least two seconds of continuous fresh
-healthy source observations.
+**Contract clarification:** A rejected stale or future-dated observation
+preserves the last accepted LiDAR values and the established health and fault
+pair. Set `recoveryState=NONE` and `recoveryStartedAt=null`. With a retained
+distance above 10 m, the supported fault pairs are WARNING with
+`LIDAR_OBSTRUCTION`, or CRITICAL with either `LIDAR_OBSTRUCTION` or
+`LIDAR_SENSOR_FAILURE` as the sole active fault. A subsequent fresh valid
+observation above 10 m starts a new recovery window. Clearing still requires
+at least two seconds of continuous fresh healthy source observations.
 
 Freshness uses original UTC: age ≤5 s AVAILABLE, >5 through 30 STALE, >30 UNAVAILABLE;
 >1 s future UNAVAILABLE/clock error. Sensor validity, last-known health, source
@@ -176,7 +176,8 @@ traffic. Restart reloads persisted watermark; unreadable state blocks only that
 vehicle. Failed/conditional writes never advance watermark or append committed
 history. Idempotent retries must reconcile actual committed state after lost reply.
 
-For the rejected-input reset in C4, the snapshot retains the last accepted
+For the rejected-input reset in C4, the snapshot preserves the accepted observation
+and its ordering watermark, including
 `sessionGeneration`, `sessionId`, `sequence`, `frame`, `sourceTimestamp`
 and `lastEventId`. The rejected observation supplies neither a new observation
 nor a new ordering watermark. Backend readers accept the retained-fault
