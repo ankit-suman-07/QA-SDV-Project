@@ -149,9 +149,44 @@ class V2FleetProjectionTest {
 
     @ParameterizedTest
     @CsvSource({
+            "warning-stale, WARNING, LIDAR_OBSTRUCTION",
+            "warning-future, WARNING, LIDAR_OBSTRUCTION",
+            "sensor-stale, CRITICAL, LIDAR_SENSOR_FAILURE",
+            "sensor-future, CRITICAL, LIDAR_SENSOR_FAILURE"
+    })
+    void projectsProducerSnapshotsAfterClockRejection(String scenario, String severity,
+                                                     String faultCode) throws Exception {
+        var snapshots = json.readTree(Files.readAllBytes(FIXTURES.resolve("twins/retained-fault-resets.json")))
+                .get(scenario);
+        var thing = thing("vehicle-002");
+        var feature = (ObjectNode) thing.at("/features/v2");
+        for (int stage = 0; stage < 3; stage++) {
+            var props = snapshots.get(stage);
+            feature.set("properties", props);
+            save("vehicle-002", thing);
+            now.set(Instant.parse(props.get("sourceTimestamp").asText()));
+            var state = state("vehicle-002");
+            assertThat(state.get("availability").asText()).as("stage %d", stage).isEqualTo("AVAILABLE");
+            assertThat(state.get("healthStatus").asText()).isEqualTo(stage == 2 ? "HEALTHY" : severity);
+            assertThat(state.get("activeFaults"))
+                    .isEqualTo(json.valueToTree(stage == 2 ? List.of() : List.of(faultCode)));
+            assertThat(state.get("recoveryState").asText()).isEqualTo(stage == 1 ? "IN_PROGRESS" : "NONE");
+            assertThat(state.get("recoveryStartedAt")).isEqualTo(props.get("recoveryStartedAt"));
+            assertThat(state.at("/lidar/distanceMeters").asInt()).isEqualTo(20);
+            for (String field : List.of("lastEventId", "sourceTimestamp", "sessionId", "sessionGeneration",
+                    "sequence", "frame")) {
+                assertThat(state.get(field)).as(field).isEqualTo(props.get(field));
+            }
+        }
+    }
+
+    @ParameterizedTest
+    @CsvSource({
             "20, HEALTHY, LIDAR_OBSTRUCTION,",
             "20, CRITICAL, LIDAR_OBSTRUCTION, 2026-01-01T00:00:00Z",
-            "20, CRITICAL, LIDAR_SENSOR_FAILURE,",
+            "20, WARNING, LIDAR_SENSOR_FAILURE,",
+            "20, WARNING, UNKNOWN_FAULT,",
+            "8, CRITICAL, LIDAR_SENSOR_FAILURE,",
             "20, CRITICAL, UNKNOWN_FAULT,",
             "8, CRITICAL, LIDAR_OBSTRUCTION,"
     })
