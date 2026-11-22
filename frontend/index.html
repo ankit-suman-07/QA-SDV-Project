@@ -32,6 +32,7 @@
         <p id="fleet-status" role="status" aria-live="polite">Loading fleet…</p>
         <p id="fleet-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
         <div id="fleet-counts" class="metric-grid" aria-label="Fleet counts"></div>
+        <ul id="fleet-vehicles" aria-label="Registered vehicles" hidden></ul>
         <p class="fleet-help">Health counts include only AVAILABLE vehicles. Stale observations remain visible as last known data.</p>
       </section>
       <section class="card fleet-detail" aria-labelledby="selected-title">
@@ -52,15 +53,27 @@
           <div><dt>LiDAR sensor available</dt><dd id="lidar-sensor">—</dd></div>
           <div><dt>Source timestamp (UTC)</dt><dd id="source-timestamp">—</dd></div>
           <div><dt>Last event ID</dt><dd id="last-event">—</dd></div>
+          <div data-v2 hidden><dt>Recovery</dt><dd id="vehicle-recovery">—</dd></div>
+          <div data-v2 hidden><dt>Recovery started (UTC)</dt><dd id="recovery-started">—</dd></div>
+          <div data-v2 hidden><dt>Source silent</dt><dd id="source-silent">—</dd></div>
+          <div data-v2 hidden><dt>Session / generation</dt><dd id="source-session">—</dd></div>
+          <div data-v2 hidden><dt>Sequence / frame</dt><dd id="source-frame">—</dd></div>
+          <div data-v2 hidden><dt>Observation provenance</dt><dd id="source-provenance">—</dd></div>
         </dl>
         <h3>LiDAR obstruction scenario</h3>
         <p class="fleet-help">An accepted command acknowledges dispatch. Health and recovery appear only in subsequent observations. A timeout leaves execution unknown.</p>
         <div class="fleet-actions">
           <button type="button" id="inject" class="btn btn--primary" disabled>Inject obstruction</button>
           <button type="button" id="clear" class="btn btn--outline" disabled>Clear obstruction</button>
+          <button type="button" id="restart" class="btn btn--outline" data-v2 hidden disabled>Restart app</button>
         </div>
         <p id="action-status" role="status" aria-live="polite"></p>
         <p id="action-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
+        <div data-v2 hidden>
+          <h3>Recent actions</h3>
+          <p id="history-status" role="status"></p>
+          <ul id="action-history"></ul>
+        </div>
       </section>
     </main>
   </div>

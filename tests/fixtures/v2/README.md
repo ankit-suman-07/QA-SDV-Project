@@ -14,6 +14,7 @@ against these outputs; passing the reference tools alone proves no production fe
 | [sessions](sequences/sessions.json): unauthorized restart rejected, registered successor, retired-session rejection | V2-C5 |
 | [source silence](sequences/source-silence.json): clock-only ticks reset recovery, no fabricated observation | V2-C2/C4 |
 | [dropout/clock](sequences/dropout-and-clock.json): invalid sensor, stale/future input reset recovery | V2-C2/C4 |
+| [optional motion](observations/vehicle-001-motion.json): 3, -4, 0 m/s → 18 km/h | V2-C2/C4 |
 | [session manifest](observations/session-manifest.json): synthetic actor/broker/provider/twin and simulation origin mapping | V2-C1/C2 |
 | observations/vehicle-001.json through vehicle-003.json → corresponding health-events/ and twins/ files | V2-C1/C5 |
 | [fleet cases](twins/fleet-cases.json): missing vehicles retained, counts in expected order below | V2-C6 |

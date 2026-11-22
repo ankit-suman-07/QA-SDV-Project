@@ -28,7 +28,7 @@ class FleetServiceTest {
         });
         var properties = new V1DittoProperties("mock", URI.create("http://localhost:8080"), Duration.ofSeconds(2),
                 Duration.ofSeconds(2), Duration.ofSeconds(5), Duration.ofSeconds(30), null, null, null);
-        try (var fleet = new FleetService(vehicles, properties, clock)) {
+        try (var fleet = new FleetService(vehicles, properties, clock, mock(V2VehicleService.class))) {
             var result = fleet.read();
             assertThat(result.generatedAt()).isEqualTo(now);
             assertThat(result.totalVehicles()).isEqualTo(2);

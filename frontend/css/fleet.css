@@ -8,3 +8,4 @@
 .fleet-help { color: var(--color-text-muted); line-height: 1.6; }
 #fleet-counts { grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); }
 #action-status { overflow-wrap: anywhere; }
+[data-v2][hidden] { display: none; }
