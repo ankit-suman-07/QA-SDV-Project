@@ -3,6 +3,7 @@
 No network or development-tool dependencies. B2 supplies the TwinWriter.
 """
 from datetime import datetime, timedelta
+from hashlib import sha256
 import json
 import math
 import re
@@ -10,7 +11,13 @@ from threading import Lock
 from typing import Protocol
 
 VEHICLES = ('vehicle-001', 'vehicle-002')
+V2_VEHICLES = (*VEHICLES, 'vehicle-003')
 MAX_PAYLOAD_BYTES = 65536
+# C2/C5 do not specify replay retention. Keep fixed-size ID digests for up to
+# 65,536 observations (about 109 minutes at 10 Hz) per vehicle's active session.
+# Do not evict IDs or silently switch sessions. Historical IDs are process-local.
+MAX_V2_SESSION_EVENT_IDS = 65_536
+MAX_VSS_FLOAT = float.fromhex('0x1.fffffep127')
 _UTC_TIMESTAMP = re.compile(
     r'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|\+00:00)\Z')
 
@@ -182,6 +189,131 @@ def _validate_event(topic, event):
     return event
 
 
+def is_v2_health_topic(topic):
+    return isinstance(topic, str) and topic.endswith('/v2/health')
+
+
+def decode_v2_health(topic, payload):
+    event = decode_json(payload, max_bytes=MAX_PAYLOAD_BYTES)
+    try:
+        validate_v2_health(topic, event)
+        encode_json(event)
+    except EventError as error:
+        if isinstance(event, dict):
+            for key, attribute in (('vehicleId', 'vehicle_id'), ('eventId', 'event_id')):
+                if isinstance(event.get(key), str):
+                    setattr(error, attribute, event[key])
+        raise
+    return event
+
+
+def validate_v2_health(topic, event):
+    """Validate the C2/C5 wire envelope before the persistence boundary."""
+    _require(isinstance(event, dict), 'INVALID_TYPE')
+    _require('lastEventId' not in event, 'INVALID_TYPE')
+    required = (
+        'schemaVersion', 'vehicleId', 'eventId', 'sessionId', 'sessionGeneration',
+        'sequence', 'frame', 'simulationSeconds', 'sourceTimestamp', 'processingTimestamp',
+        'provenance', 'lidar', 'health', 'faults', 'recoveryState', 'recoveryStartedAt',
+        'sourceSilent',
+    )
+    _require(all(key in event for key in required), 'MISSING_FIELD')
+    vehicle = event['vehicleId']
+    _require(isinstance(vehicle, str) and vehicle in V2_VEHICLES, 'UNKNOWN_VEHICLE')
+    _require(topic == f'sdv/{vehicle}/v2/health', 'TOPIC_MISMATCH')
+    _require(event['schemaVersion'] == '2.0.0', 'UNSUPPORTED_VERSION')
+    _require(('actionId' in event) == ('traceId' in event), 'MISSING_FIELD')
+    for key in ('eventId', 'sessionId', 'actionId', 'traceId'):
+        if key in event:
+            _require(isinstance(event[key], str) and bool(event[key].strip()), 'INVALID_TYPE')
+    for key, minimum in (('sessionGeneration', 1), ('sequence', 0), ('frame', 0)):
+        _require(type(event[key]) is int and event[key] >= minimum, 'INVALID_TYPE')
+    elapsed = event['simulationSeconds']
+    _require(type(elapsed) in (int, float) and elapsed >= 0, 'INVALID_TYPE')
+    try:
+        finite_elapsed = math.isfinite(elapsed)
+    except OverflowError as error:
+        raise EventError('INVALID_TYPE') from error
+    _require(finite_elapsed, 'INVALID_TYPE')
+    parse_timestamp(event['sourceTimestamp'])
+    parse_timestamp(event['processingTimestamp'])
+    _require(event['provenance'] in ('CARLA', 'SYNTHETIC'), 'INVALID_TYPE')
+    _require(type(event['sourceSilent']) is bool, 'INVALID_TYPE')
+
+    if 'velocityMetersPerSecond' in event:
+        velocity = event['velocityMetersPerSecond']
+        _require(isinstance(velocity, dict) and velocity.keys() == {'x', 'y', 'z'},
+                 'INVALID_TYPE')
+        # Check the magnitude before hypot converts components to float.
+        _require(all(type(value) in (int, float) and abs(value) <= MAX_VSS_FLOAT
+                     for value in velocity.values()), 'INVALID_TYPE')
+        speed = 3.6 * math.hypot(velocity['x'], velocity['y'], velocity['z'])
+        _require(speed <= MAX_VSS_FLOAT, 'INVALID_TYPE')
+
+    lidar = event['lidar']
+    _require(isinstance(lidar, dict), 'INVALID_TYPE')
+    _require('distanceMeters' in lidar and 'sensorAvailable' in lidar, 'MISSING_FIELD')
+    available, distance = lidar['sensorAvailable'], lidar['distanceMeters']
+    _require(type(available) is bool, 'INVALID_TYPE')
+    if available:
+        _require(type(distance) in (int, float) and distance >= 0, 'INVALID_TYPE')
+        try:
+            finite_distance = math.isfinite(distance)
+        except OverflowError as error:
+            raise EventError('INVALID_TYPE') from error
+        _require(finite_distance, 'INVALID_TYPE')
+    else:
+        _require(distance is None, 'INVALID_TYPE')
+    health, faults = event['health'], event['faults']
+    _require(health in ('HEALTHY', 'WARNING', 'CRITICAL'), 'INVALID_HEALTH')
+    state, started = event['recoveryState'], event['recoveryStartedAt']
+    _require(state in ('NONE', 'IN_PROGRESS'), 'INVALID_TYPE')
+    if state == 'IN_PROGRESS':
+        _require(not event['sourceSilent'], 'INVALID_TYPE')
+        _require(timestamp_key(started) <= timestamp_key(event['sourceTimestamp']),
+                 'INVALID_TIMESTAMP')
+        _require(available and distance > 10, 'HEALTH_FAULT_MISMATCH')
+        _require((health in ('WARNING', 'CRITICAL') and faults == ['LIDAR_OBSTRUCTION'])
+                 or (health == 'CRITICAL' and faults == ['LIDAR_SENSOR_FAILURE']),
+                 'HEALTH_FAULT_MISMATCH')
+    else:
+        _require(started is None, 'INVALID_TYPE')
+        if not available:
+            expected = 'CRITICAL', ['LIDAR_SENSOR_FAILURE']
+        elif distance <= 5:
+            expected = 'CRITICAL', ['LIDAR_OBSTRUCTION']
+        elif distance <= 10:
+            expected = 'WARNING', ['LIDAR_OBSTRUCTION']
+        else:
+            expected = 'HEALTHY', []
+        # A recovery reset can retain the prior fault on a healthy sample.
+        retained_fault = expected[0] == 'HEALTHY' and (
+            (health in ('WARNING', 'CRITICAL') and faults == ['LIDAR_OBSTRUCTION'])
+            or (health == 'CRITICAL' and faults == ['LIDAR_SENSOR_FAILURE'])
+        )
+        _require((health, faults) == expected or retained_fault, 'HEALTH_FAULT_MISMATCH')
+    return event
+
+
+def v2_write_needed(properties, previous):
+    """Compare a candidate with the last persisted V2 snapshot."""
+    if previous is None:
+        _require(properties['sessionGeneration'] == 1, 'UNREGISTERED_SESSION')
+        return True
+    if properties['lastEventId'] == previous['lastEventId']:
+        _require(properties == previous, 'EVENT_ID_CONFLICT')
+        return False
+    generation = properties['sessionGeneration']
+    _require(generation >= previous['sessionGeneration'], 'OUT_OF_ORDER')
+    _require(generation == previous['sessionGeneration']
+             and properties['sessionId'] == previous['sessionId'], 'UNREGISTERED_SESSION')
+    _require(properties['sequence'] > previous['sequence']
+             and properties['frame'] > previous['frame']
+             and timestamp_key(properties['sourceTimestamp']) > timestamp_key(previous['sourceTimestamp']),
+             'OUT_OF_ORDER')
+    return True
+
+
 class TwinWriter(Protocol):
     """B2 adapter boundary. Implementations must be safe across two vehicles.
 
@@ -203,8 +335,51 @@ class Ingress:
         self.writer = writer
         self._locks = {vehicle: Lock() for vehicle in VEHICLES}
         self._committed = {}
+        self._v2_locks = {vehicle: Lock() for vehicle in V2_VEHICLES}
+        self._v2_replay = {}
+
+    @property
+    def supports_v2(self):
+        """Whether this writer exposes the version-specific persistence boundary."""
+        return (callable(getattr(self.writer, 'load_v2_watermark', None))
+                and callable(getattr(self.writer, 'persist_v2', None)))
+
+    def _process_v2(self, topic, payload):
+        event = decode_v2_health(topic, payload)
+        properties = decode_json(encode_json(event))
+        properties['lastEventId'] = properties.pop('eventId')
+        vehicle = event['vehicleId']
+        # A dedicated V2 store may implement the generic writer boundary.
+        load = getattr(self.writer, 'load_v2_watermark', self.writer.load_watermark)
+        persist = getattr(self.writer, 'persist_v2', self.writer.persist)
+        with self._v2_locks[vehicle]:
+            previous = load(vehicle)
+            if previous is not None and not isinstance(previous, dict):
+                raise WatermarkError('invalid V2 persisted snapshot')
+            needs_write = v2_write_needed(properties, previous)
+            session = (event['sessionGeneration'], event['sessionId'])
+            active_session, accepted_ids = self._v2_replay.get(vehicle, (session, set()))
+            _require(session == active_session, 'UNREGISTERED_SESSION')
+
+            event_key = sha256(event['eventId'].encode('utf-8')).digest()
+            if previous is not None and len(accepted_ids) < MAX_V2_SESSION_EVENT_IDS:
+                # The snapshot is authoritative, including on the first read
+                # after restart or after a write whose response was lost.
+                accepted_ids.add(sha256(previous['lastEventId'].encode('utf-8')).digest())
+                self._v2_replay[vehicle] = session, accepted_ids
+            if needs_write:
+                _require(event_key not in accepted_ids, 'EVENT_ID_CONFLICT')
+                if len(accepted_ids) >= MAX_V2_SESSION_EVENT_IDS:
+                    # A persistence failure keeps QoS 1 delivery pending.
+                    raise WatermarkError('V2 source session event-ID capacity reached')
+                persist(vehicle, properties)
+                accepted_ids.add(event_key)
+                self._v2_replay[vehicle] = session, accepted_ids
+        return event
 
     def process(self, topic, payload):
+        if is_v2_health_topic(topic):
+            return self._process_v2(topic, payload)
         event = decode_event(topic, payload)
         vehicle = event['vehicleId']
         # JSON round-trip avoids deepcopy's lower recursion limit and gives the

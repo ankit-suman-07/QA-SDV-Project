@@ -8,7 +8,8 @@ from urllib.parse import quote, urlsplit
 import requests
 
 from ditto.mqtt_ingress import (VEHICLES, EventError, WatermarkError, validate_event,
-                                decode_json, encode_json, timestamp_key)
+                                decode_json, encode_json, timestamp_key,
+                                V2_VEHICLES, validate_v2_health, v2_write_needed)
 
 THINGS = {vehicle: f'sdv:{vehicle}' for vehicle in VEHICLES}
 POLICIES = {vehicle: f'sdv:{vehicle}-policy' for vehicle in VEHICLES}
@@ -201,6 +202,75 @@ class DittoWriter:
         # Keep the existing properties-only authorization boundary. Definitions,
         # desiredProperties and legacy features are outside this conditional write.
         self._http('PUT', path, value=properties, match_etag=etag)
+
+    @staticmethod
+    def _v2_thing_id(vehicle_id):
+        if vehicle_id not in V2_VEHICLES:
+            raise DittoError('UNKNOWN_VEHICLE')
+        return f'sdv:{vehicle_id}'
+
+    @staticmethod
+    def _validate_v2_properties(vehicle_id, properties):
+        if not isinstance(properties, dict) or 'lastEventId' not in properties or 'eventId' in properties:
+            raise DittoError('INVALID_PERSISTED_STATE')
+        event = dict(properties)
+        event['eventId'] = event.pop('lastEventId')
+        try:
+            validate_v2_health(f'sdv/{vehicle_id}/v2/health', event)
+        except EventError as error:
+            raise DittoError('INVALID_PERSISTED_STATE') from error
+        return properties
+
+    def load_v2_watermark(self, vehicle_id):
+        thing = self._read('things', self._v2_thing_id(vehicle_id))
+        attributes, features = thing.get('attributes'), thing.get('features', {})
+        if (thing.get('thingId') != f'sdv:{vehicle_id}' or not isinstance(attributes, dict)
+                or attributes.get('vehicleId') != vehicle_id):
+            raise DittoError('TWIN_IDENTITY')
+        if not isinstance(features, dict):
+            raise DittoError('INVALID_PERSISTED_STATE')
+        if 'v2' not in features:
+            return None
+        feature = features['v2']
+        if not isinstance(feature, dict):
+            raise DittoError('INVALID_PERSISTED_STATE')
+        return self._validate_v2_properties(vehicle_id, feature.get('properties'))
+
+    def persist_v2(self, vehicle_id, properties):
+        feature_path = f'things/{self._v2_thing_id(vehicle_id)}/features/v2'
+        properties_path = feature_path + '/properties'
+        self._validate_v2_properties(vehicle_id, properties)
+        for _ in range(2):
+            previous = self.load_v2_watermark(vehicle_id)
+            etag = None
+            if previous is not None:
+                result = self._http('GET', properties_path)
+                try:
+                    previous = self._validate_v2_properties(
+                        vehicle_id, decode_json(result.content, max_bytes=1024 * 1024)
+                    )
+                except EventError as error:
+                    raise DittoError('INVALID_DITTO_JSON') from error
+                etag = result.headers.get('ETag')
+                if not isinstance(etag, str) or not etag.strip():
+                    raise DittoError('DITTO_ETAG_MISSING')
+            if not v2_write_needed(properties, previous):
+                return
+            try:
+                if previous is None:
+                    result = self._http('PUT', feature_path,
+                                        value={'properties': properties}, create_only=True)
+                else:
+                    result = self._http('PUT', properties_path, value=properties, match_etag=etag)
+            except DittoError as error:
+                if error.status != 412:
+                    raise
+                continue
+            if result is not None:
+                if result.status_code not in (201, 204):
+                    raise DittoError('DITTO_HTTP_FAILURE', result.status_code)
+                return
+        raise DittoError('DITTO_CONCURRENT_UPDATE', 412)
 
     @staticmethod
     def _validate_policy(policy, policy_id, subject):
