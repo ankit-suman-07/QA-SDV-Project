@@ -691,3 +691,87 @@ def test_clock_only_silence_is_isolated_per_vehicle(monkeypatch):
             )
             assert result["recoveryStartedAt"] is None
         assert accepted_recovery_state(second) == second_after
+
+
+@pytest.mark.parametrize(
+    ("bad_source_ms", "bad_receipt_ms", "age_ms", "restart_ms"),
+    [(375, 5376, 5001, 5500), (1501, 500, -1001, 875)],
+    ids=["stale", "future"],
+)
+def test_freshness_rejection_resets_recovery_without_replacing_accepted_observation(
+    replay_session, bad_source_ms, bad_receipt_ms, age_ms, restart_ms,
+):
+    _, make_engine, observation = replay_session
+    fault = ["LIDAR_OBSTRUCTION"]
+    obstruction = observation(0)
+    engine = make_engine()
+    other_id = "vehicle-002" if obstruction["vehicleId"] != "vehicle-002" else "vehicle-001"
+    other = make_engine(other_id)
+    other.process(dict(obstruction, vehicleId=other_id, sessionId="unaffected-session"))
+    other_before = accepted_recovery_state(other)
+
+    initial = engine.process(obstruction)
+    assert (initial["health"], initial["faults"], initial["recoveryState"]) == (
+        "CRITICAL", fault, "NONE",
+    )
+    healthy = observation(2, distance=20)
+    partial = engine.process(healthy)
+    assert (partial["health"], partial["faults"], partial["recoveryState"]) == (
+        "CRITICAL", fault, "IN_PROGRESS",
+    )
+    identity_fields = ("lidar", "eventId", "sourceTimestamp", "sequence", "frame",
+                       "vehicleId", "sessionId", "sessionGeneration")
+    assert {key: partial[key] for key in identity_fields} == {
+        key: healthy[key] for key in identity_fields
+    }
+    latest, original_start, health, faults, ledger = accepted_recovery_state(engine)
+
+    rejected = observation(
+        9, distance=31, source_ms=bad_source_ms, receipt_ms=bad_receipt_ms, age_ms=age_ms,
+    )
+    response = engine.process(rejected)
+
+    assert engine._started_at is None
+    assert (engine._health, engine._faults) == ("CRITICAL", fault)
+    assert engine._latest == latest, "Freshness rejection replaced the last accepted observation"
+    assert accepted_recovery_state(engine) == (latest, None, health, faults, ledger)
+    assert response["recoveryState"] == "NONE"
+    assert response["recoveryStartedAt"] is None
+    assert (response["health"], response["faults"]) == ("CRITICAL", fault)
+    assert {key: response[key] for key in identity_fields} == {
+        key: healthy[key] for key in identity_fields
+    }
+
+    # No delivery at this tick. The rejected receipt cannot postpone silence.
+    observation(10, source_ms=restart_ms - 1, receipt_ms=restart_ms - 1)
+    status = engine.evaluate_silence()
+    assert status["sourceSilent"] is True
+    assert status["recoveryState"] == "NONE"
+    assert status["recoveryStartedAt"] is None
+    assert (status["health"], status["faults"]) == ("CRITICAL", fault)
+    assert accepted_recovery_state(other) == other_before
+
+    for index, offset in enumerate((0, 500, 1000, 1500, 1999, 2000), start=3):
+        sample = observation(index, distance=20, source_ms=restart_ms + offset)
+        result = engine.process(sample)
+        if offset == 0:
+            new_start = datetime.fromisoformat(sample["sourceTimestamp"])
+            assert new_start > original_start
+        if offset < 2000:
+            assert (result["health"], result["faults"], result["recoveryState"]) == (
+                "CRITICAL", fault, "IN_PROGRESS",
+            )
+            assert datetime.fromisoformat(result["recoveryStartedAt"]) == new_start
+        else:
+            assert (result["health"], result["faults"], result["recoveryState"]) == (
+                "HEALTHY", [], "NONE",
+            )
+            assert result["recoveryStartedAt"] is None
+        assert accepted_recovery_state(other) == other_before
+
+    completed = accepted_recovery_state(engine)
+    with pytest.raises(ValueError, match="duplicate event ID"):
+        engine.process(healthy)
+    with pytest.raises(ValueError, match="out-of-order observation"):
+        engine.process(dict(healthy, eventId="distinct-but-out-of-order"))
+    assert accepted_recovery_state(engine) == completed
