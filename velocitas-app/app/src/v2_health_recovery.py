@@ -1,5 +1,6 @@
 """Offline V2 health and recovery for validated, ordered-source observations."""
 
+from copy import deepcopy
 from datetime import datetime, timedelta
 from hashlib import sha256
 from math import isfinite
@@ -33,6 +34,7 @@ class V2HealthRecovery:
         self._faults = []
         self._started_at = None
         self._latest = None
+        self._last_observation = None
         self._accepted_event_ids = set()
 
     def evaluate_silence(self) -> dict:
@@ -113,12 +115,15 @@ class V2HealthRecovery:
             self._started_at = None
             raise ValueError("invalid LiDAR observation")
 
+        if not -MAX_FUTURE_OFFSET <= now - source <= MAX_OBSERVATION_AGE:
+            self._started_at = None
+            if self._last_observation is None:
+                raise ValueError("stale or future observation without an accepted sample")
+            return {**deepcopy(self._last_observation), **self.evaluate_silence()}
+
         health, faults = classify(distance, available)
-        fresh = -MAX_FUTURE_OFFSET <= now - source <= MAX_OBSERVATION_AGE
         if health != "HEALTHY":
             self._health, self._faults = health, faults
-            self._started_at = None
-        elif not fresh:
             self._started_at = None
         elif self._health != "HEALTHY":
             if self._started_at is None:
@@ -131,6 +136,7 @@ class V2HealthRecovery:
             self._accepted_event_ids.clear()
         self._accepted_event_ids.add(event_key)
         self._latest = session, event_id, sequence, frame, source, receipt
+        self._last_observation = deepcopy(observation)
         recovering = self._started_at is not None
         return {
             **observation,
