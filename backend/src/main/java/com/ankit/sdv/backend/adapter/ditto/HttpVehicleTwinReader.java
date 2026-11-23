@@ -179,15 +179,16 @@ public final class HttpVehicleTwinReader {
     private static boolean trustedHealth(String health, List<String> faults, BigDecimal distance, boolean recovering) {
         var obstruction = List.of("LIDAR_OBSTRUCTION");
         var sensorFailure = List.of("LIDAR_SENSOR_FAILURE");
-        if (recovering) {
-            return distance != null && distance.compareTo(BigDecimal.TEN) > 0
-                    && (("CRITICAL".equals(health) && (faults.equals(obstruction) || faults.equals(sensorFailure)))
-                        || ("WARNING".equals(health) && faults.equals(obstruction)));
+        if (distance != null && distance.compareTo(BigDecimal.TEN) > 0) {
+            // The last accepted clear distance can coexist with a retained fault after a reset.
+            return ("CRITICAL".equals(health) && (faults.equals(obstruction) || faults.equals(sensorFailure)))
+                    || ("WARNING".equals(health) && faults.equals(obstruction))
+                    || (!recovering && "HEALTHY".equals(health) && faults.isEmpty());
         }
+        if (recovering) return false;
         if (distance == null) return "CRITICAL".equals(health) && faults.equals(sensorFailure);
         if (distance.compareTo(BigDecimal.valueOf(5)) <= 0) return "CRITICAL".equals(health) && faults.equals(obstruction);
-        if (distance.compareTo(BigDecimal.TEN) <= 0) return "WARNING".equals(health) && faults.equals(obstruction);
-        return "HEALTHY".equals(health) && faults.isEmpty();
+        return "WARNING".equals(health) && faults.equals(obstruction);
     }
 
     private static BigInteger integer(JsonNode props, String name, int minimum) {

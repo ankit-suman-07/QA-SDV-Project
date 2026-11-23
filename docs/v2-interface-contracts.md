@@ -130,6 +130,16 @@ health/faults and set `recoveryState=IN_PROGRESS` until ≥2 s continuous health
 source observations. Then HEALTHY/[] and `recoveryState=NONE`. A fault/invalid/gap,
 stale/future input or session restart resets window. Duplicate/cached/late events
 never advance it. Initial fresh healthy observation needs no recovery window.
+
+**Contract clarification:** A rejected stale or future-dated observation
+preserves the last accepted LiDAR values and the established health and fault
+pair. Set `recoveryState=NONE` and `recoveryStartedAt=null`. With a retained
+distance above 10 m, the supported fault pairs are WARNING with
+`LIDAR_OBSTRUCTION`, or CRITICAL with either `LIDAR_OBSTRUCTION` or
+`LIDAR_SENSOR_FAILURE` as the sole active fault. A subsequent fresh valid
+observation above 10 m starts a new recovery window. Clearing still requires
+at least two seconds of continuous fresh healthy source observations.
+
 Freshness uses original UTC: age ≤5 s AVAILABLE, >5 through 30 STALE, >30 UNAVAILABLE;
 >1 s future UNAVAILABLE/clock error. Sensor validity, last-known health, source
 silence, recovery and transport availability are distinct fields. Stale values
@@ -165,6 +175,13 @@ session accept only higher generation with newer UTC; reject retired-session
 traffic. Restart reloads persisted watermark; unreadable state blocks only that
 vehicle. Failed/conditional writes never advance watermark or append committed
 history. Idempotent retries must reconcile actual committed state after lost reply.
+
+For the rejected-input reset in C4, the snapshot preserves the accepted observation
+and its ordering watermark, including
+`sessionGeneration`, `sessionId`, `sequence`, `frame`, `sourceTimestamp`
+and `lastEventId`. The rejected observation supplies neither a new observation
+nor a new ordering watermark. Backend readers accept the retained-fault
+snapshot under the existing validation and source availability rules.
 
 **New project-lead retention default for review:** Bayan owns per-vehicle fault
 transitions and diagnostic projection history (100 latest records and ≤7 days,
