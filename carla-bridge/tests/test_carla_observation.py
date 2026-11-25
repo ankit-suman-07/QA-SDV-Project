@@ -105,3 +105,40 @@ def test_ankit_mapper_accepts_two_consecutive_observations():
                                            manifest=MANIFEST, now=now, previous=first)
     assert (values[VALIDITY], values[DISTANCE], envelope["eventId"]) == (
         True, 7.77, "vehicle-001-s1-1")
+
+
+SUB_MS_MANIFEST = {**MANIFEST, "utcOrigin": "2026-01-01T00:00:00.123456Z"}
+
+
+class _Recorder:
+    def __init__(self):
+        self.calls = []
+
+    def write(self, values, source):
+        self.calls.append((values, source))
+
+    def publish(self, topic, wire):
+        self.calls.append((topic, wire))
+
+
+def test_source_time_keeps_sub_millisecond_utc_anchor():
+    observation = observe(manifest=SUB_MS_MANIFEST, simulation_seconds=100.1)
+    expected = parse_timestamp(SUB_MS_MANIFEST["utcOrigin"]) + (
+        datetime(2026, 1, 1, 0, 0, 0, 100000, tzinfo=timezone.utc)
+        - datetime(2026, 1, 1, tzinfo=timezone.utc))
+    assert parse_timestamp(observation["sourceTimestamp"]) == expected
+
+
+def test_publisher_accepts_consecutive_observations_with_sub_millisecond_anchor():
+    import sqlite3
+    from scripts.v2_dev.observation_publisher import Publisher
+
+    lines = [to_json_line(observe(manifest=SUB_MS_MANIFEST, sequence=i, frame=100 + i,
+                                  simulation_seconds=100.0 + i / 10))
+             for i in range(3)]
+    now = parse_timestamp(json.loads(lines[-1])["sourceTimestamp"])
+    kuksa, mqtt = _Recorder(), _Recorder()
+    publisher = Publisher(sqlite3.connect(":memory:"), "vehicle-001", SUB_MS_MANIFEST,
+                          kuksa, mqtt, clock=lambda: now, pause=lambda _: None)
+    assert [publisher.accept(line) for line in lines] == ["published"] * 3
+    assert [wire for _, wire in mqtt.calls] == lines
