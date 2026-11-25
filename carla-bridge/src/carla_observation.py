@@ -2,8 +2,8 @@
 
 One envelope per vehicle per LiDAR frame. Source UTC is derived from the
 session manifest: sourceUTC = utcOrigin + (simulationSeconds - simulationOrigin).
-Simulation seconds are rounded to milliseconds so the UTC string and the
-consumer's manifest check agree exactly. Reason codes (NO_FRONT_HIT,
+Simulation seconds are rounded to milliseconds and UTC keeps full
+microsecond precision, so the consumer's exact manifest check agrees. Reason codes (NO_FRONT_HIT,
 INVALID_FRAME) belong in run logs, not in the envelope.
 """
 
@@ -19,7 +19,11 @@ def _utc(text):
 
 
 def _iso(moment):
-    return moment.astimezone(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    # Never truncate: the publisher compares source UTC to the manifest mapping
+    # exactly, so any truncation of a sub-millisecond anchor is a rejection.
+    moment = moment.astimezone(timezone.utc)
+    timespec = "milliseconds" if moment.microsecond % 1000 == 0 else "microseconds"
+    return moment.isoformat(timespec=timespec).replace("+00:00", "Z")
 
 
 def build_observation(*, manifest, vehicle_id, sequence, frame, simulation_seconds,
