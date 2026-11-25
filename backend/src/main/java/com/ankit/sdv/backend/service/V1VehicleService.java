@@ -40,18 +40,22 @@ public class V1VehicleService {
         var snapshot = reader.read(vehicleId, thingId);
         if (snapshot.isEmpty()) return unavailable;
         Instant evaluation = evaluationTime == null ? clock.instant() : evaluationTime;
-        BigDecimal now = BigDecimal.valueOf(evaluation.getEpochSecond())
-                .add(BigDecimal.valueOf(evaluation.getNano(), 9));
         var state = snapshot.get();
-        BigDecimal age = now.subtract(state.sourceEpochSeconds());
-        if (age.compareTo(BigDecimal.ONE.negate()) < 0) {
+        String availability = availability(evaluation, state.sourceEpochSeconds(), config.staleAfter(), config.unavailableAfter());
+        if (availability == null) {
             LOG.warn("ditto_read_failed vehicle={} code=FUTURE_SOURCE_TIMESTAMP", vehicleId);
             return unavailable;
         }
-        String availability = age.compareTo(seconds(config.unavailableAfter())) > 0 ? "UNAVAILABLE"
-                : age.compareTo(seconds(config.staleAfter())) > 0 ? "STALE" : "AVAILABLE";
         return new V1VehicleResponse(vehicleId, thingId, state.health(), availability, state.faults(),
                 state.lidar(), state.sourceTimestamp(), state.lastEventId());
+    }
+
+    static String availability(Instant now, BigDecimal source, Duration stale, Duration unavailable) {
+        BigDecimal age = BigDecimal.valueOf(now.getEpochSecond())
+                .add(BigDecimal.valueOf(now.getNano(), 9)).subtract(source);
+        if (age.compareTo(BigDecimal.ONE.negate()) < 0) return null;
+        return age.compareTo(seconds(unavailable)) > 0 ? "UNAVAILABLE"
+                : age.compareTo(seconds(stale)) > 0 ? "STALE" : "AVAILABLE";
     }
 
     private static BigDecimal seconds(Duration duration) {

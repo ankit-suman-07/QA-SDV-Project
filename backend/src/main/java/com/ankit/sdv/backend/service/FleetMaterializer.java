@@ -20,6 +20,7 @@ public final class FleetMaterializer implements AutoCloseable {
     private final FleetService fleet;
     private final RestClient client;
     private final URI target;
+    private final String version;
     private final Duration timeout;
     private final Clock clock;
     private final ExecutorService writes = Executors.newVirtualThreadPerTaskExecutor();
@@ -28,9 +29,10 @@ public final class FleetMaterializer implements AutoCloseable {
     private volatile Instant lastSuccess;
     private final JsonMapper json = JsonMapper.builder().build();
 
-    public FleetMaterializer(FleetService fleet, RestClient client, URI baseUrl, Duration timeout, Clock clock) {
+    public FleetMaterializer(FleetService fleet, RestClient client, URI baseUrl, Duration timeout, Clock clock, String version) {
         this.fleet = fleet; this.client = client; this.timeout = timeout; this.clock = clock;
-        this.target = URI.create(baseUrl.toString().replaceAll("/+$", "") + "/api/2/things/sdv:fleet-v1/features/summary/properties");
+        this.version = version;
+        this.target = URI.create(baseUrl.toString().replaceAll("/+$", "") + "/api/2/things/sdv:fleet-" + version + "/features/summary/properties");
     }
 
     @Scheduled(fixedDelayString = "${sdv.v1.fleet.interval:2s}", initialDelayString = "${sdv.v1.fleet.initial-delay:2s}")
@@ -44,7 +46,7 @@ public final class FleetMaterializer implements AutoCloseable {
         Future<Boolean> pending = null;
         try {
             // Recompute from individual observations on every attempt, never replay a stale cached summary.
-            byte[] body = json.writeValueAsBytes(fleet.read());
+            byte[] body = json.writeValueAsBytes("v2".equals(version) ? fleet.refreshV2() : fleet.read());
             pending = writes.submit(() -> client.put().uri(target).contentType(MediaType.APPLICATION_JSON)
                     .contentLength(body.length).body(body).exchange((request, response) -> {
                         int status = response.getStatusCode().value();
@@ -54,7 +56,7 @@ public final class FleetMaterializer implements AutoCloseable {
                     }));
             if (pending.get(timeout.toNanos(), TimeUnit.NANOSECONDS)) {
                 lastSuccess = clock.instant();
-                LOG.info("fleet_write_succeeded thing=sdv:fleet-v1");
+                LOG.info("fleet_write_succeeded thing=sdv:fleet-{}", version);
             } else failed("HTTP_STATUS");
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt(); failed("INTERRUPTED");

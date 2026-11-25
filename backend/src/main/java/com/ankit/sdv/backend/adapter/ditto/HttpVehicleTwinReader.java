@@ -1,6 +1,7 @@
 package com.ankit.sdv.backend.adapter.ditto;
 
 import com.ankit.sdv.backend.dto.V1VehicleResponse.Lidar;
+import com.ankit.sdv.backend.dto.V2VehicleResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -13,6 +14,8 @@ import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.json.JsonMapper;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.function.Function;
 import java.net.URI;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -41,6 +44,14 @@ public final class HttpVehicleTwinReader {
     }
 
     public Optional<TwinSnapshot> read(String vehicleId, String thingId) {
+        return read(vehicleId, thingId, "v1", this::parseV1);
+    }
+
+    public Optional<V2Snapshot> readV2(String vehicleId, String thingId) {
+        return read(vehicleId, thingId, "v2", props -> parseV2(vehicleId, thingId, props));
+    }
+
+    private <T> Optional<T> read(String vehicleId, String thingId, String feature, Function<JsonNode, T> parse) {
         try {
             return client.get().uri(URI.create(baseUrl + "/api/2/things/" + thingId))
                     .accept(MediaType.APPLICATION_JSON).exchange((request, response) -> {
@@ -59,7 +70,7 @@ public final class HttpVehicleTwinReader {
                             return Optional.empty();
                         }
                         try {
-                            return Optional.of(parse(vehicleId, thingId, body));
+                            return Optional.of(parse.apply(properties(vehicleId, thingId, feature, body)));
                         } catch (JacksonException | IllegalArgumentException | DateTimeException exception) {
                             // Never emit raw JSON, URLs, credentials or dependency exception text.
                             LOG.warn("ditto_read_failed vehicle={} code=INVALID_SNAPSHOT", vehicleId);
@@ -72,15 +83,19 @@ public final class HttpVehicleTwinReader {
         }
     }
 
-    private TwinSnapshot parse(String vehicleId, String thingId, byte[] body) {
+    private JsonNode properties(String vehicleId, String thingId, String feature, byte[] body) {
         JsonNode thing = json.readTree(body);
         require(thing != null && thing.isObject());
         validateJsonValues(thing);
         require(thingId.equals(text(thing, "thingId")));
         require(vehicleId.equals(text(thing.path("attributes"), "vehicleId")));
-        JsonNode props = thing.at("/features/v1/properties");
+        JsonNode props = thing.at("/features/" + feature + "/properties");
         require(props.isObject());
         require(vehicleId.equals(text(props, "vehicleId")));
+        return props;
+    }
+
+    private TwinSnapshot parseV1(JsonNode props) {
         require("1.0.0".equals(text(props, "schemaVersion")));
         String source = text(props, "sourceTimestamp");
         BigDecimal epoch = sourceEpoch(source);
@@ -113,6 +128,76 @@ public final class HttpVehicleTwinReader {
         require(expectedHealth.equals(health) && expectedFaults.equals(faults));
         return new TwinSnapshot(health, List.copyOf(faults), new Lidar(distance, sensor), source, eventId, epoch);
     }
+
+    private V2Snapshot parseV2(String vehicleId, String thingId, JsonNode props) {
+        require("2.0.0".equals(text(props, "schemaVersion")));
+        String source = text(props, "sourceTimestamp");
+        BigDecimal epoch = sourceEpoch(source);
+        sourceEpoch(text(props, "processingTimestamp"));
+        require(List.of("CARLA", "SYNTHETIC").contains(text(props, "provenance")));
+        JsonNode simulation = props.path("simulationSeconds");
+        require(simulation.isNumber() && Double.isFinite(simulation.doubleValue()) && simulation.decimalValue().signum() >= 0);
+        if (props.has("actionId") || props.has("traceId")) {
+            text(props, "actionId");
+            text(props, "traceId");
+        }
+
+        JsonNode lidar = props.path("lidar");
+        require(lidar.isObject() && lidar.path("sensorAvailable").isBoolean() && lidar.has("distanceMeters"));
+        boolean sensorAvailable = lidar.get("sensorAvailable").booleanValue();
+        JsonNode value = lidar.get("distanceMeters");
+        require(sensorAvailable
+                ? value.isNumber() && Double.isFinite(value.doubleValue()) && value.decimalValue().signum() >= 0
+                : value.isNull());
+        BigDecimal distance = sensorAvailable ? value.decimalValue() : null;
+        String health = text(props, "health");
+        JsonNode faultNode = props.path("faults");
+        require(faultNode.isArray());
+        List<String> faults = new ArrayList<>();
+        for (JsonNode fault : faultNode) {
+            require(fault.isTextual());
+            faults.add(fault.asText());
+        }
+        String recovery = text(props, "recoveryState");
+        require(props.path("sourceSilent").isBoolean() && props.has("recoveryStartedAt"));
+        boolean silent = props.get("sourceSilent").booleanValue();
+        String started = null;
+        boolean recovering = "IN_PROGRESS".equals(recovery);
+        if (recovering) {
+            started = text(props, "recoveryStartedAt");
+            require(sourceEpoch(started).compareTo(epoch) <= 0 && !silent);
+        } else {
+            require("NONE".equals(recovery) && props.get("recoveryStartedAt").isNull());
+        }
+        require(trustedHealth(health, faults, distance, recovering));
+        return new V2Snapshot(new V2VehicleResponse(vehicleId, thingId, health, null, List.copyOf(faults),
+                new Lidar(distance, sensorAvailable), source, text(props, "lastEventId"), text(props, "sessionId"),
+                integer(props, "sessionGeneration", 1), integer(props, "sequence", 0), integer(props, "frame", 0),
+                recovery, started, silent), epoch);
+    }
+
+    private static boolean trustedHealth(String health, List<String> faults, BigDecimal distance, boolean recovering) {
+        var obstruction = List.of("LIDAR_OBSTRUCTION");
+        var sensorFailure = List.of("LIDAR_SENSOR_FAILURE");
+        if (distance != null && distance.compareTo(BigDecimal.TEN) > 0) {
+            // The last accepted clear distance can coexist with a retained fault after a reset.
+            return ("CRITICAL".equals(health) && (faults.equals(obstruction) || faults.equals(sensorFailure)))
+                    || ("WARNING".equals(health) && faults.equals(obstruction))
+                    || (!recovering && "HEALTHY".equals(health) && faults.isEmpty());
+        }
+        if (recovering) return false;
+        if (distance == null) return "CRITICAL".equals(health) && faults.equals(sensorFailure);
+        if (distance.compareTo(BigDecimal.valueOf(5)) <= 0) return "CRITICAL".equals(health) && faults.equals(obstruction);
+        return "WARNING".equals(health) && faults.equals(obstruction);
+    }
+
+    private static BigInteger integer(JsonNode props, String name, int minimum) {
+        JsonNode value = props.path(name);
+        require(value.isIntegralNumber() && value.bigIntegerValue().compareTo(BigInteger.valueOf(minimum)) >= 0);
+        return value.bigIntegerValue();
+    }
+
+    public record V2Snapshot(V2VehicleResponse state, BigDecimal sourceEpochSeconds) {}
 
     private static String text(JsonNode object, String field) {
         JsonNode value = object.path(field);
@@ -155,6 +240,6 @@ public final class HttpVehicleTwinReader {
     }
 
     private static void require(boolean valid) {
-        if (!valid) throw new IllegalArgumentException("Invalid individual V1 twin snapshot");
+        if (!valid) throw new IllegalArgumentException("Invalid individual twin snapshot");
     }
 }

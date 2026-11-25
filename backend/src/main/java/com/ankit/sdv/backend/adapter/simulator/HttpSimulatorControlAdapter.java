@@ -45,10 +45,20 @@ public final class HttpSimulatorControlAdapter implements SimulatorControlAdapte
     @Override public boolean dispatchAcknowledged() { return true; }
 
     @Override public void executeAction(String vehicleId, DiagnosticAction action, DiagnosticScenario scenario, String actionId, String traceId) {
+        execute(vehicleId, action, scenario, actionId, traceId, false);
+    }
+
+    /** Reuse V1 wire routing while retaining V2's explicit upstream timeout/unavailable classifications. */
+    public void executeV2(String vehicleId, DiagnosticAction action, String actionId, String traceId) {
+        execute(vehicleId, action, DiagnosticScenario.LIDAR_OBSTRUCTION, actionId, traceId, true);
+    }
+
+    private void execute(String vehicleId, DiagnosticAction action, DiagnosticScenario scenario,
+            String actionId, String traceId, boolean v2) {
         if (!supportsVehicle(vehicleId)) throw new IllegalArgumentException("Unsupported provider vehicle ID");
         // A deadline covers both headers and body. Cancellation interrupts the owned virtual thread,
         // causing the HTTP exchange/body stream to close; it cannot undo provider execution.
-        var pending = requests.submit(() -> post(vehicleId, action, scenario, actionId, traceId));
+        var pending = requests.submit(() -> post(vehicleId, action, scenario, actionId, traceId, v2));
         ProviderDispatchException failure;
         try {
             pending.get(responseTimeout.toNanos(), TimeUnit.NANOSECONDS);
@@ -73,7 +83,7 @@ public final class HttpSimulatorControlAdapter implements SimulatorControlAdapte
 
     @Override public void close() { requests.shutdownNow(); }
 
-    private void post(String vehicleId, DiagnosticAction action, DiagnosticScenario scenario, String actionId, String traceId) {
+    private void post(String vehicleId, DiagnosticAction action, DiagnosticScenario scenario, String actionId, String traceId, boolean v2) {
         URI provider = providers.get(vehicleId);
         if (provider == null) throw new IllegalArgumentException("Unsupported provider vehicle ID");
         var body = new SimulatorActionRequest(vehicleId, action, scenario, actionId, traceId);
@@ -82,6 +92,8 @@ public final class HttpSimulatorControlAdapter implements SimulatorControlAdapte
         client.post().uri(target).contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON)
                     .contentLength(payload.length).body(payload).exchange((request, response) -> {
                         int status = response.getStatusCode().value();
+                        if (v2 && status == 504) throw new ProviderDispatchException(TIMEOUT);
+                        if (v2 && status >= 500) throw new ProviderDispatchException(UNAVAILABLE);
                         if (status >= 400 && status < 500) throw new ProviderDispatchException(REJECTED);
                         if (status < 200 || status >= 300) throw new ProviderDispatchException(BAD_RESPONSE);
                         byte[] bytes = response.getBody().readNBytes(MAX_ACK_BYTES + 1);

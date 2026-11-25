@@ -1,0 +1,34 @@
+2026-11-21 | Ankit verification-before-completion v1.0.0
+Input revision: e3b4a6af5421a3b9c88e2c16f51d78f929052990
+Skill Git blob: 1ce56e72ae1fac5a3fa1c3e4550e05a56ffad67c
+Pre-check map:
+C2/C5 trust boundary: unregistered successor and retired delivery must be rejected.
+C4 recovery: accepted successor starts recovery with prior CRITICAL severity.
+Check: literal session fixture and shared prep checker at pinned revision.
+
+Commands from the exported baseline:
+rg -n 'register|expected|OUT_OF_ORDER|UNREGISTERED_SESSION|IN_PROGRESS|CRITICAL' tests/fixtures/v2/sequences/sessions.json
+PYTHONDONTWRITEBYTECODE=1 python -m scripts.v2_dev.check
+
+25:      "expected": [
+26:        "CRITICAL",
+50:      "expected": "UNREGISTERED_SESSION"
+72:      "expected": [
+73:        "CRITICAL",
+74:        "IN_PROGRESS"
+76:      "register": [
+101:      "expected": "OUT_OF_ORDER"
+........
+----------------------------------------------------------------------
+Ran 8 tests in 0.003s
+
+OK
+22 SYNTHETIC JSON files; local Markdown links checked
+exit=0
+
+Assessment:
+C2/C5 fixture line 50 expects UNREGISTERED_SESSION; line 101 expects
+OUT_OF_ORDER for retired delivery. C4 lines 72–76 expect CRITICAL and
+IN_PROGRESS once the successor is explicitly registered. The prep check
+passed the synthetic boundary (8 tests, exit 0). Live registration,
+companion delivery and affected-owner approval require separate evidence.
