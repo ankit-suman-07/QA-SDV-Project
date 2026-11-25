@@ -41,3 +41,29 @@ shows the fix.
 No obstruction, degradation or dropout scenario and no separate ground truth
 (next task). No run longer than 20 s, no Velocitas or MQTT consumer in the
 loop, and the 1.5 m mount was not checked against vehicle pitch while braking.
+
+## Generation, streaming and clock uncertainty (2026-11-25)
+
+Code at `916887d` on `emmanuel/feature/v2-carla-fleet-runner-v2` (rebased on `main`
+after #66 merged). Two consecutive 20 s autopilot runs on Town10HD_Opt, same host
+and CARLA build as above, with a fresh `carla-bridge/state/`.
+
+| Run | Generation | Observations per vehicle | Missing / stale | Clock uncertainty | Max wall lag | Cleanup |
+|---|---:|---|---|---:|---:|---|
+| live-3 | 1 | 199 / 199 / 199 | 0 / 0 | 0.63 ms | 0.028 s | 6 owned, 0 errors |
+| live-4 | 2 | 199 / 199 / 199 | 0 / 0 | 0.90 ms | 0.091 s | 6 owned, 0 errors |
+
+- **Generation:** the runs claimed 1 and then 2 from the persisted state file.
+- **Publisher:** for each vehicle, both runs went in order through
+  `scripts.v2_dev.observation_publisher.Publisher` with one state database, so the
+  session rolled over from generation 1 to 2. The KUKSA and MQTT clients were
+  recording stubs, with the clock set to each line's processing time. Result:
+  398/398 published per vehicle.
+- **Streaming:** during live-4 a reader of `vehicle-001.jsonl` saw 10, 40, 71 and
+  101 lines at 3 s intervals, before `summary.json` existed.
+- **Clock uncertainty:** the value is the window in which the simulation origin and
+  UTC anchor were read. It excludes the host clock's offset from true UTC.
+
+Samples: [live-3](live-3/manifest.json), [live-4](live-4/manifest.json); first 5
+observations per vehicle. Not covered: a real KUKSA or MQTT broker, Velocitas in
+the loop, and runs longer than 20 s.

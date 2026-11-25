@@ -12,6 +12,8 @@ never here. Publication to KUKSA/MQTT is Ankit's
 | `src/carla_observation.py` | V2-C2 envelope and compact JSON line | no |
 | `src/run_manifest.py` | Session manifest: vehicle ↔ actor/sensor IDs, clock origins, settings | no |
 | `src/vehicle_stream.py` | Per-vehicle sequencing, missing/stale frames, real-time pacing | no |
+| `src/session_state.py` | Persisted, increasing session generation; UTC origin never rolls back | no |
+| `src/line_sink.py` | Line-flushed JSONL so a publisher can follow a live run | no |
 | `src/fleet_runner.py` | CARLA layer: spawn, LiDAR, synchronous 10 Hz loop, cleanup | yes |
 
 ## Run
@@ -37,10 +39,24 @@ Output goes to `carla-bridge/runs/<UTC time>/` (git-ignored):
 `manifest.json`, `vehicle-00N.jsonl` (publisher input), `run-log.jsonl`
 (per-frame reason codes) and `summary.json` (counts, lag, cleanup).
 
+Session state lives in `carla-bridge/state/session-state.json` (git-ignored).
+Each run claims the next generation there before writing anything, so a
+restarted run is generation 2, 3, … as V2-C2 requires. Do not delete it to
+"reset": consumers reject a generation they have already passed. If it is
+unreadable the run stops instead of starting again at 1.
+
+To publish a live run, follow each vehicle file (lines are flushed as written):
+
+```bash
+tail -n +1 -f carla-bridge/runs/<run>/vehicle-001.jsonl | python -m scripts.v2_dev.observation_publisher \
+    --vehicle vehicle-001 --manifest carla-bridge/runs/<run>/manifest.json --state-dir <state-dir>
+```
+
 ## Behaviour
 
 - Synchronous mode, 0.1 s ticks, LiDAR at 10 Hz rotation: one full scan per observation.
 - Sensor at the vehicle's front centre, 1.5 m up, zero rotation; attributes are pinned in `LIDAR_ATTRIBUTES` and recorded in the manifest.
+- The manifest's `clock.uncertaintySeconds` is the window in which the simulation origin and the UTC anchor were read. It does not include the host clock's own offset from true UTC.
 - Pacing waits before each tick so simulation time never passes the wall clock; source time is always at or before processing time.
 - A missing frame yields no observation (logged `NO_SENSOR_DATA`); a repeated or older frame is dropped (`STALE_FRAME`).
 - Cleanup destroys only the six actors this run spawned and restores the world settings.
@@ -51,5 +67,5 @@ Output goes to `carla-bridge/runs/<UTC time>/` (git-ignored):
 python -m pytest -q carla-bridge/tests
 ```
 
-43 tests, CARLA-free, including round trips through Ankit's `prepare_observation`.
+58 tests, CARLA-free, including round trips through Ankit's `prepare_observation`.
 Live verification: [evidence/v2/emmanuel/carla-fleet-runner](../evidence/v2/emmanuel/carla-fleet-runner/README.md).

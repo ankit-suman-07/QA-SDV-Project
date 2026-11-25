@@ -1,0 +1,88 @@
+{
+  "provenance": "CARLA",
+  "sessionId": "carla-20261125T181836100795Z",
+  "sessionGeneration": 1,
+  "utcOrigin": "2026-11-25T18:18:36.100Z",
+  "simulationOrigin": 567.192,
+  "clock": {
+    "utcAnchor": "host system clock via container",
+    "uncertaintySeconds": 0.000627
+  },
+  "vehicles": [
+    {
+      "vehicleId": "vehicle-001",
+      "actorId": 24,
+      "sensorId": 25,
+      "provider": "provider-001",
+      "broker": "kuksa-001",
+      "brokerPort": 55555,
+      "app": "app-001",
+      "twinId": "sdv:vehicle-001"
+    },
+    {
+      "vehicleId": "vehicle-002",
+      "actorId": 26,
+      "sensorId": 27,
+      "provider": "provider-002",
+      "broker": "kuksa-002",
+      "brokerPort": 55555,
+      "app": "app-002",
+      "twinId": "sdv:vehicle-002"
+    },
+    {
+      "vehicleId": "vehicle-003",
+      "actorId": 28,
+      "sensorId": 29,
+      "provider": "provider-003",
+      "broker": "kuksa-003",
+      "brokerPort": 55555,
+      "app": "app-003",
+      "twinId": "sdv:vehicle-003"
+    }
+  ],
+  "run": {
+    "map": "Carla/Maps/Town10HD_Opt",
+    "carlaServerVersion": "0.9.15",
+    "carlaClientVersion": "0.9.15",
+    "fixedDeltaSeconds": 0.1,
+    "synchronousMode": true,
+    "drive": true,
+    "seed": 7,
+    "spawnPointIndices": [
+      1,
+      2,
+      3
+    ],
+    "sensor": {
+      "type": "sensor.lidar.ray_cast",
+      "attributes": {
+        "channels": "32",
+        "range": "50",
+        "points_per_second": "100000",
+        "rotation_frequency": "10",
+        "upper_fov": "10",
+        "lower_fov": "-30",
+        "sensor_tick": "0.0"
+      },
+      "transformRelativeToActor": {
+        "x": 2.425,
+        "y": 0.0,
+        "z": 1.5,
+        "pitch": 0.0,
+        "yaw": 0.0,
+        "roll": 0.0
+      }
+    },
+    "region": {
+      "x": [
+        0,
+        50
+      ],
+      "absY": 1.5,
+      "z": [
+        -1.0,
+        1.0
+      ]
+    }
+  }
+}
