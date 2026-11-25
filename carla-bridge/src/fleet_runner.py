@@ -10,9 +10,13 @@ Outputs in OUT_DIR:
   run-log.jsonl          per-frame reason codes and measured distances
   summary.json           counts, pacing lag and cleanup result
 
+Every line is flushed as written, so a publisher can follow a live run.
+Session generation is claimed from SESSION_STATE before anything is written.
+
 Environment: CARLA_HOST (host.docker.internal), CARLA_PORT (2000),
 DURATION_SECONDS (30), OUT_DIR (/out), SPAWN_POINTS ("1,2,3"),
-EXPECT_MAP (Town10HD_Opt), DRIVE (0 = parked, 1 = autopilot), SEED (7).
+EXPECT_MAP (Town10HD_Opt), DRIVE (0 = parked, 1 = autopilot), SEED (7),
+SESSION_STATE (/state/session-state.json).
 """
 
 import json
@@ -26,7 +30,9 @@ from pathlib import Path
 import carla
 
 from carla_observation import to_json_line
+from line_sink import LineSink
 from run_manifest import VEHICLE_IDS, build_manifest
+from session_state import claim_session
 from vehicle_stream import VehicleStream, pace_delay
 
 FIXED_DELTA_SECONDS = 0.1
@@ -129,13 +135,21 @@ def main():
 
         for _ in range(WARMUP_TICKS):
             world.tick()
+        # Bracket the anchor: the simulation origin and the UTC reading are taken
+        # within this window, which is recorded as the anchor uncertainty.
+        before = time.monotonic()
         simulation_origin = world.get_snapshot().timestamp.elapsed_seconds
         utc_origin = datetime.now(timezone.utc)
         wall_origin = time.monotonic()
+        uncertainty = round(wall_origin - before, 6)
+        session_id = f"carla-{utc_origin:%Y%m%dT%H%M%S%fZ}"
+        generation = claim_session(env("SESSION_STATE", "/state/session-state.json"),
+                                   session_id=session_id, utc_origin=utc_origin)
 
         manifest = build_manifest(
-            session_id=f"carla-{utc_origin:%Y%m%dT%H%M%SZ}", generation=1,
+            session_id=session_id, generation=generation,
             utc_origin=utc_origin, simulation_origin=simulation_origin,
+            clock_uncertainty_seconds=uncertainty,
             actors=[(vid, actor.id, sensor.id) for vid, actor, sensor, _ in vehicles],
             run={
                 "map": map_name,
@@ -153,8 +167,8 @@ def main():
         (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
         streams = {vid: VehicleStream(manifest, vid) for vid, _, _, _ in vehicles}
-        files = {vid: open(out / f"{vid}.jsonl", "w") for vid, _, _, _ in vehicles}
-        log = open(out / "run-log.jsonl", "w")
+        files = {vid: LineSink(out / f"{vid}.jsonl") for vid, _, _, _ in vehicles}
+        log = LineSink(out / "run-log.jsonl")
         counts = {vid: {"observations": 0, "missing": 0, "stale": 0} for vid in streams}
         max_lag = 0.0
         try:
@@ -188,7 +202,8 @@ def main():
         finally:
             for handle in list(files.values()) + [log]:
                 handle.close()
-        summary.update({"sessionId": manifest["sessionId"], "counts": counts,
+        summary.update({"sessionId": manifest["sessionId"], "sessionGeneration": generation,
+                        "counts": counts,
                         "maxWallLagSeconds": round(max_lag, 3)})
     finally:
         for sensor in sensors:

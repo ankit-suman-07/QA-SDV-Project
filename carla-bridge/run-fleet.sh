@@ -13,13 +13,15 @@ BRIDGE=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 OUT=${1:-"${BRIDGE}/runs/$(date -u +%Y%m%dT%H%M%SZ)"}
 IMAGE="qa-sdv-carla-client:0.9.15"
 
-mkdir -p "${OUT}"
+STATE="${BRIDGE}/state"   # persisted session generation; git-ignored
+mkdir -p "${OUT}" "${STATE}"
 OUT=$(CDPATH= cd -- "${OUT}" && pwd)
 docker build --platform linux/amd64 -q -t "${IMAGE}" "${BRIDGE}" >/dev/null
 
 docker run --rm --platform linux/amd64 \
     --add-host host.docker.internal:host-gateway \
     -v "${OUT}:/out" \
+    -v "${STATE}:/state" \
     -e CARLA_HOST="${CARLA_HOST:-host.docker.internal}" \
     -e CARLA_PORT="${CARLA_PORT:-2000}" \
     -e DURATION_SECONDS="${DURATION_SECONDS:-30}" \

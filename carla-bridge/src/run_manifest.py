@@ -6,6 +6,7 @@ sensor IDs are runtime values recorded for evidence; they are never identities.
 Origins are rounded to milliseconds so the observation clock mapping is exact.
 """
 
+import math
 from datetime import timedelta, timezone
 
 VEHICLE_IDS = ("vehicle-001", "vehicle-002", "vehicle-003")
@@ -22,6 +23,9 @@ def build_manifest(*, session_id, generation, utc_origin, simulation_origin, act
                    clock_uncertainty_seconds):
     if type(generation) is not int or generation < 1:
         raise ValueError("session generation must be an integer >= 1")
+    if (type(clock_uncertainty_seconds) not in (int, float)
+            or not math.isfinite(clock_uncertainty_seconds) or clock_uncertainty_seconds < 0):
+        raise ValueError("clock uncertainty must be a finite number of seconds >= 0")
     rows = sorted(actors)
     if tuple(vehicle for vehicle, _, _ in rows) != VEHICLE_IDS:
         raise ValueError("actors must map vehicle-001, vehicle-002 and vehicle-003 exactly once")
@@ -49,6 +53,8 @@ def build_manifest(*, session_id, generation, utc_origin, simulation_origin, act
         "sessionGeneration": generation,
         "utcOrigin": _iso_ms(utc_origin),
         "simulationOrigin": round(simulation_origin, 3),
+        "clock": {"utcAnchor": "host system clock via container",
+                  "uncertaintySeconds": clock_uncertainty_seconds},
         "vehicles": vehicles,
         "run": run,
     }
