@@ -71,6 +71,7 @@
 .fleet-page .fleet-roster { padding: 4px 8px; }
 .fleet-page table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
 .fleet-page :is(th, td) { padding: 6px 9px; overflow-wrap: anywhere; }
+.fleet-page th { text-transform: none; letter-spacing: normal; }
 .fleet-page thead th { color: var(--fleet-muted); border-bottom: 1px solid var(--fleet-line); font-size: 0.8rem; }
 .fleet-page tbody tr + tr > * { border-top: 1px solid var(--fleet-line); }
 .fleet-page .fleet-roster__selected > * { background: #fbeadb; }
@@ -121,8 +122,28 @@
 @media (max-width: 680px) {
   .fleet-page .fleet-workspace { grid-template-columns: minmax(0, 1fr); grid-template-areas: "selected" "telemetry" "execution" "recovery" "observation"; }
   .fleet-page--v1 .fleet-workspace { grid-template-areas: "selected" "telemetry" "execution" "observation"; }
-  .fleet-page .fleet-roster table { table-layout: fixed; }
-  .fleet-page .fleet-roster :is(th, td) { padding: 5px 3px; font-size: 0.75rem; }
-  .fleet-page .fleet-roster .fleet-status-chip { padding-inline: 4px; font-size: inherit; }
-  .fleet-page .fleet-roster :is(th, td):nth-child(4) { width: 21%; }
+  .fleet-page .fleet-roster { padding: 8px; }
+  .fleet-page .fleet-roster :is(table, tbody) { display: block; }
+  .fleet-page .fleet-roster thead {
+    position: absolute;
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .fleet-page .fleet-roster tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 6px;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  .fleet-page .fleet-roster tr + tr { border-top: 1px solid var(--fleet-line); }
+  .fleet-page .fleet-roster :is(th, td) { border: 0; padding: 0 4px; }
+  .fleet-page .fleet-roster th[scope="row"] { grid-column: 1 / -1; color: var(--fleet-ink); }
+  .fleet-page .fleet-roster td::before { content: attr(data-label) / ""; display: block; color: var(--fleet-muted); font-size: 0.75rem; }
+  .fleet-page .fleet-roster__selected { background: #fbeadb; }
+  .fleet-page .fleet-roster__selected > * { background: transparent; }
+  .fleet-page .fleet-roster__selected th { box-shadow: none; }
 }

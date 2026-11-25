@@ -71,9 +71,9 @@ function render(state) {
   const lastKnown = state.vehicleError || vehicle?.availability !== 'AVAILABLE';
   status(element('vehicle-health'), observed(health, lastKnown), lastKnown ? null : health);
   status(element('vehicle-availability'), state.vehicleError ? 'Unknown (request failed)' : vehicle?.availability ?? 'Unknown');
-  text('vehicle-faults', vehicle?.activeFaults == null ? 'Unknown' : vehicle.activeFaults.join(', ') || 'None');
-  text('lidar-distance', vehicle?.lidar?.distanceMeters == null ? 'Unknown' : `${vehicle.lidar.distanceMeters} m`);
-  text('lidar-sensor', vehicle?.lidar?.sensorAvailable == null ? 'Unknown' : vehicle.lidar.sensorAvailable ? 'Yes' : 'No');
+  text('vehicle-faults', observed(vehicle?.activeFaults ? vehicle.activeFaults.join(', ') || 'None' : null, lastKnown));
+  text('lidar-distance', observed(vehicle?.lidar?.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`, lastKnown));
+  text('lidar-sensor', observed(vehicle?.lidar?.sensorAvailable == null ? null : vehicle.lidar.sensorAvailable ? 'Yes' : 'No', lastKnown));
   text('source-timestamp', observed(vehicle?.sourceTimestamp, lastKnown));
   text('last-event', observed(vehicle?.lastEventId, lastKnown));
   for (const id of ['inject', 'clear', 'restart']) {
@@ -119,7 +119,11 @@ function renderRoster(fleet, selectedId, fleetError) {
     const lastKnown = fleetError || entry?.availability !== 'AVAILABLE';
     const delta = Date.parse(fleet?.generatedAt) - Date.parse(entry?.sourceTimestamp);
     const row = document.createElement('tr');
-    if (id === selectedId) row.className = 'fleet-roster__selected';
+    row.setAttribute('role', 'row');
+    if (id === selectedId) {
+      row.className = 'fleet-roster__selected';
+      row.setAttribute('aria-current', 'true');
+    }
     const values = [
       id, observed(entry?.healthStatus, lastKnown), entry?.availability ?? 'Unknown',
       observed(entry?.activeFaults ? entry.activeFaults.join(', ') || 'None' : null, lastKnown),
@@ -128,6 +132,7 @@ function renderRoster(fleet, selectedId, fleetError) {
     ];
     values.forEach((value, index) => {
       const cell = document.createElement(index === 0 ? 'th' : 'td');
+      cell.setAttribute('role', index === 0 ? 'rowheader' : 'cell');
       if (index === 0) cell.scope = 'row';
       else cell.dataset.label = columns[index];
       if (index === 1 || index === 2) {
@@ -146,9 +151,6 @@ function renderV2(state) {
   const lastKnown = vehicle && (state.vehicleError || vehicle.availability !== 'AVAILABLE');
   const read = value => observed(value, lastKnown);
   renderRoster(state.fleet, state.selectedId, state.fleetError);
-  text('vehicle-faults', read(vehicle?.activeFaults ? vehicle.activeFaults.join(', ') || 'None' : null));
-  text('lidar-distance', read(vehicle?.lidar?.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`));
-  text('lidar-sensor', read(vehicle?.lidar?.sensorAvailable == null ? null : vehicle.lidar.sensorAvailable ? 'Yes' : 'No'));
   status(element('vehicle-recovery'), read(vehicle?.recoveryState), lastKnown ? null : vehicle?.recoveryState);
   text('recovery-started', read(vehicle?.recoveryStartedAt));
   text('source-silent', read(vehicle?.sourceSilent == null ? null : vehicle.sourceSilent ? 'Yes' : 'No'));

@@ -1,4 +1,4 @@
-// Opt-in browser component smoke. Routes are simulated from shared V2 fixtures.
+// Opt-in browser component smoke. Routes are simulated from shared fixtures.
 import assert from 'node:assert/strict';
 import { readFile, mkdir } from 'node:fs/promises';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
@@ -28,7 +28,10 @@ try {
   const page = await browser.newPage({ viewport: { width: 1100, height: 850 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.addInitScript(() => { globalThis.SDV_CONFIG = { V2_API_BASE_URL: '', FLEET_PREVIEW: true }; });
+  await page.addInitScript(() => {
+    globalThis.SDV_CONFIG = { API_BASE_URL: location.origin, FLEET_PREVIEW: true };
+    if (!location.search) globalThis.SDV_CONFIG.V2_API_BASE_URL = '';
+  });
   let releaseDelayedReply;
   let delayedReplyFinished;
   let lastAction, actionStatus = 'ACCEPTED';
@@ -36,6 +39,14 @@ try {
   await page.route(`${origin}/**`, async route => {
     const path = new URL(route.request().url()).pathname;
     const respond = (json, status = 200) => route.fulfill({ json, status });
+    if (path === '/api/v1/fleet') {
+      return respond({
+        generatedAt: '2026-01-01T00:00:04Z', vehicles: ids.slice(0, 2).map(id => views.get(id)),
+        totalVehicles: 2, availableVehicles: 1, staleVehicles: 1, unavailableVehicles: 0,
+        healthyVehicles: 0, warningVehicles: 0, criticalVehicles: 1,
+      });
+    }
+    if (path === '/api/v1/vehicles/vehicle-001/state') return respond(views.get('vehicle-001'));
     if (path === '/api/v2/fleet') {
       return respond({
         generatedAt: '2026-01-01T00:00:04Z', vehicles: ids.map(id => views.get(id)),
@@ -135,9 +146,20 @@ try {
   await page.keyboard.press('Home');
   await see('vehicle-health', 'HEALTHY (last known)');
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  const roster = page.getByRole('table', { name: 'Registered vehicles at the fleet evaluation time' });
+  assert.equal(await roster.getByRole('rowheader').count(), 3);
+  assert.equal(await roster.locator('[role=row][aria-current=true]').count(), 1);
   await capture('narrow-stale');
+
+  await page.goto(`${origin}/?default-api`);
+  await see('totalVehicles', '2');
+  await see('vehicle-id', 'vehicle-001');
+  await see('lidar-distance', '20 m (last known)');
+  assert.equal(await page.locator('#vehicle-select option').count(), 2);
+  assert.equal(await page.locator('#restart').isVisible(), false);
+  assert.equal(await page.locator('.fleet-roster').isVisible(), false);
   assert.deepEqual(errors, []);
-  console.log('PASS: Chrome V2 dashboard component smoke with synthetic HTTP routes');
+  console.log('PASS: Chrome Fleet component smoke for V2 and the V1 default with synthetic HTTP routes');
 } finally {
   await browser.close();
 }

@@ -31,13 +31,13 @@
         <p id="fleet-status" class="fleet-help" role="status">Loading fleet…</p>
         <p id="fleet-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
         <div class="fleet-panel fleet-roster" data-v2 hidden>
-          <table>
+          <table role="table">
             <caption class="sr-only">Registered vehicles at the fleet evaluation time</caption>
-            <thead>
-              <tr><th scope="col">Vehicle ID</th><th scope="col">Health</th><th scope="col">Availability</th>
-                <th scope="col">Active faults</th><th scope="col">Source age</th><th scope="col">Thing ID</th></tr>
+            <thead role="rowgroup">
+              <tr role="row"><th scope="col" role="columnheader">Vehicle ID</th><th scope="col" role="columnheader">Health</th><th scope="col" role="columnheader">Availability</th>
+                <th scope="col" role="columnheader">Active faults</th><th scope="col" role="columnheader">Source age</th><th scope="col" role="columnheader">Thing ID</th></tr>
             </thead>
-            <tbody id="fleet-vehicles"></tbody>
+            <tbody id="fleet-vehicles" role="rowgroup"></tbody>
           </table>
         </div>
         <p class="fleet-help">Health counts include available vehicles only.</p>
