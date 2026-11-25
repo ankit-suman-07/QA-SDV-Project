@@ -63,3 +63,42 @@ would be classified WARNING or CRITICAL with no obstacle present.
 
 Moving vehicles, vehicle pitch under braking, other maps, LiDAR noise settings,
 and the full 3-vehicle 10 Hz runner. Those belong to the CARLA fleet runner task.
+
+## Revision 2026-11-25: scan coverage verified
+
+Review of this finding found that the original probe could overstate coverage:
+it skipped failed spawns without counting them, and a spawn whose LiDAR callback
+never arrived fell through to `NO_FRONT_HIT`. It also used the last callback
+received rather than the scan for the final tick. The original probe and the
+results above are kept unchanged as the 2026-11-18 record.
+
+[`c3_region_probe_v2.py`](../../evidence/v2/c3-extraction-review/c3_region_probe_v2.py)
+gives every spawn point exactly one outcome. It waits up to 2 s for the scan of
+the final tick, and reports `SPAWN_FAILED`, `MISSING_SCAN` and `EMPTY_SCAN`
+separately. A missing scan never counts as clear. Same sensor, mount, region and
+CARLA host as above; client 0.9.15 in the `linux/amd64` container. One JSON line
+per spawn point is committed next to the probe.
+
+| Map, lower z bound | Spawn points | Spawn failed | Missing scan | Empty scan | Valid scans | Nothing ahead | Real object | False obstacle (road) | False ≤ 10 m |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Town10HD_Opt, −1.0 | 155 | 0 | 0 | 0 | 155 | 130 | 25 | **0** | **0** |
+| Town03_Opt, −1.0 | 265 | 0 | 0 | 0 | 265 | 221 | 32 | **12** (4.5%) | **5** |
+| Town03_Opt, −0.5 | 265 | 0 | 0 | 0 | 265 | 226 | 32 | 7 | 1 |
+
+Raw output: [Town10](../../evidence/v2/c3-extraction-review/town10-v2-2026-11-25.jsonl),
+[Town03 −1.0](../../evidence/v2/c3-extraction-review/town03-zmin-1.0-v2-2026-11-25.jsonl),
+[Town03 −0.5](../../evidence/v2/c3-extraction-review/town03-zmin-0.5-v2-2026-11-25.jsonl).
+
+**Town10HD_Opt: confirmed.** The 0/155 result stands. All 155 spawns produced a
+valid, non-empty scan for the final tick, so none of the 130 clear results comes
+from a missing callback.
+
+**Town03_Opt: corrected.** The rerun finds 12 false obstacles (5 within 10 m), not
+14 (6), and at −0.5 m 1 within 10 m, not 2. The nearest is 3.8 m (spawn 10). The
+2.9 m level-spawn hit reported above did not reproduce. It most likely came from
+a scan other than the final tick's, but the original run kept no per-spawn output,
+so this cannot be confirmed. Finding 1 still holds: the road enters the region on
+rising roads, and raising the bound reduces but does not remove false hits.
+
+Not checked: repeatability across CARLA restarts (each configuration was run once),
+other maps, and moving vehicles.
