@@ -3,78 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fleet Dashboard — SDV Control</title>
+  <title>Fleet overview | SDV Control</title>
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/fleet.css" />
 </head>
-<body>
-  <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="sidebar"><span aria-hidden="true">☰</span><span class="sr-only">Toggle navigation</span></button>
+<body class="fleet-page">
   <div class="app-shell">
     <nav class="sidebar" id="sidebar" aria-label="Primary">
       <div class="sidebar__brand">SDV Control</div>
       <ul class="sidebar__nav-list">
-        <li><a class="sidebar__nav-link" href="index.html" aria-current="page">Fleet dashboard</a></li>
-        <li><a class="sidebar__nav-link" href="vehicle.html">Legacy vehicle</a></li>
+        <li><a class="sidebar__nav-link" href="index.html" aria-current="page">Fleet</a></li>
+        <li><a class="sidebar__nav-link" href="vehicle.html">Vehicle</a></li>
         <li><a class="sidebar__nav-link" href="diagnostics.html">Diagnostics</a></li>
         <li><a class="sidebar__nav-link" href="performance.html">Performance</a></li>
       </ul>
     </nav>
     <main class="content">
       <header class="page-header">
-        <h1 class="page-header__title">Fleet dashboard</h1>
+        <h1 class="page-header__title">Fleet overview</h1>
         <button type="button" class="btn btn--outline" id="refresh">Refresh</button>
       </header>
       <p id="preview-label" class="fleet-notice" hidden>Mock development preview — synthetic observations; no Spring Boot or fleet persistence verification.</p>
-      <section aria-labelledby="fleet-title">
-        <h2 id="fleet-title">Fleet overview</h2>
-        <p id="fleet-status" role="status" aria-live="polite">Loading fleet…</p>
+      <section aria-label="Fleet summary">
+        <div class="fleet-panel metric-grid" id="fleet-counts" aria-label="Fleet counts"></div>
+        <p id="fleet-status" class="fleet-help" role="status">Loading fleet…</p>
         <p id="fleet-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
-        <div id="fleet-counts" class="metric-grid" aria-label="Fleet counts"></div>
-        <ul id="fleet-vehicles" aria-label="Registered vehicles" hidden></ul>
-        <p class="fleet-help">Health counts include only AVAILABLE vehicles. Stale observations remain visible as last known data.</p>
-      </section>
-      <section class="card fleet-detail" aria-labelledby="selected-title">
-        <header class="page-header">
-          <h2 id="selected-title">Selected vehicle</h2>
-          <label for="vehicle-select">Vehicle</label>
-          <select id="vehicle-select" class="field-select" disabled><option value="">Loading…</option></select>
-        </header>
-        <p id="vehicle-status" role="status" aria-live="polite">Loading vehicle…</p>
-        <p id="vehicle-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
-        <dl class="fleet-fields">
-          <div><dt>Vehicle ID</dt><dd id="vehicle-id">—</dd></div>
-          <div><dt>Thing ID</dt><dd id="thing-id">—</dd></div>
-          <div><dt>Health</dt><dd id="vehicle-health">—</dd></div>
-          <div><dt>Availability</dt><dd id="vehicle-availability">—</dd></div>
-          <div><dt>Active faults</dt><dd id="vehicle-faults">—</dd></div>
-          <div><dt>LiDAR distance</dt><dd id="lidar-distance">—</dd></div>
-          <div><dt>LiDAR sensor available</dt><dd id="lidar-sensor">—</dd></div>
-          <div><dt>Source timestamp (UTC)</dt><dd id="source-timestamp">—</dd></div>
-          <div><dt>Last event ID</dt><dd id="last-event">—</dd></div>
-          <div data-v2 hidden><dt>Recovery</dt><dd id="vehicle-recovery">—</dd></div>
-          <div data-v2 hidden><dt>Recovery started (UTC)</dt><dd id="recovery-started">—</dd></div>
-          <div data-v2 hidden><dt>Source silent</dt><dd id="source-silent">—</dd></div>
-          <div data-v2 hidden><dt>Session / generation</dt><dd id="source-session">—</dd></div>
-          <div data-v2 hidden><dt>Sequence / frame</dt><dd id="source-frame">—</dd></div>
-          <div data-v2 hidden><dt>Observation provenance</dt><dd id="source-provenance">—</dd></div>
-        </dl>
-        <h3>LiDAR obstruction scenario</h3>
-        <p class="fleet-help">An accepted command acknowledges dispatch. Health and recovery appear only in subsequent observations. A timeout leaves execution unknown.</p>
-        <div class="fleet-actions">
-          <button type="button" id="inject" class="btn btn--primary" disabled>Inject obstruction</button>
-          <button type="button" id="clear" class="btn btn--outline" disabled>Clear obstruction</button>
-          <button type="button" id="restart" class="btn btn--outline" data-v2 hidden disabled>Restart app</button>
+        <div class="fleet-panel fleet-roster" data-v2 hidden>
+          <table>
+            <caption class="sr-only">Registered vehicles at the fleet evaluation time</caption>
+            <thead>
+              <tr><th scope="col">Vehicle ID</th><th scope="col">Health</th><th scope="col">Availability</th>
+                <th scope="col">Active faults</th><th scope="col">Source age</th><th scope="col">Thing ID</th></tr>
+            </thead>
+            <tbody id="fleet-vehicles"></tbody>
+          </table>
         </div>
-        <p id="action-status" role="status" aria-live="polite"></p>
-        <p id="action-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
-        <div data-v2 hidden>
-          <h3>Recent actions</h3>
-          <p id="history-status" role="status"></p>
-          <ul id="action-history"></ul>
-        </div>
+        <p class="fleet-help">Health counts include available vehicles only.</p>
       </section>
+      <div class="fleet-workspace">
+        <section class="fleet-panel fleet-selected" aria-labelledby="selected-title">
+          <header>
+            <h2 id="selected-title">Selected vehicle</h2>
+            <label class="sr-only" for="vehicle-select">Selected vehicle</label>
+            <select id="vehicle-select" class="field-select" disabled><option value="">Loading…</option></select>
+          </header>
+          <p id="vehicle-status" class="fleet-help" role="status">Loading vehicle…</p>
+          <p id="vehicle-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
+          <dl class="fleet-fields">
+            <div><dt>Vehicle ID</dt><dd id="vehicle-id">—</dd></div>
+            <div><dt>Thing ID</dt><dd id="thing-id">—</dd></div>
+            <div><dt>Health</dt><dd id="vehicle-health">—</dd></div>
+            <div><dt>Availability</dt><dd id="vehicle-availability">—</dd></div>
+            <div><dt>Active faults</dt><dd id="vehicle-faults">—</dd></div>
+          </dl>
+          <div class="fleet-actions fleet-links">
+            <a class="btn btn--primary" href="vehicle.html">Legacy vehicle details</a>
+            <a class="btn btn--outline" href="diagnostics.html">Legacy diagnostics</a>
+          </div>
+        </section>
+        <section class="fleet-panel fleet-telemetry" aria-labelledby="telemetry-title">
+          <h2 id="telemetry-title">Selected vehicle telemetry</h2>
+          <dl class="fleet-fields">
+            <div><dt>Front LiDAR distance</dt><dd id="lidar-distance">—</dd></div>
+            <div><dt>LiDAR sensor available</dt><dd id="lidar-sensor">—</dd></div>
+          </dl>
+        </section>
+        <section class="fleet-panel fleet-execution" aria-labelledby="execution-title">
+          <h2 id="execution-title">Action execution</h2>
+          <p class="fleet-help">Dispatch acknowledgement, execution and observed recovery are reported separately. A dispatch timeout leaves execution unknown.</p>
+          <div class="fleet-actions">
+            <button type="button" id="inject" class="btn btn--primary" disabled>Inject obstruction</button>
+            <button type="button" id="clear" class="btn btn--outline" disabled>Clear obstruction</button>
+            <button type="button" id="restart" class="btn btn--outline" data-v2 hidden disabled>Restart app</button>
+          </div>
+          <p id="action-status" role="status"></p>
+          <p id="action-error" class="fleet-notice fleet-notice--error" role="alert" hidden></p>
+          <div data-v2 hidden>
+            <h3>Recent actions</h3>
+            <p id="history-status" class="fleet-help" role="status"></p>
+            <ul id="action-history"></ul>
+          </div>
+        </section>
+        <section class="fleet-panel fleet-recovery" aria-labelledby="recovery-title" data-v2 hidden>
+          <h2 id="recovery-title">Observed recovery</h2>
+          <dl class="fleet-fields">
+            <div><dt>Recovery</dt><dd id="vehicle-recovery">—</dd></div>
+            <div><dt>Recovery started (UTC)</dt><dd id="recovery-started">—</dd></div>
+            <div><dt>Source silent</dt><dd id="source-silent">—</dd></div>
+          </dl>
+        </section>
+        <section class="fleet-panel fleet-observation" aria-labelledby="observation-title">
+          <h2 id="observation-title">Latest observation details</h2>
+          <dl class="fleet-fields">
+            <div><dt>Last event ID</dt><dd id="last-event">—</dd></div>
+            <div data-v2 hidden><dt>Session / generation</dt><dd id="source-session">—</dd></div>
+            <div data-v2 hidden><dt>Sequence / frame</dt><dd id="source-frame">—</dd></div>
+            <div><dt>Source timestamp (UTC)</dt><dd id="source-timestamp">—</dd></div>
+            <div data-v2 hidden><dt>Observation provenance</dt><dd id="source-provenance">—</dd></div>
+          </dl>
+        </section>
+      </div>
     </main>
   </div>
   <script type="module" src="js/fleet-dashboard.js"></script>
