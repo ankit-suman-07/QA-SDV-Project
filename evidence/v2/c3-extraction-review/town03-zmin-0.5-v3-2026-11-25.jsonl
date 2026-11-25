@@ -1,0 +1,266 @@
+{"spawn": 0, "pitch": 0.0, "requestedFrame": 3078, "receivedFrame": 3078, "points": 27374, "outcome": "NO_FRONT_HIT"}
+{"spawn": 1, "pitch": -0.5, "requestedFrame": 3084, "receivedFrame": 3084, "points": 26413, "outcome": "NO_FRONT_HIT"}
+{"spawn": 2, "pitch": 0.0, "requestedFrame": 3090, "receivedFrame": 3090, "points": 25972, "outcome": "NO_FRONT_HIT"}
+{"spawn": 3, "pitch": 0.0, "requestedFrame": 3096, "receivedFrame": 3096, "points": 26957, "outcome": "OBJECT", "cls": 6, "x": 49.1, "z": -0.28}
+{"spawn": 4, "pitch": 0.0, "requestedFrame": 3102, "receivedFrame": 3102, "points": 25478, "outcome": "NO_FRONT_HIT"}
+{"spawn": 5, "pitch": 0.0, "requestedFrame": 3108, "receivedFrame": 3108, "points": 26167, "outcome": "NO_FRONT_HIT"}
+{"spawn": 6, "pitch": 0.0, "requestedFrame": 3114, "receivedFrame": 3114, "points": 25753, "outcome": "NO_FRONT_HIT"}
+{"spawn": 7, "pitch": 0.0, "requestedFrame": 3120, "receivedFrame": 3120, "points": 27365, "outcome": "NO_FRONT_HIT"}
+{"spawn": 8, "pitch": 0.0, "requestedFrame": 3126, "receivedFrame": 3126, "points": 26552, "outcome": "NO_FRONT_HIT"}
+{"spawn": 9, "pitch": 0.0, "requestedFrame": 3132, "receivedFrame": 3132, "points": 26455, "outcome": "NO_FRONT_HIT"}
+{"spawn": 10, "pitch": -0.4, "requestedFrame": 3138, "receivedFrame": 3138, "points": 28609, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 5.9, "z": -0.44}
+{"spawn": 11, "pitch": 0.0, "requestedFrame": 3144, "receivedFrame": 3144, "points": 27609, "outcome": "OBJECT", "cls": 3, "x": 32.1, "z": -0.18}
+{"spawn": 12, "pitch": 0.0, "requestedFrame": 3150, "receivedFrame": 3150, "points": 27884, "outcome": "NO_FRONT_HIT"}
+{"spawn": 13, "pitch": 0.0, "requestedFrame": 3156, "receivedFrame": 3156, "points": 27574, "outcome": "NO_FRONT_HIT"}
+{"spawn": 14, "pitch": 0.0, "requestedFrame": 3162, "receivedFrame": 3162, "points": 27689, "outcome": "NO_FRONT_HIT"}
+{"spawn": 15, "pitch": 0.0, "requestedFrame": 3168, "receivedFrame": 3168, "points": 27627, "outcome": "NO_FRONT_HIT"}
+{"spawn": 16, "pitch": 0.0, "requestedFrame": 3174, "receivedFrame": 3174, "points": 30570, "outcome": "NO_FRONT_HIT"}
+{"spawn": 17, "pitch": 0.0, "requestedFrame": 3180, "receivedFrame": 3180, "points": 28604, "outcome": "NO_FRONT_HIT"}
+{"spawn": 18, "pitch": 0.0, "requestedFrame": 3186, "receivedFrame": 3186, "points": 28089, "outcome": "NO_FRONT_HIT"}
+{"spawn": 19, "pitch": 0.0, "requestedFrame": 3192, "receivedFrame": 3192, "points": 29441, "outcome": "OBJECT", "cls": 4, "x": 44.7, "z": -0.25}
+{"spawn": 20, "pitch": 0.0, "requestedFrame": 3198, "receivedFrame": 3198, "points": 27259, "outcome": "NO_FRONT_HIT"}
+{"spawn": 21, "pitch": 2.3, "requestedFrame": 3204, "receivedFrame": 3204, "points": 28664, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 13.7, "z": -0.39}
+{"spawn": 22, "pitch": 0.0, "requestedFrame": 3210, "receivedFrame": 3210, "points": 28854, "outcome": "NO_FRONT_HIT"}
+{"spawn": 23, "pitch": 0.0, "requestedFrame": 3216, "receivedFrame": 3216, "points": 29197, "outcome": "NO_FRONT_HIT"}
+{"spawn": 24, "pitch": 0.0, "requestedFrame": 3222, "receivedFrame": 3222, "points": 29109, "outcome": "NO_FRONT_HIT"}
+{"spawn": 25, "pitch": 0.0, "requestedFrame": 3228, "receivedFrame": 3228, "points": 29043, "outcome": "NO_FRONT_HIT"}
+{"spawn": 26, "pitch": 0.0, "requestedFrame": 3234, "receivedFrame": 3234, "points": 27076, "outcome": "NO_FRONT_HIT"}
+{"spawn": 27, "pitch": -0.6, "requestedFrame": 3240, "receivedFrame": 3240, "points": 27092, "outcome": "NO_FRONT_HIT"}
+{"spawn": 28, "pitch": -4.1, "requestedFrame": 3246, "receivedFrame": 3246, "points": 26920, "outcome": "NO_FRONT_HIT"}
+{"spawn": 29, "pitch": 0.0, "requestedFrame": 3252, "receivedFrame": 3252, "points": 27361, "outcome": "NO_FRONT_HIT"}
+{"spawn": 30, "pitch": 0.0, "requestedFrame": 3258, "receivedFrame": 3258, "points": 26115, "outcome": "OBJECT", "cls": 3, "x": 40.8, "z": 0.69}
+{"spawn": 31, "pitch": 0.0, "requestedFrame": 3264, "receivedFrame": 3264, "points": 25186, "outcome": "NO_FRONT_HIT"}
+{"spawn": 32, "pitch": 0.0, "requestedFrame": 3270, "receivedFrame": 3270, "points": 26175, "outcome": "OBJECT", "cls": 6, "x": 42.8, "z": -0.24}
+{"spawn": 33, "pitch": 0.0, "requestedFrame": 3276, "receivedFrame": 3276, "points": 27281, "outcome": "NO_FRONT_HIT"}
+{"spawn": 34, "pitch": 0.4, "requestedFrame": 3282, "receivedFrame": 3282, "points": 26446, "outcome": "NO_FRONT_HIT"}
+{"spawn": 35, "pitch": 0.4, "requestedFrame": 3288, "receivedFrame": 3288, "points": 25926, "outcome": "NO_FRONT_HIT"}
+{"spawn": 36, "pitch": 0.0, "requestedFrame": 3294, "receivedFrame": 3294, "points": 26418, "outcome": "NO_FRONT_HIT"}
+{"spawn": 37, "pitch": 0.0, "requestedFrame": 3300, "receivedFrame": 3300, "points": 26043, "outcome": "NO_FRONT_HIT"}
+{"spawn": 38, "pitch": 0.0, "requestedFrame": 3306, "receivedFrame": 3306, "points": 27894, "outcome": "NO_FRONT_HIT"}
+{"spawn": 39, "pitch": 0.0, "requestedFrame": 3312, "receivedFrame": 3312, "points": 27327, "outcome": "NO_FRONT_HIT"}
+{"spawn": 40, "pitch": 0.0, "requestedFrame": 3318, "receivedFrame": 3318, "points": 27480, "outcome": "NO_FRONT_HIT"}
+{"spawn": 41, "pitch": 0.0, "requestedFrame": 3324, "receivedFrame": 3324, "points": 26869, "outcome": "NO_FRONT_HIT"}
+{"spawn": 42, "pitch": 0.0, "requestedFrame": 3330, "receivedFrame": 3330, "points": 27590, "outcome": "NO_FRONT_HIT"}
+{"spawn": 43, "pitch": 0.0, "requestedFrame": 3336, "receivedFrame": 3336, "points": 25382, "outcome": "NO_FRONT_HIT"}
+{"spawn": 44, "pitch": 0.0, "requestedFrame": 3342, "receivedFrame": 3342, "points": 25288, "outcome": "NO_FRONT_HIT"}
+{"spawn": 45, "pitch": 0.0, "requestedFrame": 3348, "receivedFrame": 3348, "points": 25851, "outcome": "NO_FRONT_HIT"}
+{"spawn": 46, "pitch": 0.0, "requestedFrame": 3354, "receivedFrame": 3354, "points": 26329, "outcome": "NO_FRONT_HIT"}
+{"spawn": 47, "pitch": 0.0, "requestedFrame": 3360, "receivedFrame": 3360, "points": 25786, "outcome": "NO_FRONT_HIT"}
+{"spawn": 48, "pitch": 0.0, "requestedFrame": 3366, "receivedFrame": 3366, "points": 25736, "outcome": "NO_FRONT_HIT"}
+{"spawn": 49, "pitch": 0.0, "requestedFrame": 3372, "receivedFrame": 3372, "points": 29193, "outcome": "NO_FRONT_HIT"}
+{"spawn": 50, "pitch": 0.0, "requestedFrame": 3378, "receivedFrame": 3378, "points": 29188, "outcome": "NO_FRONT_HIT"}
+{"spawn": 51, "pitch": 0.0, "requestedFrame": 3384, "receivedFrame": 3384, "points": 25624, "outcome": "NO_FRONT_HIT"}
+{"spawn": 52, "pitch": 0.0, "requestedFrame": 3390, "receivedFrame": 3390, "points": 25728, "outcome": "NO_FRONT_HIT"}
+{"spawn": 53, "pitch": 0.0, "requestedFrame": 3396, "receivedFrame": 3396, "points": 27676, "outcome": "NO_FRONT_HIT"}
+{"spawn": 54, "pitch": 0.0, "requestedFrame": 3402, "receivedFrame": 3402, "points": 25460, "outcome": "NO_FRONT_HIT"}
+{"spawn": 55, "pitch": 3.3, "requestedFrame": 3408, "receivedFrame": 3408, "points": 29953, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 12.4, "z": -0.35}
+{"spawn": 56, "pitch": 0.0, "requestedFrame": 3414, "receivedFrame": 3414, "points": 25614, "outcome": "NO_FRONT_HIT"}
+{"spawn": 57, "pitch": 0.0, "requestedFrame": 3420, "receivedFrame": 3420, "points": 27015, "outcome": "NO_FRONT_HIT"}
+{"spawn": 58, "pitch": 0.0, "requestedFrame": 3426, "receivedFrame": 3426, "points": 26854, "outcome": "OBJECT", "cls": 20, "x": 44.6, "z": -0.25}
+{"spawn": 59, "pitch": 0.0, "requestedFrame": 3432, "receivedFrame": 3432, "points": 27697, "outcome": "NO_FRONT_HIT"}
+{"spawn": 60, "pitch": -0.3, "requestedFrame": 3438, "receivedFrame": 3438, "points": 26891, "outcome": "NO_FRONT_HIT"}
+{"spawn": 61, "pitch": 0.0, "requestedFrame": 3444, "receivedFrame": 3444, "points": 28953, "outcome": "NO_FRONT_HIT"}
+{"spawn": 62, "pitch": -0.3, "requestedFrame": 3450, "receivedFrame": 3450, "points": 26902, "outcome": "NO_FRONT_HIT"}
+{"spawn": 63, "pitch": -0.3, "requestedFrame": 3456, "receivedFrame": 3456, "points": 27667, "outcome": "NO_FRONT_HIT"}
+{"spawn": 64, "pitch": 0.0, "requestedFrame": 3462, "receivedFrame": 3462, "points": 28973, "outcome": "NO_FRONT_HIT"}
+{"spawn": 65, "pitch": -0.3, "requestedFrame": 3468, "receivedFrame": 3468, "points": 28401, "outcome": "NO_FRONT_HIT"}
+{"spawn": 66, "pitch": -0.3, "requestedFrame": 3474, "receivedFrame": 3474, "points": 28688, "outcome": "NO_FRONT_HIT"}
+{"spawn": 67, "pitch": 0.0, "requestedFrame": 3480, "receivedFrame": 3480, "points": 25701, "outcome": "NO_FRONT_HIT"}
+{"spawn": 68, "pitch": 0.0, "requestedFrame": 3486, "receivedFrame": 3486, "points": 26363, "outcome": "NO_FRONT_HIT"}
+{"spawn": 69, "pitch": 0.0, "requestedFrame": 3492, "receivedFrame": 3492, "points": 25243, "outcome": "NO_FRONT_HIT"}
+{"spawn": 70, "pitch": 0.0, "requestedFrame": 3498, "receivedFrame": 3498, "points": 25655, "outcome": "OBJECT", "cls": 6, "x": 36.4, "z": 0.62}
+{"spawn": 71, "pitch": 0.0, "requestedFrame": 3504, "receivedFrame": 3504, "points": 29004, "outcome": "NO_FRONT_HIT"}
+{"spawn": 72, "pitch": -0.3, "requestedFrame": 3510, "receivedFrame": 3510, "points": 28447, "outcome": "NO_FRONT_HIT"}
+{"spawn": 73, "pitch": -0.3, "requestedFrame": 3516, "receivedFrame": 3516, "points": 28365, "outcome": "NO_FRONT_HIT"}
+{"spawn": 74, "pitch": 2.3, "requestedFrame": 3522, "receivedFrame": 3522, "points": 29564, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 21.6, "z": -0.12}
+{"spawn": 75, "pitch": 0.0, "requestedFrame": 3528, "receivedFrame": 3528, "points": 29042, "outcome": "NO_FRONT_HIT"}
+{"spawn": 76, "pitch": 0.0, "requestedFrame": 3534, "receivedFrame": 3534, "points": 28950, "outcome": "NO_FRONT_HIT"}
+{"spawn": 77, "pitch": 0.0, "requestedFrame": 3540, "receivedFrame": 3540, "points": 28774, "outcome": "NO_FRONT_HIT"}
+{"spawn": 78, "pitch": 0.0, "requestedFrame": 3546, "receivedFrame": 3546, "points": 29039, "outcome": "NO_FRONT_HIT"}
+{"spawn": 79, "pitch": 0.0, "requestedFrame": 3552, "receivedFrame": 3552, "points": 28940, "outcome": "NO_FRONT_HIT"}
+{"spawn": 80, "pitch": 0.0, "requestedFrame": 3558, "receivedFrame": 3558, "points": 29155, "outcome": "NO_FRONT_HIT"}
+{"spawn": 81, "pitch": 0.0, "requestedFrame": 3564, "receivedFrame": 3564, "points": 27802, "outcome": "NO_FRONT_HIT"}
+{"spawn": 82, "pitch": 0.0, "requestedFrame": 3570, "receivedFrame": 3570, "points": 28100, "outcome": "NO_FRONT_HIT"}
+{"spawn": 83, "pitch": 0.0, "requestedFrame": 3576, "receivedFrame": 3576, "points": 29118, "outcome": "NO_FRONT_HIT"}
+{"spawn": 84, "pitch": 0.0, "requestedFrame": 3582, "receivedFrame": 3582, "points": 29082, "outcome": "NO_FRONT_HIT"}
+{"spawn": 85, "pitch": 0.0, "requestedFrame": 3588, "receivedFrame": 3588, "points": 27249, "outcome": "OBJECT", "cls": 4, "x": 36.0, "z": 0.61}
+{"spawn": 86, "pitch": 0.0, "requestedFrame": 3594, "receivedFrame": 3594, "points": 27985, "outcome": "NO_FRONT_HIT"}
+{"spawn": 87, "pitch": 0.0, "requestedFrame": 3600, "receivedFrame": 3600, "points": 28233, "outcome": "OBJECT", "cls": 4, "x": 46.2, "z": -0.26}
+{"spawn": 88, "pitch": 0.0, "requestedFrame": 3606, "receivedFrame": 3606, "points": 28227, "outcome": "NO_FRONT_HIT"}
+{"spawn": 89, "pitch": 0.0, "requestedFrame": 3612, "receivedFrame": 3612, "points": 28153, "outcome": "NO_FRONT_HIT"}
+{"spawn": 90, "pitch": 0.0, "requestedFrame": 3618, "receivedFrame": 3618, "points": 27273, "outcome": "OBJECT", "cls": 3, "x": 50.0, "z": 0.84}
+{"spawn": 91, "pitch": 0.0, "requestedFrame": 3624, "receivedFrame": 3624, "points": 27186, "outcome": "OBJECT", "cls": 6, "x": 40.1, "z": 0.68}
+{"spawn": 92, "pitch": 0.0, "requestedFrame": 3630, "receivedFrame": 3630, "points": 26407, "outcome": "NO_FRONT_HIT"}
+{"spawn": 93, "pitch": 0.0, "requestedFrame": 3636, "receivedFrame": 3636, "points": 26564, "outcome": "OBJECT", "cls": 6, "x": 34.6, "z": -0.19}
+{"spawn": 94, "pitch": 0.0, "requestedFrame": 3642, "receivedFrame": 3642, "points": 28132, "outcome": "NO_FRONT_HIT"}
+{"spawn": 95, "pitch": 0.0, "requestedFrame": 3648, "receivedFrame": 3648, "points": 28723, "outcome": "NO_FRONT_HIT"}
+{"spawn": 96, "pitch": 0.0, "requestedFrame": 3654, "receivedFrame": 3654, "points": 28396, "outcome": "NO_FRONT_HIT"}
+{"spawn": 97, "pitch": 0.0, "requestedFrame": 3660, "receivedFrame": 3660, "points": 27992, "outcome": "NO_FRONT_HIT"}
+{"spawn": 98, "pitch": 0.0, "requestedFrame": 3666, "receivedFrame": 3666, "points": 29054, "outcome": "NO_FRONT_HIT"}
+{"spawn": 99, "pitch": -0.3, "requestedFrame": 3672, "receivedFrame": 3672, "points": 28034, "outcome": "NO_FRONT_HIT"}
+{"spawn": 100, "pitch": -0.3, "requestedFrame": 3678, "receivedFrame": 3678, "points": 27636, "outcome": "NO_FRONT_HIT"}
+{"spawn": 101, "pitch": -0.3, "requestedFrame": 3684, "receivedFrame": 3684, "points": 27247, "outcome": "NO_FRONT_HIT"}
+{"spawn": 102, "pitch": 0.0, "requestedFrame": 3690, "receivedFrame": 3690, "points": 26188, "outcome": "NO_FRONT_HIT"}
+{"spawn": 103, "pitch": 0.0, "requestedFrame": 3696, "receivedFrame": 3696, "points": 26106, "outcome": "NO_FRONT_HIT"}
+{"spawn": 104, "pitch": 0.0, "requestedFrame": 3702, "receivedFrame": 3702, "points": 28127, "outcome": "NO_FRONT_HIT"}
+{"spawn": 105, "pitch": 0.0, "requestedFrame": 3708, "receivedFrame": 3708, "points": 28388, "outcome": "NO_FRONT_HIT"}
+{"spawn": 106, "pitch": 0.0, "requestedFrame": 3714, "receivedFrame": 3714, "points": 25378, "outcome": "NO_FRONT_HIT"}
+{"spawn": 107, "pitch": 0.0, "requestedFrame": 3720, "receivedFrame": 3720, "points": 24984, "outcome": "NO_FRONT_HIT"}
+{"spawn": 108, "pitch": 0.0, "requestedFrame": 3726, "receivedFrame": 3726, "points": 27285, "outcome": "NO_FRONT_HIT"}
+{"spawn": 109, "pitch": 0.0, "requestedFrame": 3732, "receivedFrame": 3732, "points": 27856, "outcome": "NO_FRONT_HIT"}
+{"spawn": 110, "pitch": 0.0, "requestedFrame": 3738, "receivedFrame": 3738, "points": 25906, "outcome": "NO_FRONT_HIT"}
+{"spawn": 111, "pitch": 0.0, "requestedFrame": 3744, "receivedFrame": 3744, "points": 26786, "outcome": "NO_FRONT_HIT"}
+{"spawn": 112, "pitch": 0.0, "requestedFrame": 3750, "receivedFrame": 3750, "points": 27448, "outcome": "NO_FRONT_HIT"}
+{"spawn": 113, "pitch": 0.0, "requestedFrame": 3756, "receivedFrame": 3756, "points": 27849, "outcome": "NO_FRONT_HIT"}
+{"spawn": 114, "pitch": 0.0, "requestedFrame": 3762, "receivedFrame": 3762, "points": 27566, "outcome": "NO_FRONT_HIT"}
+{"spawn": 115, "pitch": 0.0, "requestedFrame": 3768, "receivedFrame": 3768, "points": 28268, "outcome": "NO_FRONT_HIT"}
+{"spawn": 116, "pitch": 0.0, "requestedFrame": 3774, "receivedFrame": 3774, "points": 28096, "outcome": "NO_FRONT_HIT"}
+{"spawn": 117, "pitch": 0.0, "requestedFrame": 3780, "receivedFrame": 3780, "points": 28204, "outcome": "NO_FRONT_HIT"}
+{"spawn": 118, "pitch": 0.0, "requestedFrame": 3786, "receivedFrame": 3786, "points": 28225, "outcome": "NO_FRONT_HIT"}
+{"spawn": 119, "pitch": 0.0, "requestedFrame": 3792, "receivedFrame": 3792, "points": 26254, "outcome": "NO_FRONT_HIT"}
+{"spawn": 120, "pitch": 0.0, "requestedFrame": 3798, "receivedFrame": 3798, "points": 28513, "outcome": "NO_FRONT_HIT"}
+{"spawn": 121, "pitch": 0.0, "requestedFrame": 3804, "receivedFrame": 3804, "points": 26091, "outcome": "NO_FRONT_HIT"}
+{"spawn": 122, "pitch": 0.0, "requestedFrame": 3810, "receivedFrame": 3810, "points": 26786, "outcome": "NO_FRONT_HIT"}
+{"spawn": 123, "pitch": 0.0, "requestedFrame": 3816, "receivedFrame": 3816, "points": 26564, "outcome": "NO_FRONT_HIT"}
+{"spawn": 124, "pitch": 1.2, "requestedFrame": 3822, "receivedFrame": 3822, "points": 24357, "outcome": "NO_FRONT_HIT"}
+{"spawn": 125, "pitch": 0.0, "requestedFrame": 3828, "receivedFrame": 3828, "points": 25769, "outcome": "NO_FRONT_HIT"}
+{"spawn": 126, "pitch": 0.0, "requestedFrame": 3834, "receivedFrame": 3834, "points": 25871, "outcome": "NO_FRONT_HIT"}
+{"spawn": 127, "pitch": 0.0, "requestedFrame": 3840, "receivedFrame": 3840, "points": 28621, "outcome": "NO_FRONT_HIT"}
+{"spawn": 128, "pitch": 0.0, "requestedFrame": 3846, "receivedFrame": 3846, "points": 27718, "outcome": "NO_FRONT_HIT"}
+{"spawn": 129, "pitch": 0.0, "requestedFrame": 3852, "receivedFrame": 3852, "points": 28894, "outcome": "NO_FRONT_HIT"}
+{"spawn": 130, "pitch": 0.0, "requestedFrame": 3858, "receivedFrame": 3858, "points": 24864, "outcome": "NO_FRONT_HIT"}
+{"spawn": 131, "pitch": 0.0, "requestedFrame": 3864, "receivedFrame": 3864, "points": 29400, "outcome": "NO_FRONT_HIT"}
+{"spawn": 132, "pitch": -0.3, "requestedFrame": 3870, "receivedFrame": 3870, "points": 26283, "outcome": "NO_FRONT_HIT"}
+{"spawn": 133, "pitch": -0.3, "requestedFrame": 3876, "receivedFrame": 3876, "points": 25020, "outcome": "NO_FRONT_HIT"}
+{"spawn": 134, "pitch": -0.3, "requestedFrame": 3882, "receivedFrame": 3882, "points": 26760, "outcome": "NO_FRONT_HIT"}
+{"spawn": 135, "pitch": -0.3, "requestedFrame": 3888, "receivedFrame": 3888, "points": 27172, "outcome": "NO_FRONT_HIT"}
+{"spawn": 136, "pitch": -0.5, "requestedFrame": 3894, "receivedFrame": 3894, "points": 26737, "outcome": "NO_FRONT_HIT"}
+{"spawn": 137, "pitch": -0.5, "requestedFrame": 3900, "receivedFrame": 3900, "points": 27078, "outcome": "NO_FRONT_HIT"}
+{"spawn": 138, "pitch": -0.5, "requestedFrame": 3906, "receivedFrame": 3906, "points": 27543, "outcome": "NO_FRONT_HIT"}
+{"spawn": 139, "pitch": -0.5, "requestedFrame": 3912, "receivedFrame": 3912, "points": 27770, "outcome": "NO_FRONT_HIT"}
+{"spawn": 140, "pitch": -0.5, "requestedFrame": 3918, "receivedFrame": 3918, "points": 26353, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 45.5, "z": -0.26}
+{"spawn": 141, "pitch": -0.5, "requestedFrame": 3924, "receivedFrame": 3924, "points": 25898, "outcome": "NO_FRONT_HIT"}
+{"spawn": 142, "pitch": 0.0, "requestedFrame": 3930, "receivedFrame": 3930, "points": 30094, "outcome": "NO_FRONT_HIT"}
+{"spawn": 143, "pitch": 0.0, "requestedFrame": 3936, "receivedFrame": 3936, "points": 27256, "outcome": "NO_FRONT_HIT"}
+{"spawn": 144, "pitch": 0.0, "requestedFrame": 3942, "receivedFrame": 3942, "points": 27429, "outcome": "NO_FRONT_HIT"}
+{"spawn": 145, "pitch": 0.0, "requestedFrame": 3948, "receivedFrame": 3948, "points": 27057, "outcome": "NO_FRONT_HIT"}
+{"spawn": 146, "pitch": 0.0, "requestedFrame": 3954, "receivedFrame": 3954, "points": 27855, "outcome": "NO_FRONT_HIT"}
+{"spawn": 147, "pitch": 0.0, "requestedFrame": 3960, "receivedFrame": 3960, "points": 27234, "outcome": "NO_FRONT_HIT"}
+{"spawn": 148, "pitch": 0.0, "requestedFrame": 3966, "receivedFrame": 3966, "points": 28064, "outcome": "NO_FRONT_HIT"}
+{"spawn": 149, "pitch": 0.0, "requestedFrame": 3972, "receivedFrame": 3972, "points": 28020, "outcome": "NO_FRONT_HIT"}
+{"spawn": 150, "pitch": 0.0, "requestedFrame": 3978, "receivedFrame": 3978, "points": 27193, "outcome": "NO_FRONT_HIT"}
+{"spawn": 151, "pitch": 0.0, "requestedFrame": 3984, "receivedFrame": 3984, "points": 27420, "outcome": "NO_FRONT_HIT"}
+{"spawn": 152, "pitch": -2.3, "requestedFrame": 3990, "receivedFrame": 3990, "points": 30277, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 13.0, "z": -0.37}
+{"spawn": 153, "pitch": 0.0, "requestedFrame": 3996, "receivedFrame": 3996, "points": 29101, "outcome": "NO_FRONT_HIT"}
+{"spawn": 154, "pitch": 0.0, "requestedFrame": 4002, "receivedFrame": 4002, "points": 25194, "outcome": "NO_FRONT_HIT"}
+{"spawn": 155, "pitch": 0.0, "requestedFrame": 4008, "receivedFrame": 4008, "points": 26829, "outcome": "OBJECT", "cls": 6, "x": 34.7, "z": -0.2}
+{"spawn": 156, "pitch": 0.0, "requestedFrame": 4014, "receivedFrame": 4014, "points": 27666, "outcome": "NO_FRONT_HIT"}
+{"spawn": 157, "pitch": 0.0, "requestedFrame": 4020, "receivedFrame": 4020, "points": 27510, "outcome": "NO_FRONT_HIT"}
+{"spawn": 158, "pitch": 0.0, "requestedFrame": 4026, "receivedFrame": 4026, "points": 26281, "outcome": "NO_FRONT_HIT"}
+{"spawn": 159, "pitch": 0.2, "requestedFrame": 4032, "receivedFrame": 4032, "points": 25409, "outcome": "NO_FRONT_HIT"}
+{"spawn": 160, "pitch": 0.2, "requestedFrame": 4038, "receivedFrame": 4038, "points": 25966, "outcome": "NO_FRONT_HIT"}
+{"spawn": 161, "pitch": 0.0, "requestedFrame": 4044, "receivedFrame": 4044, "points": 26618, "outcome": "NO_FRONT_HIT"}
+{"spawn": 162, "pitch": 0.0, "requestedFrame": 4050, "receivedFrame": 4050, "points": 28754, "outcome": "NO_FRONT_HIT"}
+{"spawn": 163, "pitch": 0.0, "requestedFrame": 4056, "receivedFrame": 4056, "points": 27815, "outcome": "NO_FRONT_HIT"}
+{"spawn": 164, "pitch": 0.0, "requestedFrame": 4062, "receivedFrame": 4062, "points": 28454, "outcome": "NO_FRONT_HIT"}
+{"spawn": 165, "pitch": 0.0, "requestedFrame": 4068, "receivedFrame": 4068, "points": 28134, "outcome": "OBJECT", "cls": 9, "x": 32.1, "z": -0.18}
+{"spawn": 166, "pitch": 0.0, "requestedFrame": 4074, "receivedFrame": 4074, "points": 26868, "outcome": "NO_FRONT_HIT"}
+{"spawn": 167, "pitch": 0.0, "requestedFrame": 4080, "receivedFrame": 4080, "points": 28753, "outcome": "NO_FRONT_HIT"}
+{"spawn": 168, "pitch": 0.0, "requestedFrame": 4086, "receivedFrame": 4086, "points": 28398, "outcome": "NO_FRONT_HIT"}
+{"spawn": 169, "pitch": 0.0, "requestedFrame": 4092, "receivedFrame": 4092, "points": 26780, "outcome": "NO_FRONT_HIT"}
+{"spawn": 170, "pitch": 0.0, "requestedFrame": 4098, "receivedFrame": 4098, "points": 27202, "outcome": "NO_FRONT_HIT"}
+{"spawn": 171, "pitch": 0.0, "requestedFrame": 4104, "receivedFrame": 4104, "points": 27752, "outcome": "NO_FRONT_HIT"}
+{"spawn": 172, "pitch": 0.0, "requestedFrame": 4110, "receivedFrame": 4110, "points": 27646, "outcome": "NO_FRONT_HIT"}
+{"spawn": 173, "pitch": 0.0, "requestedFrame": 4116, "receivedFrame": 4116, "points": 28001, "outcome": "NO_FRONT_HIT"}
+{"spawn": 174, "pitch": 0.0, "requestedFrame": 4122, "receivedFrame": 4122, "points": 27587, "outcome": "NO_FRONT_HIT"}
+{"spawn": 175, "pitch": 0.0, "requestedFrame": 4128, "receivedFrame": 4128, "points": 27425, "outcome": "NO_FRONT_HIT"}
+{"spawn": 176, "pitch": 0.0, "requestedFrame": 4134, "receivedFrame": 4134, "points": 28578, "outcome": "NO_FRONT_HIT"}
+{"spawn": 177, "pitch": 0.0, "requestedFrame": 4140, "receivedFrame": 4140, "points": 28259, "outcome": "NO_FRONT_HIT"}
+{"spawn": 178, "pitch": 0.0, "requestedFrame": 4146, "receivedFrame": 4146, "points": 28561, "outcome": "NO_FRONT_HIT"}
+{"spawn": 179, "pitch": 0.0, "requestedFrame": 4152, "receivedFrame": 4152, "points": 28712, "outcome": "NO_FRONT_HIT"}
+{"spawn": 180, "pitch": 0.0, "requestedFrame": 4158, "receivedFrame": 4158, "points": 29031, "outcome": "NO_FRONT_HIT"}
+{"spawn": 181, "pitch": 0.0, "requestedFrame": 4164, "receivedFrame": 4164, "points": 29089, "outcome": "NO_FRONT_HIT"}
+{"spawn": 182, "pitch": 0.0, "requestedFrame": 4170, "receivedFrame": 4170, "points": 29073, "outcome": "NO_FRONT_HIT"}
+{"spawn": 183, "pitch": 0.0, "requestedFrame": 4176, "receivedFrame": 4176, "points": 29134, "outcome": "NO_FRONT_HIT"}
+{"spawn": 184, "pitch": 0.0, "requestedFrame": 4182, "receivedFrame": 4182, "points": 27187, "outcome": "NO_FRONT_HIT"}
+{"spawn": 185, "pitch": 0.0, "requestedFrame": 4188, "receivedFrame": 4188, "points": 26784, "outcome": "NO_FRONT_HIT"}
+{"spawn": 186, "pitch": 0.0, "requestedFrame": 4194, "receivedFrame": 4194, "points": 25871, "outcome": "NO_FRONT_HIT"}
+{"spawn": 187, "pitch": 0.0, "requestedFrame": 4200, "receivedFrame": 4200, "points": 28202, "outcome": "NO_FRONT_HIT"}
+{"spawn": 188, "pitch": 0.0, "requestedFrame": 4206, "receivedFrame": 4206, "points": 28053, "outcome": "NO_FRONT_HIT"}
+{"spawn": 189, "pitch": 0.0, "requestedFrame": 4212, "receivedFrame": 4212, "points": 25739, "outcome": "NO_FRONT_HIT"}
+{"spawn": 190, "pitch": 0.0, "requestedFrame": 4218, "receivedFrame": 4218, "points": 26410, "outcome": "NO_FRONT_HIT"}
+{"spawn": 191, "pitch": 0.0, "requestedFrame": 4224, "receivedFrame": 4224, "points": 27700, "outcome": "NO_FRONT_HIT"}
+{"spawn": 192, "pitch": 0.0, "requestedFrame": 4230, "receivedFrame": 4230, "points": 26768, "outcome": "NO_FRONT_HIT"}
+{"spawn": 193, "pitch": 0.0, "requestedFrame": 4236, "receivedFrame": 4236, "points": 25153, "outcome": "OBJECT", "cls": 3, "x": 12.4, "z": -0.07}
+{"spawn": 194, "pitch": -0.2, "requestedFrame": 4242, "receivedFrame": 4242, "points": 27274, "outcome": "NO_FRONT_HIT"}
+{"spawn": 195, "pitch": 0.0, "requestedFrame": 4248, "receivedFrame": 4248, "points": 27584, "outcome": "NO_FRONT_HIT"}
+{"spawn": 196, "pitch": 0.0, "requestedFrame": 4254, "receivedFrame": 4254, "points": 28207, "outcome": "OBJECT", "cls": 20, "x": 27.9, "z": 0.47}
+{"spawn": 197, "pitch": 0.0, "requestedFrame": 4260, "receivedFrame": 4260, "points": 28448, "outcome": "OBJECT", "cls": 20, "x": 33.7, "z": 0.57}
+{"spawn": 198, "pitch": 0.0, "requestedFrame": 4266, "receivedFrame": 4266, "points": 28273, "outcome": "NO_FRONT_HIT"}
+{"spawn": 199, "pitch": 0.0, "requestedFrame": 4272, "receivedFrame": 4272, "points": 28218, "outcome": "NO_FRONT_HIT"}
+{"spawn": 200, "pitch": 0.0, "requestedFrame": 4278, "receivedFrame": 4278, "points": 25207, "outcome": "NO_FRONT_HIT"}
+{"spawn": 201, "pitch": -2.3, "requestedFrame": 4284, "receivedFrame": 4284, "points": 24520, "outcome": "NO_FRONT_HIT"}
+{"spawn": 202, "pitch": 0.0, "requestedFrame": 4290, "receivedFrame": 4290, "points": 27199, "outcome": "NO_FRONT_HIT"}
+{"spawn": 203, "pitch": 0.0, "requestedFrame": 4296, "receivedFrame": 4296, "points": 25256, "outcome": "NO_FRONT_HIT"}
+{"spawn": 204, "pitch": 0.0, "requestedFrame": 4302, "receivedFrame": 4302, "points": 27663, "outcome": "OBJECT", "cls": 20, "x": 29.9, "z": 0.51}
+{"spawn": 205, "pitch": 0.0, "requestedFrame": 4308, "receivedFrame": 4308, "points": 27751, "outcome": "OBJECT", "cls": 20, "x": 38.5, "z": 0.65}
+{"spawn": 206, "pitch": 0.0, "requestedFrame": 4314, "receivedFrame": 4314, "points": 27667, "outcome": "NO_FRONT_HIT"}
+{"spawn": 207, "pitch": 0.0, "requestedFrame": 4320, "receivedFrame": 4320, "points": 27849, "outcome": "NO_FRONT_HIT"}
+{"spawn": 208, "pitch": -0.2, "requestedFrame": 4326, "receivedFrame": 4326, "points": 27335, "outcome": "NO_FRONT_HIT"}
+{"spawn": 209, "pitch": 0.0, "requestedFrame": 4332, "receivedFrame": 4332, "points": 28287, "outcome": "OBJECT", "cls": 20, "x": 42.9, "z": -0.24}
+{"spawn": 210, "pitch": 0.0, "requestedFrame": 4338, "receivedFrame": 4338, "points": 28156, "outcome": "OBJECT", "cls": 20, "x": 48.6, "z": 0.82}
+{"spawn": 211, "pitch": 0.0, "requestedFrame": 4344, "receivedFrame": 4344, "points": 28388, "outcome": "NO_FRONT_HIT"}
+{"spawn": 212, "pitch": 0.0, "requestedFrame": 4350, "receivedFrame": 4350, "points": 25530, "outcome": "NO_FRONT_HIT"}
+{"spawn": 213, "pitch": 0.0, "requestedFrame": 4356, "receivedFrame": 4356, "points": 26671, "outcome": "NO_FRONT_HIT"}
+{"spawn": 214, "pitch": 0.0, "requestedFrame": 4362, "receivedFrame": 4362, "points": 25842, "outcome": "NO_FRONT_HIT"}
+{"spawn": 215, "pitch": 0.2, "requestedFrame": 4368, "receivedFrame": 4368, "points": 26802, "outcome": "NO_FRONT_HIT"}
+{"spawn": 216, "pitch": 0.2, "requestedFrame": 4374, "receivedFrame": 4374, "points": 26319, "outcome": "NO_FRONT_HIT"}
+{"spawn": 217, "pitch": 0.0, "requestedFrame": 4380, "receivedFrame": 4380, "points": 25638, "outcome": "NO_FRONT_HIT"}
+{"spawn": 218, "pitch": 0.0, "requestedFrame": 4386, "receivedFrame": 4386, "points": 26984, "outcome": "NO_FRONT_HIT"}
+{"spawn": 219, "pitch": 0.0, "requestedFrame": 4392, "receivedFrame": 4392, "points": 27292, "outcome": "OBJECT", "cls": 20, "x": 30.0, "z": -0.17}
+{"spawn": 220, "pitch": 0.0, "requestedFrame": 4398, "receivedFrame": 4398, "points": 27841, "outcome": "NO_FRONT_HIT"}
+{"spawn": 221, "pitch": 0.0, "requestedFrame": 4404, "receivedFrame": 4404, "points": 27302, "outcome": "OBJECT", "cls": 6, "x": 24.4, "z": -0.14}
+{"spawn": 222, "pitch": 0.0, "requestedFrame": 4410, "receivedFrame": 4410, "points": 26035, "outcome": "NO_FRONT_HIT"}
+{"spawn": 223, "pitch": 0.0, "requestedFrame": 4416, "receivedFrame": 4416, "points": 25896, "outcome": "NO_FRONT_HIT"}
+{"spawn": 224, "pitch": 0.0, "requestedFrame": 4422, "receivedFrame": 4422, "points": 26003, "outcome": "NO_FRONT_HIT"}
+{"spawn": 225, "pitch": 0.0, "requestedFrame": 4428, "receivedFrame": 4428, "points": 27664, "outcome": "NO_FRONT_HIT"}
+{"spawn": 226, "pitch": 0.0, "requestedFrame": 4434, "receivedFrame": 4434, "points": 27820, "outcome": "NO_FRONT_HIT"}
+{"spawn": 227, "pitch": 0.0, "requestedFrame": 4440, "receivedFrame": 4440, "points": 25969, "outcome": "NO_FRONT_HIT"}
+{"spawn": 228, "pitch": 0.0, "requestedFrame": 4446, "receivedFrame": 4446, "points": 24998, "outcome": "NO_FRONT_HIT"}
+{"spawn": 229, "pitch": 0.0, "requestedFrame": 4452, "receivedFrame": 4452, "points": 24080, "outcome": "NO_FRONT_HIT"}
+{"spawn": 230, "pitch": 0.0, "requestedFrame": 4458, "receivedFrame": 4458, "points": 28591, "outcome": "NO_FRONT_HIT"}
+{"spawn": 231, "pitch": 0.0, "requestedFrame": 4464, "receivedFrame": 4464, "points": 26736, "outcome": "NO_FRONT_HIT"}
+{"spawn": 232, "pitch": 0.0, "requestedFrame": 4470, "receivedFrame": 4470, "points": 26298, "outcome": "NO_FRONT_HIT"}
+{"spawn": 233, "pitch": 0.0, "requestedFrame": 4476, "receivedFrame": 4476, "points": 25957, "outcome": "NO_FRONT_HIT"}
+{"spawn": 234, "pitch": 0.0, "requestedFrame": 4482, "receivedFrame": 4482, "points": 25595, "outcome": "NO_FRONT_HIT"}
+{"spawn": 235, "pitch": 0.0, "requestedFrame": 4488, "receivedFrame": 4488, "points": 26655, "outcome": "NO_FRONT_HIT"}
+{"spawn": 236, "pitch": 0.0, "requestedFrame": 4494, "receivedFrame": 4494, "points": 24925, "outcome": "NO_FRONT_HIT"}
+{"spawn": 237, "pitch": 1.2, "requestedFrame": 4500, "receivedFrame": 4500, "points": 27899, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 14.5, "z": -0.41}
+{"spawn": 238, "pitch": 0.0, "requestedFrame": 4506, "receivedFrame": 4506, "points": 27860, "outcome": "OBJECT", "cls": 6, "x": 24.8, "z": -0.14}
+{"spawn": 239, "pitch": 0.0, "requestedFrame": 4512, "receivedFrame": 4512, "points": 28361, "outcome": "OBJECT", "cls": 9, "x": 6.2, "z": 0.97}
+{"spawn": 240, "pitch": 0.0, "requestedFrame": 4518, "receivedFrame": 4518, "points": 27893, "outcome": "OBJECT", "cls": 4, "x": 25.2, "z": 0.99}
+{"spawn": 241, "pitch": 0.0, "requestedFrame": 4524, "receivedFrame": 4524, "points": 27992, "outcome": "OBJECT", "cls": 4, "x": 48.8, "z": -0.27}
+{"spawn": 242, "pitch": 0.0, "requestedFrame": 4530, "receivedFrame": 4530, "points": 28299, "outcome": "OBJECT", "cls": 20, "x": 26.7, "z": -0.15}
+{"spawn": 243, "pitch": 0.0, "requestedFrame": 4536, "receivedFrame": 4536, "points": 28466, "outcome": "OBJECT", "cls": 20, "x": 34.9, "z": -0.2}
+{"spawn": 244, "pitch": 0.0, "requestedFrame": 4542, "receivedFrame": 4542, "points": 28634, "outcome": "NO_FRONT_HIT"}
+{"spawn": 245, "pitch": 0.0, "requestedFrame": 4548, "receivedFrame": 4548, "points": 28326, "outcome": "NO_FRONT_HIT"}
+{"spawn": 246, "pitch": 0.0, "requestedFrame": 4554, "receivedFrame": 4554, "points": 27246, "outcome": "NO_FRONT_HIT"}
+{"spawn": 247, "pitch": 0.4, "requestedFrame": 4560, "receivedFrame": 4560, "points": 26799, "outcome": "NO_FRONT_HIT"}
+{"spawn": 248, "pitch": 0.0, "requestedFrame": 4566, "receivedFrame": 4566, "points": 27418, "outcome": "NO_FRONT_HIT"}
+{"spawn": 249, "pitch": 0.0, "requestedFrame": 4572, "receivedFrame": 4572, "points": 28738, "outcome": "OBJECT", "cls": 20, "x": 41.1, "z": -0.23}
+{"spawn": 250, "pitch": 0.0, "requestedFrame": 4578, "receivedFrame": 4578, "points": 28837, "outcome": "OBJECT", "cls": 20, "x": 49.2, "z": -0.28}
+{"spawn": 251, "pitch": 0.0, "requestedFrame": 4584, "receivedFrame": 4584, "points": 27423, "outcome": "NO_FRONT_HIT"}
+{"spawn": 252, "pitch": 0.0, "requestedFrame": 4590, "receivedFrame": 4590, "points": 27308, "outcome": "NO_FRONT_HIT"}
+{"spawn": 253, "pitch": 0.0, "requestedFrame": 4596, "receivedFrame": 4596, "points": 27225, "outcome": "NO_FRONT_HIT"}
+{"spawn": 254, "pitch": 0.0, "requestedFrame": 4602, "receivedFrame": 4602, "points": 27156, "outcome": "NO_FRONT_HIT"}
+{"spawn": 255, "pitch": 0.0, "requestedFrame": 4608, "receivedFrame": 4608, "points": 26828, "outcome": "NO_FRONT_HIT"}
+{"spawn": 256, "pitch": 0.0, "requestedFrame": 4614, "receivedFrame": 4614, "points": 26576, "outcome": "NO_FRONT_HIT"}
+{"spawn": 257, "pitch": 0.4, "requestedFrame": 4620, "receivedFrame": 4620, "points": 26725, "outcome": "NO_FRONT_HIT"}
+{"spawn": 258, "pitch": 0.4, "requestedFrame": 4626, "receivedFrame": 4626, "points": 27078, "outcome": "NO_FRONT_HIT"}
+{"spawn": 259, "pitch": -0.3, "requestedFrame": 4632, "receivedFrame": 4632, "points": 26427, "outcome": "NO_FRONT_HIT"}
+{"spawn": 260, "pitch": -0.3, "requestedFrame": 4638, "receivedFrame": 4638, "points": 26324, "outcome": "NO_FRONT_HIT"}
+{"spawn": 261, "pitch": 0.0, "requestedFrame": 4644, "receivedFrame": 4644, "points": 24488, "outcome": "NO_FRONT_HIT"}
+{"spawn": 262, "pitch": 0.8, "requestedFrame": 4650, "receivedFrame": 4650, "points": 27609, "outcome": "OBJECT", "cls": 6, "x": 32.8, "z": -0.19}
+{"spawn": 263, "pitch": -0.5, "requestedFrame": 4656, "receivedFrame": 4656, "points": 25844, "outcome": "NO_FRONT_HIT"}
+{"spawn": 264, "pitch": 0.0, "requestedFrame": 4662, "receivedFrame": 4662, "points": 27983, "outcome": "NO_FRONT_HIT"}
+{"map": "Carla/Maps/Town03_Opt", "zmin": -0.5, "spawnPoints": 265, "validScans": 265, "NO_FRONT_HIT": 226, "OBJECT": 32, "FALSE_SURFACE": 7}
