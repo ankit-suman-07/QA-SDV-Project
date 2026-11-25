@@ -22,7 +22,7 @@ RUN = {"map": "Carla/Maps/Town10HD_Opt", "fixedDeltaSeconds": 0.1}
 def manifest(**overrides):
     arguments = dict(session_id="carla-20261121T150000Z", generation=1,
                      utc_origin=ORIGIN_UTC, simulation_origin=12.3456,
-                     actors=ACTORS, run=RUN)
+                     actors=ACTORS, run=RUN, clock_uncertainty_seconds=0.002)
     arguments.update(overrides)
     return build_manifest(**arguments)
 
@@ -83,3 +83,14 @@ def test_ankit_mapper_accepts_an_observation_under_this_manifest():
     envelope, _ = prepare_observation(to_json_line(observation), vehicle_id="vehicle-003",
                                       manifest=result, now=now)
     assert envelope["sourceTimestamp"] == "2026-11-21T15:00:01.777Z"
+
+
+def test_records_clock_anchor_uncertainty():
+    clock = manifest(clock_uncertainty_seconds=0.0042)["clock"]
+    assert clock == {"utcAnchor": "host system clock via container", "uncertaintySeconds": 0.0042}
+
+
+@pytest.mark.parametrize("bad", [-0.001, float("nan"), float("inf"), True])
+def test_rejects_invalid_clock_uncertainty(bad):
+    with pytest.raises(ValueError, match="uncertainty"):
+        manifest(clock_uncertainty_seconds=bad)

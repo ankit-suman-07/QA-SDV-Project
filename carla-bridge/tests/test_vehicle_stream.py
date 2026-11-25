@@ -16,7 +16,7 @@ MANIFEST = build_manifest(
     session_id="carla-test", generation=1,
     utc_origin=datetime(2026, 11, 21, 15, 0, 0, tzinfo=timezone.utc), simulation_origin=10.0,
     actors=[("vehicle-001", 1, 4), ("vehicle-002", 2, 5), ("vehicle-003", 3, 6)],
-    run={"map": "test"})
+    run={"map": "test"}, clock_uncertainty_seconds=0.002)
 OBSTACLE_AT_8 = struct.pack("<4f", 8.0, 0.0, 0.0, 1.0)
 VELOCITY = {"x": 1.0, "y": 0.0, "z": 0.0}
 

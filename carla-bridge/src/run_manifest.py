@@ -18,7 +18,8 @@ def _iso_ms(moment):
     return moment.isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
 
-def build_manifest(*, session_id, generation, utc_origin, simulation_origin, actors, run):
+def build_manifest(*, session_id, generation, utc_origin, simulation_origin, actors, run,
+                   clock_uncertainty_seconds):
     if type(generation) is not int or generation < 1:
         raise ValueError("session generation must be an integer >= 1")
     rows = sorted(actors)
