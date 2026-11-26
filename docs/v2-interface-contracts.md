@@ -505,6 +505,149 @@ Restart reloads the fence and pending-first-observation state. An uncertain
 migration write requires reconciliation against the persisted authorization
 and initialization state. Never reinitialize an already active generation.
 
+#### Authorized session rollover and backend handoff
+
+##### Approved requirements
+
+The initial architecture combines a bounded replay ledger inside each
+vehicle's Ditto v2 feature (option A) with authorized session rollover
+(option C). Target 10 accepted health observations per second per vehicle
+for at least 30 minutes of continuous operation across authorized
+rollovers. The publisher requests rollover before exhaustion. Ankit owns
+the backend/control authorization boundary. Ingress independently verifies
+that authorization before accepting successor observations. Replay safety
+must survive both rollovers and restarts. All ledger limits remain
+provisional. C5 rollover implementation stays within the existing Task 3
+pull request, [PR #68](https://github.com/ankit-suman-07/QA-SDV-Project/pull/68).
+
+At target rate, 30 minutes requires approximately 18,000 accepted
+observations per vehicle. With the current candidate encoding and full
+budget available, 4,095 observation IDs cover 409.5 seconds (6m49.5s).
+Starting with an empty ledger, the theoretical minimum is five sessions
+and four rollovers per vehicle. Early rollover, growth in status records
+under shared byte ceilings, or lower validated capacities may require
+more rollovers. This calculation is a sizing estimate. Thirty-minute
+runtime performance and lossless rollover have yet to be verified.
+
+##### Proposed transition sequence
+
+The existing ingress checks the persisted session tuple and observation
+watermark. The Ditto writer already provides conditional writes and
+bounded HTTP 412 reconciliation. The fingerprint utility computes the
+original health digest independently of the projected state. These
+are reusable boundaries. Successor authorization, capacity reporting,
+durable replay metadata and the rollover sequence below are pending
+implementation.
+
+1. The active authorized session receives observations. The publisher
+   monitors remaining ledger capacity and requests successor authorization
+   early enough to leave room for in-flight observations. A request alone
+   grants no authority and changes no ingress state.
+2. Backend/control binds its decision to the vehicle and exact current
+   authorized predecessor. An approval assigns a new session ID and a
+   strictly newer positive, interoperable safe-integer generation.
+   Ingress independently verifies the issuer, decision, binding and
+   durable transition identity. MQTT health fields alone cannot authorize
+   a session.
+3. Under the vehicle's conditional feature write, ingress rechecks the
+   predecessor, makes the authorization and generation fence durable,
+   initializes empty successor ledgers and status watermark zero, and
+   records that the first successor observation is pending. The last
+   accepted observation, its source time, original health fingerprint
+   when known, and displayed projection remain unchanged at this step.
+4. The durable fence is the cutover point. Old-session writes that commit
+   before it may advance the source-time fence. A racing old-session
+   write using a stale ETag must reload and revalidate. After cutover,
+   reject all retired-generation observations, status traffic and retries.
+   Successor observations received before the fence is confirmed cannot
+   be accepted or receive an acceptance ACK. The publisher waits for
+   confirmation of durable cutover before publishing with the successor
+   identity.
+5. The first successor observation must pass ordinary validation and have
+   a source timestamp strictly newer than the last observation accepted
+   before the fence. Commit its identity, original digest, replay membership,
+   watermark and projection together, and clear the pending-first state
+   in that same write. If the observation is rejected, preserve both the
+   fence and the prior projection. The successor remains pending for a
+   later eligible observation, and the retired session stays fenced.
+   Successor status is eligible only after the first successor observation
+   commits.
+
+##### Proposed versioned authorization semantics
+
+The table specifies semantic information. Field spelling and transport
+encoding remain part of the handoff.
+
+| Information | Origin and ingress verification |
+|---|---|
+| Contract version | Backend/control emits the version. Ingress requires a supported version. |
+| Vehicle and predecessor session ID/generation | Publisher identifies the requested scope. Backend/control verifies and binds the decision to the authoritative vehicle and predecessor. Ingress compares that binding to the target twin and current durable authorization. |
+| Successor session ID and generation | Backend/control assigns the successor tuple. Ingress verifies a new nonblank unpadded ID and a strictly newer safe-integer generation for the same vehicle. |
+| Unique authorization or transition identity | Backend/control issues a stable identity bound to the full decision. Ingress verifies the binding and commits the identity with the fence so retries and restarts cannot reapply a transition. |
+| Authorization decision and issuer | Backend/control issues the decision. Ingress independently verifies the issuer's authority for the vehicle and only activates a positively authorized successor. A publisher request, denial or unverifiable decision cannot activate a successor. |
+
+An exact duplicate of the currently applied authorization is an idempotent
+no-op after durable verification. It never reinitializes a ledger or
+rewinds the first-observation state. Reuse of a transition identity with
+different content, or competing decisions for the same transition, is
+rejected. Competing writes may race, but only a decision that matches the
+authoritative predecessor may win the conditional update. On HTTP 412,
+reread the durable state and ETag, recognize an exact already-applied
+decision, or revalidate the complete decision before a bounded retry.
+Reject stale or out-of-order decisions whose predecessor is no longer
+current. They cannot reopen a retired generation.
+
+**HANDOFF REQUIRED — ANKIT:** Specify the versioned backend interface,
+issuer trust and verification mechanism, authorization transport, and
+how publishers learn remaining capacity and receive durable cutover
+confirmation. Agree how concurrent requests are coordinated and how
+decisions and their bindings are recovered and verified after restart.
+No API endpoint, MQTT topic, credential format, signing scheme or backend
+storage model is established by this proposal.
+
+##### Durable replay and failure invariants
+
+- Commit each accepted observation and its replay metadata in a single
+  ETag-protected Ditto feature update. Preserve the latest accepted
+  identity and original health digest through status overlays. Confirm
+  exact active-session retries from durable identity and digest.
+  Historical active-session IDs cannot be silently evicted. Keep the
+  vehicle's generation fence durable across rollovers and restarts.
+  Retired generations remain fenced permanently for that vehicle.
+- After HTTP 412, reread and fully revalidate authorization, fence,
+  membership, ordering, reference, and capacity before retrying. After
+  a timeout or restart, reload the durable authorization, transition ID,
+  fence, ledgers, last accepted observation and pending-first state.
+  Require durable confirmation of an uncertain write before reporting
+  acceptance. No valid observation that has not been durably accepted
+  receives an acceptance ACK. Terminal invalid-input disposal retains
+  the existing rejection ACK policy.
+- If capacity runs out, stop accepting new observations for that
+  session and preserve the prior state and eligible exact retry handling.
+  With delayed or denied authorization, or publisher/backend
+  disconnection, retain the current durable fence. The active generation
+  may still accept eligible observations within its budgets until a
+  successor fence commits. At exhaustion, withhold acceptance and apply
+  the agreed publisher buffering or backpressure policy when available.
+  Do not invent observations or claim lossless delivery through the gap.
+- If durable metadata is missing on an existing legacy twin, follow the
+  migration rule above. If it is malformed, fail closed and require
+  reconciliation with authoritative state. Never rebuild historical
+  membership from the latest observation alone or guess that a rollover
+  finished. A fresh, explicitly provisioned twin has a separate
+  initialization path.
+- Keep per-vehicle authorization, replay state and writes isolated.
+  Existing V1 validation, persistence and ACK behavior is unaffected.
+
+Before validating thresholds or freezing any limits, measure sustained
+10 Hz acceptance per vehicle, real Ditto request/response sizes and whole
+Thing sizes, and authorization and durable cutover latency. Verify the
+publisher buffering/backpressure policy and choose a safe request
+threshold that accounts for in-flight traffic and delay. Measure status
+ledger growth against its independent record and byte budgets and the
+shared metadata limits. Run a 30-minute multi-rollover endurance test
+with restart, concurrent delivery, and isolation checks.
+
 #### Acceptance coverage
 
 Share synthetic fixtures under tests/fixtures/v2/status. Offline tests
