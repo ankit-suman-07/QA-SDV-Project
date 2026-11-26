@@ -56,7 +56,11 @@ function render(state) {
   text('vehicle-health', health ? `${health}${state.vehicleError || vehicle.availability !== 'AVAILABLE' ? ' (last known)' : ''}` : 'Unknown');
   text('vehicle-availability', state.vehicleError ? 'Request error — current availability unknown' : vehicle?.availability);
   text('vehicle-faults', vehicle?.activeFaults == null ? 'Unknown' : vehicle.activeFaults.join(', ') || 'None');
-  text('lidar-distance', vehicle?.lidar?.distanceMeters == null ? 'Unknown' : `${vehicle.lidar.distanceMeters} m`);
+  if (!v2) {
+    const distance = vehicle?.lidar?.distanceMeters;
+    const retained = state.vehicleError || vehicle?.availability !== 'AVAILABLE';
+    text('lidar-distance', distance == null ? 'Unknown' : `${distance} m${retained ? ' (last known)' : ''}`);
+  }
   text('lidar-sensor', vehicle?.lidar == null ? 'Unknown' : vehicle.lidar.sensorAvailable ? 'Yes' : 'No');
   text('source-timestamp', vehicle?.sourceTimestamp);
   text('last-event', vehicle?.lastEventId);
@@ -154,6 +158,8 @@ function renderV2(state) {
   const lastKnown = vehicle && (state.vehicleError || vehicle.availability !== 'AVAILABLE');
   const observed = value => value == null ? 'Unknown' : `${value}${lastKnown ? ' (last known)' : ''}`;
   renderRoster(state);
+  element('vehicle-health').dataset.tone = lastKnown ? 'unknown' : statusTones[vehicle?.healthStatus] ?? 'unknown';
+  element('vehicle-availability').dataset.tone = state.vehicleError ? 'unknown' : statusTones[vehicle?.availability] ?? 'unknown';
   text('vehicle-faults', observed(vehicle?.activeFaults ? vehicle.activeFaults.join(', ') || 'None' : null));
   text('lidar-distance', observed(vehicle?.lidar?.sensorAvailable !== true || vehicle.lidar.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`));
   text('lidar-sensor', observed(vehicle?.lidar?.sensorAvailable == null ? null : vehicle.lidar.sensorAvailable ? 'Yes' : 'No'));

@@ -82,6 +82,7 @@
 
 .fleet-roster table { width: 100%; border-collapse: collapse; text-align: left; font-size: .875rem; }
 .fleet-roster th, .fleet-roster td { padding: 8px; overflow-wrap: anywhere; }
+.fleet-roster tbody th { text-transform: none; letter-spacing: normal; color: inherit; }
 .fleet-roster thead { border-bottom: 1px solid var(--color-border); }
 .fleet-roster tbody tr + tr { border-top: 1px solid var(--color-border); }
 .fleet-roster tr[aria-current="true"] { background: var(--fleet-sage); }
@@ -127,6 +128,7 @@
 #lidar-distance { font-weight: 750; font-size: 1.5rem; }
 .fleet-observation .fleet-fields > div { border-inline-start: 1px solid var(--color-border); padding-inline-start: 8px; }
 .fleet-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.fleet-selection dd[data-tone] { justify-self: start; }
 .fleet-actions a { text-decoration: none; }
 .fleet-board .btn--primary { background: #39644c; border-color: #39644c; }
 .fleet-help { line-height: 1.5; }
