@@ -1,6 +1,6 @@
-// Opt-in browser component smoke. Routes are simulated from shared V2 fixtures.
+// Opt-in browser component smoke. Routes are simulated from shared fixtures.
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdir } from 'node:fs/promises';
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright-core');
 
 const root = new URL('../', import.meta.url);
@@ -28,12 +28,25 @@ try {
   const page = await browser.newPage({ viewport: { width: 1100, height: 850 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.addInitScript(() => { globalThis.SDV_CONFIG = { V2_API_BASE_URL: '', FLEET_PREVIEW: true }; });
+  await page.addInitScript(() => {
+    globalThis.SDV_CONFIG = { API_BASE_URL: location.origin, FLEET_PREVIEW: true };
+    if (!location.search) globalThis.SDV_CONFIG.V2_API_BASE_URL = '';
+  });
+  let releaseDelayedReply;
+  let delayedReplyFinished;
   let lastAction, actionStatus = 'ACCEPTED';
   const submitted = [];
   await page.route(`${origin}/**`, async route => {
     const path = new URL(route.request().url()).pathname;
     const respond = (json, status = 200) => route.fulfill({ json, status });
+    if (path === '/api/v1/fleet') {
+      return respond({
+        generatedAt: '2026-01-01T00:00:04Z', vehicles: ids.slice(0, 2).map(id => views.get(id)),
+        totalVehicles: 2, availableVehicles: 1, staleVehicles: 1, unavailableVehicles: 0,
+        healthyVehicles: 0, warningVehicles: 0, criticalVehicles: 1,
+      });
+    }
+    if (path === '/api/v1/vehicles/vehicle-001/state') return respond(views.get('vehicle-001'));
     if (path === '/api/v2/fleet') {
       return respond({
         generatedAt: '2026-01-01T00:00:04Z', vehicles: ids.map(id => views.get(id)),
@@ -42,7 +55,15 @@ try {
       });
     }
     const state = path.match(/^\/api\/v2\/vehicles\/(vehicle-00[123])\/state$/);
-    if (state) return respond(views.get(state[1]));
+    if (state) {
+      if (state[1] === 'vehicle-002' && releaseDelayedReply === undefined && delayedReplyFinished) {
+        await new Promise(resolve => { releaseDelayedReply = resolve; });
+        await respond(views.get(state[1]));
+        delayedReplyFinished();
+        return;
+      }
+      return respond(views.get(state[1]));
+    }
     const history = path.match(/^\/api\/v2\/diagnostics\/vehicles\/(vehicle-00[123])\/actions$/);
     if (history) return respond(lastAction?.vehicleId === history[1] ? [{ ...lastAction, status: actionStatus }] : []);
     if (path === '/api/v2/diagnostics/actions' && route.request().method() === 'POST') {
@@ -64,14 +85,33 @@ try {
 
   const see = (id, value) => page.waitForFunction(({ id, value }) =>
     document.getElementById(id)?.textContent.includes(value), { id, value });
+  const screenshotDir = process.env.FLEET_SCREENSHOTS;
+  if (screenshotDir) await mkdir(screenshotDir, { recursive: true });
+  const capture = name => screenshotDir && page.screenshot({ path: `${screenshotDir}/${name}.png`, fullPage: true });
   await page.goto(origin);
   await see('totalVehicles', '3');
-  assert.equal(await page.locator('#fleet-vehicles li').count(), 3);
+  assert.deepEqual(await page.locator('#fleet-vehicles th[scope=row]').allTextContents(), ids);
+  for (const key of ['availableVehicles', 'staleVehicles', 'unavailableVehicles', 'criticalVehicles']) {
+    assert.equal(await page.locator(`#${key}`).textContent(), '1');
+  }
   assert.equal(await page.locator('#preview-label').isVisible(), true);
   await see('vehicle-health', 'HEALTHY (last known)');
+  await capture('desktop-stale');
+  const delayed = new Promise(resolve => { delayedReplyFinished = resolve; });
+  await page.selectOption('#vehicle-select', 'vehicle-002');
   await page.selectOption('#vehicle-select', 'vehicle-003');
+  await see('vehicle-availability', 'UNAVAILABLE');
+  const deadline = Date.now() + 5000;
+  while (!releaseDelayedReply && Date.now() < deadline) await new Promise(resolve => setTimeout(resolve, 10));
+  assert.ok(releaseDelayedReply, 'Delayed request reached the synthetic route');
+  releaseDelayedReply();
+  await delayed;
+  await page.waitForLoadState('networkidle');
+  await see('vehicle-id', 'vehicle-003');
+  await see('vehicle-availability', 'UNAVAILABLE');
   await see('vehicle-health', 'Unknown');
   await see('lidar-distance', 'Unknown');
+  await capture('desktop-unavailable');
   await page.selectOption('#vehicle-select', 'vehicle-002');
   await see('vehicle-recovery', 'IN_PROGRESS');
   await see('vehicle-faults', 'LIDAR_SENSOR_FAILURE');
@@ -97,8 +137,29 @@ try {
   assert.equal(submitted.at(-1).action, 'RESTART_APP');
   assert.equal('scenario' in submitted.at(-1), false);
   await see('action-history', 'RESTART_APP');
+  await capture('desktop-recovering');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator('#refresh').focus();
+  await page.keyboard.press('Tab');
+  assert.equal(await page.locator('#vehicle-select').evaluate(select => select.matches(':focus-visible')), true);
+  assert.equal(await page.locator('#vehicle-select').evaluate(select => getComputedStyle(select).outlineStyle), 'solid');
+  await page.keyboard.press('Home');
+  await see('vehicle-health', 'HEALTHY (last known)');
+  assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+  const roster = page.getByRole('table', { name: 'Registered vehicles at the fleet evaluation time' });
+  assert.equal(await roster.getByRole('rowheader').count(), 3);
+  assert.equal(await roster.locator('[role=row][aria-current=true]').count(), 1);
+  await capture('narrow-stale');
+
+  await page.goto(`${origin}/?default-api`);
+  await see('totalVehicles', '2');
+  await see('vehicle-id', 'vehicle-001');
+  await see('lidar-distance', '20 m (last known)');
+  assert.equal(await page.locator('#vehicle-select option').count(), 2);
+  assert.equal(await page.locator('#restart').isVisible(), false);
+  assert.equal(await page.locator('.fleet-roster').isVisible(), false);
   assert.deepEqual(errors, []);
-  console.log('PASS: Chrome V2 dashboard component smoke with synthetic HTTP routes');
+  console.log('PASS: Chrome Fleet component smoke for V2 and the V1 default with synthetic HTTP routes');
 } finally {
   await browser.close();
 }
