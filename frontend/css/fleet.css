@@ -1,11 +1,158 @@
-.fleet-detail { margin-top: 24px; }
-.fleet-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.fleet-fields dt { color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 6px; }
-.fleet-fields dd { margin: 0; overflow-wrap: anywhere; }
-.fleet-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.fleet-notice { border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; }
-.fleet-notice--error { border-color: #b54747; }
-.fleet-help { color: var(--color-text-muted); line-height: 1.6; }
-#fleet-counts { grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); }
-#action-status { overflow-wrap: anywhere; }
-[data-v2][hidden] { display: none; }
+.fleet-page {
+  --color-canvas: #f6f7fa;
+  --color-text: #202633;
+  --color-text-muted: #586273;
+  --color-border: #d8dee7;
+  --color-navy: var(--color-text);
+  --fleet-sage: #e7f0e6;
+  --fleet-blue: #e3edf5;
+  --fleet-orange: #fbecdd;
+  --fleet-rose: #f6e2e5;
+  --fleet-lavender: #eeeaf6;
+  --fleet-gap: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fleet-page :focus-visible { outline: 2px solid #235591; outline-offset: 2px; }
+.fleet-page [hidden] { display: none; }
+
+.fleet-nav {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 8px 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fleet-nav__brand { font-weight: 800; font-size: 1.2rem; }
+.fleet-nav__nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fleet-nav__nav-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  color: inherit;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.fleet-nav__nav-link[aria-current],
+.fleet-nav__nav-link:hover { background: var(--fleet-sage); }
+.fleet-board.content { margin: auto; padding: 16px; gap: var(--fleet-gap); }
+.fleet-board h1 { font-size: clamp(1.65rem, 3.4vw, 2.25rem); letter-spacing: -.025em; }
+.fleet-board .card { min-width: 0; padding: 12px 14px; }
+.fleet-board h2 { margin: 0 0 10px; font-size: 1.15rem; }
+.fleet-board h3 { font-size: .95rem; margin: 12px 0 6px; }
+.fleet-summary p { margin: 0; }
+.fleet-summary #fleet-counts { margin-block: 8px; }
+.fleet-board .metric-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 116px), 1fr));
+  gap: 8px;
+}
+
+.fleet-board .metric-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+  padding: 8px;
+  border: 0;
+  background: var(--fleet-tone, var(--color-canvas));
+  box-shadow: none;
+}
+
+.fleet-board .metric-card__label { color: inherit; font-size: .77rem; }
+.fleet-board .metric-card__value { color: inherit; font-size: 1.15rem; margin: 0; }
+
+[data-tone="positive"] { --fleet-tone: var(--fleet-sage); }
+[data-tone="caution"] { --fleet-tone: var(--fleet-orange); }
+[data-tone="negative"] { --fleet-tone: var(--fleet-rose); }
+[data-tone="unknown"] { --fleet-tone: var(--fleet-lavender); }
+
+.fleet-roster table { width: 100%; border-collapse: collapse; text-align: left; font-size: .875rem; }
+.fleet-roster th, .fleet-roster td { padding: 8px; overflow-wrap: anywhere; }
+.fleet-roster thead { border-bottom: 1px solid var(--color-border); }
+.fleet-roster tbody tr + tr { border-top: 1px solid var(--color-border); }
+.fleet-roster tr[aria-current="true"] { background: var(--fleet-sage); }
+.fleet-badge {
+  display: inline-block;
+  padding: 3px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--fleet-tone, var(--color-canvas));
+  font-weight: 600;
+}
+.fleet-roster__label { display: none; }
+
+.fleet-panels {
+  display: grid;
+  gap: var(--fleet-gap);
+  grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 1fr));
+  grid-template-areas: "selection telemetry telemetry" "selection execution recovery";
+  align-items: start;
+}
+
+.fleet-selection { grid-area: selection; align-self: stretch; }
+.fleet-telemetry { grid-area: telemetry; }
+.fleet-recovery { grid-area: recovery; }
+.fleet-execution { grid-area: execution; }
+.fleet-page:not([data-version="v2"]) .fleet-execution { grid-column: 2 / -1; }
+.fleet-fields { display: grid; gap: 9px; margin: 12px 0 0; }
+.fleet-fields dt, .fleet-help, #fleet-status { color: var(--color-text-muted); font-size: .84rem; }
+.fleet-fields dd { margin: 3px 0 0; overflow-wrap: anywhere; }
+.fleet-selection .fleet-fields > div, .fleet-recovery .fleet-fields > div {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 8px;
+  padding-block: 5px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.fleet-telemetry .fleet-fields, .fleet-observation .fleet-fields {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 145px), 1fr));
+}
+
+.fleet-telemetry .fleet-fields { background: var(--fleet-blue); border-radius: var(--radius-sm); padding: 12px; }
+#lidar-distance { font-weight: 750; font-size: 1.5rem; }
+.fleet-observation .fleet-fields > div { border-inline-start: 1px solid var(--color-border); padding-inline-start: 8px; }
+.fleet-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.fleet-actions a { text-decoration: none; }
+.fleet-board .btn--primary { background: #39644c; border-color: #39644c; }
+.fleet-help { line-height: 1.5; }
+.fleet-notice { margin: 0; border-radius: var(--radius-sm); padding: 8px 12px; background: var(--fleet-lavender); }
+.fleet-notice--error { background: var(--fleet-rose); }
+#vehicle-status, #action-status, #action-history { overflow-wrap: anywhere; font-size: .875rem; }
+#action-status:empty, #history-status:empty, #action-history:empty { margin: 0; }
+
+@media (max-width: 820px) {
+  .fleet-panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas: "selection telemetry" "execution recovery";
+  }
+  .fleet-page:not([data-version="v2"]) .fleet-execution { grid-column: 1 / -1; }
+}
+
+@media (max-width: 640px) {
+  .fleet-board.content { padding: 12px; }
+  .fleet-panels {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "selection" "telemetry" "execution" "recovery";
+  }
+  .fleet-roster table, .fleet-roster tbody { display: block; }
+  .fleet-roster thead { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+  .fleet-roster tr { display: block; }
+  .fleet-roster tbody th, .fleet-roster td { display: block; }
+  .fleet-roster td { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 8px; padding-block: 4px; }
+  .fleet-roster__label { display: block; color: var(--color-text-muted); }
+}

@@ -1,3 +1,4 @@
+import { getFreshness } from './freshness.js';
 import { CONFIG } from './config.js';
 import { createHttpFleetApi } from './fleet-api.js';
 import { createHttpDiagnosticApi } from './diagnostic-api.js';
@@ -12,12 +13,14 @@ const element = id => document.getElementById(id);
 const text = (id, value) => { element(id).textContent = value ?? '—'; };
 function errorText(id, value) { text(id, value); element(id).hidden = !value; }
 const counters = [
-  ['totalVehicles', 'Total vehicles'], ['availableVehicles', 'Available'],
-  ['staleVehicles', 'Stale'], ['unavailableVehicles', 'Unavailable'],
-  ['healthyVehicles', 'Healthy now'], ['warningVehicles', 'Warning now'], ['criticalVehicles', 'Critical now'],
+  ['totalVehicles', 'Vehicles'], ['availableVehicles', 'Available', 'positive'],
+  ['staleVehicles', 'Stale', 'caution'], ['unavailableVehicles', 'Unavailable', 'negative'],
+  ['healthyVehicles', 'Healthy', 'positive'], ['warningVehicles', 'Warning', 'caution'],
+  ['criticalVehicles', 'Critical', 'negative'],
 ];
-for (const [key, label] of counters) {
+for (const [key, label, tone] of counters) {
   const card = document.createElement('div'); card.className = 'metric-card';
+  if (tone) card.dataset.tone = tone;
   const title = document.createElement('span'); title.className = 'metric-card__label'; title.textContent = label;
   const value = document.createElement('div'); value.className = 'metric-card__value'; value.id = key; value.textContent = '—';
   card.append(title, value); element('fleet-counts').append(card);
@@ -93,16 +96,66 @@ function renderList(id, items) {
   }));
 }
 
+const statusTones = {
+  HEALTHY: 'positive', AVAILABLE: 'positive', WARNING: 'caution', STALE: 'caution',
+  CRITICAL: 'negative', UNAVAILABLE: 'negative',
+};
+
+const rosterColumns = ['Health', 'Availability', 'Active faults', 'Source age', 'Thing ID'];
+const rosterRows = new Map();
+if (v2) for (const id of V2_VEHICLES) {
+  const row = element('fleet-vehicles').insertRow();
+  row.setAttribute('role', 'row');
+  const header = document.createElement('th');
+  header.scope = 'row';
+  header.setAttribute('role', 'rowheader');
+  header.textContent = id;
+  row.append(header);
+  const values = rosterColumns.map((column, index) => {
+    const cell = row.insertCell();
+    cell.setAttribute('role', 'cell');
+    const label = document.createElement('span');
+    label.className = 'fleet-roster__label';
+    label.setAttribute('aria-hidden', 'true');
+    label.textContent = column;
+    const value = document.createElement('span');
+    if (index < 2) value.className = 'fleet-badge';
+    cell.append(label, value);
+    return value;
+  });
+  rosterRows.set(id, { row, values });
+}
+
+function renderRoster(state) {
+  const fleet = state.fleet;
+  const evaluatedAt = Date.parse(fleet?.generatedAt);
+  for (const [id, { row, values }] of rosterRows) {
+    const view = fleet?.vehicles.find(entry => entry.vehicleId === id);
+    const lastKnown = state.fleetError || view?.availability !== 'AVAILABLE';
+    const observed = value => value == null ? 'Unknown' : lastKnown ? `${value} (last known)` : value;
+    const { ageMs } = getFreshness(view?.sourceTimestamp, Infinity, evaluatedAt);
+    const age = Number.isFinite(ageMs) && ageMs >= 0 ? `${ageMs / 1000} s` : 'Unknown';
+    const labels = [
+      observed(view?.healthStatus),
+      state.fleetError ? 'Unknown' : view?.availability ?? (fleet ? 'Unknown' : 'Loading'),
+      observed(view?.activeFaults ? view.activeFaults.join(', ') || 'None' : null),
+      age,
+      view?.thingId ?? '—',
+    ];
+    row.setAttribute('aria-current', String(id === state.selectedId));
+    values.forEach((value, index) => { value.textContent = labels[index] || 'None'; });
+    values[0].dataset.tone = lastKnown ? 'unknown' : statusTones[view?.healthStatus] ?? 'unknown';
+    values[1].dataset.tone = state.fleetError ? 'unknown' : statusTones[view?.availability] ?? 'unknown';
+  }
+}
+
 function renderV2(state) {
   const vehicle = state.vehicle;
   const lastKnown = vehicle && (state.vehicleError || vehicle.availability !== 'AVAILABLE');
   const observed = value => value == null ? 'Unknown' : `${value}${lastKnown ? ' (last known)' : ''}`;
-  renderList('fleet-vehicles', V2_VEHICLES.map(id => {
-    const view = state.fleet?.vehicles.find(entry => entry.vehicleId === id);
-    return `${id} · ${view?.availability ?? (state.fleetError ? 'Unknown' : 'Loading')}`;
-  }));
+  renderRoster(state);
   text('vehicle-faults', observed(vehicle?.activeFaults ? vehicle.activeFaults.join(', ') || 'None' : null));
-  text('lidar-distance', observed(vehicle?.lidar?.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`));
+  text('lidar-distance', observed(vehicle?.lidar?.sensorAvailable !== true || vehicle.lidar.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`));
   text('lidar-sensor', observed(vehicle?.lidar?.sensorAvailable == null ? null : vehicle.lidar.sensorAvailable ? 'Yes' : 'No'));
   text('vehicle-recovery', observed(vehicle?.recoveryState));
   text('recovery-started', vehicle?.recoveryStartedAt);
@@ -121,7 +174,7 @@ function renderV2(state) {
 const model = v2 ? new V2FleetDashboard(createV2FleetApi(CONFIG.V2_API_BASE_URL), render)
   : new FleetDashboard(createHttpFleetApi(), createHttpDiagnosticApi(), render);
 element('preview-label').hidden = !preview;
-element('fleet-vehicles').hidden = !v2;
+if (v2) document.body.dataset.version = 'v2';
 if (v2) for (const field of document.querySelectorAll('[data-v2]')) field.hidden = false;
 element('vehicle-select').addEventListener('change', event => model.selectVehicle(event.target.value));
 element('inject').addEventListener('click', () => model.submit('INJECT_SCENARIO'));
@@ -132,9 +185,6 @@ async function refresh() {
     ...(v2 ? [model.refreshAction(), model.refreshHistory()] : [])]);
 }
 element('refresh').addEventListener('click', refresh);
-element('menu-toggle').addEventListener('click', event => {
-  const open = element('sidebar').classList.toggle('is-open'); event.currentTarget.setAttribute('aria-expanded', String(open));
-});
 // Poll after completion rather than setInterval: slow requests cannot accumulate.
 let timer;
 let stopped = false;
