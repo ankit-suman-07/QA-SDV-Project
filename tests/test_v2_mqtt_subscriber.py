@@ -39,11 +39,13 @@ def transport():
     subscriber.on_connect(client, None, {}, 0, None)
     release = Event()
 
-    def deliver(mid, topic=TOPIC, *, event=None):
-        event = event_at(0) if event is None else event
+    def deliver(mid, topic=TOPIC, *, event=None, payload=None):
+        if payload is None:
+            event = event_at(0) if event is None else event
+            payload = json.dumps(event).encode()
         acked.clear()
         subscriber.on_message(client, None, SimpleNamespace(
-            topic=topic, payload=json.dumps(event).encode(), mid=mid, qos=1, retain=False,
+            topic=topic, payload=payload, mid=mid, qos=1, retain=False,
         ))
 
     def replace_request(callback):
@@ -130,8 +132,27 @@ def test_v2_topic_mismatch_is_rejected_before_ditto_access(transport, caplog):
     assert http.calls == []
     assert http.twins == before
     assert "event_rejected code=TOPIC_MISMATCH" in caplog.text
+    assert f"vehicle={TARGET!r} event={event_at(0)['eventId']!r}" in caplog.text
     # Existing subscriber policy disposes of invalid QoS 1 deliveries by ACK.
     client.ack.assert_called_once_with(51, 1)
+
+
+@pytest.mark.parametrize(("prefix", "code"), [
+    (b'{"eventId":"duplicate",', "DUPLICATE_KEY"),
+    (b'{"fingerprint":"not-wire-metadata",', "UNKNOWN_FIELD"),
+])
+def test_invalid_raw_c5_health_uses_poison_ack_without_storage(transport, caplog, prefix, code):
+    http, client, _, _, _, deliver, _ = transport
+    before = deepcopy(http.twins)
+    deliver(52, payload=prefix + json.dumps(event_at(0)).encode()[1:])
+    assert http.calls == []
+    assert http.twins == before
+    assert f"event_rejected code={code}" in caplog.text
+    if code == "DUPLICATE_KEY":
+        assert "vehicle=None event=None" in caplog.text
+    else:
+        assert f"vehicle={TARGET!r} event={event_at(0)['eventId']!r}" in caplog.text
+    client.ack.assert_called_once_with(52, 1)
 
 
 @pytest.mark.parametrize("old_outcome", ["success", "http-503", "lost-reply"])

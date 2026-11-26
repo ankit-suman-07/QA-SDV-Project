@@ -193,18 +193,38 @@ def is_v2_health_topic(topic):
     return isinstance(topic, str) and topic.endswith('/v2/health')
 
 
-def decode_v2_health(topic, payload):
-    event = decode_json(payload, max_bytes=MAX_PAYLOAD_BYTES)
+def _fingerprint_v2_health(topic, payload):
+    # Load lazily because the C5 utility reuses the health schema checks below.
+    from .c5_fingerprint import _decode, fingerprint_envelope
+
+    _require(is_v2_health_topic(topic), 'TOPIC_MISMATCH')
+    if isinstance(payload, str):
+        try:
+            payload = payload.encode('utf-8')
+        except UnicodeEncodeError as error:
+            raise EventError('INVALID_UNICODE') from error
     try:
-        validate_v2_health(topic, event)
-        encode_json(event)
+        return fingerprint_envelope(topic, payload)
     except EventError as error:
+        # Reparse only on rejection. A body that fails the same strict decoder
+        # cannot contribute diagnostic IDs, including on duplicate keys.
+        try:
+            event = _decode(payload)
+        except EventError:
+            event = None
         if isinstance(event, dict):
-            for key, attribute in (('vehicleId', 'vehicle_id'), ('eventId', 'event_id')):
-                if isinstance(event.get(key), str):
-                    setattr(error, attribute, event[key])
+            vehicle = event.get('vehicleId')
+            event_id = event.get('eventId')
+            if isinstance(vehicle, str) and vehicle in V2_VEHICLES:
+                error.vehicle_id = vehicle
+            if (isinstance(event_id, str) and event_id.isprintable()
+                    and event_id.strip() == event_id):
+                error.event_id = event_id
         raise
-    return event
+
+
+def decode_v2_health(topic, payload):
+    return _fingerprint_v2_health(topic, payload).envelope
 
 
 def validate_v2_health(topic, event):
@@ -344,8 +364,10 @@ class Ingress:
         return (callable(getattr(self.writer, 'load_v2_watermark', None))
                 and callable(getattr(self.writer, 'persist_v2', None)))
 
-    def _process_v2(self, topic, payload):
-        event = decode_v2_health(topic, payload)
+    def process_v2_health(self, topic, payload):
+        """Return verified health and fingerprint metadata after persistence or exact retry."""
+        validated = _fingerprint_v2_health(topic, payload)
+        event = validated.envelope
         properties = decode_json(encode_json(event))
         properties['lastEventId'] = properties.pop('eventId')
         vehicle = event['vehicleId']
@@ -375,11 +397,11 @@ class Ingress:
                 persist(vehicle, properties)
                 accepted_ids.add(event_key)
                 self._v2_replay[vehicle] = session, accepted_ids
-        return event
+        return validated
 
     def process(self, topic, payload):
         if is_v2_health_topic(topic):
-            return self._process_v2(topic, payload)
+            return self.process_v2_health(topic, payload).envelope
         event = decode_event(topic, payload)
         vehicle = event['vehicleId']
         # JSON round-trip avoids deepcopy's lower recursion limit and gives the
