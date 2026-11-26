@@ -4,6 +4,12 @@ This paired exploratory case study compares the same Fleet task starting at `700
 
 [Fleet reference](../../frontend-design-sample/fleet.png) · [Run A PR](https://github.com/ankit-suman-07/QA-SDV-Project/pull/69) · [Run B baseline and field mapping](../../evidence/v2/skill-evaluation/frontend-design/run-b-customized/baseline.md) · [Run B verification and screenshots](../../evidence/v2/skill-evaluation/frontend-design/run-b-customized/README.md)
 
+## Selection and merge
+
+Run A was selected for the Fleet implementation. GitHub records PR #69 as merged on November 26, 2026 at 18:45:12 UTC. The merge commit `d81fe141585eae84d9af240dccffb45e4e7bfeb2` was verified on fetched `main`. PR #70 retains the Run B evaluation and adopts the merged frontend tree. The customized skill remains available on `main`. [Run A merge](https://github.com/ankit-suman-07/QA-SDV-Project/commit/d81fe141585eae84d9af240dccffb45e4e7bfeb2) · [Run B evidence PR](https://github.com/ankit-suman-07/QA-SDV-Project/pull/70)
+
+PR #70's pre-alignment head was `c0f373c7be743b6754b1171d8921ae12284d6fdc`. The backup branch `ankit/backup/v2-fleet-ui-run-b-c0f373c` preserves the original Run B frontend and its experimental commits. The results below describe the historical revisions tested in the experiment. [Backup branch](https://github.com/ankit-suman-07/QA-SDV-Project/tree/ankit/backup/v2-fleet-ui-run-b-c0f373c)
+
 ## Revisions and provenance
 
 | | Run A, original | Run B, customized |

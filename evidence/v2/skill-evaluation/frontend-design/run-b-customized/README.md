@@ -2,6 +2,10 @@
 
 [Frozen task and plan](baseline.md) · [Paired comparison](../../../../../docs/findings/v2-frontend-skill-comparison.md)
 
+## Archived implementation and harness
+
+Run B's frontend is recorded at its initial and corrected experimental SHAs. The evidence branch now carries the selected Run A frontend. The common harness on the merged frontend is byte-identical to the archived harness from `ca1cdb4`. Use the historical revisions to reproduce the Run B results. [Archived Run B tree](https://github.com/ankit-suman-07/QA-SDV-Project/tree/c0f373c7be743b6754b1171d8921ae12284d6fdc) · [Frozen harness](https://github.com/ankit-suman-07/QA-SDV-Project/blob/ca1cdb4ab6d6bd2f12144ba1d5b382b0a640bd2b/frontend/tests/v2-fleet-browser.mjs)
+
 ## Initial implementation
 
 Tested `798ed94723b74d00a020e383d1d86f91224f2e50` before review corrections.
@@ -14,7 +18,7 @@ Tested `798ed94723b74d00a020e383d1d86f91224f2e50` before review corrections.
 
 The correction adds last-known distance labelling to the V1 fallback, preserves case for roster vehicle IDs that inherited uppercase from the shared table rule, and gives selected health and availability the same status treatment as roster values. Source age is calculated against fleet `generatedAt`. The selected API response supplies its own source timestamp but no evaluation timestamp or explicit provenance field in the production DTO. The UI uses explicit provenance when supplied and the existing preview/mock marker when applicable.
 
-- The corrected frontend in the checkpoint containing this file passed `cd frontend && npm test` (exit 0, 12/12) and the unchanged frozen Chrome harness (exit 0). [Unit log](final-unit.txt) · [Browser log](final-browser.txt)
+- The corrected Run B frontend at `126999e75c232e99423603269bcbe8465aa04db0` passed `cd frontend && npm test` (exit 0, 12/12) and the unchanged frozen Chrome harness (exit 0). [Unit log](final-unit.txt) · [Browser log](final-browser.txt)
 - Common browser coverage includes roster identities, availability and critical totals, stale and unavailable details, returning to the recovering vehicle, a delayed state reply, selected-vehicle action transitions through acceptance/execution/timeout/success, independent recovery, restart payload/history, keyboard selection and visible focus at 390 px, and V1 default routing/rendering.
 - Final captures. [Stale](final/desktop-stale.png) · [Unavailable](final/desktop-unavailable.png) · [Recovering](final/desktop-recovering.png) · [Narrow](final/narrow-stale.png)
 
