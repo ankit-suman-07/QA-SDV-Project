@@ -1,0 +1,310 @@
+{
+  "fixtureLabel": "SYNTHETIC",
+  "formatVersion": 1,
+  "statusContext": {
+    "vehicleId": "vehicle-003",
+    "sessionId": "session-1",
+    "sessionGeneration": 1,
+    "observationRef": {
+      "eventId": "vehicle-003-s1-0",
+      "sequence": 0,
+      "frame": 100,
+      "sourceTimestamp": "2026-01-01T00:00:00.000Z"
+    },
+    "health": "CRITICAL",
+    "faults": [
+      "LIDAR_SENSOR_FAILURE"
+    ]
+  },
+  "cases": [
+    {
+      "id": "health-minimal-optionals-absent",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d6865616c74682d6f62736572766174696f6e222c227061796c6f6164223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226672616d65223a3130302c226865616c7468223a22435249544943414c222c226c69646172223a7b2264697374616e63654d6574657273223a32302c2273656e736f72417661696c61626c65223a747275657d2c2270726f63657373696e6754696d657374616d70223a22323032362d30312d30315430303a30303a30302e3031305a222c2270726f76656e616e6365223a2253594e544845544943222c227265636f76657279537461727465644174223a22323032362d30312d30315430303a30303a30302e3030305a222c227265636f766572795374617465223a22494e5f50524f4752455353222c2273657175656e6365223a302c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c2273696d756c6174696f6e5365636f6e6473223a3130302c22736f7572636553696c656e74223a66616c73652c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a222c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "577d44daf36fa74dcd3e8c39bbdb1f62ac6a8078aaedd839b11bb94d0342cc48"
+      }
+    },
+    {
+      "id": "health-paired-ids",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"actionId\": \"action-003\", \"traceId\": \"trace-003\"}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d6865616c74682d6f62736572766174696f6e222c227061796c6f6164223a7b22616374696f6e4964223a22616374696f6e2d303033222c226576656e744964223a2276656869636c652d3030332d73312d30222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226672616d65223a3130302c226865616c7468223a22435249544943414c222c226c69646172223a7b2264697374616e63654d6574657273223a32302c2273656e736f72417661696c61626c65223a747275657d2c2270726f63657373696e6754696d657374616d70223a22323032362d30312d30315430303a30303a30302e3031305a222c2270726f76656e616e6365223a2253594e544845544943222c227265636f76657279537461727465644174223a22323032362d30312d30315430303a30303a30302e3030305a222c227265636f766572795374617465223a22494e5f50524f4752455353222c2273657175656e6365223a302c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c2273696d756c6174696f6e5365636f6e6473223a3130302c22736f7572636553696c656e74223a66616c73652c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a222c2274726163654964223a2274726163652d303033222c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "6645a800e6a8f685cee47bfa6f7f7a68c319507bd3c6ca6af206073262e17a84"
+      }
+    },
+    {
+      "id": "health-velocity",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"velocityMetersPerSecond\": {\"x\": 1, \"y\": 0, \"z\": 0}}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d6865616c74682d6f62736572766174696f6e222c227061796c6f6164223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226672616d65223a3130302c226865616c7468223a22435249544943414c222c226c69646172223a7b2264697374616e63654d6574657273223a32302c2273656e736f72417661696c61626c65223a747275657d2c2270726f63657373696e6754696d657374616d70223a22323032362d30312d30315430303a30303a30302e3031305a222c2270726f76656e616e6365223a2253594e544845544943222c227265636f76657279537461727465644174223a22323032362d30312d30315430303a30303a30302e3030305a222c227265636f766572795374617465223a22494e5f50524f4752455353222c2273657175656e6365223a302c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c2273696d756c6174696f6e5365636f6e6473223a3130302c22736f7572636553696c656e74223a66616c73652c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a222c2276656869636c654964223a2276656869636c652d303033222c2276656c6f636974794d65746572735065725365636f6e64223a7b2278223a312c2279223a302c227a223a307d7d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "ea9c87f8be4499b944e2e715fdf035d6dd1d87f8da4e0c2d072b9fa95fd2573c"
+      }
+    },
+    {
+      "id": "health-reordered-retry",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\n  \"sourceSilent\": false,\n  \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\",\n  \"recoveryState\": \"IN_PROGRESS\",\n  \"faults\": [\n    \"LIDAR_SENSOR_FAILURE\"\n  ],\n  \"health\": \"CRITICAL\",\n  \"lidar\": {\n    \"distanceMeters\": 20,\n    \"sensorAvailable\": true\n  },\n  \"provenance\": \"SYNTHETIC\",\n  \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\",\n  \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\",\n  \"simulationSeconds\": 100,\n  \"frame\": 100,\n  \"sequence\": 0,\n  \"sessionGeneration\": 1,\n  \"sessionId\": \"session-1\",\n  \"eventId\": \"vehicle-003-s1-0\",\n  \"vehicleId\": \"vehicle-003\",\n  \"schemaVersion\": \"2.0.0\"\n}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d6865616c74682d6f62736572766174696f6e222c227061796c6f6164223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226672616d65223a3130302c226865616c7468223a22435249544943414c222c226c69646172223a7b2264697374616e63654d6574657273223a32302c2273656e736f72417661696c61626c65223a747275657d2c2270726f63657373696e6754696d657374616d70223a22323032362d30312d30315430303a30303a30302e3031305a222c2270726f76656e616e6365223a2253594e544845544943222c227265636f76657279537461727465644174223a22323032362d30312d30315430303a30303a30302e3030305a222c227265636f766572795374617465223a22494e5f50524f4752455353222c2273657175656e6365223a302c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c2273696d756c6174696f6e5365636f6e6473223a3130302c22736f7572636553696c656e74223a66616c73652c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a222c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "577d44daf36fa74dcd3e8c39bbdb1f62ac6a8078aaedd839b11bb94d0342cc48"
+      }
+    },
+    {
+      "id": "health-required-null-recovery-start",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d6865616c74682d6f62736572766174696f6e222c227061796c6f6164223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226672616d65223a3130302c226865616c7468223a22435249544943414c222c226c69646172223a7b2264697374616e63654d6574657273223a32302c2273656e736f72417661696c61626c65223a747275657d2c2270726f63657373696e6754696d657374616d70223a22323032362d30312d30315430303a30303a30302e3031305a222c2270726f76656e616e6365223a2253594e544845544943222c227265636f76657279537461727465644174223a6e756c6c2c227265636f766572795374617465223a224e4f4e45222c2273657175656e6365223a302c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c2273696d756c6174696f6e5365636f6e6473223a3130302c22736f7572636553696c656e74223a66616c73652c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a222c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "7bce3a280bdc86c2bcb7e6447deff05dfd9a0e97a0f1840ff7fa063c15039d26"
+      }
+    },
+    {
+      "id": "health-absent-recovery-start",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"sourceSilent\": false}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "MISSING_FIELD"
+      }
+    },
+    {
+      "id": "health-required-null-distance",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"sensorAvailable\": false, \"distanceMeters\": null}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d6865616c74682d6f62736572766174696f6e222c227061796c6f6164223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226672616d65223a3130302c226865616c7468223a22435249544943414c222c226c69646172223a7b2264697374616e63654d6574657273223a6e756c6c2c2273656e736f72417661696c61626c65223a66616c73657d2c2270726f63657373696e6754696d657374616d70223a22323032362d30312d30315430303a30303a30302e3031305a222c2270726f76656e616e6365223a2253594e544845544943222c227265636f76657279537461727465644174223a6e756c6c2c227265636f766572795374617465223a224e4f4e45222c2273657175656e6365223a302c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c2273696d756c6174696f6e5365636f6e6473223a3130302c22736f7572636553696c656e74223a66616c73652c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a222c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "be283e20c1a19192e37bfd7c3a5ca60e8c860899c45c5f8c4fb0b2646ed35ac5"
+      }
+    },
+    {
+      "id": "health-absent-distance",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"sensorAvailable\": false}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "MISSING_FIELD"
+      }
+    },
+    {
+      "id": "health-null-paired-ids",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"actionId\": null, \"traceId\": null}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "INVALID_TYPE"
+      }
+    },
+    {
+      "id": "health-lone-actionId",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"actionId\": \"valid\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "MISSING_FIELD"
+      }
+    },
+    {
+      "id": "health-lone-traceId",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"traceId\": \"valid\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "MISSING_FIELD"
+      }
+    },
+    {
+      "id": "health-null-velocity",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"velocityMetersPerSecond\": null}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "INVALID_TYPE"
+      }
+    },
+    {
+      "id": "health-incomplete-velocity",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"velocityMetersPerSecond\": {\"x\": 1, \"y\": 0}}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "INVALID_TYPE"
+      }
+    },
+    {
+      "id": "health-unknown-extension",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"extension\": \"unexpected\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "health-unknown-packetId",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"packetId\": \"unexpected\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "health-unknown-brokerTimestamp",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"brokerTimestamp\": \"unexpected\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "health-unknown-fingerprint",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"fingerprint\": \"unexpected\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "health-unknown-fixtureLabel",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"fixtureLabel\": \"unexpected\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "health-unknown-lidar-key",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true, \"unexpected\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "health-unknown-velocity-axis",
+      "topic": "sdv/vehicle-003/v2/health",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"eventId\": \"vehicle-003-s1-0\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"sequence\": 0, \"frame\": 100, \"simulationSeconds\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"processingTimestamp\": \"2026-01-01T00:00:00.010Z\", \"provenance\": \"SYNTHETIC\", \"lidar\": {\"distanceMeters\": 20, \"sensorAvailable\": true}, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"recoveryState\": \"IN_PROGRESS\", \"recoveryStartedAt\": \"2026-01-01T00:00:00.000Z\", \"sourceSilent\": false, \"velocityMetersPerSecond\": {\"x\": 1, \"y\": 0, \"z\": 0, \"w\": 0}}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "status-minimal",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": 1, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"}, \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"]}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d737461747573222c227061796c6f6164223a7b226576616c756174696f6e54696d657374616d70223a22323032362d30312d30315430303a30303a30312e3132305a222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226865616c7468223a22435249544943414c222c226f62736572766174696f6e526566223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226672616d65223a3130302c2273657175656e6365223a302c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a227d2c227265636f76657279537461727465644174223a6e756c6c2c227265636f766572795374617465223a224e4f4e45222c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c22736f7572636553696c656e74223a66616c73652c227374617475734576656e744964223a2272657365742d31222c227374617475735265766973696f6e223a312c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "e7999f301490edd02b9588e03cfba955880405edb119165e3def2806627464c0"
+      }
+    },
+    {
+      "id": "status-reordered-retry",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\n  \"faults\": [\n    \"LIDAR_SENSOR_FAILURE\"\n  ],\n  \"health\": \"CRITICAL\",\n  \"sourceSilent\": false,\n  \"recoveryStartedAt\": null,\n  \"recoveryState\": \"NONE\",\n  \"observationRef\": {\n    \"eventId\": \"vehicle-003-s1-0\",\n    \"sequence\": 0,\n    \"frame\": 100,\n    \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"\n  },\n  \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\",\n  \"statusRevision\": 1,\n  \"statusEventId\": \"reset-1\",\n  \"sessionGeneration\": 1,\n  \"sessionId\": \"session-1\",\n  \"vehicleId\": \"vehicle-003\",\n  \"schemaVersion\": \"2.0.0\"\n}",
+      "expected": {
+        "validation": "ACCEPT",
+        "canonicalUtf8Hex": "7b226d65737361676554797065223a2276322d737461747573222c227061796c6f6164223a7b226576616c756174696f6e54696d657374616d70223a22323032362d30312d30315430303a30303a30312e3132305a222c226661756c7473223a5b224c494441525f53454e534f525f4641494c555245225d2c226865616c7468223a22435249544943414c222c226f62736572766174696f6e526566223a7b226576656e744964223a2276656869636c652d3030332d73312d30222c226672616d65223a3130302c2273657175656e6365223a302c22736f7572636554696d657374616d70223a22323032362d30312d30315430303a30303a30302e3030305a227d2c227265636f76657279537461727465644174223a6e756c6c2c227265636f766572795374617465223a224e4f4e45222c2273657373696f6e47656e65726174696f6e223a312c2273657373696f6e4964223a2273657373696f6e2d31222c22736f7572636553696c656e74223a66616c73652c227374617475734576656e744964223a2272657365742d31222c227374617475735265766973696f6e223a312c2276656869636c654964223a2276656869636c652d303033227d2c22736368656d6156657273696f6e223a22322e302e30227d",
+        "sha256": "e7999f301490edd02b9588e03cfba955880405edb119165e3def2806627464c0"
+      }
+    },
+    {
+      "id": "status-unknown-key",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": 1, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"}, \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"extension\": true}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "status-unknown-ref-key",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": 1, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\", \"unexpected\": true}, \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"]}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "status-missing-recovery-start",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": 1, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"}, \"recoveryState\": \"NONE\", \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"]}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "MISSING_FIELD"
+      }
+    },
+    {
+      "id": "status-invalid-revision",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": false, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"}, \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"]}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "INVALID_TYPE"
+      }
+    },
+    {
+      "id": "status-invalid-recovery-start",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": 1, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"}, \"recoveryState\": \"NONE\", \"recoveryStartedAt\": \"2026-01-01T00:00:01.120Z\", \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"]}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "INVALID_TYPE"
+      }
+    },
+    {
+      "id": "status-wire-fingerprint",
+      "topic": "sdv/vehicle-003/v2/status",
+      "inputJson": "{\"schemaVersion\": \"2.0.0\", \"vehicleId\": \"vehicle-003\", \"sessionId\": \"session-1\", \"sessionGeneration\": 1, \"statusEventId\": \"reset-1\", \"statusRevision\": 1, \"evaluationTimestamp\": \"2026-01-01T00:00:01.120Z\", \"observationRef\": {\"eventId\": \"vehicle-003-s1-0\", \"sequence\": 0, \"frame\": 100, \"sourceTimestamp\": \"2026-01-01T00:00:00.000Z\"}, \"recoveryState\": \"NONE\", \"recoveryStartedAt\": null, \"sourceSilent\": false, \"health\": \"CRITICAL\", \"faults\": [\"LIDAR_SENSOR_FAILURE\"], \"fingerprint\": \"unexpected\"}",
+      "expected": {
+        "validation": "REJECT",
+        "reason": "UNKNOWN_FIELD"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "kind": "sameFingerprint",
+      "cases": [
+        "health-minimal-optionals-absent",
+        "health-reordered-retry"
+      ]
+    },
+    {
+      "kind": "sameFingerprint",
+      "cases": [
+        "status-minimal",
+        "status-reordered-retry"
+      ]
+    },
+    {
+      "kind": "differentFingerprint",
+      "cases": [
+        "health-minimal-optionals-absent",
+        "status-minimal"
+      ]
+    },
+    {
+      "kind": "originalHealthFingerprintAfterStatusOverlay",
+      "observation": "health-minimal-optionals-absent",
+      "status": "status-minimal",
+      "retry": "health-reordered-retry"
+    }
+  ]
+}

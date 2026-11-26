@@ -191,11 +191,42 @@ records to Bayan, never a second fleet engine. Histories retain original event,
 action/trace IDs, detection/clear times, outcome and provenance; transitions only,
 not every 10 Hz sample. Evidence logs are separate artifacts, no raw clouds.
 
+### C5 health envelope 2.0.0
+
+The health topic is `sdv/{vehicleId}/v2/health`. For schema version
+`2.0.0`, require exactly these application fields, plus the optional
+fields listed below when present:
+
+- Required: `schemaVersion`, `vehicleId`, `eventId`, `sessionId`,
+  `sessionGeneration`, `sequence`, `frame`, `simulationSeconds`,
+  `sourceTimestamp`, `processingTimestamp`, `provenance`, `lidar`,
+  `health`, `faults`, `recoveryState`, `recoveryStartedAt`, `sourceSilent`.
+- Optional: `actionId` and `traceId` as a pair, and
+  `velocityMetersPerSecond`.
+
+The C2 and C4 type, identity, and recovery rules apply. Reject unknown
+top-level and nested keys. The required `lidar` object contains exactly
+`sensorAvailable` and `distanceMeters`. Keep `distanceMeters` present
+with null when unavailable and a finite nonnegative number when available.
+The required `recoveryStartedAt` is null for `NONE` and a valid UTC
+timestamp string for `IN_PROGRESS`. Other required values are non-null.
+
+Omit both correlation identifiers or supply both as nonblank strings.
+A lone identifier, explicit null, or another type is invalid. Omit
+velocity or supply an object containing exactly `x`, `y`, and `z` with
+valid finite numeric components and a representable derived speed per C2.
+Null and incomplete velocity objects are invalid. A future C2/C3
+dropout-reason wire field requires separate producer compatibility
+review. This version allows no generic extensions.
+
 ### C5 status handoff
 
 Publish status on **sdv/{vehicleId}/v2/status**, QoS 1, retain false.
 The observation and health topics and their replay rules remain unchanged.
-Require strict JSON, at most 64 KiB, with exactly these fields:
+Require strict JSON, at most 64 KiB. For schema version `2.0.0`, all
+fields below are required, including the explicit null for
+`recoveryStartedAt`. There are no optional fields. Reject unknown
+top-level keys and unknown keys inside `observationRef`:
 
 | Field | Rule |
 |---|---|
@@ -301,14 +332,21 @@ validated wire envelope into `payload`, preserving field presence:
 
 | `messageType` | Payload fields |
 |---|---|
-| `v2-health-observation` | `vehicleId`, `eventId`, `sessionId`, `sessionGeneration`, `sequence`, `frame`, `simulationSeconds`, `sourceTimestamp`, `processingTimestamp`, `provenance`, `lidar` (including `distanceMeters` and `sensorAvailable`), `health`, `faults`, `recoveryState`, `recoveryStartedAt`, `sourceSilent`, and optional `actionId` and `traceId` as a pair and `velocityMetersPerSecond` with `x`, `y`, `z` when present. Include other application fields only if accepted by the applicable health schema, including their validated nested contents. |
+| `v2-health-observation` | `vehicleId`, `eventId`, `sessionId`, `sessionGeneration`, `sequence`, `frame`, `simulationSeconds`, `sourceTimestamp`, `processingTimestamp`, `provenance`, `lidar` (including `distanceMeters` and `sensorAvailable`), `health`, `faults`, `recoveryState`, `recoveryStartedAt`, `sourceSilent`, and optional `actionId` and `traceId` as a pair and `velocityMetersPerSecond` with `x`, `y`, `z` when present. |
 | `v2-status` | `vehicleId`, `sessionId`, `sessionGeneration`, `statusEventId`, `statusRevision`, `evaluationTimestamp`, `observationRef` (exactly `eventId`, `sequence`, `frame`, `sourceTimestamp`), `recoveryState`, `recoveryStartedAt`, `sourceSilent`, `health`, `faults`. |
 
-Fingerprint fields, fixture annotations, MQTT packet IDs, delivery flags,
-broker timestamps, other transport-generated metadata, ingress receipts,
-and ingress-owned projection metadata such as `_ingress` and `lastEventId`
-are outside the input. The application `processingTimestamp` is included.
-These exclusions do not grant permission to add fields to the wire schema.
+Reject unknown wire fields, including `packetId`, `brokerTimestamp`,
+`fingerprint`, `fixtureLabel`, ingress-generated receipt fields,
+projection metadata such as `_ingress` and `lastEventId`, and arbitrary
+extensions. Transport metadata supplied outside the application envelope
+never enters the fingerprint. The application `processingTimestamp`
+is included.
+
+The payload contains exactly the allowed application fields present on the
+original wire message, with `schemaVersion` carried only in the wrapper.
+Absent optional fields stay absent and required nulls remain present and
+are hashed as JSON null. Explicit null is invalid for each optional field.
+Do not mutate the original envelope or normalize timestamp strings.
 
 1. Decode strict UTF-8 JSON, detecting duplicate property names at every
    level after JSON escape decoding. Retain number token kinds until
@@ -343,7 +381,8 @@ Retain the digest of the original accepted health payload even after a
 status overlay changes projected recovery or source silence. Reconcile an
 exact health retry against that digest and the accepted observation tuple,
 without recalculating the digest from projected properties or undoing the
-overlay. See the [shared fingerprint vectors](../tests/fixtures/v2/status/README.md).
+overlay. See the [shared fingerprint vectors](../tests/fixtures/v2/status/README.md)
+and [strict envelope cases](../tests/fixtures/v2/status/envelope-vectors.md).
 
 
 #### Durable metadata and conditional writes
