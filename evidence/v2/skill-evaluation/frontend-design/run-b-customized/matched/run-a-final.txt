@@ -1,0 +1,1 @@
+PASS: Chrome Fleet component smoke for V2 and the V1 default with synthetic HTTP routes

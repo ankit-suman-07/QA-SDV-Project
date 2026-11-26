@@ -1,0 +1,24 @@
+
+> test
+> node --test --experimental-test-isolation=none tests/*.test.js
+
+✔ fleet client uses v1 paths and encodes a selected identity (6.456182ms)
+✔ scenario timeout preserves correlated UNKNOWN error and never retries POST (1.415206ms)
+✔ fleet loading and errors are distinct from selected vehicle availability (1.315821ms)
+✔ an old selection or error cannot overwrite a newer selection (0.501395ms)
+✔ newer polls win and failed reads preserve labelled last known state (0.597078ms)
+✔ dispatch acknowledgement does not change observed health; no automatic POST retry (1.149039ms)
+✔ switching during an action hides old acknowledgement without allowing duplicate submission (0.474785ms)
+✔ retains all three even when missing, and keeps fleet and observation samples independent (1.638909ms)
+✔ rapid selection cannot apply another vehicle’s unread observation, history or action result (1.052586ms)
+✔ tracks correlated execution, rejects mismatches, and keeps CLEAR separate from recovery (0.924218ms)
+✔ terminal timeout and rejection remain distinct from an unknown dispatch acknowledgement (0.858706ms)
+✔ V2 adapter uses explicit routes and adds no browser bearer credentials (87.8286ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 160.525331
