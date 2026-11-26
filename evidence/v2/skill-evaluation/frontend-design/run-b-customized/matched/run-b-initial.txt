@@ -1,0 +1,12 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 30000ms exceeded.
+    at see (/tmp/sdv-run-b-initial/frontend/tests/v2-fleet-browser.mjs:86:35)
+    at /tmp/sdv-run-b-initial/frontend/tests/v2-fleet-browser.mjs:157:9 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v24.18.0

@@ -38,3 +38,5 @@ assert.equal(await page.getByRole('link', { name: 'Open diagnostics' }).isVisibl
 await capture('intermediate-stale');
 console.log('PASS: 768 px width, roster semantics and diagnostics link');
 ```
+
+The comparison also reran all four archived frontend revisions with Playwright Core 1.65.1 and the frozen `ca1cdb4` harness. For each revision, archive `frontend` and `tests/fixtures/v2`, copy the frozen harness to `frontend/tests/v2-fleet-browser.mjs`, then run the browser command above with the matched driver and without `FLEET_SCREENSHOTS`. Both initials exited 1 and both corrected revisions exited 0. [Run A initial](matched/run-a-initial.txt) · [Run A corrected](matched/run-a-final.txt) · [Run B initial](matched/run-b-initial.txt) · [Run B corrected](matched/run-b-final.txt)
