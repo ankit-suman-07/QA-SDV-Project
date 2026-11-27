@@ -1,0 +1,266 @@
+{"spawn": 0, "pitch": 0.0, "points": 27374, "outcome": "NO_FRONT_HIT"}
+{"spawn": 1, "pitch": -0.5, "points": 26413, "outcome": "NO_FRONT_HIT"}
+{"spawn": 2, "pitch": 0.0, "points": 25972, "outcome": "NO_FRONT_HIT"}
+{"spawn": 3, "pitch": 0.0, "points": 26957, "outcome": "OBJECT", "cls": 6, "x": 49.1, "z": -0.28}
+{"spawn": 4, "pitch": 0.0, "points": 25478, "outcome": "NO_FRONT_HIT"}
+{"spawn": 5, "pitch": 0.0, "points": 26167, "outcome": "NO_FRONT_HIT"}
+{"spawn": 6, "pitch": 0.0, "points": 25753, "outcome": "NO_FRONT_HIT"}
+{"spawn": 7, "pitch": 0.0, "points": 27365, "outcome": "NO_FRONT_HIT"}
+{"spawn": 8, "pitch": 0.0, "points": 26552, "outcome": "NO_FRONT_HIT"}
+{"spawn": 9, "pitch": 0.0, "points": 26455, "outcome": "NO_FRONT_HIT"}
+{"spawn": 10, "pitch": -0.4, "points": 28609, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 3.8, "z": -1.0}
+{"spawn": 11, "pitch": 0.0, "points": 27609, "outcome": "OBJECT", "cls": 3, "x": 32.1, "z": -0.91}
+{"spawn": 12, "pitch": 0.0, "points": 27884, "outcome": "NO_FRONT_HIT"}
+{"spawn": 13, "pitch": 0.0, "points": 27574, "outcome": "NO_FRONT_HIT"}
+{"spawn": 14, "pitch": 0.0, "points": 27689, "outcome": "NO_FRONT_HIT"}
+{"spawn": 15, "pitch": 0.0, "points": 27627, "outcome": "NO_FRONT_HIT"}
+{"spawn": 16, "pitch": 0.0, "points": 30570, "outcome": "NO_FRONT_HIT"}
+{"spawn": 17, "pitch": 0.0, "points": 28604, "outcome": "NO_FRONT_HIT"}
+{"spawn": 18, "pitch": 0.0, "points": 28089, "outcome": "NO_FRONT_HIT"}
+{"spawn": 19, "pitch": 0.0, "points": 29441, "outcome": "OBJECT", "cls": 4, "x": 44.7, "z": -0.25}
+{"spawn": 20, "pitch": 0.0, "points": 27259, "outcome": "NO_FRONT_HIT"}
+{"spawn": 21, "pitch": 2.3, "points": 28664, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 6.8, "z": -0.98}
+{"spawn": 22, "pitch": 0.0, "points": 28854, "outcome": "NO_FRONT_HIT"}
+{"spawn": 23, "pitch": 0.0, "points": 29197, "outcome": "NO_FRONT_HIT"}
+{"spawn": 24, "pitch": 0.0, "points": 29109, "outcome": "NO_FRONT_HIT"}
+{"spawn": 25, "pitch": 0.0, "points": 29043, "outcome": "NO_FRONT_HIT"}
+{"spawn": 26, "pitch": 0.0, "points": 27076, "outcome": "NO_FRONT_HIT"}
+{"spawn": 27, "pitch": -0.6, "points": 27092, "outcome": "NO_FRONT_HIT"}
+{"spawn": 28, "pitch": -4.1, "points": 26920, "outcome": "NO_FRONT_HIT"}
+{"spawn": 29, "pitch": 0.0, "points": 27361, "outcome": "NO_FRONT_HIT"}
+{"spawn": 30, "pitch": 0.0, "points": 26115, "outcome": "OBJECT", "cls": 3, "x": 40.8, "z": 0.69}
+{"spawn": 31, "pitch": 0.0, "points": 25186, "outcome": "NO_FRONT_HIT"}
+{"spawn": 32, "pitch": 0.0, "points": 26175, "outcome": "OBJECT", "cls": 6, "x": 42.8, "z": -0.24}
+{"spawn": 33, "pitch": 0.0, "points": 27281, "outcome": "NO_FRONT_HIT"}
+{"spawn": 34, "pitch": 0.4, "points": 26446, "outcome": "NO_FRONT_HIT"}
+{"spawn": 35, "pitch": 0.4, "points": 25926, "outcome": "NO_FRONT_HIT"}
+{"spawn": 36, "pitch": 0.0, "points": 26418, "outcome": "NO_FRONT_HIT"}
+{"spawn": 37, "pitch": 0.0, "points": 26043, "outcome": "NO_FRONT_HIT"}
+{"spawn": 38, "pitch": 0.0, "points": 27894, "outcome": "NO_FRONT_HIT"}
+{"spawn": 39, "pitch": 0.0, "points": 27327, "outcome": "NO_FRONT_HIT"}
+{"spawn": 40, "pitch": 0.0, "points": 27480, "outcome": "NO_FRONT_HIT"}
+{"spawn": 41, "pitch": 0.0, "points": 26869, "outcome": "NO_FRONT_HIT"}
+{"spawn": 42, "pitch": 0.0, "points": 27590, "outcome": "NO_FRONT_HIT"}
+{"spawn": 43, "pitch": 0.0, "points": 25382, "outcome": "NO_FRONT_HIT"}
+{"spawn": 44, "pitch": 0.0, "points": 25288, "outcome": "NO_FRONT_HIT"}
+{"spawn": 45, "pitch": 0.0, "points": 25851, "outcome": "NO_FRONT_HIT"}
+{"spawn": 46, "pitch": 0.0, "points": 26329, "outcome": "NO_FRONT_HIT"}
+{"spawn": 47, "pitch": 0.0, "points": 25786, "outcome": "NO_FRONT_HIT"}
+{"spawn": 48, "pitch": 0.0, "points": 25736, "outcome": "NO_FRONT_HIT"}
+{"spawn": 49, "pitch": 0.0, "points": 29193, "outcome": "NO_FRONT_HIT"}
+{"spawn": 50, "pitch": 0.0, "points": 29188, "outcome": "NO_FRONT_HIT"}
+{"spawn": 51, "pitch": 0.0, "points": 25624, "outcome": "NO_FRONT_HIT"}
+{"spawn": 52, "pitch": 0.0, "points": 25728, "outcome": "NO_FRONT_HIT"}
+{"spawn": 53, "pitch": 0.0, "points": 27676, "outcome": "NO_FRONT_HIT"}
+{"spawn": 54, "pitch": 0.0, "points": 25460, "outcome": "NO_FRONT_HIT"}
+{"spawn": 55, "pitch": 3.3, "points": 29953, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 8.0, "z": -0.96}
+{"spawn": 56, "pitch": 0.0, "points": 25614, "outcome": "NO_FRONT_HIT"}
+{"spawn": 57, "pitch": 0.0, "points": 27015, "outcome": "NO_FRONT_HIT"}
+{"spawn": 58, "pitch": 0.0, "points": 26854, "outcome": "OBJECT", "cls": 20, "x": 44.6, "z": -0.25}
+{"spawn": 59, "pitch": 0.0, "points": 27697, "outcome": "NO_FRONT_HIT"}
+{"spawn": 60, "pitch": -0.3, "points": 26891, "outcome": "NO_FRONT_HIT"}
+{"spawn": 61, "pitch": 0.0, "points": 28953, "outcome": "NO_FRONT_HIT"}
+{"spawn": 62, "pitch": -0.3, "points": 26902, "outcome": "NO_FRONT_HIT"}
+{"spawn": 63, "pitch": -0.3, "points": 27667, "outcome": "NO_FRONT_HIT"}
+{"spawn": 64, "pitch": 0.0, "points": 28973, "outcome": "NO_FRONT_HIT"}
+{"spawn": 65, "pitch": -0.3, "points": 28401, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 30.0, "z": -0.85}
+{"spawn": 66, "pitch": -0.3, "points": 28688, "outcome": "NO_FRONT_HIT"}
+{"spawn": 67, "pitch": 0.0, "points": 25701, "outcome": "NO_FRONT_HIT"}
+{"spawn": 68, "pitch": 0.0, "points": 26363, "outcome": "NO_FRONT_HIT"}
+{"spawn": 69, "pitch": 0.0, "points": 25243, "outcome": "NO_FRONT_HIT"}
+{"spawn": 70, "pitch": 0.0, "points": 25655, "outcome": "OBJECT", "cls": 6, "x": 36.4, "z": 0.62}
+{"spawn": 71, "pitch": 0.0, "points": 29004, "outcome": "NO_FRONT_HIT"}
+{"spawn": 72, "pitch": -0.3, "points": 28447, "outcome": "NO_FRONT_HIT"}
+{"spawn": 73, "pitch": -0.3, "points": 28365, "outcome": "NO_FRONT_HIT"}
+{"spawn": 74, "pitch": 2.3, "points": 29564, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 13.5, "z": -0.99}
+{"spawn": 75, "pitch": 0.0, "points": 29042, "outcome": "NO_FRONT_HIT"}
+{"spawn": 76, "pitch": 0.0, "points": 28950, "outcome": "NO_FRONT_HIT"}
+{"spawn": 77, "pitch": 0.0, "points": 28774, "outcome": "NO_FRONT_HIT"}
+{"spawn": 78, "pitch": 0.0, "points": 29039, "outcome": "NO_FRONT_HIT"}
+{"spawn": 79, "pitch": 0.0, "points": 28940, "outcome": "NO_FRONT_HIT"}
+{"spawn": 80, "pitch": 0.0, "points": 29155, "outcome": "NO_FRONT_HIT"}
+{"spawn": 81, "pitch": 0.0, "points": 27802, "outcome": "NO_FRONT_HIT"}
+{"spawn": 82, "pitch": 0.0, "points": 28100, "outcome": "NO_FRONT_HIT"}
+{"spawn": 83, "pitch": 0.0, "points": 29118, "outcome": "NO_FRONT_HIT"}
+{"spawn": 84, "pitch": 0.0, "points": 29082, "outcome": "NO_FRONT_HIT"}
+{"spawn": 85, "pitch": 0.0, "points": 27249, "outcome": "OBJECT", "cls": 4, "x": 36.0, "z": 0.61}
+{"spawn": 86, "pitch": 0.0, "points": 27985, "outcome": "NO_FRONT_HIT"}
+{"spawn": 87, "pitch": 0.0, "points": 28233, "outcome": "OBJECT", "cls": 4, "x": 46.2, "z": -0.26}
+{"spawn": 88, "pitch": 0.0, "points": 28227, "outcome": "NO_FRONT_HIT"}
+{"spawn": 89, "pitch": 0.0, "points": 28153, "outcome": "NO_FRONT_HIT"}
+{"spawn": 90, "pitch": 0.0, "points": 27273, "outcome": "OBJECT", "cls": 3, "x": 50.0, "z": 0.84}
+{"spawn": 91, "pitch": 0.0, "points": 27186, "outcome": "OBJECT", "cls": 6, "x": 40.1, "z": 0.68}
+{"spawn": 92, "pitch": 0.0, "points": 26407, "outcome": "NO_FRONT_HIT"}
+{"spawn": 93, "pitch": 0.0, "points": 26564, "outcome": "OBJECT", "cls": 6, "x": 34.4, "z": -0.97}
+{"spawn": 94, "pitch": 0.0, "points": 28132, "outcome": "NO_FRONT_HIT"}
+{"spawn": 95, "pitch": 0.0, "points": 28723, "outcome": "NO_FRONT_HIT"}
+{"spawn": 96, "pitch": 0.0, "points": 28396, "outcome": "NO_FRONT_HIT"}
+{"spawn": 97, "pitch": 0.0, "points": 27992, "outcome": "NO_FRONT_HIT"}
+{"spawn": 98, "pitch": 0.0, "points": 29054, "outcome": "NO_FRONT_HIT"}
+{"spawn": 99, "pitch": -0.3, "points": 28034, "outcome": "NO_FRONT_HIT"}
+{"spawn": 100, "pitch": -0.3, "points": 27636, "outcome": "NO_FRONT_HIT"}
+{"spawn": 101, "pitch": -0.3, "points": 27247, "outcome": "NO_FRONT_HIT"}
+{"spawn": 102, "pitch": 0.0, "points": 26188, "outcome": "NO_FRONT_HIT"}
+{"spawn": 103, "pitch": 0.0, "points": 26106, "outcome": "NO_FRONT_HIT"}
+{"spawn": 104, "pitch": 0.0, "points": 28127, "outcome": "NO_FRONT_HIT"}
+{"spawn": 105, "pitch": 0.0, "points": 28388, "outcome": "NO_FRONT_HIT"}
+{"spawn": 106, "pitch": 0.0, "points": 25378, "outcome": "NO_FRONT_HIT"}
+{"spawn": 107, "pitch": 0.0, "points": 24984, "outcome": "NO_FRONT_HIT"}
+{"spawn": 108, "pitch": 0.0, "points": 27285, "outcome": "NO_FRONT_HIT"}
+{"spawn": 109, "pitch": 0.0, "points": 27856, "outcome": "NO_FRONT_HIT"}
+{"spawn": 110, "pitch": 0.0, "points": 25906, "outcome": "NO_FRONT_HIT"}
+{"spawn": 111, "pitch": 0.0, "points": 26786, "outcome": "NO_FRONT_HIT"}
+{"spawn": 112, "pitch": 0.0, "points": 27448, "outcome": "NO_FRONT_HIT"}
+{"spawn": 113, "pitch": 0.0, "points": 27849, "outcome": "NO_FRONT_HIT"}
+{"spawn": 114, "pitch": 0.0, "points": 27566, "outcome": "NO_FRONT_HIT"}
+{"spawn": 115, "pitch": 0.0, "points": 28268, "outcome": "NO_FRONT_HIT"}
+{"spawn": 116, "pitch": 0.0, "points": 28096, "outcome": "NO_FRONT_HIT"}
+{"spawn": 117, "pitch": 0.0, "points": 28204, "outcome": "NO_FRONT_HIT"}
+{"spawn": 118, "pitch": 0.0, "points": 28225, "outcome": "NO_FRONT_HIT"}
+{"spawn": 119, "pitch": 0.0, "points": 26254, "outcome": "NO_FRONT_HIT"}
+{"spawn": 120, "pitch": 0.0, "points": 28513, "outcome": "NO_FRONT_HIT"}
+{"spawn": 121, "pitch": 0.0, "points": 26091, "outcome": "NO_FRONT_HIT"}
+{"spawn": 122, "pitch": 0.0, "points": 26786, "outcome": "NO_FRONT_HIT"}
+{"spawn": 123, "pitch": 0.0, "points": 26564, "outcome": "NO_FRONT_HIT"}
+{"spawn": 124, "pitch": 1.2, "points": 24357, "outcome": "NO_FRONT_HIT"}
+{"spawn": 125, "pitch": 0.0, "points": 25769, "outcome": "NO_FRONT_HIT"}
+{"spawn": 126, "pitch": 0.0, "points": 25871, "outcome": "NO_FRONT_HIT"}
+{"spawn": 127, "pitch": 0.0, "points": 28621, "outcome": "NO_FRONT_HIT"}
+{"spawn": 128, "pitch": 0.0, "points": 27718, "outcome": "NO_FRONT_HIT"}
+{"spawn": 129, "pitch": 0.0, "points": 28894, "outcome": "NO_FRONT_HIT"}
+{"spawn": 130, "pitch": 0.0, "points": 24864, "outcome": "NO_FRONT_HIT"}
+{"spawn": 131, "pitch": 0.0, "points": 29400, "outcome": "NO_FRONT_HIT"}
+{"spawn": 132, "pitch": -0.3, "points": 26283, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 32.5, "z": -0.92}
+{"spawn": 133, "pitch": -0.3, "points": 25020, "outcome": "NO_FRONT_HIT"}
+{"spawn": 134, "pitch": -0.3, "points": 26760, "outcome": "NO_FRONT_HIT"}
+{"spawn": 135, "pitch": -0.3, "points": 27172, "outcome": "NO_FRONT_HIT"}
+{"spawn": 136, "pitch": -0.5, "points": 26737, "outcome": "NO_FRONT_HIT"}
+{"spawn": 137, "pitch": -0.5, "points": 27078, "outcome": "NO_FRONT_HIT"}
+{"spawn": 138, "pitch": -0.5, "points": 27543, "outcome": "NO_FRONT_HIT"}
+{"spawn": 139, "pitch": -0.5, "points": 27770, "outcome": "NO_FRONT_HIT"}
+{"spawn": 140, "pitch": -0.5, "points": 26353, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 29.4, "z": -0.83}
+{"spawn": 141, "pitch": -0.5, "points": 25898, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 34.3, "z": -0.97}
+{"spawn": 142, "pitch": 0.0, "points": 30094, "outcome": "NO_FRONT_HIT"}
+{"spawn": 143, "pitch": 0.0, "points": 27256, "outcome": "NO_FRONT_HIT"}
+{"spawn": 144, "pitch": 0.0, "points": 27429, "outcome": "NO_FRONT_HIT"}
+{"spawn": 145, "pitch": 0.0, "points": 27057, "outcome": "NO_FRONT_HIT"}
+{"spawn": 146, "pitch": 0.0, "points": 27855, "outcome": "NO_FRONT_HIT"}
+{"spawn": 147, "pitch": 0.0, "points": 27234, "outcome": "NO_FRONT_HIT"}
+{"spawn": 148, "pitch": 0.0, "points": 28064, "outcome": "NO_FRONT_HIT"}
+{"spawn": 149, "pitch": 0.0, "points": 28020, "outcome": "NO_FRONT_HIT"}
+{"spawn": 150, "pitch": 0.0, "points": 27193, "outcome": "NO_FRONT_HIT"}
+{"spawn": 151, "pitch": 0.0, "points": 27420, "outcome": "NO_FRONT_HIT"}
+{"spawn": 152, "pitch": -2.3, "points": 30277, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 8.4, "z": -1.0}
+{"spawn": 153, "pitch": 0.0, "points": 29101, "outcome": "NO_FRONT_HIT"}
+{"spawn": 154, "pitch": 0.0, "points": 25194, "outcome": "NO_FRONT_HIT"}
+{"spawn": 155, "pitch": 0.0, "points": 26829, "outcome": "OBJECT", "cls": 6, "x": 34.5, "z": -0.97}
+{"spawn": 156, "pitch": 0.0, "points": 27666, "outcome": "NO_FRONT_HIT"}
+{"spawn": 157, "pitch": 0.0, "points": 27510, "outcome": "NO_FRONT_HIT"}
+{"spawn": 158, "pitch": 0.0, "points": 26281, "outcome": "NO_FRONT_HIT"}
+{"spawn": 159, "pitch": 0.2, "points": 25409, "outcome": "NO_FRONT_HIT"}
+{"spawn": 160, "pitch": 0.2, "points": 25966, "outcome": "NO_FRONT_HIT"}
+{"spawn": 161, "pitch": 0.0, "points": 26618, "outcome": "NO_FRONT_HIT"}
+{"spawn": 162, "pitch": 0.0, "points": 28754, "outcome": "NO_FRONT_HIT"}
+{"spawn": 163, "pitch": 0.0, "points": 27815, "outcome": "NO_FRONT_HIT"}
+{"spawn": 164, "pitch": 0.0, "points": 28454, "outcome": "NO_FRONT_HIT"}
+{"spawn": 165, "pitch": 0.0, "points": 28134, "outcome": "OBJECT", "cls": 9, "x": 32.1, "z": -0.18}
+{"spawn": 166, "pitch": 0.0, "points": 26868, "outcome": "NO_FRONT_HIT"}
+{"spawn": 167, "pitch": 0.0, "points": 28753, "outcome": "NO_FRONT_HIT"}
+{"spawn": 168, "pitch": 0.0, "points": 28398, "outcome": "NO_FRONT_HIT"}
+{"spawn": 169, "pitch": 0.0, "points": 26780, "outcome": "NO_FRONT_HIT"}
+{"spawn": 170, "pitch": 0.0, "points": 27202, "outcome": "NO_FRONT_HIT"}
+{"spawn": 171, "pitch": 0.0, "points": 27752, "outcome": "NO_FRONT_HIT"}
+{"spawn": 172, "pitch": 0.0, "points": 27646, "outcome": "NO_FRONT_HIT"}
+{"spawn": 173, "pitch": 0.0, "points": 28001, "outcome": "NO_FRONT_HIT"}
+{"spawn": 174, "pitch": 0.0, "points": 27587, "outcome": "NO_FRONT_HIT"}
+{"spawn": 175, "pitch": 0.0, "points": 27425, "outcome": "NO_FRONT_HIT"}
+{"spawn": 176, "pitch": 0.0, "points": 28578, "outcome": "NO_FRONT_HIT"}
+{"spawn": 177, "pitch": 0.0, "points": 28259, "outcome": "NO_FRONT_HIT"}
+{"spawn": 178, "pitch": 0.0, "points": 28561, "outcome": "NO_FRONT_HIT"}
+{"spawn": 179, "pitch": 0.0, "points": 28712, "outcome": "NO_FRONT_HIT"}
+{"spawn": 180, "pitch": 0.0, "points": 29031, "outcome": "NO_FRONT_HIT"}
+{"spawn": 181, "pitch": 0.0, "points": 29089, "outcome": "NO_FRONT_HIT"}
+{"spawn": 182, "pitch": 0.0, "points": 29073, "outcome": "NO_FRONT_HIT"}
+{"spawn": 183, "pitch": 0.0, "points": 29134, "outcome": "NO_FRONT_HIT"}
+{"spawn": 184, "pitch": 0.0, "points": 27187, "outcome": "NO_FRONT_HIT"}
+{"spawn": 185, "pitch": 0.0, "points": 26784, "outcome": "NO_FRONT_HIT"}
+{"spawn": 186, "pitch": 0.0, "points": 25871, "outcome": "NO_FRONT_HIT"}
+{"spawn": 187, "pitch": 0.0, "points": 28202, "outcome": "NO_FRONT_HIT"}
+{"spawn": 188, "pitch": 0.0, "points": 28053, "outcome": "NO_FRONT_HIT"}
+{"spawn": 189, "pitch": 0.0, "points": 25739, "outcome": "NO_FRONT_HIT"}
+{"spawn": 190, "pitch": 0.0, "points": 26410, "outcome": "NO_FRONT_HIT"}
+{"spawn": 191, "pitch": 0.0, "points": 27700, "outcome": "NO_FRONT_HIT"}
+{"spawn": 192, "pitch": 0.0, "points": 26768, "outcome": "NO_FRONT_HIT"}
+{"spawn": 193, "pitch": 0.0, "points": 25153, "outcome": "OBJECT", "cls": 3, "x": 12.4, "z": -0.07}
+{"spawn": 194, "pitch": -0.2, "points": 27274, "outcome": "NO_FRONT_HIT"}
+{"spawn": 195, "pitch": 0.0, "points": 27584, "outcome": "NO_FRONT_HIT"}
+{"spawn": 196, "pitch": 0.0, "points": 28207, "outcome": "OBJECT", "cls": 20, "x": 27.9, "z": 0.47}
+{"spawn": 197, "pitch": 0.0, "points": 28448, "outcome": "OBJECT", "cls": 4, "x": 30.9, "z": -0.87}
+{"spawn": 198, "pitch": 0.0, "points": 28273, "outcome": "NO_FRONT_HIT"}
+{"spawn": 199, "pitch": 0.0, "points": 28218, "outcome": "NO_FRONT_HIT"}
+{"spawn": 200, "pitch": 0.0, "points": 25207, "outcome": "NO_FRONT_HIT"}
+{"spawn": 201, "pitch": -2.3, "points": 24520, "outcome": "NO_FRONT_HIT"}
+{"spawn": 202, "pitch": 0.0, "points": 27199, "outcome": "NO_FRONT_HIT"}
+{"spawn": 203, "pitch": 0.0, "points": 25256, "outcome": "NO_FRONT_HIT"}
+{"spawn": 204, "pitch": 0.0, "points": 27663, "outcome": "OBJECT", "cls": 4, "x": 27.4, "z": -0.77}
+{"spawn": 205, "pitch": 0.0, "points": 27751, "outcome": "OBJECT", "cls": 4, "x": 34.5, "z": -0.97}
+{"spawn": 206, "pitch": 0.0, "points": 27667, "outcome": "NO_FRONT_HIT"}
+{"spawn": 207, "pitch": 0.0, "points": 27849, "outcome": "NO_FRONT_HIT"}
+{"spawn": 208, "pitch": -0.2, "points": 27335, "outcome": "NO_FRONT_HIT"}
+{"spawn": 209, "pitch": 0.0, "points": 28287, "outcome": "OBJECT", "cls": 20, "x": 42.9, "z": -0.24}
+{"spawn": 210, "pitch": 0.0, "points": 28156, "outcome": "OBJECT", "cls": 20, "x": 48.6, "z": 0.82}
+{"spawn": 211, "pitch": 0.0, "points": 28388, "outcome": "NO_FRONT_HIT"}
+{"spawn": 212, "pitch": 0.0, "points": 25530, "outcome": "NO_FRONT_HIT"}
+{"spawn": 213, "pitch": 0.0, "points": 26671, "outcome": "NO_FRONT_HIT"}
+{"spawn": 214, "pitch": 0.0, "points": 25842, "outcome": "NO_FRONT_HIT"}
+{"spawn": 215, "pitch": 0.2, "points": 26802, "outcome": "NO_FRONT_HIT"}
+{"spawn": 216, "pitch": 0.2, "points": 26319, "outcome": "NO_FRONT_HIT"}
+{"spawn": 217, "pitch": 0.0, "points": 25638, "outcome": "NO_FRONT_HIT"}
+{"spawn": 218, "pitch": 0.0, "points": 26984, "outcome": "NO_FRONT_HIT"}
+{"spawn": 219, "pitch": 0.0, "points": 27292, "outcome": "OBJECT", "cls": 20, "x": 30.0, "z": -0.85}
+{"spawn": 220, "pitch": 0.0, "points": 27841, "outcome": "NO_FRONT_HIT"}
+{"spawn": 221, "pitch": 0.0, "points": 27302, "outcome": "OBJECT", "cls": 6, "x": 24.4, "z": -0.69}
+{"spawn": 222, "pitch": 0.0, "points": 26035, "outcome": "NO_FRONT_HIT"}
+{"spawn": 223, "pitch": 0.0, "points": 25896, "outcome": "NO_FRONT_HIT"}
+{"spawn": 224, "pitch": 0.0, "points": 26003, "outcome": "NO_FRONT_HIT"}
+{"spawn": 225, "pitch": 0.0, "points": 27664, "outcome": "NO_FRONT_HIT"}
+{"spawn": 226, "pitch": 0.0, "points": 27820, "outcome": "NO_FRONT_HIT"}
+{"spawn": 227, "pitch": 0.0, "points": 25969, "outcome": "NO_FRONT_HIT"}
+{"spawn": 228, "pitch": 0.0, "points": 24998, "outcome": "NO_FRONT_HIT"}
+{"spawn": 229, "pitch": 0.0, "points": 24080, "outcome": "NO_FRONT_HIT"}
+{"spawn": 230, "pitch": 0.0, "points": 28591, "outcome": "NO_FRONT_HIT"}
+{"spawn": 231, "pitch": 0.0, "points": 26736, "outcome": "NO_FRONT_HIT"}
+{"spawn": 232, "pitch": 0.0, "points": 26298, "outcome": "NO_FRONT_HIT"}
+{"spawn": 233, "pitch": 0.0, "points": 25957, "outcome": "NO_FRONT_HIT"}
+{"spawn": 234, "pitch": 0.0, "points": 25595, "outcome": "NO_FRONT_HIT"}
+{"spawn": 235, "pitch": 0.0, "points": 26655, "outcome": "NO_FRONT_HIT"}
+{"spawn": 236, "pitch": 0.0, "points": 24925, "outcome": "NO_FRONT_HIT"}
+{"spawn": 237, "pitch": 1.2, "points": 27899, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 9.7, "z": -0.95}
+{"spawn": 238, "pitch": 0.0, "points": 27860, "outcome": "OBJECT", "cls": 6, "x": 24.7, "z": -0.7}
+{"spawn": 239, "pitch": 0.0, "points": 28361, "outcome": "OBJECT", "cls": 9, "x": 6.2, "z": 0.97}
+{"spawn": 240, "pitch": 0.0, "points": 27893, "outcome": "OBJECT", "cls": 4, "x": 25.2, "z": 0.99}
+{"spawn": 241, "pitch": 0.0, "points": 27992, "outcome": "OBJECT", "cls": 4, "x": 48.8, "z": -0.27}
+{"spawn": 242, "pitch": 0.0, "points": 28299, "outcome": "OBJECT", "cls": 20, "x": 26.7, "z": -0.15}
+{"spawn": 243, "pitch": 0.0, "points": 28466, "outcome": "OBJECT", "cls": 4, "x": 27.9, "z": -0.79}
+{"spawn": 244, "pitch": 0.0, "points": 28634, "outcome": "NO_FRONT_HIT"}
+{"spawn": 245, "pitch": 0.0, "points": 28326, "outcome": "NO_FRONT_HIT"}
+{"spawn": 246, "pitch": 0.0, "points": 27246, "outcome": "NO_FRONT_HIT"}
+{"spawn": 247, "pitch": 0.4, "points": 26799, "outcome": "NO_FRONT_HIT"}
+{"spawn": 248, "pitch": 0.0, "points": 27418, "outcome": "NO_FRONT_HIT"}
+{"spawn": 249, "pitch": 0.0, "points": 28738, "outcome": "OBJECT", "cls": 20, "x": 41.1, "z": -0.23}
+{"spawn": 250, "pitch": 0.0, "points": 28837, "outcome": "OBJECT", "cls": 20, "x": 49.2, "z": -0.28}
+{"spawn": 251, "pitch": 0.0, "points": 27423, "outcome": "NO_FRONT_HIT"}
+{"spawn": 252, "pitch": 0.0, "points": 27308, "outcome": "NO_FRONT_HIT"}
+{"spawn": 253, "pitch": 0.0, "points": 27225, "outcome": "NO_FRONT_HIT"}
+{"spawn": 254, "pitch": 0.0, "points": 27156, "outcome": "NO_FRONT_HIT"}
+{"spawn": 255, "pitch": 0.0, "points": 26828, "outcome": "NO_FRONT_HIT"}
+{"spawn": 256, "pitch": 0.0, "points": 26576, "outcome": "NO_FRONT_HIT"}
+{"spawn": 257, "pitch": 0.4, "points": 26725, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 34.3, "z": -0.97}
+{"spawn": 258, "pitch": 0.4, "points": 27078, "outcome": "FALSE_SURFACE", "cls": "Roads", "x": 33.6, "z": -0.95}
+{"spawn": 259, "pitch": -0.3, "points": 26427, "outcome": "NO_FRONT_HIT"}
+{"spawn": 260, "pitch": -0.3, "points": 26324, "outcome": "NO_FRONT_HIT"}
+{"spawn": 261, "pitch": 0.0, "points": 24488, "outcome": "NO_FRONT_HIT"}
+{"spawn": 262, "pitch": 0.8, "points": 27609, "outcome": "OBJECT", "cls": 6, "x": 32.8, "z": -0.93}
+{"spawn": 263, "pitch": -0.5, "points": 25844, "outcome": "NO_FRONT_HIT"}
+{"spawn": 264, "pitch": 0.0, "points": 27983, "outcome": "NO_FRONT_HIT"}
+{"map": "Carla/Maps/Town03_Opt", "zmin": -1.0, "spawnPoints": 265, "validScans": 265, "NO_FRONT_HIT": 221, "OBJECT": 32, "FALSE_SURFACE": 12}
