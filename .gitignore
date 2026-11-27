@@ -207,3 +207,5 @@ docker-compose.override.yml
 *-config.local.json
 
 .demo-runtime/
+carla-bridge/runs/
+carla-bridge/state/

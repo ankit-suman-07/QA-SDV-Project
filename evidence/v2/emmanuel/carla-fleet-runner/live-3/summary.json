@@ -1,0 +1,26 @@
+{
+  "cleanup": {
+    "owned": 6,
+    "errors": []
+  },
+  "sessionId": "carla-20261125T181836100795Z",
+  "sessionGeneration": 1,
+  "counts": {
+    "vehicle-001": {
+      "observations": 199,
+      "missing": 0,
+      "stale": 0
+    },
+    "vehicle-002": {
+      "observations": 199,
+      "missing": 0,
+      "stale": 0
+    },
+    "vehicle-003": {
+      "observations": 199,
+      "missing": 0,
+      "stale": 0
+    }
+  },
+  "maxWallLagSeconds": 0.028
+}
