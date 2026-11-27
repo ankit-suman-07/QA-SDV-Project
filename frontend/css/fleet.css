@@ -1,11 +1,149 @@
-.fleet-detail { margin-top: 24px; }
-.fleet-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
-.fleet-fields dt { color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 6px; }
-.fleet-fields dd { margin: 0; overflow-wrap: anywhere; }
-.fleet-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.fleet-notice { border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; }
-.fleet-notice--error { border-color: #b54747; }
-.fleet-help { color: var(--color-text-muted); line-height: 1.6; }
-#fleet-counts { grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); }
-#action-status { overflow-wrap: anywhere; }
-[data-v2][hidden] { display: none; }
+.fleet-page {
+  --fleet-ink: #202538;
+  --fleet-muted: #525b70;
+  --fleet-line: #dce0e9;
+  --fleet-surface: #fcfcfe;
+  background: #f6f6f8;
+  color: var(--fleet-ink);
+  font-family: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  font-size: 0.875rem;
+}
+
+.fleet-page .app-shell { display: block; }
+.fleet-page .sidebar {
+  position: static;
+  transform: none;
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 22px;
+  padding: 6px clamp(14px, 3vw, 44px);
+  background: var(--fleet-surface);
+  color: var(--fleet-ink);
+  border-bottom: 1px solid var(--fleet-line);
+}
+.fleet-page .sidebar__brand { padding: 3px 0; }
+.fleet-page .sidebar__brand::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border: 3px solid #4c7557;
+  border-radius: 4px;
+}
+.fleet-page .sidebar__nav-list { flex-flow: row wrap; gap: 2px; }
+.fleet-page .sidebar__nav-link { color: var(--fleet-ink); padding: 6px 10px; }
+.fleet-page .sidebar__nav-link:is(:hover, [aria-current="page"]) { background: #e3efe2; color: #244d31; }
+.fleet-page .content { max-width: 1500px; margin-inline: auto; padding: 16px clamp(12px, 2vw, 28px) 24px; gap: 12px; }
+.fleet-page .page-header__title { color: inherit; font-size: clamp(1.55rem, 3vw, 2rem); letter-spacing: -0.035em; }
+.fleet-page h2 { margin: 0 0 8px; font-size: 1.05rem; letter-spacing: -0.018em; }
+.fleet-page h3 { margin: 10px 0 2px; font-size: 0.875rem; }
+.fleet-page :focus-visible { outline: 2px solid #244b87; outline-offset: 2px; box-shadow: none; }
+
+.fleet-page .fleet-panel {
+  min-width: 0;
+  padding: 12px;
+  background: var(--fleet-surface);
+  border: 1px solid var(--fleet-line);
+  border-radius: 12px;
+}
+.fleet-page .metric-grid { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; padding: 9px; }
+.fleet-page .fleet-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  border-radius: 7px;
+  padding: 6px 9px;
+  overflow-wrap: anywhere;
+}
+.fleet-page .fleet-count__value { font-size: 1.12rem; font-variant-numeric: tabular-nums; font-weight: 750; }
+.fleet-page .fleet-tone--sage { color: #244d31; background: #e3efe2; }
+.fleet-page .fleet-tone--orange { color: #763c10; background: #fbeadb; }
+.fleet-page .fleet-tone--rose { color: #802f43; background: #f8e7eb; }
+.fleet-page .fleet-tone--blue { color: #233d60; background: #e7eff8; }
+.fleet-page .fleet-tone--lavender { color: #4a3d69; background: #eee8f7; }
+.fleet-page .fleet-status-chip { display: inline-block; border-radius: 6px; padding: 2px 7px; font-size: 0.8rem; font-weight: 600; }
+.fleet-page .fleet-help { margin: 6px 0; color: var(--fleet-muted); font-size: 0.8rem; line-height: 1.5; overflow-wrap: anywhere; }
+.fleet-page .fleet-notice { margin: 0; padding: 8px 12px; border-radius: 8px; background: #eee8f7; overflow-wrap: anywhere; }
+.fleet-page .fleet-notice--error { background: #f8e7eb; color: #802f43; }
+
+.fleet-page .fleet-roster { padding: 4px 8px; }
+.fleet-page table { width: 100%; border-collapse: separate; border-spacing: 0; text-align: left; }
+.fleet-page :is(th, td) { padding: 6px 9px; overflow-wrap: anywhere; }
+.fleet-page th { text-transform: none; letter-spacing: normal; }
+.fleet-page thead th { color: var(--fleet-muted); border-bottom: 1px solid var(--fleet-line); font-size: 0.8rem; }
+.fleet-page tbody tr + tr > * { border-top: 1px solid var(--fleet-line); }
+.fleet-page .fleet-roster__selected > * { background: #fbeadb; }
+.fleet-page .fleet-roster__selected th { box-shadow: inset 3px 0 #a85a25; }
+
+.fleet-page .fleet-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-areas: "selected telemetry telemetry" "selected execution recovery" "observation observation observation";
+  gap: 9px;
+}
+.fleet-page--v1 .fleet-workspace { grid-template-areas: "selected telemetry telemetry" "selected execution execution" "observation observation observation"; }
+.fleet-page .fleet-selected { grid-area: selected; display: flex; flex-direction: column; }
+.fleet-page .fleet-selected header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+.fleet-page .fleet-selected h2 { margin: 0; }
+.fleet-page .fleet-telemetry { grid-area: telemetry; }
+.fleet-page .fleet-execution { grid-area: execution; }
+.fleet-page .fleet-recovery { grid-area: recovery; }
+.fleet-page .fleet-observation { grid-area: observation; }
+.fleet-page .fleet-fields { margin: 0; border-top: 1px solid var(--fleet-line); }
+.fleet-page .fleet-fields > div { padding: 6px 0; }
+.fleet-page .fleet-fields dt { color: var(--fleet-muted); font-size: 0.8rem; }
+.fleet-page .fleet-fields dd { justify-self: start; margin: 0; font-weight: 650; overflow-wrap: anywhere; }
+.fleet-page :is(.fleet-selected, .fleet-recovery) .fleet-fields > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+  align-items: baseline;
+  gap: 6px;
+}
+.fleet-page .fleet-telemetry .fleet-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding-top: 8px; }
+.fleet-page .fleet-telemetry .fleet-fields > div { padding: 9px 12px; border-radius: 8px; background: #e7eff8; }
+.fleet-page .fleet-telemetry dd { color: #233d60; font-size: 1.15rem; }
+.fleet-page .fleet-observation .fleet-fields { display: flex; flex-wrap: wrap; }
+.fleet-page .fleet-observation .fleet-fields > div { flex: 1 1 150px; padding: 8px; }
+.fleet-page .fleet-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+.fleet-page .fleet-links { margin-top: auto; padding-top: 12px; }
+.fleet-page .btn { padding-inline: 10px; text-decoration: none; }
+.fleet-page .btn--primary { background: #42694d; color: white; }
+.fleet-page .btn--primary:hover:not(:disabled) { background: #2f5038; }
+.fleet-page :is(#action-status, #action-history) { overflow-wrap: anywhere; margin: 6px 0; }
+.fleet-page #action-history { padding-inline-start: 18px; font-size: 0.8rem; }
+.fleet-page #action-history:empty { display: none; }
+.fleet-page [hidden] { display: none !important; }
+
+@media (max-width: 900px) {
+  .fleet-page .metric-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+}
+@media (max-width: 680px) {
+  .fleet-page .fleet-workspace { grid-template-columns: minmax(0, 1fr); grid-template-areas: "selected" "telemetry" "execution" "recovery" "observation"; }
+  .fleet-page--v1 .fleet-workspace { grid-template-areas: "selected" "telemetry" "execution" "observation"; }
+  .fleet-page .fleet-roster { padding: 8px; }
+  .fleet-page .fleet-roster :is(table, tbody) { display: block; }
+  .fleet-page .fleet-roster thead {
+    position: absolute;
+    clip-path: inset(50%);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .fleet-page .fleet-roster tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 6px;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  .fleet-page .fleet-roster tr + tr { border-top: 1px solid var(--fleet-line); }
+  .fleet-page .fleet-roster :is(th, td) { border: 0; padding: 0 4px; }
+  .fleet-page .fleet-roster th[scope="row"] { grid-column: 1 / -1; color: var(--fleet-ink); }
+  .fleet-page .fleet-roster td::before { content: attr(data-label) / ""; display: block; color: var(--fleet-muted); font-size: 0.75rem; }
+  .fleet-page .fleet-roster__selected { background: #fbeadb; }
+  .fleet-page .fleet-roster__selected > * { background: transparent; }
+  .fleet-page .fleet-roster__selected th { box-shadow: none; }
+}

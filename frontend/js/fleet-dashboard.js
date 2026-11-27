@@ -9,26 +9,44 @@ const v2 = typeof CONFIG.V2_API_BASE_URL === 'string';
 const preview = CONFIG.FLEET_PREVIEW || (!v2 && /:19082\/?$/.test(CONFIG.API_BASE_URL));
 
 const element = id => document.getElementById(id);
-const text = (id, value) => { element(id).textContent = value ?? '—'; };
+const text = (id, value) => {
+  const field = element(id);
+  const next = String(value ?? 'Unavailable');
+  if (field.textContent !== next) field.textContent = next;
+};
+const tones = new Map([
+  ['AVAILABLE', 'sage'], ['HEALTHY', 'sage'], ['STALE', 'orange'], ['WARNING', 'orange'],
+  ['UNAVAILABLE', 'rose'], ['CRITICAL', 'rose'], ['IN_PROGRESS', 'lavender'],
+]);
+function status(field, label, status = label) {
+  const tone = tones.get(status) ?? 'lavender';
+  field.className = `fleet-status-chip fleet-tone--${tone}`;
+  if (field.textContent !== label) field.textContent = label;
+}
+function observed(value, lastKnown) {
+  return value == null ? 'Unknown' : `${value}${lastKnown ? ' (last known)' : ''}`;
+}
+
 function errorText(id, value) { text(id, value); element(id).hidden = !value; }
 const counters = [
-  ['totalVehicles', 'Total vehicles'], ['availableVehicles', 'Available'],
-  ['staleVehicles', 'Stale'], ['unavailableVehicles', 'Unavailable'],
-  ['healthyVehicles', 'Healthy now'], ['warningVehicles', 'Warning now'], ['criticalVehicles', 'Critical now'],
+  ['totalVehicles', 'Vehicles', 'blue'], ['availableVehicles', 'Available', 'sage'],
+  ['staleVehicles', 'Stale', 'orange'], ['unavailableVehicles', 'Unavailable', 'rose'],
+  ['healthyVehicles', 'Healthy', 'sage'], ['warningVehicles', 'Warning', 'orange'],
+  ['criticalVehicles', 'Critical', 'rose'],
 ];
-for (const [key, label] of counters) {
-  const card = document.createElement('div'); card.className = 'metric-card';
-  const title = document.createElement('span'); title.className = 'metric-card__label'; title.textContent = label;
-  const value = document.createElement('div'); value.className = 'metric-card__value'; value.id = key; value.textContent = '—';
+for (const [key, label, tone] of counters) {
+  const card = document.createElement('div'); card.className = `fleet-count fleet-tone--${tone}`;
+  const title = document.createElement('span'); title.textContent = label;
+  const value = document.createElement('div'); value.className = 'fleet-count__value'; value.id = key; value.textContent = '—';
   card.append(title, value); element('fleet-counts').append(card);
 }
 let optionsKey;
 function render(state) {
   const fleet = state.fleet;
-  text('fleet-status', state.fleetError ? 'Request failed — counts below are last known, not current.'
+  text('fleet-status', state.fleetError ? (fleet ? 'Fleet request failed. Showing the last known fleet snapshot.' : 'Fleet snapshot unavailable.')
     : !fleet ? 'Loading fleet…' : `${state.fleetLoading ? 'Refreshing… ' : ''}Evaluated at ${fleet.generatedAt}`);
   errorText('fleet-error', state.fleetError);
-  for (const [key] of counters) text(key, fleet?.[key]);
+  for (const [key] of counters) text(key, fleet?.[key] ?? '—');
   const ids = v2 ? V2_VEHICLES : fleet?.vehicles.map(vehicle => vehicle.vehicleId) ?? [];
   const key = ids.join('|');
   if (key !== optionsKey) {
@@ -50,20 +68,21 @@ function render(state) {
   text('vehicle-id', state.selectedId);
   text('thing-id', vehicle?.thingId);
   const health = vehicle?.healthStatus;
-  text('vehicle-health', health ? `${health}${state.vehicleError || vehicle.availability !== 'AVAILABLE' ? ' (last known)' : ''}` : 'Unknown');
-  text('vehicle-availability', state.vehicleError ? 'Request error — current availability unknown' : vehicle?.availability);
-  text('vehicle-faults', vehicle?.activeFaults == null ? 'Unknown' : vehicle.activeFaults.join(', ') || 'None');
-  text('lidar-distance', vehicle?.lidar?.distanceMeters == null ? 'Unknown' : `${vehicle.lidar.distanceMeters} m`);
-  text('lidar-sensor', vehicle?.lidar == null ? 'Unknown' : vehicle.lidar.sensorAvailable ? 'Yes' : 'No');
-  text('source-timestamp', vehicle?.sourceTimestamp);
-  text('last-event', vehicle?.lastEventId);
+  const lastKnown = state.vehicleError || vehicle?.availability !== 'AVAILABLE';
+  status(element('vehicle-health'), observed(health, lastKnown), lastKnown ? null : health);
+  status(element('vehicle-availability'), state.vehicleError ? 'Unknown (request failed)' : vehicle?.availability ?? 'Unknown');
+  text('vehicle-faults', observed(vehicle?.activeFaults ? vehicle.activeFaults.join(', ') || 'None' : null, lastKnown));
+  text('lidar-distance', observed(vehicle?.lidar?.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`, lastKnown));
+  text('lidar-sensor', observed(vehicle?.lidar?.sensorAvailable == null ? null : vehicle.lidar.sensorAvailable ? 'Yes' : 'No', lastKnown));
+  text('source-timestamp', observed(vehicle?.sourceTimestamp, lastKnown));
+  text('last-event', observed(vehicle?.lastEventId, lastKnown));
   for (const id of ['inject', 'clear', 'restart']) {
     element(id).disabled = !state.selectedId || state.submitting || Boolean(state.actionActive);
   }
   const action = state.action;
   text('action-status', state.submitting ? (v2 ? 'Submitting action…' : 'Submitting scenario…') : v2
     ? describeAction(action, state.pendingActionId) : action
-      ? `${action.status} / ${action.dispatchStatus ?? 'dispatch unconfirmed'} · action ${action.actionId} · trace ${action.traceId}. Observe health separately.` : '');
+      ? `${action.status} / ${action.dispatchStatus ?? 'dispatch unconfirmed'} · action ${action.actionId} · trace ${action.traceId}. Observe health separately.` : 'No action requested for this selection.');
   errorText('action-error', state.actionError);
   if (v2) {
     element('preview-label').hidden = !(preview || fleet?.mock === true || vehicle?.mock === true);
@@ -72,7 +91,7 @@ function render(state) {
 }
 
 function describeAction(action, pendingId) {
-  if (!action) return pendingId ? `Action ${pendingId}` : '';
+  if (!action) return pendingId ? `Action ${pendingId}` : 'No action requested for this selection.';
   const details = {
     ACCEPTED: 'Dispatch acknowledged.',
     EXECUTING: 'Executor reports progress.',
@@ -93,23 +112,51 @@ function renderList(id, items) {
   }));
 }
 
+function renderRoster(fleet, selectedId, fleetError) {
+  const columns = ['Vehicle ID', 'Health', 'Availability', 'Active faults', 'Source age', 'Thing ID'];
+  element('fleet-vehicles').replaceChildren(...V2_VEHICLES.map(id => {
+    const entry = fleet?.vehicles.find(vehicle => vehicle.vehicleId === id);
+    const lastKnown = fleetError || entry?.availability !== 'AVAILABLE';
+    const delta = Date.parse(fleet?.generatedAt) - Date.parse(entry?.sourceTimestamp);
+    const row = document.createElement('tr');
+    row.setAttribute('role', 'row');
+    if (id === selectedId) {
+      row.className = 'fleet-roster__selected';
+      row.setAttribute('aria-current', 'true');
+    }
+    const values = [
+      id, observed(entry?.healthStatus, lastKnown), entry?.availability ?? 'Unknown',
+      observed(entry?.activeFaults ? entry.activeFaults.join(', ') || 'None' : null, lastKnown),
+      Number.isFinite(delta) && delta >= 0 ? `${(delta / 1000).toFixed(1)} s` : 'Unavailable',
+      entry?.thingId ?? 'Unavailable',
+    ];
+    values.forEach((value, index) => {
+      const cell = document.createElement(index === 0 ? 'th' : 'td');
+      cell.setAttribute('role', index === 0 ? 'rowheader' : 'cell');
+      if (index === 0) cell.scope = 'row';
+      else cell.dataset.label = columns[index];
+      if (index === 1 || index === 2) {
+        const chip = document.createElement('span');
+        status(chip, value, index === 1 && lastKnown ? null : undefined);
+        cell.append(chip);
+      } else cell.textContent = value;
+      row.append(cell);
+    });
+    return row;
+  }));
+}
+
 function renderV2(state) {
   const vehicle = state.vehicle;
   const lastKnown = vehicle && (state.vehicleError || vehicle.availability !== 'AVAILABLE');
-  const observed = value => value == null ? 'Unknown' : `${value}${lastKnown ? ' (last known)' : ''}`;
-  renderList('fleet-vehicles', V2_VEHICLES.map(id => {
-    const view = state.fleet?.vehicles.find(entry => entry.vehicleId === id);
-    return `${id} · ${view?.availability ?? (state.fleetError ? 'Unknown' : 'Loading')}`;
-  }));
-  text('vehicle-faults', observed(vehicle?.activeFaults ? vehicle.activeFaults.join(', ') || 'None' : null));
-  text('lidar-distance', observed(vehicle?.lidar?.distanceMeters == null ? null : `${vehicle.lidar.distanceMeters} m`));
-  text('lidar-sensor', observed(vehicle?.lidar?.sensorAvailable == null ? null : vehicle.lidar.sensorAvailable ? 'Yes' : 'No'));
-  text('vehicle-recovery', observed(vehicle?.recoveryState));
-  text('recovery-started', vehicle?.recoveryStartedAt);
-  text('source-silent', observed(vehicle?.sourceSilent == null ? null : vehicle.sourceSilent ? 'Yes' : 'No'));
-  text('source-session', vehicle?.sessionId ? `${vehicle.sessionId} / ${vehicle.sessionGeneration ?? '—'}` : null);
-  text('source-frame', vehicle?.sequence == null ? null : `${vehicle.sequence} / ${vehicle.frame ?? '—'}`);
-  text('source-provenance', vehicle?.provenance ?? (vehicle?.lastEventId && (preview || vehicle.mock) ? 'SYNTHETIC' : 'Unknown'));
+  const read = value => observed(value, lastKnown);
+  renderRoster(state.fleet, state.selectedId, state.fleetError);
+  status(element('vehicle-recovery'), read(vehicle?.recoveryState), lastKnown ? null : vehicle?.recoveryState);
+  text('recovery-started', read(vehicle?.recoveryStartedAt));
+  text('source-silent', read(vehicle?.sourceSilent == null ? null : vehicle.sourceSilent ? 'Yes' : 'No'));
+  text('source-session', read(vehicle?.sessionId ? `${vehicle.sessionId} / ${vehicle.sessionGeneration ?? 'Unknown'}` : null));
+  text('source-frame', read(vehicle?.sequence == null ? null : `${vehicle.sequence} / ${vehicle.frame ?? 'Unknown'}`));
+  text('source-provenance', read(vehicle?.provenance));
   text('history-status', state.historyError
     ? `${state.historyError}${state.history ? ' Showing last known history.' : ''}`
     : !state.history ? 'Loading action history…' : state.history.length ? '' : 'No retained actions.');
@@ -121,7 +168,7 @@ function renderV2(state) {
 const model = v2 ? new V2FleetDashboard(createV2FleetApi(CONFIG.V2_API_BASE_URL), render)
   : new FleetDashboard(createHttpFleetApi(), createHttpDiagnosticApi(), render);
 element('preview-label').hidden = !preview;
-element('fleet-vehicles').hidden = !v2;
+if (!v2) document.body.classList.add('fleet-page--v1');
 if (v2) for (const field of document.querySelectorAll('[data-v2]')) field.hidden = false;
 element('vehicle-select').addEventListener('change', event => model.selectVehicle(event.target.value));
 element('inject').addEventListener('click', () => model.submit('INJECT_SCENARIO'));
@@ -132,9 +179,6 @@ async function refresh() {
     ...(v2 ? [model.refreshAction(), model.refreshHistory()] : [])]);
 }
 element('refresh').addEventListener('click', refresh);
-element('menu-toggle').addEventListener('click', event => {
-  const open = element('sidebar').classList.toggle('is-open'); event.currentTarget.setAttribute('aria-expanded', String(open));
-});
 // Poll after completion rather than setInterval: slow requests cannot accumulate.
 let timer;
 let stopped = false;
