@@ -6,7 +6,8 @@ import os
 from queue import Empty, Full, Queue
 from threading import Event, Lock, Thread
 
-from ditto.mqtt_ingress import EventError, VEHICLES, decode_event
+from ditto.mqtt_ingress import (EventError, V2_VEHICLES, VEHICLES, decode_event,
+                                decode_v2_health, is_v2_health_topic)
 
 LOG = logging.getLogger(__name__)
 
@@ -61,7 +62,7 @@ class Subscriber:
     A failing downstream is retried at retry_seconds without ACK or watermark
     advancement. Another vehicle continues independently. Queue overflow is a
     visible fatal stop, leaving work unacknowledged for broker replay on restart.
-    Never run two subscribers/writers for the same pair of individual twins.
+    Never run two subscribers/writers for the same individual twins.
     """
     def __init__(self, ingress, config=None, *, client=None):
         self.ingress = ingress
@@ -72,7 +73,11 @@ class Subscriber:
         self._generation = 0
         self._connected = False
         self._fatal = None
-        self._queues = {vehicle: Queue(self.config.queue_size) for vehicle in VEHICLES}
+        self._subscription_mids = {}
+        self._subscription_state = {}
+        self._v2_enabled = getattr(ingress, 'supports_v2', False)
+        vehicles = V2_VEHICLES if self._v2_enabled else VEHICLES
+        self._queues = {vehicle: Queue(self.config.queue_size) for vehicle in vehicles}
         self.client.manual_ack_set(True)
         self.client.reconnect_delay_set(min_delay=1, max_delay=30)
         if self.config.username is not None:
@@ -105,21 +110,50 @@ class Subscriber:
         with self._session_lock:
             self._generation += 1
             self._connected = reason_code == 0
+            self._subscription_mids.clear()
+            self._subscription_state.clear()
         if reason_code != 0:
             LOG.warning('mqtt_connection_rejected')
             return
-        result, _mid = client.subscribe('sdv/+/health', qos=1)
-        if result != 0:
-            self._fail('SUBSCRIBE_FAILED')
+        topics = ('sdv/+/health', 'sdv/+/v2/health') if self._v2_enabled else ('sdv/+/health',)
+        for topic in topics:
+            result, mid = client.subscribe(topic, qos=1)
+            if result != 0:
+                if topic == 'sdv/+/health':
+                    self._fail('SUBSCRIBE_FAILED')
+                    return
+                with self._session_lock:
+                    self._subscription_state[topic] = 'denied'
+                LOG.warning('mqtt_subscription_failed topic=%s result=%s', topic, result)
+                continue
+            with self._session_lock:
+                self._subscription_mids[mid] = topic
+                self._subscription_state[topic] = 'pending'
 
     def on_subscribe(self, client, userdata, mid, reason_codes, properties):
-        if not reason_codes or any(code != 1 for code in reason_codes):
+        # Each MQTT 3.1.1 SUBSCRIBE above contains one filter. Paho v2 passes
+        # the packet ID and the ordered list of results for that packet.
+        granted = len(reason_codes or ()) == 1 and reason_codes[0] == 1
+        with self._session_lock:
+            topic = self._subscription_mids.pop(mid, None)
+            if topic is not None:
+                self._subscription_state[topic] = 'granted' if granted else 'denied'
+        if topic is None and self._v2_enabled:
+            LOG.warning('mqtt_unmatched_suback mid=%s', mid)
+        elif granted:
+            if topic is not None:
+                LOG.info('mqtt_subscription_granted topic=%s qos=1', topic)
+        elif topic == 'sdv/+/v2/health':
+            LOG.warning('mqtt_subscription_denied topic=%s results=%s', topic, reason_codes)
+        else:
             self._fail('SUBSCRIBE_QOS_REJECTED')
 
     def on_disconnect(self, client, userdata, flags, reason_code, properties):
         with self._session_lock:
             self._connected = False
             self._generation += 1
+            self._subscription_mids.clear()
+            self._subscription_state.clear()
         if not self._stopping.is_set():
             LOG.warning('mqtt_disconnected reconnect_pending=true')
 
@@ -136,10 +170,16 @@ class Subscriber:
             return
         with self._session_lock:
             generation = self._generation
+            v2_denied = self._subscription_state.get('sdv/+/v2/health') == 'denied'
         try:
             if message.retain or message.qos != 1:
                 raise EventError('INVALID_MQTT_DELIVERY')
-            event = decode_event(message.topic, message.payload)
+            decoder = decode_event
+            if is_v2_health_topic(message.topic):
+                if not self._v2_enabled or v2_denied:
+                    raise EventError('V2_SUBSCRIPTION_UNAVAILABLE')
+                decoder = decode_v2_health
+            event = decoder(message.topic, message.payload)
         except EventError as error:
             LOG.warning('event_rejected code=%s topic=%r vehicle=%r event=%r',
                         error.code, message.topic, error.vehicle_id, error.event_id)
