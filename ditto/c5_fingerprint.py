@@ -1,5 +1,6 @@
 """Standalone strict C5 wire validation and RFC 8785 fingerprints."""
 
+from copy import deepcopy
 from dataclasses import dataclass
 from hashlib import sha256
 import json
@@ -12,6 +13,7 @@ from .mqtt_ingress import (
     MAX_PAYLOAD_BYTES,
     V2_VEHICLES,
     _require,
+    _validate_json,
     parse_timestamp,
     validate_v2_health,
 )
@@ -105,6 +107,8 @@ def _decode(raw):
 def _fingerprint(value):
     try:
         canonical = rfc8785.dumps(value)
+    except rfc8785.IntegerDomainError as error:
+        raise EventError("UNSAFE_INTEGER") from error
     except (rfc8785.CanonicalizationError, RecursionError) as error:
         raise EventError("MALFORMED_JSON") from error
     return canonical, sha256(canonical).hexdigest()
@@ -199,7 +203,17 @@ def fingerprint_envelope(topic: str, raw: bytes) -> EnvelopeFingerprint:
     can be reconciled before checking the current accepted observation.
     """
     _require(isinstance(topic, str), "TOPIC_MISMATCH")
-    event = _decode(raw)
+    return fingerprint_decoded_envelope(topic, _decode(raw))
+
+
+def fingerprint_decoded_envelope(topic: str, event: dict) -> EnvelopeFingerprint:
+    """Validate application data without applying an MQTT byte limit.
+
+    Raw callers must use fingerprint_envelope to enforce transport limits
+    and detect duplicate keys and invalid numeric tokens before decoding.
+    """
+    _require(isinstance(topic, str), "TOPIC_MISMATCH")
+    _validate_json(event)
     if topic.endswith("/v2/health"):
         _object_fields(event, _HEALTH_REQUIRED, _HEALTH_OPTIONAL)
         _object_fields(event["lidar"], {"sensorAvailable", "distanceMeters"})
@@ -222,4 +236,4 @@ def fingerprint_envelope(topic: str, raw: bytes) -> EnvelopeFingerprint:
         "payload": {key: value for key, value in event.items() if key != "schemaVersion"},
     }
     canonical, digest = _fingerprint(scoped)
-    return EnvelopeFingerprint(event, canonical, digest)
+    return EnvelopeFingerprint(deepcopy(event), canonical, digest)

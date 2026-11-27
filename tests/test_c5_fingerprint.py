@@ -7,6 +7,7 @@ import pytest
 from ditto.c5_fingerprint import (
     EventError,
     canonicalize_json,
+    fingerprint_decoded_envelope,
     fingerprint_envelope,
     validate_status_reference,
 )
@@ -168,3 +169,30 @@ def test_accepted_context_comparison_preserves_inputs(status_reference_inputs, m
             validate_status_reference(event, accepted, source_silent=False)
         assert exc.value.code == "REFERENCE_MISMATCH"
     assert (event, accepted) == before
+
+
+def test_decoded_fingerprinting_matches_wire_and_detaches_input():
+    case = next(x for x in ENVELOPES["cases"] if x["id"] == "health-velocity")
+    wire = fingerprint_envelope(HEALTH, case["inputJson"].encode())
+    envelope = copy.deepcopy(wire.envelope)
+    result = fingerprint_decoded_envelope(HEALTH, envelope)
+    assert result == wire and envelope == wire.envelope
+    result.envelope["lidar"]["distanceMeters"] = 21
+    assert envelope == wire.envelope
+
+
+@pytest.mark.parametrize("changes,code", [
+    ({"sequence": 2**53}, "UNSAFE_INTEGER"),
+    ({"faults": ("LIDAR_SENSOR_FAILURE",)}, "MALFORMED_JSON"),
+    ({"velocityMetersPerSecond": {"x": 1, "y": 0, "z": 0, "w": 0}}, "UNKNOWN_FIELD"),
+])
+def test_decoded_fingerprinting_keeps_strict_schema(changes, code):
+    envelope = json.loads(ORIGINAL["accepted"][0]["inputJson"])
+    envelope.update(changes)
+    with pytest.raises(EventError, match=f"^{code}$"):
+        fingerprint_decoded_envelope(HEALTH, envelope)
+
+
+def test_raw_entry_point_still_rejects_duplicate_keys():
+    with pytest.raises(EventError, match="^DUPLICATE_KEY$"):
+        fingerprint_envelope(HEALTH, b'{"vehicleId":"vehicle-003","vehicleId":"vehicle-003"}')
